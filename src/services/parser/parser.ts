@@ -2,7 +2,6 @@
 import {ParserResult} from '../../interfaces/parser-result';
 import {LexerToken} from '../../interfaces/lexer-token';
 import {ParserStackElement} from '../../enums/parserStackElement';
-import {AbstractSyntaxTree} from '../../interfaces/abstract-syntax-tree';
 import {LexerTokenCategory} from '../../enums/lexerTokenCategory';
 import {ParserEntryPoint} from '../../enums/parserEntryPoint';
 import {Injectable} from '@angular/core';
@@ -109,6 +108,74 @@ export class Parser {
   exists(individual: object): boolean {
     return false;
     //return individuals.hasOwnProperty(individual);
+  }
+
+  /**
+   * Retrieves all global variables, constants, dim-arrays, function and type names
+   * from a given lexer code.
+   * @param lexerCode An array of lexer token arrays, preprocessed by the lexer
+   */
+  getIndividuals(lexerCode: Array<LexerToken[]>): any {
+    let result = {
+      global: [],
+      const: [],
+      dim: [],
+      fn: [],
+      type: []
+    };
+
+    lexerCode.forEach((lexerTokens: LexerToken[]) => {
+      for(let i=0; i<lexerTokens.length; i++) {
+        if(lexerTokens[i].which === LexerTokenCategory.INDIVIDUAL) {
+          if(i > 0 && lexerTokens[i-1].which === LexerTokenCategory.KEYWORD) {
+            //console.info('Previous token is a key word:', lexerTokens[i-1]);
+            let keywordValue = lexerTokens[i-1].value.toLowerCase();
+            switch(keywordValue) {
+              case 'global':
+                if(result.global.indexOf(keywordValue) === -1) {
+                  result.global.push(lexerTokens[i].value);
+                }
+                break;
+              case 'const':
+                if(result.const.indexOf(keywordValue) === -1) {
+                  result.const.push(lexerTokens[i].value);
+                }
+                break;
+              case 'dim':
+                if(result.dim.indexOf(keywordValue) === -1) {
+                  result.dim.push(lexerTokens[i].value);
+                }
+                break;
+              case 'function':
+                if(result.fn.indexOf(keywordValue) === -1) {
+                  result.fn.push(lexerTokens[i].value);
+                }
+                break;
+              case 'type':
+                if(result.type.indexOf(keywordValue) === -1) {
+                  result.type.push(lexerTokens[i].value);
+                }
+                break;
+            }
+          }
+        }
+      }
+    });
+
+    return result;
+  }
+
+  /**
+   * Retrieves all local variables from a given lexer code.
+   * If a function name is passed, only local variables of this function will be retrieved.
+   * Otherwise, all local variables of all code functions will be retrieved.
+   * @param lexerCode
+   * @param fn
+   */
+  getLocals(lexerCode: Array<LexerToken[]>, fn?: string): any {
+    if (fn) {
+
+    }
   }
 
   /** RULES **/
@@ -261,7 +328,7 @@ export class Parser {
               if (lexerTokens.length > 1) {
                 switch (lexerTokens[1].which) {
                   case LexerTokenCategory.KEYWORD:
-                    switch(lexerTokens[1].value.toLowerCase()) {
+                    switch (lexerTokens[1].value.toLowerCase()) {
                       case 'function':
                         entryPoint = ParserEntryPoint.FUNCTION_END;
                         break;
@@ -295,23 +362,23 @@ export class Parser {
         case LexerTokenCategory.INDIVIDUAL:
           let hasAssignment = false;
           lexerTokens.forEach((token) => {
-            if(token.which === LexerTokenCategory.ASSIGNMENT) {
+            if (token.which === LexerTokenCategory.ASSIGNMENT) {
               hasAssignment = true;
             }
           });
 
-          if(hasAssignment) {
+          if (hasAssignment) {
             entryPoint = ParserEntryPoint.ASSIGNMENT;
           } else {
             entryPoint = ParserEntryPoint.FUNCTION_CALL;
           }
           break;
         default:
-          //TODO error, invalid first token
+        //TODO error, invalid first token
       }
 
       /* STEP 2: generate the actual tree branch */
-      switch(entryPoint) {
+      switch (entryPoint) {
         case ParserEntryPoint.DECLARATION:
           //DECL: {scope, name, value}
           break;
