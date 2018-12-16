@@ -1,4 +1,4 @@
-export class Diverse {
+export class CommandsBasicsDiverse {
   constructor() {
 
   }
