@@ -9,7 +9,7 @@ import { Component, OnInit } from '@angular/core';
   `,
   styles: []
 })
-export class BlitzbasicscriptComponent implements OnInit {
+export class BlitzBasicScriptComponent implements OnInit {
 
   constructor() { }
 

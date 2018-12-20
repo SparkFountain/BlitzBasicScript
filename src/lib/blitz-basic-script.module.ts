@@ -1,5 +1,5 @@
 import {ModuleWithProviders, NgModule} from '@angular/core';
-import { BlitzbasicscriptComponent } from './blitzbasicscript.component';
+import { BlitzBasicScriptComponent } from './blitzbasicscript.component';
 import {Lexer} from '../services/lexer/lexer.service';
 import {CodeGenerator} from '../services/code-generator/code-generator.service';
 import {Parser} from '../services/parser/parser.service';
@@ -8,20 +8,20 @@ import {CommandService} from '../services/commands/command.service';
 
 @NgModule({
   declarations: [
-    BlitzbasicscriptComponent
+    BlitzBasicScriptComponent
   ],
   imports: [
     HttpClientModule
   ],
   exports: [
-    BlitzbasicscriptComponent
+    BlitzBasicScriptComponent
   ]
 })
 
-export class BlitzbasicscriptModule {
+export class BlitzBasicScriptModule {
   static forRoot(): ModuleWithProviders {
     return {
-      ngModule: BlitzbasicscriptModule,
+      ngModule: BlitzBasicScriptModule,
       providers: [ Lexer, Parser, CodeGenerator, CommandService ]
     };
   }
