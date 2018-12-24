@@ -5,6 +5,7 @@ import {ParserStackElement} from '../../enums/parserStackElement';
 import {LexerTokenCategory} from '../../enums/lexerTokenCategory';
 import {ParserEntryPoint} from '../../enums/parserEntryPoint';
 import {Injectable} from '@angular/core';
+import {AbstractSyntaxTree} from '../../interfaces/abstract-syntax-tree';
 
 @Injectable({
   providedIn: 'root'
@@ -125,34 +126,34 @@ export class Parser {
     };
 
     lexerCode.forEach((lexerTokens: LexerToken[]) => {
-      for(let i=0; i<lexerTokens.length; i++) {
-        if(lexerTokens[i].which === LexerTokenCategory.INDIVIDUAL) {
-          if(i > 0 && lexerTokens[i-1].which === LexerTokenCategory.KEYWORD) {
+      for (let i = 0; i < lexerTokens.length; i++) {
+        if (lexerTokens[i].which === LexerTokenCategory.INDIVIDUAL) {
+          if (i > 0 && lexerTokens[i - 1].which === LexerTokenCategory.KEYWORD) {
             //console.info('Previous token is a key word:', lexerTokens[i-1]);
-            let keywordValue = lexerTokens[i-1].value.toLowerCase();
-            switch(keywordValue) {
+            let keywordValue = lexerTokens[i - 1].value.toLowerCase();
+            switch (keywordValue) {
               case 'global':
-                if(result.global.indexOf(keywordValue) === -1) {
+                if (result.global.indexOf(keywordValue) === -1) {
                   result.global.push(lexerTokens[i].value);
                 }
                 break;
               case 'const':
-                if(result.const.indexOf(keywordValue) === -1) {
+                if (result.const.indexOf(keywordValue) === -1) {
                   result.const.push(lexerTokens[i].value);
                 }
                 break;
               case 'dim':
-                if(result.dim.indexOf(keywordValue) === -1) {
+                if (result.dim.indexOf(keywordValue) === -1) {
                   result.dim.push(lexerTokens[i].value);
                 }
                 break;
               case 'function':
-                if(result.fn.indexOf(keywordValue) === -1) {
+                if (result.fn.indexOf(keywordValue) === -1) {
                   result.fn.push(lexerTokens[i].value);
                 }
                 break;
               case 'type':
-                if(result.type.indexOf(keywordValue) === -1) {
+                if (result.type.indexOf(keywordValue) === -1) {
                   result.type.push(lexerTokens[i].value);
                 }
                 break;
@@ -241,7 +242,7 @@ export class Parser {
   // [Sar]: [NumExpr] Shr [NumExpr]
 
 
-  getAbstractSyntaxTree(lexerCode: Array<LexerToken[]>): string {
+  getAbstractSyntaxTree(lexerCode: Array<LexerToken[]>): AbstractSyntaxTree {
     let globalEntryPoint = '';
 
     lexerCode.forEach((lexerTokens: LexerToken[]) => {
@@ -478,7 +479,7 @@ export class Parser {
        */
     });
 
-    return globalEntryPoint;
+    return null; //globalEntryPoint;
   }
 
   /**
@@ -486,7 +487,7 @@ export class Parser {
    * Gets an array of lexer code lines and parses them line by line.
    * Each code line consists of an array of lexer tokens which will be investigated sequentially.
    * @param lexerCode An array of arrays, containing lexed code lines
-   * @return {{js, errors, warnings, infos}} An object consisting of generated JavaScript code,
+   * @return An object consisting of generated JavaScript code,
    * as well as parser messages
    */
   parse(lexerCode: Array<LexerToken[]>): ParserResult {

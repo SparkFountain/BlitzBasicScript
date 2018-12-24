@@ -1,4 +1,5 @@
 import {ParserResult} from '../interfaces/parser-result';
+import {$} from 'protractor';
 
 export class Core {
   static LIGHT = {
@@ -220,18 +221,15 @@ export class Core {
       mouseHit = {};
   }
 
-  forToNext()
-  {
+  forToNext() {
 
   }
 
-  whileWend()
-  {
+  whileWend() {
 
   }
 
-  repeatUntil()
-  {
+  repeatUntil() {
 
   }
 

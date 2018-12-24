@@ -1,8 +1,7 @@
 import {LexerToken} from '../../interfaces/lexer-token';
 import {LexerContext} from '../../enums/lexerContext';
 import {LexerTokenCategory} from '../../enums/lexerTokenCategory';
-import {ApiService} from '../api.service';
-import {Component, Injectable} from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {ApiResponse} from '../../interfaces/api-response';
 import {ApiKeyword} from '../../interfaces/api-keyword';
@@ -142,13 +141,13 @@ export class Lexer {
    * @param code An array of BBScript code lines
    * @return An array of arrays, containing all tokens per code line
    */
-  lexCode(code: string[]): Array<LexerToken[]> {
+  lexCode(code: string[][]): Array<LexerToken[]> {
     console.info('Key Words:', this.keywords);
 
     let lexer: Lexer = this;
 
     let result: Array<LexerToken[]> = [];
-    code.forEach(function (line: string, index: number) {
+    code.forEach((line: string[], index: number) => {
       let tokens: LexerToken[] = lexer.lexLine(line);
       for (let i = 0; i < tokens.length; i++) {
         tokens[i].offset.y = index + 1;
@@ -160,10 +159,12 @@ export class Lexer {
 
   /**
    * Performs lexing operations on a BBScript code line.
-   * @param codeLine A string consisting of plain BBScript code
+   * @param codeCharArray A string consisting of plain BBScript code
    * @return An array of tokens which represent the code's components
    */
-  lexLine(codeLine: string): LexerToken[] {
+  lexLine(codeCharArray: string[]): LexerToken[] {
+    let codeLine: string = codeCharArray.join('');
+
     //replace tabs by 2 spaces
     codeLine = codeLine.replace(new RegExp('\\t', 'g'), '  ');
 
@@ -383,7 +384,7 @@ export class Lexer {
     let variables = {};
 
     let result: string = '';
-    let tokens: LexerToken[] = this.lexLine(codeLine);
+    let tokens: LexerToken[] = this.lexLine(codeLine.split(''));
     //console.info('tokens:', tokens);
     for (let i = 0; i < tokens.length; i++) {
       let whitespace: number;

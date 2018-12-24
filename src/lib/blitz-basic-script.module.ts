@@ -1,10 +1,11 @@
-import {ModuleWithProviders, NgModule} from '@angular/core';
-import { BlitzBasicScriptComponent } from './blitzbasicscript.component';
-import {Lexer} from '../services/lexer/lexer.service';
-import {CodeGenerator} from '../services/code-generator/code-generator.service';
-import {Parser} from '../services/parser/parser.service';
+import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
+import {BlitzBasicScriptComponent} from './blitz-basic-script.component';
 import {CommandService} from '../services/commands/command.service';
+import {CommandsBasicsDiverse} from '../services/commands/basics/diverse';
+import {CommandsBasicsMaths} from '../services/commands/basics/maths';
+import {CommandsBasicsStrings} from '../services/commands/basics/strings';
+import {CommandsBasicsTimeRandom} from '../services/commands/basics/time-random';
 
 @NgModule({
   declarations: [
@@ -15,14 +16,15 @@ import {CommandService} from '../services/commands/command.service';
   ],
   exports: [
     BlitzBasicScriptComponent
+  ],
+  providers: [
+    CommandService,
+    CommandsBasicsDiverse,
+    CommandsBasicsMaths,
+    CommandsBasicsStrings,
+    CommandsBasicsTimeRandom
   ]
 })
 
 export class BlitzBasicScriptModule {
-  static forRoot(): ModuleWithProviders {
-    return {
-      ngModule: BlitzBasicScriptModule,
-      providers: [ Lexer, Parser, CodeGenerator, CommandService ]
-    };
-  }
 }

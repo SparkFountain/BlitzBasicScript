@@ -3,9 +3,12 @@ export class CommandsBasicsMaths {
 
   }
 
-  abs() {}
+  abs() {
+  }
 
-  acos() {}
+  acos() {
+  }
 
-  asin() {}
+  asin() {
+  }
 }

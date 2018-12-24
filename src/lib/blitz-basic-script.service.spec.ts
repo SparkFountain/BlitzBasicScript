@@ -1,6 +1,6 @@
-import { TestBed } from '@angular/core/testing';
+import {TestBed} from '@angular/core/testing';
 
-import { BlitzBasicScriptService } from './blitzbasicscript.service';
+import {BlitzBasicScriptService} from './blitzbasicscript.service';
 
 describe('BlitzbasicscriptService', () => {
   beforeEach(() => TestBed.configureTestingModule({}));

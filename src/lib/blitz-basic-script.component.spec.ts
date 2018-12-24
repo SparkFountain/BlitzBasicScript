@@ -1,6 +1,6 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
 
-import { BlitzBasicScriptComponent } from './blitzbasicscript.component';
+import {BlitzBasicScriptComponent} from './blitz-basic-script.component';
 
 describe('BlitzbasicscriptComponent', () => {
   let component: BlitzBasicScriptComponent;
@@ -8,9 +8,9 @@ describe('BlitzbasicscriptComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ BlitzBasicScriptComponent ]
+      declarations: [BlitzBasicScriptComponent]
     })
-    .compileComponents();
+      .compileComponents();
   }));
 
   beforeEach(() => {
