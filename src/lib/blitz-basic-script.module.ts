@@ -6,6 +6,11 @@ import {CommandsBasicsDiverse} from '../services/commands/basics/diverse';
 import {CommandsBasicsMaths} from '../services/commands/basics/maths';
 import {CommandsBasicsStrings} from '../services/commands/basics/strings';
 import {CommandsBasicsTimeRandom} from '../services/commands/basics/time-random';
+import {GeneralService} from '../services/general/general.service';
+import {GameStateService} from '../services/game-state/game-state.service';
+import {BabylonJSService} from '../services/babylon-js/babylon-js.service';
+import {CommandsGraphics2dDisplay} from '../services/commands/graphics2d/display';
+import {CommandsGraphics2dGraphics} from '../services/commands/graphics2d/graphics';
 
 @NgModule({
   declarations: [
@@ -18,11 +23,19 @@ import {CommandsBasicsTimeRandom} from '../services/commands/basics/time-random'
     BlitzBasicScriptComponent
   ],
   providers: [
+    GeneralService,
+
     CommandService,
     CommandsBasicsDiverse,
     CommandsBasicsMaths,
     CommandsBasicsStrings,
-    CommandsBasicsTimeRandom
+    CommandsBasicsTimeRandom,
+
+    CommandsGraphics2dDisplay,
+    CommandsGraphics2dGraphics,
+
+    GameStateService,
+    BabylonJSService
   ]
 })
 

@@ -18,8 +18,13 @@ export class CommandsBasicsDiverse {
 
   }
 
-  debugLog() {
+  debugLog(message: string): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      console.log(message);
 
+      observer.next();
+      observer.complete();
+    });
   }
 
   runtimeError() {

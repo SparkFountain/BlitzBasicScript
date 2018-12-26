@@ -1,11 +1,11 @@
 //TODO refactor package access structure (like BBScript.game.xyz)
-import {ParserResult} from '../../interfaces/parser-result';
+import {ParserResult} from '../../interfaces/parser/parser-result';
 import {LexerToken} from '../../interfaces/lexer-token';
 import {ParserStackElement} from '../../enums/parserStackElement';
 import {LexerTokenCategory} from '../../enums/lexerTokenCategory';
 import {ParserEntryPoint} from '../../enums/parserEntryPoint';
 import {Injectable} from '@angular/core';
-import {AbstractSyntaxTree} from '../../interfaces/abstract-syntax-tree';
+import {AbstractSyntaxTree} from '../../interfaces/parser/abstract-syntax-tree';
 
 @Injectable({
   providedIn: 'root'

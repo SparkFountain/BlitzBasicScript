@@ -3,9 +3,9 @@ import {LexerContext} from '../../enums/lexerContext';
 import {LexerTokenCategory} from '../../enums/lexerTokenCategory';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {ApiResponse} from '../../interfaces/api-response';
-import {ApiKeyword} from '../../interfaces/api-keyword';
-import {ApiCommand} from '../../interfaces/api-command';
+import {ApiResponse} from '../../interfaces/api/api-response';
+import {ApiKeyword} from '../../interfaces/api/api-keyword';
+import {ApiCommand} from '../../interfaces/api/api-command';
 
 @Injectable()
 export class Lexer {

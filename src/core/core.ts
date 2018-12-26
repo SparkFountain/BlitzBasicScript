@@ -1,4 +1,4 @@
-import {ParserResult} from '../interfaces/parser-result';
+import {ParserResult} from '../interfaces/parser/parser-result';
 import {$} from 'protractor';
 
 export class Core {

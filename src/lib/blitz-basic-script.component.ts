@@ -1,11 +1,13 @@
-import {AfterViewInit, Component, Input, OnInit, ViewChild} from '@angular/core';
+import {AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
 import {LexerToken} from '../interfaces/lexer-token';
 import {Lexer} from '../services/lexer/lexer.service';
 import {Parser} from '../services/parser/parser.service';
 import {CodeGenerator} from '../services/code-generator/code-generator.service';
-import {AbstractSyntaxTree} from '../interfaces/abstract-syntax-tree';
+import {AbstractSyntaxTree} from '../interfaces/parser/abstract-syntax-tree';
 import {BbscriptCode} from '../interfaces/bbscript-code';
 import {concat} from 'rxjs';
+import {GameStateService} from '../services/game-state/game-state.service';
+import {BabylonJSService} from '../services/babylon-js/babylon-js.service';
 
 @Component({
   selector: 'blitz-basic-script-canvas',
@@ -16,31 +18,41 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
   @Input('code') code: string[][];
   @Input('debug') debug?: boolean;
 
-  @ViewChild('canvas') canvas: HTMLCanvasElement;
+  @ViewChild('canvas') canvas: ElementRef;
 
   constructor(private lexer: Lexer,
               private parser: Parser,
-              private codeGenerator: CodeGenerator
+              private codeGenerator: CodeGenerator,
+              private gameState: GameStateService,
+              private babylonjs: BabylonJSService
   ) {
   }
 
   ngOnInit(): void {
-    console.info('Source code:', this.code);
 
-    let lexerTokens: LexerToken[][] = this.lexer.lexCode(this.code);
-    console.info('Lexer Tokens:', lexerTokens);
-
-    let abstractSyntaxTree: AbstractSyntaxTree = this.parser.getAbstractSyntaxTree(lexerTokens);
-    console.info('Abstract Syntax Tree:', abstractSyntaxTree);
-
-    let bbscriptCode = this.codeGenerator.getFakeTargetCode();  //createTargetCode(abstractSyntaxTree);
-    console.info('Target Code:', bbscriptCode);
-
-    this.executeCode(bbscriptCode);
   }
 
   ngAfterViewInit(): void {
-    //TODO initialize Babylon.js and canvas
+    this.babylonjs.initEngine(this.canvas.nativeElement);
+
+    // Create the scene.
+    this.babylonjs.createScene();
+
+    // Start render loop.
+    this.babylonjs.doRender();
+
+    //console.info('Source code:', this.code);
+
+    let lexerTokens: LexerToken[][] = this.lexer.lexCode(this.code);
+    //console.info('Lexer Tokens:', lexerTokens);
+
+    let abstractSyntaxTree: AbstractSyntaxTree = this.parser.getAbstractSyntaxTree(lexerTokens);
+    //console.info('Abstract Syntax Tree:', abstractSyntaxTree);
+
+    let bbscriptCode = this.codeGenerator.getFakeTargetCode();  //createTargetCode(abstractSyntaxTree);
+    //console.info('Target Code:', bbscriptCode);
+
+    this.executeCode(bbscriptCode);
   }
 
   executeCode(code: BbscriptCode): void {
