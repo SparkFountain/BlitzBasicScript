@@ -1,10 +1,11 @@
 import {Injectable} from '@angular/core';
 
 import * as BABYLON from 'babylonjs';
-import {Observable, Subscriber} from 'rxjs';
+import {concat, Observable, Subscriber} from 'rxjs';
 import {CameraType} from '../../enums/camera/camera-type';
 import Mesh = BABYLON.Mesh;
 import Camera = BABYLON.Camera;
+import {Axis} from '../../enums/axis';
 
 @Injectable({
   providedIn: 'root'
@@ -71,11 +72,20 @@ export class BabylonJSService {
       {width: 6, height: 6, subdivisions: 2}, this._scene);*/
   }
 
-  doRender(): void {
+  mainLoop(statements: Observable<any>[]): void {
     // Run the render loop.
-    //TODO here comes the MainLoop code
     this._engine.runRenderLoop(() => {
       this._scene.render();
+
+      concat(...statements).subscribe(() => {
+          console.info('Next mainLoop statement has been executed.');
+        },
+        () => {
+        },
+        () => {
+          console.info('### ALL MAIN LOOP STATEMENTS EXECUTED ###');
+        }
+      );
     });
   }
 
@@ -143,14 +153,6 @@ export class BabylonJSService {
       }
 
       observer.next(camera);
-      observer.complete();
-    });
-  }
-
-  /* COORDINATES */
-  alignToVector(): Observable<any> {
-    return new Observable<any>((observer: Subscriber<any>) => {
-      observer.next();
       observer.complete();
     });
   }
@@ -297,7 +299,12 @@ export class BabylonJSService {
   rotateMesh() {
   }
 
-  scaleMesh() {
+  scaleMesh(entity: any, x: number, y: number, z: number, parentScale?: boolean): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      entity.scaling = new BABYLON.Vector3(x, y, z);
+      observer.next();
+      observer.complete();
+    });
   }
 
   /* ENTITIES */
@@ -313,7 +320,62 @@ export class BabylonJSService {
     return new Observable<void>((observer: Subscriber<void>) => {
       //Pi = 180°
       //TODO regard parent coordinates
-      entity.rotation = new BABYLON.Vector3(Math.PI * (pitch / 180), Math.PI * (yaw / 180), Math.PI * (roll / 180));
+      if (entity instanceof Mesh) {
+        entity.rotation = new BABYLON.Vector3(Math.PI * (pitch / 180), Math.PI * (yaw / 180), Math.PI * (roll / 180));
+      } else {
+        //TODO
+      }
+
+      observer.next();
+      observer.complete();
+    });
+  }
+
+  translateEntity(entity: any, x: number, y: number, z: number, parentAngle?: boolean): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      entity.translate(BABYLON.Axis.X, x, BABYLON.Space.LOCAL);
+      entity.translate(BABYLON.Axis.Y, y, BABYLON.Space.LOCAL);
+      entity.translate(BABYLON.Axis.Z, z, BABYLON.Space.LOCAL);
+      observer.next();
+      observer.complete();
+    });
+  }
+
+  turnEntity(entity: any, pitch: number, yaw: number, roll: number, parentAngle?: boolean): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      //TODO implement global
+      entity.addRotation(pitch, yaw, roll);
+      observer.next();
+      observer.complete();
+    });
+  }
+
+  alignToVector(entity: any, x: number, y: number, z: number, axis: Axis, tween: number): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      //TODO test if this is the correct behaviour
+      //TODO in this implementation, tween would be deprecated
+      let upDirection;
+      switch (axis) {
+        case 1: //x
+          upDirection = new BABYLON.Vector3(1, 0, 0);
+          break;
+        case 2: //y
+          upDirection = new BABYLON.Vector3(0, 1, 0);
+          break;
+        case 3: //z
+          upDirection = new BABYLON.Vector3(0, 0, 1);
+          break;
+      }
+      entity.alignWithNormal(new BABYLON.Vector3(x, y, z), upDirection);
+
+      observer.next();
+      observer.complete();
+    });
+  }
+
+  pointEntity(sourceEntity: any, targetEntity: any, roll: number): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      //TODO implementation
 
       observer.next();
       observer.complete();

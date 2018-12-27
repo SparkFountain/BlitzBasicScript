@@ -1,10 +1,8 @@
-import {NumExpOp} from './numerical-expression';
-import {BoolExpOp} from './boolean-expression';
-import {StringExpOp} from './string-expression';
+import {Observable} from 'rxjs';
 
 export interface Expression {
   operation?: any;
-  value?: any;
+  value?: Observable<any>;
   left?: Expression;
   right?: Expression;
 }

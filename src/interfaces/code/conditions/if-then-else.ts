@@ -1,6 +1,10 @@
-export interface IfThenElse {
-  //TODO regard Else If branches (arbitrarily many)
+import {Observable} from 'rxjs';
 
+export interface IfThenElse {
+  conditions: ConditionalBlock[];
+}
+
+type ConditionalBlock = {
   condition: boolean;
-  statements: any[];
+  statements: Observable<any>[];
 }

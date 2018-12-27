@@ -10,7 +10,7 @@ import {CameraType} from '../../enums/camera/camera-type';
 import {CommandsGraphics3dMeshes} from '../commands/graphics3d/meshes';
 import {CommandsGraphics3dCoordinates} from '../commands/graphics3d/coordinates';
 import {GameStateService} from '../game-state/game-state.service';
-import {Observable} from 'rxjs';
+import {Observable, of, Subscriber} from 'rxjs';
 import Camera = BABYLON.Camera;
 import Mesh = BABYLON.Mesh;
 
@@ -45,7 +45,7 @@ export class CodeGenerator {
           variable: 'i',
           type: 'global',
           expression: {
-            value: 42
+            value: of(42)
           }
         }),
 
@@ -95,6 +95,9 @@ export class CodeGenerator {
         }),
 
         this.commandService.basics.diverse.appTitle('Carribico')*/
+      ],
+      mainLoop: [
+        this.commandsBasicsDiverse.debugLog('Hello World' + new Date().getTime())
       ],
       functions: [],
       types: []

@@ -38,9 +38,6 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     // Create the scene.
     this.babylonjs.createScene();
 
-    // Start render loop.
-    this.babylonjs.doRender();
-
     //console.info('Source code:', this.code);
 
     let lexerTokens: LexerToken[][] = this.lexer.lexCode(this.code);
@@ -52,6 +49,10 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     let bbscriptCode = this.codeGenerator.getFakeTargetCode();  //createTargetCode(abstractSyntaxTree);
     //console.info('Target Code:', bbscriptCode);
 
+    // Start render loop.
+    this.babylonjs.mainLoop(bbscriptCode.mainLoop);
+
+    //execute code lines
     this.executeCode(bbscriptCode);
   }
 
@@ -64,7 +65,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
 
     concat(...code.statements).subscribe(
       () => {
-        console.info('Next code has been executed.');
+        console.info('Next statement has been executed.');
       },
       () => {
       },

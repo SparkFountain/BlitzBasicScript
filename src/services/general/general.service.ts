@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {isObservable, Observable, Subscriber} from 'rxjs';
+import {forkJoin, Observable, Subscriber} from 'rxjs';
 import {ForToNext} from '../../interfaces/code/loops/for-to-next';
 import {WhileWend} from '../../interfaces/code/loops/while-wend';
 import {RepeatUntil} from '../../interfaces/code/loops/repeat-until';
@@ -39,23 +39,56 @@ export class GeneralService {
     return new Observable<any>((observer: Subscriber<any>) => {
       console.info('Expression:', e);
 
-      let result: any;
-
-      if (e.value) {
-        if (isObservable(e.value)) {
-          e.value.subscribe((response: any) => {
-            observer.next(response);
+      if (!e.operation) {
+        if(e.value) {
+          e.value.subscribe((value: any) => {
+            observer.next(value);
             observer.complete();
           });
         } else {
-          observer.next(e.value);
+          observer.next(null);
           observer.complete();
         }
       } else {
         //TODO parse abstract syntax tree
+        forkJoin([this.evaluateExpression(e.left), this.evaluateExpression(e.right)])
+          .subscribe((innerValues: any[]) => {
+            console.info('innerValues:', innerValues);
 
-        observer.next(null);
-        observer.complete();
+            let result: any;
+            switch(e.operation) {
+              case '+':
+                result = innerValues[0] + innerValues[1];
+                break;
+              case '-':
+                result = innerValues[0] - innerValues[1];
+                break;
+              case '*':
+                result = innerValues[0] * innerValues[1];
+                break;
+              case '/':
+                result = innerValues[0] / innerValues[1];
+                break;
+              case 'And':
+                result = innerValues[0] && innerValues[1];
+                break;
+              case 'Not':
+                result = !(innerValues[0]);
+                break;
+              case 'Or':
+                result = innerValues[0] || innerValues[1];
+                break;
+              case 'Xor':
+                result = innerValues[0] ? !(innerValues[1]) : innerValues[1];
+                break;
+              case 'Mod':
+                result = innerValues[0] % innerValues[1];
+                break;
+            }
+
+            observer.next(result);
+            observer.complete();
+          });
       }
     });
   }
