@@ -2,6 +2,9 @@ import {Injectable} from '@angular/core';
 
 import * as BABYLON from 'babylonjs';
 import {Observable, Subscriber} from 'rxjs';
+import {CameraType} from '../../enums/camera/camera-type';
+import Mesh = BABYLON.Mesh;
+import Camera = BABYLON.Camera;
 
 @Injectable({
   providedIn: 'root'
@@ -17,7 +20,21 @@ export class BabylonJSService {
   private _light: BABYLON.Light;
 
   constructor() {
+
   }
+
+  defaultMaterial() {
+    let material = new BABYLON.StandardMaterial('1', this._scene);
+    let white = new BABYLON.Color3(1, 1, 1);
+    material.diffuseColor = white;
+    material.specularColor = white;
+    material.emissiveColor = white;
+    material.ambientColor = white;
+    /*if(BBScript.game.wireFrame) {
+      material.wireframe = true;
+    }*/
+    return material;
+  };
 
   initEngine(canvas) {
     // Create canvas and engine.
@@ -30,27 +47,28 @@ export class BabylonJSService {
     this._scene = new BABYLON.Scene(this._engine);
 
     // Create a FreeCamera, and set its position to (x:0, y:5, z:-10).
-    this._camera = new BABYLON.FreeCamera('camera1', new BABYLON.Vector3(0, 5, -10), this._scene);
+    //this._camera = new BABYLON.FreeCamera('camera1', new BABYLON.Vector3(0, 5, -10), this._scene);
 
     // Target the camera to scene origin.
-    this._camera.setTarget(BABYLON.Vector3.Zero());
+    //this._camera.setTarget(BABYLON.Vector3.Zero());
 
     // Attach the camera to the canvas.
-    this._camera.attachControl(this._canvas, false);
+    //this._camera.attachControl(this._canvas, false);
 
     // Create a basic light, aiming 0,1,0 - meaning, to the sky.
     this._light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), this._scene);
 
     // Create a built-in "sphere" shape; with 16 segments and diameter of 2.
-    let sphere = BABYLON.MeshBuilder.CreateSphere('sphere1',
-      {segments: 16, diameter: 2}, this._scene);
+    /*let sphere = BABYLON.MeshBuilder.CreateSphere('sphere1',
+      {segments: 16, diameter: 2}, this._scene);*/
 
     // Move the sphere upward 1/2 of its height.
-    sphere.position.y = 1;
+    //sphere.position.z = 10;
+    //sphere.position.y = 1;
 
     // Create a built-in "ground" shape.
-    let ground = BABYLON.MeshBuilder.CreateGround('ground1',
-      {width: 6, height: 6, subdivisions: 2}, this._scene);
+    /*let ground = BABYLON.MeshBuilder.CreateGround('ground1',
+      {width: 6, height: 6, subdivisions: 2}, this._scene);*/
   }
 
   doRender(): void {
@@ -65,8 +83,6 @@ export class BabylonJSService {
     return new Observable<void>((observer: Subscriber<void>) => {
       this.width = width;
       this.height = height;
-
-      console.info('this._canvas:', this._canvas);
 
       this._canvas.style.width = width + 'px';
       this._canvas.style.height = height + 'px';
@@ -93,6 +109,211 @@ export class BabylonJSService {
   setFogColor(red: number, green: number, blue: number): Observable<void> {
     return new Observable((observer: Subscriber<void>) => {
       this._scene.fogColor = new BABYLON.Color3(red, green, blue);
+
+      observer.next();
+      observer.complete();
+    });
+  }
+
+  /* CAMERA */
+  createCamera(type: CameraType): Observable<BABYLON.Camera> {
+    return new Observable<BABYLON.Camera>((observer: Subscriber<BABYLON.Camera>) => {
+      let camera: BABYLON.Camera;
+
+      switch (type) {
+        //TODO anaglyph needs another type in combination
+        case CameraType.ANAGLYPH:
+          break;
+        case CameraType.ARC_ROTATE:
+          //TODO add many more parameters
+          //return new BABYLON.ArcRotateCamera(id('cam'), );
+          break;
+        case CameraType.FOLLOW:
+          break;
+        case CameraType.FREE:
+          camera = new BABYLON.FreeCamera('1', new BABYLON.Vector3(0, 0, 0), this._scene, true);
+          break;
+        case CameraType.UNIVERSAL:
+          break;
+        case CameraType.WEB_VR:
+          break;
+        default:
+          console.error('Error at CreateCamera: invalid camera type', type);
+          break;
+      }
+
+      observer.next(camera);
+      observer.complete();
+    });
+  }
+
+  /* COORDINATES */
+  alignToVector(): Observable<any> {
+    return new Observable<any>((observer: Subscriber<any>) => {
+      observer.next();
+      observer.complete();
+    });
+  }
+
+  /* MESHES */
+  addMesh(source: any, target: any): Observable<void> {
+    return new Observable((observer: Subscriber<any>) => {
+      observer.next();
+      observer.complete();
+    });
+  }
+
+  copyMesh() {
+  }
+
+  createCone(segments?: number, hasFloor?: boolean): Observable<Mesh> {
+    return new Observable<Mesh>((observer: Subscriber<Mesh>) => {
+      //TODO implement segments and hasFloor
+      let cone = BABYLON.MeshBuilder.CreateCylinder(
+        '1', {diameterTop: 0, tessellation: 32}, this._scene
+      );
+      cone.material = this.defaultMaterial();
+
+      observer.next(cone);
+      observer.complete();
+    });
+  }
+
+  createSphere(segments, parent) {
+    let sphere = BABYLON.MeshBuilder.CreateSphere('1', {},
+      this._scene
+      )
+    ;
+    sphere.material = this.defaultMaterial();
+    if (parent) {
+      sphere.parent = parent;
+    }
+    return sphere;
+  }
+
+  createCube(parent) {
+    let cube = BABYLON.MeshBuilder.CreateBox('1', {}, this._scene);
+    cube.material = this.defaultMaterial();
+    if (parent) {
+      cube.parent = parent;
+    }
+    return cube;
+  }
+
+  createCylinder(segments, hasFloor, parent) {
+    let cylinder = BABYLON.MeshBuilder.CreateCylinder(
+      '1', {diameterTop: 4, diameterBottom: 4, tessellation: 32}, this._scene
+    );
+    cylinder.material = this.defaultMaterial();
+    if (parent) {
+      cylinder.parent = parent;
+    }
+    return cylinder;
+  }
+
+  createPyramid(baseVertexNumber, parent) {
+    let meshType;
+
+    switch (baseVertexNumber) {
+      case 3:
+        meshType = 0;
+        break;
+      case 4:
+        meshType = 8;
+        break;
+      case 5:
+        meshType = 9;
+        break;
+      default:
+        console.error('The number of base vertices for a pyramid is not allowed:', baseVertexNumber);
+        return;
+    }
+
+    let pyramid = BABYLON.MeshBuilder.CreatePolyhedron('1', {type: 1, size: 1}, this._scene);
+    pyramid.material = this.defaultMaterial();
+    if (parent) {
+      pyramid.parent = parent;
+    }
+    return pyramid;
+  }
+
+  createTorus() {
+    let torus: any = BABYLON.MeshBuilder.CreateTorus('1', {}, this._scene);
+    torus.material = this.defaultMaterial();
+    if (parent) {
+      torus.parent = parent;
+    }
+    return torus;
+  }
+
+  createTorusKnot() {
+
+  }
+
+  fitMesh() {
+  }
+
+  flipMesh(mesh) {
+    console.info('flip mesh', mesh);
+    //TODO negative scaling does not work, try to invert all normals / vertices
+  }
+
+  loadAnimMesh() {
+  }
+
+  loadMesh(filePath, parent) {
+    //TODO find out if this method is still up to date and if so, how to use it exactly
+    //BABYLON.SceneLoader.ImportMesh();
+    let mesh;
+
+    if (parent) {
+      mesh.parent = parent;
+    }
+  }
+
+  meshCullBox() {
+  }
+
+  meshDepth() {
+  }
+
+  meshHeight() {
+  }
+
+  meshWidth() {
+  }
+
+  positionMesh(entity: Mesh | Camera, x: number, y: number, z: number, parentCoordinates?: boolean): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      //TODO regard parent coordinates
+      entity.position = new BABYLON.Vector3(x, y, z);
+      console.info('New position of entity:', x, y, z);
+
+      observer.next();
+      observer.complete();
+    });
+  }
+
+  rotateMesh() {
+  }
+
+  scaleMesh() {
+  }
+
+  /* ENTITIES */
+  moveEntity(entity: any, x: number, y: number, z: number): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      entity.movePOV(-x, -y, -z);
+      observer.next();
+      observer.complete();
+    });
+  }
+
+  rotateEntity(entity: Mesh | Camera, pitch: number, yaw: number, roll: number, parentCoordinates?: boolean): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      //Pi = 180°
+      //TODO regard parent coordinates
+      entity.rotation = new BABYLON.Vector3(Math.PI * (pitch / 180), Math.PI * (yaw / 180), Math.PI * (roll / 180));
 
       observer.next();
       observer.complete();

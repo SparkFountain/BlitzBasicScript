@@ -13,7 +13,7 @@ export class CommandsGraphics2dGraphics {
   }
 
   clsColor(red: number, green: number, blue: number): Observable<void> {
-    return this.babylonjs.setRenderBackgroundColor(red / 255, green / 255, blue / 255);
+    return this.babylonjs.setClearColor(red / 255, green / 255, blue / 255);
   }
 
   color() {

@@ -1,4 +1,4 @@
-import {ParserEntryPoint} from '../../enums/parserEntryPoint';
+import {ParserEntryPoint} from '../../enums/parser/parserEntryPoint';
 
 export interface TreeNode {
   value: ParserEntryPoint;

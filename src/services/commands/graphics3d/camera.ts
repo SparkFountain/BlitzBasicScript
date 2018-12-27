@@ -1,6 +1,9 @@
 import {BabylonJSService} from '../../babylon-js/babylon-js.service';
-import {Observable} from 'rxjs';
+import {Observable, Subscriber} from 'rxjs';
+import Camera = BABYLON.Camera;
+import {Injectable} from '@angular/core';
 
+@Injectable()
 export class CommandsGraphics3dCamera {
   constructor(private babylonjs: BabylonJSService) {
 
@@ -14,7 +17,7 @@ export class CommandsGraphics3dCamera {
     return this.babylonjs.setClearColor(this.normalize(red), this.normalize(green), this.normalize(blue));
   }
 
-  cameraClsMode() {
+  cameraClsMode(camera: any, deleteColorBuffer?: boolean, deleteZBuffer?: boolean) {
     //TODO
   };
 
@@ -22,7 +25,12 @@ export class CommandsGraphics3dCamera {
     return this.babylonjs.setFogColor(this.normalize(red), this.normalize(green), this.normalize(blue));
   }
 
-  fogMode(mode) {
+  fogMode(mode): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      observer.next();
+      observer.complete();
+    });
+
     //TODO
 
     /*switch (mode) {
@@ -41,29 +49,39 @@ export class CommandsGraphics3dCamera {
     }*/
   }
 
-  fogRange(near, far) {
-    if (BBScript.game.scene.fogMode === BABYLON.Scene.FOGMODE_LINEAR) {
+  fogRange(near: number, far: number): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      observer.next();
+      observer.complete();
+    });
+
+    /*if (BBScript.game.scene.fogMode === BABYLON.Scene.FOGMODE_LINEAR) {
       BBScript.game.scene.fogStart = near;
       BBScript.game.scene.fogEnd = far;
     } else {
       console.warn('[FogRange]: Invalid fog mode (must be linear)');
-    }
+    }*/
   }
 
-  fogDensity(value) {
-    if (BBScript.game.scene.fogMode === BABYLON.Scene.FOGMODE_EXP || BBScript.game.scene.fogMode === BABYLON.Scene.FOGMODE_EXP2) {
+  fogDensity(value: number): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      observer.next();
+      observer.complete();
+    });
+
+    /*if (BBScript.game.scene.fogMode === BABYLON.Scene.FOGMODE_EXP || BBScript.game.scene.fogMode === BABYLON.Scene.FOGMODE_EXP2) {
       BBScript.game.scene.fogDensity = value;
     } else {
       console.warn('[FogDensity]: Invalid fog mode (must be exponential)');
-    }
+    }*/
   }
 
-  cameraProject(camera, x, y, z) {
+  cameraProject(camera: any, x: number, y: number, z: number): void {
 
   }
 
-  cameraProjMode(camera, mode) {
-    switch (mode) {
+  cameraProjMode(camera: any, mode: number): void {
+    /*switch (mode) {
       case BBScript.CAMERA_PROJECTION.NONE:
         camera.setEnabled(false);
         break;
@@ -73,64 +91,45 @@ export class CommandsGraphics3dCamera {
       case BBScript.CAMERA_PROJECTION.ORTHOGRAPHIC:
         camera.mode = BABYLON.Camera.ORTHOGRAPHIC_CAMERA;
         break;
-    }
+    }*/
   }
 
-  cameraRange(camera, near: number, far: number) {
+  cameraRange(camera: any, near: number, far: number): void {
     camera.minZ = near;
     camera.maxZ = far;
   }
 
-  cameraViewport(camera, x: number, y: number, width: number, height: number) {
+  cameraViewport(camera: any, x: number, y: number, width: number, height: number): void {
 
   }
 
-  cameraZoom(camera, value) {
+  cameraZoom(camera: any, value: number): void {
     //TODO fix (code below does not seem to work)
     //camera.zoomOnFactor = value;
   }
 
-  createCamera(type, parent) {
-    //TODO implement
-    /*let camera;
+  createCamera(type: any, parent?: any): Observable<Camera> {
+    return new Observable<Camera>((observer: Subscriber<Camera>) => {
+      this.babylonjs.createCamera(type).subscribe((camera: Camera) => {
+        if (parent) {
+          camera.parent = parent;
+        }
 
-    switch (type) {
-      //TODO anaglyph needs another type in combination
-      case BBScript.CAMERA.ANAGLYPH:
-        break;
-      case BBScript.CAMERA.ARC_ROTATE:
-        //TODO add many more parameters
-        //return new BABYLON.ArcRotateCamera(id('cam'), );
-        break;
-      case BBScript.CAMERA.FOLLOW:
-        break;
-      case BBScript.CAMERA.FREE:
-        camera = new BABYLON.FreeCamera(id('cam'), new BABYLON.Vector3(0, 0, 0), BBScript.game.scene, true);
-        break;
-      case BBScript.CAMERA.UNIVERSAL:
-        break;
-      case BBScript.CAMERA.WEB_VR:
-        break;
-      default:
-        console.error('Error at CreateCamera: invalid camera type!');
-        break;
-    }
-
-    if (parent) {
-      camera.parent = parent;
-    }
-    return camera;*/
+        observer.next(camera);
+        observer.complete();
+      });
+    });
   }
 
-  projectedX() {
-
+  projectedX(): number {
+    return 0;
   }
 
-  projectedY() {
-
+  projectedY(): number {
+    return 0;
   }
 
-  projectedZ() {
-
+  projectedZ(): boolean {
+    return false;
   }
 }

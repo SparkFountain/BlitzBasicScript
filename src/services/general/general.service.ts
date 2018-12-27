@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, Subscriber} from 'rxjs';
+import {isObservable, Observable, Subscriber} from 'rxjs';
 import {ForToNext} from '../../interfaces/code/loops/for-to-next';
 import {WhileWend} from '../../interfaces/code/loops/while-wend';
 import {RepeatUntil} from '../../interfaces/code/loops/repeat-until';
@@ -8,9 +8,6 @@ import {GameStateService} from '../game-state/game-state.service';
 import {Assignment} from '../../interfaces/code/assignment';
 import {IfThenElse} from '../../interfaces/code/conditions/if-then-else';
 import {Expression} from '../../interfaces/code/expressions/expression';
-import {NumExpOp} from '../../interfaces/code/expressions/numerical-expression';
-import {BoolExpOp} from '../../interfaces/code/expressions/boolean-expression';
-import {StringExpOp} from '../../interfaces/code/expressions/string-expression';
 
 @Injectable()
 export class GeneralService {
@@ -20,35 +17,47 @@ export class GeneralService {
 
   public assign(e: Assignment): Observable<void> {
     return new Observable((observer: Subscriber<void>) => {
-      let expressionValue: any = this.evaluateExpression(e.expression);
       //console.info('Expression value:', expressionValue);
 
-      switch (e.type) {
-        case 'global':
-          this.gameState.setGlobal(e.variable, expressionValue);
-          console.info(e.variable + ':', this.gameState.getGlobal(e.variable));
-          break;
-        case 'dim':
-          this.gameState.setDim(e.variable, expressionValue);
-      }
+      this.evaluateExpression(e.expression).subscribe((expressionValue: any) => {
+        switch (e.type) {
+          case 'global':
+            this.gameState.setGlobal(e.variable, expressionValue);
+            console.info(e.variable + ':', this.gameState.getGlobal(e.variable));
+            break;
+          case 'dim':
+            this.gameState.setDim(e.variable, expressionValue);
+        }
 
-      observer.next();
-      observer.complete();
+        observer.next();
+        observer.complete();
+      });
     });
   }
 
-  public evaluateExpression(e: Expression): number | boolean | string {
-    console.info('Expression:', e);
+  public evaluateExpression(e: Expression): Observable<any> {
+    return new Observable<any>((observer: Subscriber<any>) => {
+      console.info('Expression:', e);
 
-    if (e.operations.length === 0) {
-      return e.terms[0];
-    } else {
-      e.operations.forEach((o: NumExpOp | BoolExpOp | StringExpOp) => {
+      let result: any;
 
-      });
-    }
+      if (e.value) {
+        if (isObservable(e.value)) {
+          e.value.subscribe((response: any) => {
+            observer.next(response);
+            observer.complete();
+          });
+        } else {
+          observer.next(e.value);
+          observer.complete();
+        }
+      } else {
+        //TODO parse abstract syntax tree
 
-    return null;
+        observer.next(null);
+        observer.complete();
+      }
+    });
   }
 
   public forToNext(e: ForToNext): Observable<any> {

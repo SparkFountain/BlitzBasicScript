@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {Observable, of} from 'rxjs';
 
 @Injectable()
 export class GameStateService {
@@ -19,7 +20,12 @@ export class GameStateService {
   }
 
   getGlobal(variableName: string): any {
+    console.info('Get Global '+variableName+':', this.global[variableName]);
     return this.global[variableName];
+  }
+
+  getGlobalAsync(variableName: string): Observable<any> {
+    return of(this.global[variableName]);
   }
 
   setDim(dimName: string, value: any): any {

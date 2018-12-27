@@ -1,4 +1,4 @@
-import {LexerTokenCategory} from '../enums/lexerTokenCategory';
+import {LexerTokenCategory} from '../enums/lexer/lexerTokenCategory';
 
 export interface LexerToken {
   which: LexerTokenCategory;

@@ -1,7 +1,6 @@
 import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {BlitzBasicScriptComponent} from './blitz-basic-script.component';
-import {CommandService} from '../services/commands/command.service';
 import {CommandsBasicsDiverse} from '../services/commands/basics/diverse';
 import {CommandsBasicsMaths} from '../services/commands/basics/maths';
 import {CommandsBasicsStrings} from '../services/commands/basics/strings';
@@ -11,6 +10,9 @@ import {GameStateService} from '../services/game-state/game-state.service';
 import {BabylonJSService} from '../services/babylon-js/babylon-js.service';
 import {CommandsGraphics2dDisplay} from '../services/commands/graphics2d/display';
 import {CommandsGraphics2dGraphics} from '../services/commands/graphics2d/graphics';
+import {CommandsGraphics3dCamera} from '../services/commands/graphics3d/camera';
+import {CommandsGraphics3dMeshes} from '../services/commands/graphics3d/meshes';
+import {CommandsGraphics3dCoordinates} from '../services/commands/graphics3d/coordinates';
 
 @NgModule({
   declarations: [
@@ -25,7 +27,6 @@ import {CommandsGraphics2dGraphics} from '../services/commands/graphics2d/graphi
   providers: [
     GeneralService,
 
-    CommandService,
     CommandsBasicsDiverse,
     CommandsBasicsMaths,
     CommandsBasicsStrings,
@@ -33,6 +34,10 @@ import {CommandsGraphics2dGraphics} from '../services/commands/graphics2d/graphi
 
     CommandsGraphics2dDisplay,
     CommandsGraphics2dGraphics,
+
+    CommandsGraphics3dCamera,
+    CommandsGraphics3dCoordinates,
+    CommandsGraphics3dMeshes,
 
     GameStateService,
     BabylonJSService

@@ -1,24 +1,31 @@
 import {Injectable} from '@angular/core';
 import {AbstractSyntaxTree} from '../../interfaces/parser/abstract-syntax-tree';
 import {BbscriptCode} from '../../interfaces/bbscript-code';
-import {Observable} from 'rxjs';
-import {CommandService} from '../commands/command.service';
-import {types} from 'util';
 import {GeneralService} from '../general/general.service';
 import {CommandsGraphics2dDisplay} from '../commands/graphics2d/display';
 import {CommandsGraphics2dGraphics} from '../commands/graphics2d/graphics';
 import {CommandsBasicsDiverse} from '../commands/basics/diverse';
-import {NumericalExpression} from '../../interfaces/code/expressions/numerical-expression';
+import {CommandsGraphics3dCamera} from '../commands/graphics3d/camera';
+import {CameraType} from '../../enums/camera/camera-type';
+import {CommandsGraphics3dMeshes} from '../commands/graphics3d/meshes';
+import {CommandsGraphics3dCoordinates} from '../commands/graphics3d/coordinates';
+import {GameStateService} from '../game-state/game-state.service';
+import {Observable} from 'rxjs';
+import Camera = BABYLON.Camera;
+import Mesh = BABYLON.Mesh;
 
 @Injectable({
   providedIn: 'root'
 })
 export class CodeGenerator {
   constructor(
+    private gameState: GameStateService,
     private generalService: GeneralService,
-    private commandService: CommandService,
     private commandsGraphics2dDisplay: CommandsGraphics2dDisplay,
     private commandsGraphics2dGraphics: CommandsGraphics2dGraphics,
+    private commandsGraphics3dCamera: CommandsGraphics3dCamera,
+    private commandsGraphics3dCoordinates: CommandsGraphics3dCoordinates,
+    private commandsGraphics3dMeshes: CommandsGraphics3dMeshes,
     private commandsBasicsDiverse: CommandsBasicsDiverse
   ) {
 
@@ -38,9 +45,43 @@ export class CodeGenerator {
           variable: 'i',
           type: 'global',
           expression: {
-            terms: [42],
-            operations: []
-          } as NumericalExpression
+            value: 42
+          }
+        }),
+
+        this.generalService.assign({
+          variable: 'camera',
+          type: 'global',
+          expression: {
+            value: this.commandsGraphics3dCamera.createCamera(CameraType.FREE)
+          }
+        }),
+
+        new Observable((observer) => {
+          this.gameState.getGlobalAsync('camera').subscribe((camera: Camera) => {
+            this.commandsGraphics3dCoordinates.positionEntity(camera, 0, 1, -10).subscribe((done) => {
+              observer.next();
+              observer.complete();
+            });
+
+          });
+        }),
+
+        this.generalService.assign({
+          variable: 'cone',
+          type: 'global',
+          expression: {
+            value: this.commandsGraphics3dMeshes.createCone()
+          }
+        }),
+        new Observable((observer) => {
+          this.gameState.getGlobalAsync('cone').subscribe((cone: Mesh) => {
+            this.commandsGraphics3dCoordinates.positionEntity(cone, 0, 1, 5).subscribe((done) => {
+              observer.next();
+              observer.complete();
+            });
+
+          });
         })
 
         /*this.generalService.forToNext({
