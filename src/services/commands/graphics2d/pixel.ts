@@ -1,4 +1,7 @@
-export class Pixel {
+import {Injectable} from '@angular/core';
+
+@Injectable()
+export class CommandsGraphics2dPixel {
   constructor() {
 
   }

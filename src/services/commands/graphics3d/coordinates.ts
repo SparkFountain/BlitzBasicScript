@@ -42,4 +42,22 @@ export class CommandsGraphics3dCoordinates {
   turnEntity(entity: any, pitch: number, yaw: number, roll: number, parentAngle?: boolean): Observable<void> {
     return this.babylonjs.turnEntity(entity, pitch, yaw, roll, parentAngle);
   }
+
+  tFormedX() {
+  }
+
+  tFormedY() {
+  }
+
+  tFormedZ() {
+  }
+
+  tFormNormal() {
+  }
+
+  tFormPoint() {
+  }
+
+  tFormVector() {
+  }
 }

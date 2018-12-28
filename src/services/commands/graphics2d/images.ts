@@ -1,4 +1,7 @@
-export class Images {
+import {Injectable} from '@angular/core';
+
+@Injectable()
+export class CommandsGraphics2dImages {
   constructor() {
 
   }
@@ -118,6 +121,4 @@ export class Images {
   tileImage() {
 
   }
-
-
 }

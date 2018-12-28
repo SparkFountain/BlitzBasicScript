@@ -5,7 +5,7 @@ export class CommandsBasicsDiverse {
 
   }
 
-  public appTitle(title: string): Observable<any> {
+  appTitle(title: string): Observable<any> {
     return new Observable<any>((observer: Subscriber<any>) => {
       console.info('Setting AppTitle to', title);
 
@@ -27,7 +27,19 @@ export class CommandsBasicsDiverse {
     });
   }
 
+  getEnv() {
+  }
+
   runtimeError() {
 
+  }
+
+  runtimeStats() {
+  }
+
+  setEnv() {
+  }
+
+  systemProperty() {
   }
 }

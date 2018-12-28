@@ -9,7 +9,7 @@ export class CommandsGraphics3dCamera {
 
   }
 
-  normalize(value: number): number {
+  private normalize(value: number): number {
     return value / Math.trunc(255);
   }
 

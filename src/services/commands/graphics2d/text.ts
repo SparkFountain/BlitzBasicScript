@@ -1,4 +1,7 @@
-export class Text {
+import {Injectable} from '@angular/core';
+
+@Injectable()
+export class CommandsGraphics2dText {
   constructor() {
 
   }
@@ -62,6 +65,4 @@ export class Text {
   text() {
 
   }
-
-
 }
