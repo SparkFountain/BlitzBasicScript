@@ -282,7 +282,7 @@ export class Core {
 
   play(code, debugModeEnabled) {
     if (!this.canvas.dom) {
-      console.error('No canvas has been initialized! Please execute "this.initialize(canvasID)" first.');
+      console.error('No canvas3d has been initialized! Please execute "this.initialize(canvasID)" first.');
       return;
     }
 

@@ -1,0 +1,9 @@
+#bbscript-canvas-container {
+  display: flex;
+  background: yellow;
+}
+
+canvas {
+  position: absolute;
+  border: 1px #eee solid;
+}

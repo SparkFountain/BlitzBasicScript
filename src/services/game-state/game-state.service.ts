@@ -8,11 +8,34 @@ export class GameStateService {
   private function: object;
   private type: object;
 
+  private screen: {
+    width: number,
+    height: number
+  };
+
   constructor() {
     this.global = {};
     this.dim  = {};
     this.function = {};
     this.type = {};
+
+    this.screen = {
+      width: 400,
+      height: 300
+    }
+  }
+
+  public get(property: string): any {
+    if(!this.hasOwnProperty(property)) {
+      console.error('Game State has no property', property);
+      return null;
+    } else {
+      return this[property];
+    }
+  }
+
+  public set(property: string, value: any): void {
+    this[property] = value;
   }
 
   setGlobal(variableName: string, value: any): any {

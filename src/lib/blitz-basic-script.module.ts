@@ -13,13 +13,17 @@ import {CommandsGraphics2dGraphics} from '../services/commands/graphics2d/graphi
 import {CommandsGraphics3dCamera} from '../services/commands/graphics3d/camera';
 import {CommandsGraphics3dMeshes} from '../services/commands/graphics3d/meshes';
 import {CommandsGraphics3dCoordinates} from '../services/commands/graphics3d/coordinates';
+import {Graphics2dService} from '../services/2d/graphics2d.service';
+import {GuiService} from '../services/gui/gui.service';
+import {CommonModule} from '@angular/common';
 
 @NgModule({
   declarations: [
     BlitzBasicScriptComponent
   ],
   imports: [
-    HttpClientModule
+    HttpClientModule,
+    CommonModule
   ],
   exports: [
     BlitzBasicScriptComponent
@@ -40,7 +44,9 @@ import {CommandsGraphics3dCoordinates} from '../services/commands/graphics3d/coo
     CommandsGraphics3dMeshes,
 
     GameStateService,
-    BabylonJSService
+    BabylonJSService,
+    Graphics2dService,
+    GuiService
   ]
 })
 

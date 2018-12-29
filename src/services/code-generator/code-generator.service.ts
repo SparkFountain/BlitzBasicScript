@@ -82,7 +82,11 @@ export class CodeGenerator {
             });
 
           });
-        })
+        }),
+
+        this.commandsGraphics2dGraphics.rect(20, 20, 100, 50, true),
+        this.commandsGraphics2dGraphics.oval(50, 200, 20, 40, true),
+        this.commandsGraphics2dGraphics.line(300, 40, 350, 120),
 
         /*this.generalService.forToNext({
           assignment: {
@@ -97,7 +101,7 @@ export class CodeGenerator {
         this.commandService.basics.diverse.appTitle('Carribico')*/
       ],
       mainLoop: [
-        this.commandsBasicsDiverse.debugLog('Hello World' + new Date().getTime())
+        //this.commandsBasicsDiverse.debugLog('Hello World' + new Date().getTime())
       ],
       functions: [],
       types: []

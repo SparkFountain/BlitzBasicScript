@@ -11,12 +11,14 @@ import {Axis} from '../../enums/axis';
   providedIn: 'root'
 })
 export class BabylonJSService {
-  public width: number;
-  public height: number;
+  private screenWidth: number;
+  private screenHeight: number;
 
   private _canvas: HTMLCanvasElement;
   private _engine: BABYLON.Engine;
   private _scene: BABYLON.Scene;
+
+  //TODO remove camera and light later
   private _camera: BABYLON.FreeCamera;
   private _light: BABYLON.Light;
 
@@ -24,6 +26,9 @@ export class BabylonJSService {
   private antiAlias: boolean;
 
   constructor() {
+    this.screenWidth = 0;
+    this.screenHeight = 0;
+
     this.wireFrame = false;
     this.antiAlias = true;
   }
@@ -41,8 +46,8 @@ export class BabylonJSService {
     return material;
   };
 
-  initEngine(canvas) {
-    // Create canvas and engine.
+  initEngine(canvas: HTMLElement) {
+    // Create canvas3d and engine.
     this._canvas = canvas as HTMLCanvasElement;
     this._engine = new BABYLON.Engine(this._canvas, true);
   }
@@ -57,7 +62,7 @@ export class BabylonJSService {
     // Target the camera to scene origin.
     //this._camera.setTarget(BABYLON.Vector3.Zero());
 
-    // Attach the camera to the canvas.
+    // Attach the camera to the canvas3d.
     //this._camera.attachControl(this._canvas, false);
 
     // Create a basic light, aiming 0,1,0 - meaning, to the sky.
@@ -81,7 +86,9 @@ export class BabylonJSService {
     this._engine.runRenderLoop(() => {
       this._scene.render();
 
-      concat(...statements).subscribe(() => {
+      //TODO observables are only evaluated one single time
+      //TODO find out how to reset (or re-send) observables
+      /*concat(...statements).subscribe(() => {
           console.info('Next mainLoop statement has been executed.');
         },
         () => {
@@ -89,22 +96,22 @@ export class BabylonJSService {
         () => {
           console.info('### ALL MAIN LOOP STATEMENTS EXECUTED ###');
         }
-      );
+      );*/
     });
   }
 
   initGraphics(width: number, height: number): Observable<void> {
     return new Observable<void>((observer: Subscriber<void>) => {
-      this.width = width;
-      this.height = height;
+      this.screenWidth = width;
+      this.screenHeight = height;
 
       this._canvas.style.width = width + 'px';
       this._canvas.style.height = height + 'px';
 
       this._engine = new BABYLON.Engine(this._canvas, true);
 
-      this._canvas.style.width = '100%';
-      this._canvas.style.height = '100%';
+      //this._canvas.style.width = '100%';
+      //this._canvas.style.height = '100%';
 
       observer.next();
       observer.complete();
