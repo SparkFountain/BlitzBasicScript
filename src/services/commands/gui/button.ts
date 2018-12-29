@@ -1,17 +1,17 @@
 import {Injectable} from '@angular/core';
 
 @Injectable()
-export class CommandsGraphics3dScene {
+export class CommandsGuiButton {
   constructor() {
 
   }
 
-  createSkyBox() {
+  buttonState() {
   }
 
-  loadSkyBox() {
+  createButton() {
   }
 
-  setGravity() {
+  setButtonState() {
   }
 }

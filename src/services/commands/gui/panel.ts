@@ -1,17 +1,17 @@
 import {Injectable} from '@angular/core';
 
 @Injectable()
-export class CommandsGraphics3dScene {
+export class CommandsGuiPanel {
   constructor() {
 
   }
 
-  createSkyBox() {
+  createPanel() {
   }
 
-  loadSkyBox() {
+  setPanelColor() {
   }
 
-  setGravity() {
+  setPanelImage() {
   }
 }

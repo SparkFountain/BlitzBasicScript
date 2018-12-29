@@ -23,4 +23,19 @@ export class CommandsGraphics3dLightShadow {
 
   lightRange() {
   }
+
+  createShadowMap() {
+  }
+
+  deleteShadowMap() {
+  }
+
+  castShadow() {
+  }
+
+  receiveShadows() {
+  }
+
+  shadowDarkness() {
+  }
 }

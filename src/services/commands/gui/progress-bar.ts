@@ -1,17 +1,14 @@
 import {Injectable} from '@angular/core';
 
 @Injectable()
-export class CommandsSound3D {
+export class CommandsGuiProgressBar {
   constructor() {
 
   }
 
-  createListener() {
+  createProgBar() {
   }
 
-  emitSound() {
-  }
-
-  load3DSound() {
+  updateProgBar() {
   }
 }

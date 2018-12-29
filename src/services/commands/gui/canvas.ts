@@ -1,17 +1,14 @@
 import {Injectable} from '@angular/core';
 
 @Injectable()
-export class CommandsSound3D {
+export class CommandsGuiCanvas {
   constructor() {
 
   }
 
-  createListener() {
+  createCanvas() {
   }
 
-  emitSound() {
-  }
-
-  load3DSound() {
+  flipCanvas() {
   }
 }
