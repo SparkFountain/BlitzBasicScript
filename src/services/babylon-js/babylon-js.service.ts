@@ -20,8 +20,12 @@ export class BabylonJSService {
   private _camera: BABYLON.FreeCamera;
   private _light: BABYLON.Light;
 
-  constructor() {
+  private wireFrame: boolean;
+  private antiAlias: boolean;
 
+  constructor() {
+    this.wireFrame = false;
+    this.antiAlias = true;
   }
 
   defaultMaterial() {
