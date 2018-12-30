@@ -16,6 +16,7 @@ import {CommandsGraphics3dCoordinates} from '../services/commands/graphics3d/coo
 import {Graphics2dService} from '../services/2d/graphics2d.service';
 import {GuiService} from '../services/gui/gui.service';
 import {CommonModule} from '@angular/common';
+import {CommandsGraphics2dPixel} from '../services/commands/graphics2d/pixel';
 
 @NgModule({
   declarations: [
@@ -38,6 +39,7 @@ import {CommonModule} from '@angular/common';
 
     CommandsGraphics2dDisplay,
     CommandsGraphics2dGraphics,
+    CommandsGraphics2dPixel,
 
     CommandsGraphics3dCamera,
     CommandsGraphics3dCoordinates,

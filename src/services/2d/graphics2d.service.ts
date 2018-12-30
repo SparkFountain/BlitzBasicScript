@@ -1,6 +1,5 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subscriber} from 'rxjs';
-import * as BABYLON from '../babylon-js/babylon-js.service';
 import {GameStateService} from '../game-state/game-state.service';
 
 @Injectable()
@@ -33,8 +32,27 @@ export class Graphics2dService {
     });
   }
 
+  private loadActiveColor(): void {
+    let red = this.gameState.get('screen.color.red');
+    let green = this.gameState.get('screen.color.green');
+    let blue = this.gameState.get('screen.color.blue');
+
+    this._context2d.strokeStyle = 'rgba(' + red + ',' + green + ',' + blue + ', 1)';
+    this._context2d.fillStyle = 'rgba(' + red + ',' + green + ',' + blue + ', 1)';
+  }
+
+  private getActiveClsColor(): { red: number, green: number, blue: number } {
+    return {
+      red: this.gameState.get('screen.clsColor.red'),
+      green: this.gameState.get('screen.clsColor.green'),
+      blue: this.gameState.get('screen.clsColor.blue')
+    };
+  }
+
   line(beginX: number, beginY: number, endX: number, endY: number): Observable<void> {
     return new Observable<void>((observer: Subscriber<void>) => {
+      this.loadActiveColor();
+
       this._context2d.beginPath();
       this._context2d.moveTo(beginX, beginY);
       this._context2d.lineTo(endX, endY);
@@ -47,12 +65,13 @@ export class Graphics2dService {
 
   rect(x: number, y: number, width: number, height: number, filled: boolean): Observable<void> {
     return new Observable<void>((observer: Subscriber<void>) => {
+      this.loadActiveColor();
+
       this._context2d.rect(20, 20, 150, 100);
 
       if (filled) {
         this._context2d.fill();
-      }
-      else {
+      } else {
         this._context2d.stroke();
       }
 
@@ -63,9 +82,10 @@ export class Graphics2dService {
 
   oval(x: number, y: number, width: number, height: number, filled: boolean): Observable<void> {
     return new Observable<void>((observer: Subscriber<void>) => {
+      this.loadActiveColor();
+
       this._context2d.beginPath();
       this._context2d.lineWidth = 1;
-      this._context2d.strokeStyle = 'black';
 
       let yStart = y + height / 2;
 
@@ -76,10 +96,20 @@ export class Graphics2dService {
 
       if (filled) {
         this._context2d.fill();
-      }
-      else {
+      } else {
         this._context2d.stroke();
       }
+
+      observer.next();
+      observer.complete();
+    });
+  }
+
+  plot(x: number, y: number): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      this.loadActiveColor();
+
+      this._context2d.fillRect(x, y, 1, 1);
 
       observer.next();
       observer.complete();

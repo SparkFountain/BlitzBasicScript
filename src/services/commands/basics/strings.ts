@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {Observable, of} from 'rxjs';
 
 @Injectable()
 export class CommandsBasicsStrings {
@@ -6,86 +7,86 @@ export class CommandsBasicsStrings {
 
   }
 
-  asc(string: string): number {
-    return string.charCodeAt(0);
+  asc(string: string): Observable<number> {
+    return of(string.charCodeAt(0));
   }
 
-  chr(value: number): string {
-    return String.fromCharCode(value);
+  chr(value: number): Observable<string> {
+    return of(String.fromCharCode(value));
   }
 
-  instr(text: string, search: string, start: number): number {
+  instr(text: string, search: string, start: number): Observable<number> {
     //remember, BlitzBasic indexes start at 1, not 0
     if (!start) {
       start = 1;
     }
     let posIndex0 = text.indexOf(search, start - 1);
-    return posIndex0 + 1;
+    return of(posIndex0 + 1);
   }
 
-  left(text: string, count: number): string {
-    return text.substr(0, count);
+  left(text: string, count: number): Observable<string> {
+    return of(text.substr(0, count));
   }
 
-  len(text: string): number {
-    return text.length;
+  len(text: string): Observable<number> {
+    return of(text.length);
   }
 
-  lower(text: string): string {
-    return text.toLowerCase();
+  lower(text: string): Observable<string> {
+    return of(text.toLowerCase());
   }
 
-  lset(text: string, count: number): string {
+  lset(text: string, count: number): Observable<string> {
     let len = text.length;
     if (len > count) {
       //strip text to the given count
-      return text.substr(0, count);
+      return of(text.substr(0, count));
     } else {
       //fill string with space characters until it has the count length
-      return text + Array(count - len).join(' ');
+      return of(text + Array(count - len).join(' '));
     }
   }
 
-  mid(text: string, start: number, count: number): string {
+  mid(text: string, start: number, count: number): Observable<string> {
     if (count) {
-      return text.substr(start, count);
+      return of(text.substr(start, count));
     } else {
-      return text.substr(start);
+      return of(text.substr(start));
     }
   }
 
-  replace(text: string, search: string, replace: string): string {
-    return text.replace(new RegExp(search, 'g'), replace);
+  replace(text: string, search: string, replace: string): Observable<string> {
+    return of(text.replace(new RegExp(search, 'g'), replace));
   }
 
-  right(text: string, count: number): string {
-    return text.substr(-count);
+  right(text: string, count: number): Observable<string> {
+    return of(text.substr(-count));
   }
 
-  rset(text: string, count: number): string {
+  rset(text: string, count: number): Observable<string> {
     let len = text.length;
     if (len > count) {
       //strip text to the given count
-      return text.substr(-count);
+      return of(text.substr(-count));
     } else {
       //fill string with space characters until it has the count length
-      return Array(count - len).join(' ') + text;
+      return of(Array(count - len).join(' ') + text);
     }
   }
 
-  str(value: number): string {
-    return value.toString();
+  str(value: number): Observable<string> {
+    return of(value.toString());
   }
 
-  string(text: string, count: number): string {
-    return Array(count).join(text);
+  string(text: string, count: number): Observable<string> {
+    return of(Array(count).join(text));
   }
 
-  trim(text: string): string {
-    return text.trim();
+  trim(text: string): Observable<string> {
+    return of(text.trim());
   }
 
-  upper(text: string): string {
-    return text.toUpperCase();
+  upper(text: string): Observable<string> {
+    return of(text.toUpperCase());
   }
 }

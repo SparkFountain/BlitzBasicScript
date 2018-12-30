@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
+import {assertNumber} from '@angular/core/src/render3/assert';
 
 @Injectable()
 export class GameStateService {
@@ -10,7 +11,21 @@ export class GameStateService {
 
   private screen: {
     width: number,
-    height: number
+    height: number,
+    origin: {
+      x: number,
+      y: number
+    },
+    color: {
+      red: number,
+      green: number,
+      blue: number
+    },
+    clsColor: {
+      red: number,
+      green: number,
+      blue: number
+    }
   };
 
   constructor() {
@@ -21,7 +36,21 @@ export class GameStateService {
 
     this.screen = {
       width: 400,
-      height: 300
+      height: 300,
+      origin: {
+        x: 0,
+        y: 0
+      },
+      color: {
+        red: 1,
+        green: 1,
+        blue: 1
+      },
+      clsColor: {
+        red: 0,
+        green: 0,
+        blue: 0
+      }
     }
   }
 
