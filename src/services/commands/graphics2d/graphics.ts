@@ -13,8 +13,8 @@ export class CommandsGraphics2dGraphics {
 
   }
 
-  cls() {
-
+  cls(): Observable<void> {
+    return this.graphics2dService.cls();
   }
 
   clsColor(red: number, green: number, blue: number): Observable<void> {

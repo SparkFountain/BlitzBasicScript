@@ -14,6 +14,8 @@ import {Observable, of, Subscriber} from 'rxjs';
 import Camera = BABYLON.Camera;
 import Mesh = BABYLON.Mesh;
 import {CommandsGraphics2dPixel} from '../commands/graphics2d/pixel';
+import {CommandsBasicsTimeRandom} from '../commands/basics/time-random';
+import {CommandsGraphics2dImages} from '../commands/graphics2d/images';
 
 @Injectable({
   providedIn: 'root'
@@ -22,13 +24,18 @@ export class CodeGenerator {
   constructor(
     private gameState: GameStateService,
     private generalService: GeneralService,
+
     private commandsGraphics2dDisplay: CommandsGraphics2dDisplay,
     private commandsGraphics2dGraphics: CommandsGraphics2dGraphics,
+    private commandsGraphics2dImages: CommandsGraphics2dImages,
     private commandsGraphics2dPixel: CommandsGraphics2dPixel,
+
     private commandsGraphics3dCamera: CommandsGraphics3dCamera,
     private commandsGraphics3dCoordinates: CommandsGraphics3dCoordinates,
     private commandsGraphics3dMeshes: CommandsGraphics3dMeshes,
-    private commandsBasicsDiverse: CommandsBasicsDiverse
+
+    private commandsBasicsDiverse: CommandsBasicsDiverse,
+    private commandsBasicsTimeRandom: CommandsBasicsTimeRandom
   ) {
 
   }
@@ -88,11 +95,16 @@ export class CodeGenerator {
 
         this.commandsGraphics2dGraphics.color(255, 0, 0),
         this.commandsGraphics2dGraphics.rect(20, 20, 100, 50, true),
+
+        this.commandsBasicsTimeRandom.delay(2000),
+
         this.commandsGraphics2dGraphics.oval(50, 200, 20, 40, false),
         this.commandsGraphics2dGraphics.line(300, 40, 350, 120),
 
         this.commandsGraphics2dGraphics.color(255, 255, 0),
-        this.commandsGraphics2dPixel.plot(200, 200)
+        this.commandsGraphics2dPixel.plot(200, 200),
+
+        //this.commandsGraphics2dImages.loadImage();
 
         /*this.generalService.forToNext({
           assignment: {

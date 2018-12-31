@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, Subscriber} from 'rxjs';
+import {observable, Observable, Subscriber} from 'rxjs';
 import {GameStateService} from '../game-state/game-state.service';
 
 @Injectable()
@@ -41,12 +41,27 @@ export class Graphics2dService {
     this._context2d.fillStyle = 'rgba(' + red + ',' + green + ',' + blue + ', 1)';
   }
 
-  private getActiveClsColor(): { red: number, green: number, blue: number } {
-    return {
-      red: this.gameState.get('screen.clsColor.red'),
-      green: this.gameState.get('screen.clsColor.green'),
-      blue: this.gameState.get('screen.clsColor.blue')
-    };
+  private loadActiveClsColor(): void {
+    let red = this.gameState.get('screen.clsColor.red');
+    let green = this.gameState.get('screen.clsColor.green');
+    let blue = this.gameState.get('screen.clsColor.blue');
+
+    this._context2d.fillStyle = 'rgba(' + red + ',' + green + ',' + blue + ', 1)';
+  }
+
+  cls(): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      this.loadActiveClsColor();
+
+      let screen = {
+        width: this.gameState.get('screen.width'),
+        height: this.gameState.get('screen.height')
+      };
+      this._context2d.fillRect(0, 0, screen.width, screen.height);
+
+      observer.next();
+      observer.complete();
+    });
   }
 
   line(beginX: number, beginY: number, endX: number, endY: number): Observable<void> {

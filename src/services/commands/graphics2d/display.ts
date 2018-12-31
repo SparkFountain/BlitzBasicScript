@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {BabylonJSService} from '../../babylon-js/babylon-js.service';
-import {concat, forkJoin, Observable} from 'rxjs';
+import {concat, forkJoin, Observable, of} from 'rxjs';
 import {Graphics2dService} from '../../2d/graphics2d.service';
 import {GameStateService} from '../../game-state/game-state.service';
 
@@ -39,15 +39,15 @@ export class CommandsGraphics2dDisplay {
     );
   }
 
-  graphicsDepth() {
-
+  graphicsDepth(): Observable<number> {
+    return of(32);
   }
 
-  graphicsHeight() {
-
+  graphicsHeight(): Observable<number> {
+    return of(this.gameState.get('screen.height'));
   }
 
-  graphicsWidth() {
-
+  graphicsWidth(): Observable<number> {
+    return of(this.gameState.get('screen.width'));
   }
 }

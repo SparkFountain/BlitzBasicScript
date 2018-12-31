@@ -28,9 +28,13 @@ export class GameStateService {
     }
   };
 
+  private images: {
+    autoMidHandle: boolean
+  };
+
   constructor() {
     this.global = {};
-    this.dim  = {};
+    this.dim = {};
     this.function = {};
     this.type = {};
 
@@ -51,11 +55,15 @@ export class GameStateService {
         green: 0,
         blue: 0
       }
-    }
+    };
+
+    this.images = {
+      autoMidHandle: false
+    };
   }
 
   public get(property: string): any {
-    if(!this.hasOwnProperty(property)) {
+    if (!this.hasOwnProperty(property)) {
       console.error('Game State has no property', property);
       return null;
     } else {
@@ -72,7 +80,7 @@ export class GameStateService {
   }
 
   getGlobal(variableName: string): any {
-    console.info('Get Global '+variableName+':', this.global[variableName]);
+    console.info('Get Global ' + variableName + ':', this.global[variableName]);
     return this.global[variableName];
   }
 
