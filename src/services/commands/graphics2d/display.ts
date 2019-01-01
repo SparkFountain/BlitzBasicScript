@@ -21,12 +21,12 @@ export class CommandsGraphics2dDisplay {
 
   }
 
-  gfxModeDepth() {
-
+  gfxModeDepth(): Observable<number> {
+    return of(32);
   }
 
-  gfxModeExists() {
-
+  gfxModeExists(): Observable<boolean> {
+    return of(true);
   }
 
   graphics(width: number, height: number): Observable<void> {

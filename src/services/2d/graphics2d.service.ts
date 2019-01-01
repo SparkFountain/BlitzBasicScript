@@ -130,4 +130,13 @@ export class Graphics2dService {
       observer.complete();
     });
   }
+
+  drawImage(image: HTMLImageElement, x: number, y: number, frame?: number): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      this._context2d.drawImage(image, x, y);
+
+      observer.next();
+      observer.complete();
+    });
+  }
 }

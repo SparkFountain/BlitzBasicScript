@@ -5,7 +5,7 @@ export class DebugEnvironment {
   private server: string;
 
   constructor() {
-    this.server = 'https://blitzbasicscript.com';
+    this.server = 'http://localhost:4200';
   }
 
   getServer(): string {

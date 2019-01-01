@@ -23,9 +23,9 @@ export class CommandsGraphics3dMeshes {
     });
   }
 
-  createCone(segments?: number, hasFloor?: boolean, parent?: any): Observable<any> {
-    return new Observable((observer: Subscriber<any>) => {
-      this.babylonjs.createCone().subscribe((cone: Mesh) => {
+  createCone(segments?: number, hasFloor?: boolean, parent?: Mesh): Observable<Mesh> {
+    return new Observable<Mesh>((observer: Subscriber<Mesh>) => {
+      this.babylonjs.createCone(segments, hasFloor).subscribe((cone: Mesh) => {
         if (parent) {
           cone.parent = parent;
         }
@@ -36,28 +36,82 @@ export class CommandsGraphics3dMeshes {
     });
   }
 
-  createSphere(segments?: number, parent?: any): any {
+  createSphere(segments?: number, parent?: Mesh): Observable<Mesh> {
+    return new Observable<Mesh>((observer: Subscriber<Mesh>) => {
+      this.babylonjs.createSphere(segments).subscribe((sphere: Mesh) => {
+        if (parent) {
+          sphere.parent = parent;
+        }
 
+        observer.next(sphere);
+        observer.complete();
+      });
+    });
   }
 
-  createCube(parent?: any): any {
+  createCube(parent?: Mesh): Observable<Mesh> {
+    return new Observable<Mesh>((observer: Subscriber<Mesh>) => {
+      this.babylonjs.createCube().subscribe((cube: Mesh) => {
+        if (parent) {
+          cube.parent = parent;
+        }
 
+        observer.next(cube);
+        observer.complete();
+      });
+    });
   }
 
   createCylinder(segments?: number, hasFloor?: boolean, parent?: any): any {
+    return new Observable<Mesh>((observer: Subscriber<Mesh>) => {
+      this.babylonjs.createCylinder(segments, hasFloor).subscribe((cylinder: Mesh) => {
+        if (parent) {
+          cylinder.parent = parent;
+        }
 
+        observer.next(cylinder);
+        observer.complete();
+      });
+    });
   }
 
   createPyramid(baseVertexNumber?: number, parent?: any): any {
+    return new Observable<Mesh>((observer: Subscriber<Mesh>) => {
+      this.babylonjs.createPyramid(baseVertexNumber).subscribe((pyramid: Mesh) => {
+        if (parent) {
+          pyramid.parent = parent;
+        }
 
+        observer.next(pyramid);
+        observer.complete();
+      });
+    });
   }
 
-  createTorus(): any {
+  createTorus(parent?: Mesh): Observable<Mesh> {
+    return new Observable<Mesh>((observer: Subscriber<Mesh>) => {
+      this.babylonjs.createTorus().subscribe((torus: Mesh) => {
+        if (parent) {
+          torus.parent = parent;
+        }
 
+        observer.next(torus);
+        observer.complete();
+      });
+    });
   }
 
-  createTorusKnot(): any {
+  createTorusKnot(parent?: Mesh): Observable<Mesh> {
+    return new Observable<Mesh>((observer: Subscriber<Mesh>) => {
+      this.babylonjs.createTorusKnot().subscribe((torusKnot: Mesh) => {
+        if (parent) {
+          torusKnot.parent = parent;
+        }
 
+        observer.next(torusKnot);
+        observer.complete();
+      });
+    });
   }
 
   fitMesh(mesh: any, x: number, y: number, z: number, width: number, height: number, depth: number, uniform: boolean): void {

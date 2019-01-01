@@ -17,6 +17,9 @@ import {Graphics2dService} from '../services/2d/graphics2d.service';
 import {GuiService} from '../services/gui/gui.service';
 import {CommonModule} from '@angular/common';
 import {CommandsGraphics2dPixel} from '../services/commands/graphics2d/pixel';
+import {CommandsGraphics2dImages} from '../services/commands/graphics2d/images';
+import {DebugEnvironment} from '../services/environment/debug.environment';
+import {CommandsGraphics3dLightShadow} from '../services/commands/graphics3d/light-shadow';
 
 @NgModule({
   declarations: [
@@ -30,6 +33,8 @@ import {CommandsGraphics2dPixel} from '../services/commands/graphics2d/pixel';
     BlitzBasicScriptComponent
   ],
   providers: [
+    DebugEnvironment,
+
     GeneralService,
 
     CommandsBasicsDiverse,
@@ -39,10 +44,12 @@ import {CommandsGraphics2dPixel} from '../services/commands/graphics2d/pixel';
 
     CommandsGraphics2dDisplay,
     CommandsGraphics2dGraphics,
+    CommandsGraphics2dImages,
     CommandsGraphics2dPixel,
 
     CommandsGraphics3dCamera,
     CommandsGraphics3dCoordinates,
+    CommandsGraphics3dLightShadow,
     CommandsGraphics3dMeshes,
 
     GameStateService,

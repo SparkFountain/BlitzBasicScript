@@ -1,11 +1,16 @@
 import {Injectable} from '@angular/core';
 
 import * as BABYLON from 'babylonjs';
-import {concat, Observable, Subscriber} from 'rxjs';
+import {concat, observable, Observable, Subscriber} from 'rxjs';
 import {CameraType} from '../../enums/camera/camera-type';
 import Mesh = BABYLON.Mesh;
 import Camera = BABYLON.Camera;
 import {Axis} from '../../enums/axis';
+import {LightType} from '../../enums/light/light-type';
+import Light = BABYLON.Light;
+import PointLight = BABYLON.PointLight;
+import SpotLight = BABYLON.SpotLight;
+import Color3 = BABYLON.Color3;
 
 @Injectable({
   providedIn: 'root'
@@ -66,7 +71,7 @@ export class BabylonJSService {
     //this._camera.attachControl(this._canvas, false);
 
     // Create a basic light, aiming 0,1,0 - meaning, to the sky.
-    this._light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), this._scene);
+    //this._light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), this._scene);
 
     // Create a built-in "sphere" shape; with 16 segments and diameter of 2.
     /*let sphere = BABYLON.MeshBuilder.CreateSphere('sphere1',
@@ -182,7 +187,7 @@ export class BabylonJSService {
   createCone(segments?: number, hasFloor?: boolean): Observable<Mesh> {
     return new Observable<Mesh>((observer: Subscriber<Mesh>) => {
       //TODO implement segments and hasFloor
-      let cone = BABYLON.MeshBuilder.CreateCylinder(
+      let cone: Mesh = BABYLON.MeshBuilder.CreateCylinder(
         '1', {diameterTop: 0, tessellation: 32}, this._scene
       );
       cone.material = this.defaultMaterial();
@@ -192,75 +197,84 @@ export class BabylonJSService {
     });
   }
 
-  createSphere(segments, parent) {
-    let sphere = BABYLON.MeshBuilder.CreateSphere('1', {},
-      this._scene
-      )
-    ;
-    sphere.material = this.defaultMaterial();
-    if (parent) {
-      sphere.parent = parent;
-    }
-    return sphere;
+  createSphere(segments: number): Observable<Mesh> {
+    return new Observable<Mesh>((observer: Subscriber<Mesh>) => {
+      let sphere: Mesh = BABYLON.MeshBuilder.CreateSphere('1', {}, this._scene);
+      sphere.material = this.defaultMaterial();
+
+      observer.next(sphere);
+      observer.complete();
+    });
   }
 
-  createCube(parent) {
-    let cube = BABYLON.MeshBuilder.CreateBox('1', {}, this._scene);
-    cube.material = this.defaultMaterial();
-    if (parent) {
-      cube.parent = parent;
-    }
-    return cube;
+  createCube(): Observable<Mesh> {
+    return new Observable<Mesh>((observer: Subscriber<Mesh>) => {
+      let cube: Mesh = BABYLON.MeshBuilder.CreateBox('1', {}, this._scene);
+      cube.material = this.defaultMaterial();
+
+      observer.next(cube);
+      observer.complete();
+    });
   }
 
-  createCylinder(segments, hasFloor, parent) {
-    let cylinder = BABYLON.MeshBuilder.CreateCylinder(
-      '1', {diameterTop: 4, diameterBottom: 4, tessellation: 32}, this._scene
-    );
-    cylinder.material = this.defaultMaterial();
-    if (parent) {
-      cylinder.parent = parent;
-    }
-    return cylinder;
+  createCylinder(segments, hasFloor): Observable<Mesh> {
+    return new Observable<Mesh>((observer: Subscriber<Mesh>) => {
+      let cylinder: Mesh = BABYLON.MeshBuilder.CreateCylinder(
+        '1', {diameterTop: 4, diameterBottom: 4, tessellation: 32}, this._scene
+      );
+      cylinder.material = this.defaultMaterial();
+
+      observer.next(cylinder);
+      observer.complete();
+    });
   }
 
-  createPyramid(baseVertexNumber, parent) {
-    let meshType;
+  createPyramid(baseVertexNumber: number): Observable<Mesh> {
+    return new Observable<Mesh>((observer: Subscriber<Mesh>) => {
+      let meshType;
 
-    switch (baseVertexNumber) {
-      case 3:
-        meshType = 0;
-        break;
-      case 4:
-        meshType = 8;
-        break;
-      case 5:
-        meshType = 9;
-        break;
-      default:
-        console.error('The number of base vertices for a pyramid is not allowed:', baseVertexNumber);
-        return;
-    }
+      switch (baseVertexNumber) {
+        case 3:
+          meshType = 0;
+          break;
+        case 4:
+          meshType = 8;
+          break;
+        case 5:
+          meshType = 9;
+          break;
+        default:
+          console.error('The number of base vertices for a pyramid is not allowed:', baseVertexNumber);
+          return;
+      }
 
-    let pyramid = BABYLON.MeshBuilder.CreatePolyhedron('1', {type: 1, size: 1}, this._scene);
-    pyramid.material = this.defaultMaterial();
-    if (parent) {
-      pyramid.parent = parent;
-    }
-    return pyramid;
+      let pyramid: Mesh = BABYLON.MeshBuilder.CreatePolyhedron('1', {type: 1, size: 1}, this._scene);
+      pyramid.material = this.defaultMaterial();
+
+      observer.next(pyramid);
+      observer.complete();
+    });
   }
 
+  //TODO add parameter(s) how smooth the torus should be
   createTorus() {
-    let torus: any = BABYLON.MeshBuilder.CreateTorus('1', {}, this._scene);
-    torus.material = this.defaultMaterial();
-    if (parent) {
-      torus.parent = parent;
-    }
-    return torus;
+    return new Observable<Mesh>((observer: Subscriber<Mesh>) => {
+      let torus: Mesh = BABYLON.MeshBuilder.CreateTorus('1', {}, this._scene);
+      torus.material = this.defaultMaterial();
+
+      observer.next(torus);
+      observer.complete();
+    });
   }
 
-  createTorusKnot() {
+  createTorusKnot(): Observable<Mesh> {
+    return new Observable<Mesh>((observer: Subscriber<Mesh>) => {
+      let torusKnot: Mesh = BABYLON.MeshBuilder.CreateTorusKnot('tk', {}, this._scene);
+      torusKnot.material = this.defaultMaterial();
 
+      observer.next(torusKnot);
+      observer.complete();
+    });
   }
 
   fitMesh() {
@@ -305,9 +319,6 @@ export class BabylonJSService {
       observer.next();
       observer.complete();
     });
-  }
-
-  rotateMesh() {
   }
 
   scaleMesh(entity: any, x: number, y: number, z: number, parentScale?: boolean): Observable<void> {
@@ -387,6 +398,74 @@ export class BabylonJSService {
   pointEntity(sourceEntity: any, targetEntity: any, roll: number): Observable<void> {
     return new Observable<void>((observer: Subscriber<void>) => {
       //TODO implementation
+
+      observer.next();
+      observer.complete();
+    });
+  }
+
+  /** LIGHT **/
+  ambientLight(red: number, green: number, blue: number): Observable<void> {
+    //TODO implementation not working
+    return new Observable<void>((observer: Subscriber<void>) => {
+      this._scene.ambientColor = new BABYLON.Color3(
+        Math.trunc(red) / 255, Math.trunc(green) / 255, Math.trunc(blue) / 255
+      );
+
+      observer.next();
+      observer.complete();
+    });
+  }
+
+  createLight(type: LightType): Observable<Light> {
+    return new Observable<Light>((observer: Subscriber<Light>) => {
+      let light: Light;
+
+      if (!type) {
+        type = LightType.DIRECTIONAL;
+      }
+
+      switch (type) {
+        case LightType.DIRECTIONAL:
+          light = new BABYLON.DirectionalLight('1', new BABYLON.Vector3(0, 0, 0), this._scene);
+          break;
+        case LightType.POINT:
+          light = new BABYLON.PointLight('1', new BABYLON.Vector3(0, 0, 0), this._scene);
+          break;
+        case LightType.SPOT:
+          light = new BABYLON.SpotLight('1', new BABYLON.Vector3(0, 0, 0), new BABYLON.Vector3(0, 0, 0), Math.PI / 3, 2, this._scene);
+          break;
+        case LightType.HEMISPHERIC:
+          light = new BABYLON.HemisphericLight('1', new BABYLON.Vector3(0, 0, 0), this._scene);
+          break;
+        default:
+          console.error('Error in CreateLight: Invalid light type!');
+          light = null;
+      }
+
+      observer.next(light);
+      observer.complete();
+    });
+  }
+
+  lightColor(light: Light, red: number, green: number, blue: number): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      light.diffuse = new Color3(
+        Math.trunc(red) / 255, Math.trunc(green) / 255, Math.trunc(blue) / 255
+      );
+
+      observer.next();
+      observer.complete();
+    });
+  }
+
+  lightRange(light: Light, range: number): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      if (light instanceof PointLight || light instanceof SpotLight) {
+        light.range = range;
+      } else {
+        console.warn('Light range can only be applied to point or spot lights');
+      }
 
       observer.next();
       observer.complete();

@@ -16,6 +16,8 @@ import Mesh = BABYLON.Mesh;
 import {CommandsGraphics2dPixel} from '../commands/graphics2d/pixel';
 import {CommandsBasicsTimeRandom} from '../commands/basics/time-random';
 import {CommandsGraphics2dImages} from '../commands/graphics2d/images';
+import {CommandsGraphics3dLightShadow} from '../commands/graphics3d/light-shadow';
+import Light = BABYLON.Light;
 
 @Injectable({
   providedIn: 'root'
@@ -24,16 +26,14 @@ export class CodeGenerator {
   constructor(
     private gameState: GameStateService,
     private generalService: GeneralService,
-
     private commandsGraphics2dDisplay: CommandsGraphics2dDisplay,
     private commandsGraphics2dGraphics: CommandsGraphics2dGraphics,
     private commandsGraphics2dImages: CommandsGraphics2dImages,
     private commandsGraphics2dPixel: CommandsGraphics2dPixel,
-
     private commandsGraphics3dCamera: CommandsGraphics3dCamera,
     private commandsGraphics3dCoordinates: CommandsGraphics3dCoordinates,
+    private commandsGraphics3dLightShadow: CommandsGraphics3dLightShadow,
     private commandsGraphics3dMeshes: CommandsGraphics3dMeshes,
-
     private commandsBasicsDiverse: CommandsBasicsDiverse,
     private commandsBasicsTimeRandom: CommandsBasicsTimeRandom
   ) {
@@ -48,6 +48,8 @@ export class CodeGenerator {
     return {
       globals: [],
       statements: [
+        //TODO wait with target code execution until all services are initialized
+
         this.commandsGraphics2dDisplay.graphics(800, 600),
         //this.commandsGraphics2dGraphics.cameraClsColor(255,0,0),  //TODO wrong implementation, fix
         this.generalService.assign({
@@ -58,6 +60,7 @@ export class CodeGenerator {
           }
         }),
 
+        //CAMERA
         this.generalService.assign({
           variable: 'camera',
           type: 'global',
@@ -65,22 +68,46 @@ export class CodeGenerator {
             value: this.commandsGraphics3dCamera.createCamera(CameraType.FREE)
           }
         }),
-
         new Observable((observer) => {
           this.gameState.getGlobalAsync('camera').subscribe((camera: Camera) => {
-            this.commandsGraphics3dCoordinates.positionEntity(camera, 0, 1, -10).subscribe((done) => {
+            this.commandsGraphics3dCoordinates.positionEntity(camera, 0, 1, -10).subscribe(() => {
               observer.next();
               observer.complete();
             });
-
+          });
+        }),
+        new Observable((observer) => {
+          this.gameState.getGlobalAsync('camera').subscribe((camera: Camera) => {
+            this.commandsGraphics3dCamera.cameraClsColor(camera, 50, 200, 240).subscribe(() => {
+              observer.next();
+              observer.complete();
+            });
           });
         }),
 
+        //LIGHT
+        this.generalService.assign({
+          variable: 'light',
+          type: 'global',
+          expression: {
+            value: this.commandsGraphics3dLightShadow.createLight(1)
+          }
+        }),
+        new Observable((observer) => {
+          this.gameState.getGlobalAsync('light').subscribe((light: Light) => {
+            this.commandsGraphics3dLightShadow.lightColor(light, 255, 255, 0).subscribe(() => {
+              observer.next();
+              observer.complete();
+            });
+          });
+        }),
+
+        //PRIMITIVE MESH
         this.generalService.assign({
           variable: 'cone',
           type: 'global',
           expression: {
-            value: this.commandsGraphics3dMeshes.createCone()
+            value: this.commandsGraphics3dMeshes.createTorusKnot()
           }
         }),
         new Observable((observer) => {
@@ -89,9 +116,10 @@ export class CodeGenerator {
               observer.next();
               observer.complete();
             });
-
           });
         }),
+
+        this.commandsGraphics3dLightShadow.ambientLight(128, 200, 50),
 
         this.commandsGraphics2dGraphics.color(255, 0, 0),
         this.commandsGraphics2dGraphics.rect(20, 20, 100, 50, true),
@@ -104,7 +132,22 @@ export class CodeGenerator {
         this.commandsGraphics2dGraphics.color(255, 255, 0),
         this.commandsGraphics2dPixel.plot(200, 200),
 
-        //this.commandsGraphics2dImages.loadImage();
+        //IMAGE
+        this.generalService.assign({
+          variable: 'image',
+          type: 'global',
+          expression: {
+            value: this.commandsGraphics2dImages.loadImage('/assets/gfx/bbscript-logo.png')
+          }
+        }),
+        new Observable((observer) => {
+          this.gameState.getGlobalAsync('image').subscribe((image: HTMLImageElement) => {
+            this.commandsGraphics2dImages.drawImage(image, 0, 0).subscribe(() => {
+              observer.next();
+              observer.complete();
+            });
+          });
+        })
 
         /*this.generalService.forToNext({
           assignment: {

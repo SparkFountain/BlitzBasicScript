@@ -64,7 +64,7 @@ export class GameStateService {
 
   public get(property: string): any {
     if (!this.hasOwnProperty(property)) {
-      console.error('Game State has no property', property);
+      console.error('Game State has no property ' + property + ':', this);
       return null;
     } else {
       return this[property];
@@ -80,7 +80,7 @@ export class GameStateService {
   }
 
   getGlobal(variableName: string): any {
-    console.info('Get Global ' + variableName + ':', this.global[variableName]);
+    //console.info('Get Global ' + variableName + ':', this.global[variableName]);
     return this.global[variableName];
   }
 
