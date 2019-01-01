@@ -18,6 +18,7 @@ import {CommandsBasicsTimeRandom} from '../commands/basics/time-random';
 import {CommandsGraphics2dImages} from '../commands/graphics2d/images';
 import {CommandsGraphics3dLightShadow} from '../commands/graphics3d/light-shadow';
 import Light = BABYLON.Light;
+import {GameImage2D} from '../../interfaces/game/image-2d';
 
 @Injectable({
   providedIn: 'root'
@@ -137,11 +138,19 @@ export class CodeGenerator {
           variable: 'image',
           type: 'global',
           expression: {
-            value: this.commandsGraphics2dImages.loadImage('/assets/gfx/bbscript-logo.png')
+            value: this.commandsGraphics2dImages.loadImage('/assets/gfx/face.png')
           }
         }),
         new Observable((observer) => {
-          this.gameState.getGlobalAsync('image').subscribe((image: HTMLImageElement) => {
+          this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
+            this.commandsGraphics2dImages.maskImage(image, 255, 0, 255).subscribe(() => {
+              observer.next();
+              observer.complete();
+            });
+          });
+        }),
+        new Observable((observer) => {
+          this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
             this.commandsGraphics2dImages.drawImage(image, 0, 0).subscribe(() => {
               observer.next();
               observer.complete();
