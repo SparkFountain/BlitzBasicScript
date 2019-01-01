@@ -159,27 +159,45 @@ export class CommandsGraphics2dImages {
       y1 + height1 > y2);
   }
 
-  resizeImage() {
-
+  resizeImage(image: GameImage2D, width: number, height: number): Observable<void> {
+    return new Observable<any>((observer: Subscriber<any>) => {
+      observer.next('TODO');
+      observer.complete();
+    });
   }
 
-  rotateImage() {
-
+  rotateImage(): Observable<void> {
+    return new Observable<any>((observer: Subscriber<any>) => {
+      observer.next('TODO');
+      observer.complete();
+    });
   }
 
-  saveImage() {
-
+  saveImage(): Observable<void> {
+    return new Observable<any>((observer: Subscriber<any>) => {
+      observer.next('TODO');
+      observer.complete();
+    });
   }
 
-  scaleImage() {
-
+  scaleImage(): Observable<void> {
+    return new Observable<any>((observer: Subscriber<any>) => {
+      observer.next('TODO');
+      observer.complete();
+    });
   }
 
-  tileBlock() {
-
+  tileBlock(): Observable<void> {
+    return new Observable<any>((observer: Subscriber<any>) => {
+      observer.next('TODO');
+      observer.complete();
+    });
   }
 
-  tileImage() {
-
+  tileImage(): Observable<void> {
+    return new Observable<any>((observer: Subscriber<any>) => {
+      observer.next('TODO');
+      observer.complete();
+    });
   }
 }
