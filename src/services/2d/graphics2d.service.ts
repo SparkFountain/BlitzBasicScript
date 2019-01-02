@@ -50,6 +50,13 @@ export class Graphics2dService {
     this._context2d.fillStyle = 'rgba(' + red + ',' + green + ',' + blue + ', 1)';
   }
 
+  private getOrigin(): {x: number, y: number} {
+    return {
+      x: this.gameState.get('screen.origin.x'),
+      y: this.gameState.get('screen.origin.y')
+    };
+  }
+
   cls(): Observable<void> {
     return new Observable<void>((observer: Subscriber<void>) => {
       this.loadActiveClsColor();
@@ -68,10 +75,11 @@ export class Graphics2dService {
   line(beginX: number, beginY: number, endX: number, endY: number): Observable<void> {
     return new Observable<void>((observer: Subscriber<void>) => {
       this.loadActiveColor();
+      let origin = this.getOrigin();
 
       this._context2d.beginPath();
-      this._context2d.moveTo(beginX, beginY);
-      this._context2d.lineTo(endX, endY);
+      this._context2d.moveTo(beginX + origin.x, beginY + origin.y);
+      this._context2d.lineTo(endX + origin.x, endY + origin.y);
       this._context2d.stroke();
 
       observer.next();
@@ -82,8 +90,9 @@ export class Graphics2dService {
   rect(x: number, y: number, width: number, height: number, filled: boolean): Observable<void> {
     return new Observable<void>((observer: Subscriber<void>) => {
       this.loadActiveColor();
+      let origin = this.getOrigin();
 
-      this._context2d.rect(20, 20, 150, 100);
+      this._context2d.rect(x + origin.x, y + origin.y, width + origin.x, height + origin.y);
 
       if (filled) {
         this._context2d.fill();
@@ -97,8 +106,10 @@ export class Graphics2dService {
   }
 
   oval(x: number, y: number, width: number, height: number, filled: boolean): Observable<void> {
+    //TODO refactor with respect to origin
     return new Observable<void>((observer: Subscriber<void>) => {
       this.loadActiveColor();
+      let origin = this.getOrigin();
 
       this._context2d.beginPath();
       this._context2d.lineWidth = 1;
@@ -124,8 +135,9 @@ export class Graphics2dService {
   plot(x: number, y: number): Observable<void> {
     return new Observable<void>((observer: Subscriber<void>) => {
       this.loadActiveColor();
+      let origin = this.getOrigin();
 
-      this._context2d.fillRect(x, y, 1, 1);
+      this._context2d.fillRect(x + origin.x, y + origin.y, 1, 1);
 
       observer.next();
       observer.complete();
@@ -171,7 +183,8 @@ export class Graphics2dService {
 
   drawBlock(image: GameImage2D, x: number, y: number, frame?: number): Observable<void> {
     return new Observable<void>((observer: Subscriber<void>) => {
-      this._context2d.drawImage(image.element, x, y);
+      let origin = this.getOrigin();
+      this._context2d.drawImage(image.element, x + origin.x, y + origin.y);
 
       observer.next();
       observer.complete();
@@ -184,7 +197,8 @@ export class Graphics2dService {
         if (!image.maskedElement) {
           console.error('Image has no mask color');
         } else {
-          this._context2d.drawImage(image.maskedElement, x, y);
+          let origin = this.getOrigin();
+          this._context2d.drawImage(image.maskedElement, x + origin.x, y + origin.y);
 
           observer.next();
           observer.complete();
