@@ -136,16 +136,7 @@ export class CommandsGraphics2dImages {
   }
 
   maskImage(image: GameImage2D, red: number, green: number, blue: number): Observable<void> {
-    return new Observable((observer: Subscriber<void>) => {
-      image.maskColor = {
-        red: red,
-        green: green,
-        blue: blue
-      };
-
-      observer.next();
-      observer.complete();
-    });
+    return this.graphics2d.maskImage(image, red, green, blue);
   }
 
   midHandle() {

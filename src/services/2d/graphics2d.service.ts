@@ -132,6 +132,43 @@ export class Graphics2dService {
     });
   }
 
+  maskImage(image: GameImage2D, red: number, green: number, blue: number): Observable<void> {
+    return new Observable((observer: Subscriber<void>) => {
+      image.maskColor = {
+        red: red,
+        green: green,
+        blue: blue
+      };
+
+      //create masked element
+      image.maskedElement = document.createElement('img') as HTMLImageElement;
+      image.maskedElement.onload = () => {
+        observer.next();
+        observer.complete();
+      };
+
+      let maskCanvas = document.createElement('canvas');
+      maskCanvas.width = image.width;
+      maskCanvas.height = image.height;
+      let ctx = maskCanvas.getContext('2d');
+      ctx.drawImage(image.element, 0, 0);
+
+      let canvasImage = ctx.getImageData(0, 0, image.width, image.height);
+      let length = canvasImage.data.length;
+      for (let i = 0; i < length; i += 4) {
+        let red = canvasImage.data[i];
+        let green = canvasImage.data[i + 1];
+        let blue = canvasImage.data[i + 2];
+
+        if (red === image.maskColor.red && green === image.maskColor.green && blue === image.maskColor.blue) {
+          canvasImage.data[i + 3] = 0;
+        }
+      }
+      ctx.putImageData(canvasImage, 0, 0);
+      image.maskedElement.src = maskCanvas.toDataURL();
+    });
+  }
+
   drawBlock(image: GameImage2D, x: number, y: number, frame?: number): Observable<void> {
     return new Observable<void>((observer: Subscriber<void>) => {
       this._context2d.drawImage(image.element, x, y);
@@ -145,35 +182,7 @@ export class Graphics2dService {
     if (image.maskColor) {
       return new Observable<void>((observer: Subscriber<void>) => {
         if (!image.maskedElement) {
-          //create masked element
-          image.maskedElement = document.createElement('img') as HTMLImageElement;
-          image.maskedElement.onload = () => {
-            this._context2d.drawImage(image.maskedElement, x, y);
-
-            observer.next();
-            observer.complete();
-          };
-
-          let maskCanvas = document.createElement('canvas');
-          maskCanvas.width = image.width;
-          maskCanvas.height = image.height;
-          let ctx = maskCanvas.getContext('2d');
-          ctx.drawImage(image.element, 0, 0);
-
-          let canvasImage = ctx.getImageData(0, 0, image.width, image.height);
-          let length = canvasImage.data.length;
-          for (let i = 0; i < length; i += 4) {
-            let red = canvasImage.data[i];
-            let green = canvasImage.data[i + 1];
-            let blue = canvasImage.data[i + 2];
-
-            if (red === image.maskColor.red && green === image.maskColor.green && blue === image.maskColor.blue) {
-              canvasImage.data[i + 3] = 0;
-            }
-          }
-          ctx.putImageData(canvasImage, 0, 0);
-
-          image.maskedElement.src = maskCanvas.toDataURL();
+          console.error('Image has no mask color');
         } else {
           this._context2d.drawImage(image.maskedElement, x, y);
 
