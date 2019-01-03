@@ -2,16 +2,16 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsSound3D {
-    constructor() {
+  constructor() {
 
-    }
+  }
 
-    createListener() {
-    }
+  createListener() {
+  }
 
-    emitSound() {
-    }
+  emitSound() {
+  }
 
-    load3DSound() {
-    }
+  load3DSound() {
+  }
 }

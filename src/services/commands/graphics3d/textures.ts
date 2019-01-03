@@ -2,58 +2,58 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGraphics3dTextures {
-    constructor() {
+  constructor() {
 
-    }
+  }
 
-    activeTextures() {
-    }
+  activeTextures() {
+  }
 
-    clearTextureFilters() {
-    }
+  clearTextureFilters() {
+  }
 
-    createTexture() {
-    }
+  createTexture() {
+  }
 
-    freeTexture() {
-    }
+  freeTexture() {
+  }
 
-    loadAnimTexture() {
-    }
+  loadAnimTexture() {
+  }
 
-    loadTexture() {
-    }
+  loadTexture() {
+  }
 
-    positionTexture() {
-    }
+  positionTexture() {
+  }
 
-    rotateTexture() {
-    }
+  rotateTexture() {
+  }
 
-    scaleTexture() {
-    }
+  scaleTexture() {
+  }
 
-    setCubeFace() {
-    }
+  setCubeFace() {
+  }
 
-    setCubeMode() {
-    }
+  setCubeMode() {
+  }
 
-    textureBlend() {
-    }
+  textureBlend() {
+  }
 
-    textureCoords() {
-    }
+  textureCoords() {
+  }
 
-    textureFilter() {
-    }
+  textureFilter() {
+  }
 
-    textureHeight() {
-    }
+  textureHeight() {
+  }
 
-    textureName() {
-    }
+  textureName() {
+  }
 
-    textureWidth() {
-    }
+  textureWidth() {
+  }
 }

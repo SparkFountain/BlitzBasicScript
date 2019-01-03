@@ -2,16 +2,16 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGraphics3dScene {
-    constructor() {
+  constructor() {
 
-    }
+  }
 
-    createSkyBox() {
-    }
+  createSkyBox() {
+  }
 
-    loadSkyBox() {
-    }
+  loadSkyBox() {
+  }
 
-    setGravity() {
-    }
+  setGravity() {
+  }
 }

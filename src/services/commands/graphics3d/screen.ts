@@ -2,25 +2,25 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGraphics3dScreen {
-    constructor() {
+  constructor() {
 
-    }
+  }
 
-    countGfxModes3d() {
-    }
+  countGfxModes3d() {
+  }
 
-    gfxDriver3D() {
-    }
+  gfxDriver3D() {
+  }
 
-    gfxDriverCaps3D() {
-    }
+  gfxDriverCaps3D() {
+  }
 
-    gfxMode3D() {
-    }
+  gfxMode3D() {
+  }
 
-    gfxMode3DExists() {
-    }
+  gfxMode3DExists() {
+  }
 
-    windowed3D() {
-    }
+  windowed3D() {
+  }
 }

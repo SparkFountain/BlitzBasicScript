@@ -2,13 +2,13 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGuiProgressBar {
-    constructor() {
+  constructor() {
 
-    }
+  }
 
-    createProgBar() {
-    }
+  createProgBar() {
+  }
 
-    updateProgBar() {
-    }
+  updateProgBar() {
+  }
 }

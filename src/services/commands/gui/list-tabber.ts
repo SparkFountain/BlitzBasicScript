@@ -2,43 +2,43 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGuiListTabber {
-    constructor() {
+  constructor() {
 
-    }
+  }
 
-    addGadgetItem() {
-    }
+  addGadgetItem() {
+  }
 
-    clearGadgetItems() {
-    }
+  clearGadgetItems() {
+  }
 
-    countGadgetItems() {
-    }
+  countGadgetItems() {
+  }
 
-    createComboBox() {
-    }
+  createComboBox() {
+  }
 
-    createListBox() {
-    }
+  createListBox() {
+  }
 
-    createTabber() {
-    }
+  createTabber() {
+  }
 
-    gadgetItemText() {
-    }
+  gadgetItemText() {
+  }
 
-    insertGadgetItem() {
-    }
+  insertGadgetItem() {
+  }
 
-    modifyGadgetItem() {
-    }
+  modifyGadgetItem() {
+  }
 
-    removeGadgetItem() {
-    }
+  removeGadgetItem() {
+  }
 
-    selectedGadgetItem() {
-    }
+  selectedGadgetItem() {
+  }
 
-    selectGadgetItem() {
-    }
+  selectGadgetItem() {
+  }
 }

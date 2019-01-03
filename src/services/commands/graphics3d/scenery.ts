@@ -2,25 +2,25 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGraphics3dScenery {
-    constructor() {
+  constructor() {
 
-    }
+  }
 
-    antiAlias() {
-    }
+  antiAlias() {
+  }
 
-    captureWorld() {
-    }
+  captureWorld() {
+  }
 
-    clearWorld() {
-    }
+  clearWorld() {
+  }
 
-    renderWorld() {
-    }
+  renderWorld() {
+  }
 
-    updateWorld() {
-    }
+  updateWorld() {
+  }
 
-    wireFrame() {
-    }
+  wireFrame() {
+  }
 }

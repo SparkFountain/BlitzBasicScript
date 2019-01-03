@@ -2,34 +2,34 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsSoundMusicSamples {
-    constructor() {
+  constructor() {
 
-    }
+  }
 
-    playCDTrack() {
-    }
+  playCDTrack() {
+  }
 
-    playMusic() {
-    }
+  playMusic() {
+  }
 
-    freeSound() {
-    }
+  freeSound() {
+  }
 
-    loadSound() {
-    }
+  loadSound() {
+  }
 
-    loopSound() {
-    }
+  loopSound() {
+  }
 
-    playSound() {
-    }
+  playSound() {
+  }
 
-    soundPan() {
-    }
+  soundPan() {
+  }
 
-    soundPitch() {
-    }
+  soundPitch() {
+  }
 
-    soundVolume() {
-    }
+  soundVolume() {
+  }
 }

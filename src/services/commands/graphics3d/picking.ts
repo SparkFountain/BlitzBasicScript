@@ -2,49 +2,49 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGraphics3dPicking {
-    constructor() {
+  constructor() {
 
-    }
+  }
 
-    cameraPick() {
-    }
+  cameraPick() {
+  }
 
-    entityPick() {
-    }
+  entityPick() {
+  }
 
-    entityPickMode() {
-    }
+  entityPickMode() {
+  }
 
-    linePick() {
-    }
+  linePick() {
+  }
 
-    pickedEntity() {
-    }
+  pickedEntity() {
+  }
 
-    pickedNX() {
-    }
+  pickedNX() {
+  }
 
-    pickedNY() {
-    }
+  pickedNY() {
+  }
 
-    pickedNZ() {
-    }
+  pickedNZ() {
+  }
 
-    pickedSurface() {
-    }
+  pickedSurface() {
+  }
 
-    pickedTime() {
-    }
+  pickedTime() {
+  }
 
-    pickedTriangle() {
-    }
+  pickedTriangle() {
+  }
 
-    pickedX() {
-    }
+  pickedX() {
+  }
 
-    pickedY() {
-    }
+  pickedY() {
+  }
 
-    pickedZ() {
-    }
+  pickedZ() {
+  }
 }

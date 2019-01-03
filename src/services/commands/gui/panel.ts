@@ -2,16 +2,16 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGuiPanel {
-    constructor() {
+  constructor() {
 
-    }
+  }
 
-    createPanel() {
-    }
+  createPanel() {
+  }
 
-    setPanelColor() {
-    }
+  setPanelColor() {
+  }
 
-    setPanelImage() {
-    }
+  setPanelImage() {
+  }
 }

@@ -2,67 +2,67 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGraphics2dText {
-    constructor() {
+  constructor() {
 
-    }
+  }
 
-    fontAscent() {
+  fontAscent() {
 
-    }
+  }
 
-    fontDescent() {
+  fontDescent() {
 
-    }
+  }
 
-    fontHeight() {
+  fontHeight() {
 
-    }
+  }
 
-    fontName() {
+  fontName() {
 
-    }
+  }
 
-    fontSize() {
+  fontSize() {
 
-    }
+  }
 
-    fontStyle() {
+  fontStyle() {
 
-    }
+  }
 
-    fontWidth() {
+  fontWidth() {
 
-    }
+  }
 
-    freeFont() {
+  freeFont() {
 
-    }
+  }
 
-    loadFont() {
+  loadFont() {
 
-    }
+  }
 
-    locate() {
+  locate() {
 
-    }
+  }
 
-    print() {
+  print() {
 
-    }
+  }
 
-    setFont() {
+  setFont() {
 
-    }
+  }
 
-    stringHeight() {
+  stringHeight() {
 
-    }
+  }
 
-    stringWidth() {
+  stringWidth() {
 
-    }
+  }
 
-    text() {
+  text() {
 
-    }
+  }
 }

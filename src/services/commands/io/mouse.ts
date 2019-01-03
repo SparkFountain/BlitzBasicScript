@@ -2,52 +2,52 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsIOMouse {
-    constructor() {
+  constructor() {
 
-    }
+  }
 
-    flushMouse() {
-    }
+  flushMouse() {
+  }
 
-    getMouse() {
-    }
+  getMouse() {
+  }
 
-    hidePointer() {
-    }
+  hidePointer() {
+  }
 
-    mouseDown() {
-    }
+  mouseDown() {
+  }
 
-    mouseHit() {
-    }
+  mouseHit() {
+  }
 
-    mouseWait() {
-    }
+  mouseWait() {
+  }
 
-    mouseX() {
-    }
+  mouseX() {
+  }
 
-    mouseXSpeed() {
-    }
+  mouseXSpeed() {
+  }
 
-    mouseY() {
-    }
+  mouseY() {
+  }
 
-    mouseYSpeed() {
-    }
+  mouseYSpeed() {
+  }
 
-    mouseZ() {
-    }
+  mouseZ() {
+  }
 
-    mouseZSpeed() {
-    }
+  mouseZSpeed() {
+  }
 
-    moveMouse() {
-    }
+  moveMouse() {
+  }
 
-    showPointer() {
-    }
+  showPointer() {
+  }
 
-    waitMouse() {
-    }
+  waitMouse() {
+  }
 }

@@ -2,64 +2,64 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGraphics3dStatus {
-    constructor() {
+  constructor() {
 
-    }
+  }
 
-    countChildren() {
-    }
+  countChildren() {
+  }
 
-    deltaPitch() {
-    }
+  deltaPitch() {
+  }
 
-    deltaYaw() {
-    }
+  deltaYaw() {
+  }
 
-    deltaRoll() {
-    }
+  deltaRoll() {
+  }
 
-    entityClass() {
-    }
+  entityClass() {
+  }
 
-    entityDistance() {
-    }
+  entityDistance() {
+  }
 
-    entityInView() {
-    }
+  entityInView() {
+  }
 
-    entityName() {
-    }
+  entityName() {
+  }
 
-    entityPitch() {
-    }
+  entityPitch() {
+  }
 
-    entityRoll() {
-    }
+  entityRoll() {
+  }
 
-    entityVisible() {
-    }
+  entityVisible() {
+  }
 
-    entityX() {
-    }
+  entityX() {
+  }
 
-    entityY() {
-    }
+  entityY() {
+  }
 
-    entityYaw() {
-    }
+  entityYaw() {
+  }
 
-    entityZ() {
-    }
+  entityZ() {
+  }
 
-    findChild() {
-    }
+  findChild() {
+  }
 
-    getChild() {
-    }
+  getChild() {
+  }
 
-    getParent() {
-    }
+  getParent() {
+  }
 
-    nameEntity() {
-    }
+  nameEntity() {
+  }
 }

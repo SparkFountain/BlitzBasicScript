@@ -2,37 +2,37 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGuiWindow {
-    constructor() {
+  constructor() {
 
-    }
+  }
 
-    activateWindow() {
-    }
+  activateWindow() {
+  }
 
-    activeWindow() {
-    }
+  activeWindow() {
+  }
 
-    createWindow() {
-    }
+  createWindow() {
+  }
 
-    maximizeWindow() {
-    }
+  maximizeWindow() {
+  }
 
-    minimizeWindow() {
-    }
+  minimizeWindow() {
+  }
 
-    restoreWindow() {
-    }
+  restoreWindow() {
+  }
 
-    setMinWindowSize() {
-    }
+  setMinWindowSize() {
+  }
 
-    setStatusText() {
-    }
+  setStatusText() {
+  }
 
-    windowMaximized() {
-    }
+  windowMaximized() {
+  }
 
-    windowMinimized() {
-    }
+  windowMinimized() {
+  }
 }

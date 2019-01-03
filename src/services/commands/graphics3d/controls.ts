@@ -2,46 +2,46 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGraphics3dControls {
-    constructor() {
+  constructor() {
 
-    }
+  }
 
-    copyEntity() {
-    }
+  copyEntity() {
+  }
 
-    entityAlpha() {
-    }
+  entityAlpha() {
+  }
 
-    entityAutoFade() {
-    }
+  entityAutoFade() {
+  }
 
-    entityBlend() {
-    }
+  entityBlend() {
+  }
 
-    entityColor() {
-    }
+  entityColor() {
+  }
 
-    entityFx() {
-    }
+  entityFx() {
+  }
 
-    entityOrder() {
-    }
+  entityOrder() {
+  }
 
-    entityParent() {
-    }
+  entityParent() {
+  }
 
-    entityShininess() {
-    }
+  entityShininess() {
+  }
 
-    entityTexture() {
-    }
+  entityTexture() {
+  }
 
-    freeEntity() {
-    }
+  freeEntity() {
+  }
 
-    hideEntity() {
-    }
+  hideEntity() {
+  }
 
-    showEntity() {
-    }
+  showEntity() {
+  }
 }
