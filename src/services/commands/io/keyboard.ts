@@ -2,28 +2,28 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsIOKeyboard {
-  constructor() {
+    constructor() {
 
-  }
+    }
 
-  flushKeys() {
-  }
+    flushKeys() {
+    }
 
-  getKey() {
-  }
+    getKey() {
+    }
 
-  input() {
-  }
+    input() {
+    }
 
-  keyDown() {
-  }
+    keyDown() {
+    }
 
-  keyHit() {
-  }
+    keyHit() {
+    }
 
-  keyWait() {
-  }
+    keyWait() {
+    }
 
-  waitKey() {
-  }
+    waitKey() {
+    }
 }

@@ -6,24 +6,24 @@ import {inject, TestBed} from '@angular/core/testing';
 const expect = chai.expect;
 
 describe('BBScript Lexer Library Functions', () => {
-  beforeEach(() => {
+    beforeEach(() => {
 
-    // refine the test module by declaring the test component
-    TestBed.configureTestingModule({
-      declarations: [Lexer],
-      providers: [Lexer]
+        // refine the test module by declaring the test component
+        TestBed.configureTestingModule({
+            declarations: [Lexer],
+            providers: [Lexer]
+        });
     });
-  });
 
-  let lexer: Lexer = TestBed.get(Lexer);
+    let lexer: Lexer = TestBed.get(Lexer);
 
-  it('should lex some lines of code correctly',
-    inject([Lexer], () => {
-      let line: string = 'Global x, y = 42 ;some comment';
+    it('should lex some lines of code correctly',
+        inject([Lexer], () => {
+            let line: string = 'Global x, y = 42 ;some comment';
 
-      let tokens: LexerToken[][] = lexer.lexCode([line.split('')]);
-      console.info('Tokens:', tokens);
-      expect(true).to.equal(true);
-    })
-  );
+            let tokens: LexerToken[][] = lexer.lexCode([line.split('')]);
+            console.info('Tokens:', tokens);
+            expect(true).to.equal(true);
+        })
+    );
 });

@@ -1,194 +1,244 @@
 import {Injectable} from '@angular/core';
 import {Observable, of, Subscriber} from 'rxjs';
 import {GameStateService} from '../../game-state/game-state.service';
-import {HttpClient, HttpResponse} from '@angular/common/http';
+import {HttpClient} from '@angular/common/http';
 import {DebugEnvironment} from '../../environment/debug.environment';
 import {Graphics2dService} from '../../2d/graphics2d.service';
 import {GameImage2D} from '../../../interfaces/game/image-2d';
 
 @Injectable()
 export class CommandsGraphics2dImages {
-  constructor(private gameState: GameStateService,
-              private graphics2d: Graphics2dService,
-              private environment: DebugEnvironment,
-              private http: HttpClient) {
+    constructor(private gameState: GameStateService,
+                private graphics2d: Graphics2dService,
+                private environment: DebugEnvironment,
+                private http: HttpClient) {
 
-  }
+    }
 
-  autoMidHandle(on: boolean): Observable<void> {
-    return new Observable<void>((observer: Subscriber<void>) => {
-      this.gameState.set('images.autoMidHandle', true);
+    private autoMidHandleActive(): boolean {
+        return this.gameState.get('images.autoMidHandle');
+    }
 
-      observer.next();
-      observer.complete();
-    });
-  }
+    autoMidHandle(on: boolean): Observable<void> {
+        return new Observable<void>((observer: Subscriber<void>) => {
+            this.gameState.set('images.autoMidHandle', true);
 
-  copyImage(): Observable<any> {
-    return new Observable<any>((observer: Subscriber<any>) => {
-      observer.next('TODO');
-      observer.complete();
-    });
-  }
-
-  createImage(width: number, height: number, frames: number): Observable<GameImage2D> {
-    return new Observable<any>((observer: Subscriber<any>) => {
-      observer.next('TODO');
-      observer.complete();
-    });
-  }
-
-  drawBlock(image: any, x: number, y: number, frame?: number): Observable<void> {
-    return new Observable<any>((observer: Subscriber<any>) => {
-      observer.next('TODO');
-      observer.complete();
-    });
-  }
-
-  drawBlockRect(image: any, x: number, y: number, beginX: number, beginY: number, width: number, height: number, frame?: number): Observable<void> {
-    return new Observable<any>((observer: Subscriber<any>) => {
-      observer.next('TODO');
-      observer.complete();
-    });
-  }
-
-  drawImage(image: GameImage2D, x: number, y: number, frame?: number): Observable<void> {
-    return this.graphics2d.drawImage(image, x, y, frame);
-  }
-
-  drawImageRect() {
-
-  }
-
-  freeImage() {
-
-  }
-
-  grabImage() {
-
-  }
-
-  handleImage() {
-
-  }
-
-  imageHeight(image: GameImage2D): Observable<number> {
-    return of(image.height);
-  }
-
-  imageRectCollide() {
-
-  }
-
-  imageRectOverlap() {
-
-  }
-
-  imagesCollide() {
-
-  }
-
-  imagesOverlap() {
-
-  }
-
-  imageWidth(image: GameImage2D): Observable<number> {
-    return of(image.width);
-  }
-
-  imageXHandle() {
-
-  }
-
-  imageYHandle() {
-
-  }
-
-  loadAnimImage() {
-
-  }
-
-  loadImage(filePath: string): Observable<GameImage2D> {
-    return new Observable<GameImage2D>((observer: Subscriber<GameImage2D>) => {
-      //info: the responseType conversion to JSON is a workaround, see https://github.com/angular/angular/issues/18586
-      this.http.get<Blob>(this.environment.getServer() + filePath, {responseType: 'blob' as 'json'})
-        .subscribe((imageAsBlob: Blob) => {
-          let reader = new FileReader();
-          reader.addEventListener('load', () => {
-            let htmlImage: HTMLImageElement = document.createElement('img') as HTMLImageElement;
-            htmlImage.onload = () => {
-              observer.next({
-                name: 'TODO',
-                element: htmlImage,
-                width: htmlImage.width,
-                height: htmlImage.height
-              });
-              observer.complete();
-            };
-            htmlImage.src = reader.result as string;
-          }, false);
-
-          if (imageAsBlob) {
-            reader.readAsDataURL(imageAsBlob);
-          }
+            observer.next();
+            observer.complete();
         });
-    });
-  }
+    }
 
-  maskImage(image: GameImage2D, red: number, green: number, blue: number): Observable<void> {
-    return this.graphics2d.maskImage(image, red, green, blue);
-  }
+    copyImage(image: GameImage2D): Observable<GameImage2D> {
+        return new Observable<GameImage2D>((observer: Subscriber<GameImage2D>) => {
+            this.createImage(image.width, image.height).subscribe(() => {
+                observer.next();
+                observer.complete();
+            });
+        });
+    }
 
-  midHandle() {
+    createImage(width: number, height: number, frames?: number): Observable<GameImage2D> {
+        return new Observable<GameImage2D>((observer: Subscriber<GameImage2D>) => {
+            let autoMidHandleActive = this.autoMidHandleActive();
+            let htmlImage: HTMLImageElement = document.createElement('img') as HTMLImageElement;
+            htmlImage.width = width;
+            htmlImage.height = height;
 
-  }
 
-  rectsOverlap(x1: number, y1: number, width1: number, height1: number, x2: number, y2: number, width2: number, height2: number): Observable<boolean> {
-    return of(x1 < x2 + width2 &&
-      x1 + width1 > x2 &&
-      y1 < y2 + height2 &&
-      y1 + height1 > y2);
-  }
+            observer.next({
+                name: '',
+                element: htmlImage,
+                width: width,
+                height: height,
+                handle: {
+                    x: autoMidHandleActive ? width / 2 : 0,
+                    y: autoMidHandleActive ? height / 2 : 0
+                }
+            });
+            observer.complete();
+        });
+    }
 
-  resizeImage(image: GameImage2D, width: number, height: number): Observable<void> {
-    return new Observable<any>((observer: Subscriber<any>) => {
-      observer.next('TODO');
-      observer.complete();
-    });
-  }
+    drawBlock(image: any, x: number, y: number, frame?: number): Observable<void> {
+        return this.graphics2d.drawBlock(image, x, y, frame);
+    }
 
-  rotateImage(): Observable<void> {
-    return new Observable<any>((observer: Subscriber<any>) => {
-      observer.next('TODO');
-      observer.complete();
-    });
-  }
+    drawBlockRect(image: any, x: number, y: number, beginX: number, beginY: number, width: number, height: number, frame?: number): Observable<void> {
+        return new Observable<any>((observer: Subscriber<any>) => {
+            observer.next('TODO');
+            observer.complete();
+        });
+    }
 
-  saveImage(): Observable<void> {
-    return new Observable<any>((observer: Subscriber<any>) => {
-      observer.next('TODO');
-      observer.complete();
-    });
-  }
+    drawImage(image: GameImage2D, x: number, y: number, frame?: number): Observable<void> {
+        return this.graphics2d.drawImage(image, x, y, frame);
+    }
 
-  scaleImage(): Observable<void> {
-    return new Observable<any>((observer: Subscriber<any>) => {
-      observer.next('TODO');
-      observer.complete();
-    });
-  }
+    drawImageRect() {
 
-  tileBlock(): Observable<void> {
-    return new Observable<any>((observer: Subscriber<any>) => {
-      observer.next('TODO');
-      observer.complete();
-    });
-  }
+    }
 
-  tileImage(): Observable<void> {
-    return new Observable<any>((observer: Subscriber<any>) => {
-      observer.next('TODO');
-      observer.complete();
-    });
-  }
+    freeImage(image: GameImage2D): Observable<void> {
+        return new Observable<void>((observer: Subscriber<void>) => {
+            image = null;
+
+            observer.next();
+            observer.complete();
+        });
+    }
+
+    grabImage() {
+
+    }
+
+    handleImage(image: GameImage2D, x: number, y: number): Observable<void> {
+        return new Observable<void>((observer: Subscriber<void>) => {
+            image.handle.x = x;
+            image.handle.y = y;
+
+            observer.next();
+            observer.complete();
+        });
+    }
+
+    imageHeight(image: GameImage2D): Observable<number> {
+        return of(image.height);
+    }
+
+    imageRectCollide(image: GameImage2D, x: number, y: number, frame: number, beginX: number, beginY: number, width: number, height: number) {
+
+    }
+
+    imageRectOverlap() {
+
+    }
+
+    imagesCollide(image1: GameImage2D, x1: number, y1: number, frame1: number, image2: GameImage2D, x2: number, y2: number, frame2: number): Observable<boolean> {
+        return of(false);
+    }
+
+    imagesOverlap(image1: GameImage2D, x1: number, y1: number, image2: GameImage2D, x2: number, y2: number): Observable<boolean> {
+        return this.rectsOverlap(x1, y1, image1.width, image1.height, x2, y2, image2.width, image2.height);
+    }
+
+    imageWidth(image: GameImage2D): Observable<number> {
+        return of(image.width);
+    }
+
+    imageXHandle(image: GameImage2D): Observable<number> {
+        return of(image.handle.x);
+    }
+
+    imageYHandle(image: GameImage2D): Observable<number> {
+        return of(image.handle.y);
+    }
+
+    loadAnimImage(filePath: string, width, height, startFrameIndex: number, totalFrames: number) {
+
+    }
+
+    loadImage(filePath: string): Observable<GameImage2D> {
+        return new Observable<GameImage2D>((observer: Subscriber<GameImage2D>) => {
+            //info: the responseType conversion to JSON is a workaround, see https://github.com/angular/angular/issues/18586
+            this.http.get<Blob>(this.environment.getServer() + filePath, {responseType: 'blob' as 'json'})
+                .subscribe((imageAsBlob: Blob) => {
+                    let reader = new FileReader();
+                    reader.addEventListener('load', () => {
+                        let htmlImage: HTMLImageElement = document.createElement('img') as HTMLImageElement;
+                        htmlImage.onload = () => {
+                            let autoMidHandleActive = this.autoMidHandleActive();
+
+                            observer.next({
+                                name: '',
+                                element: htmlImage,
+                                width: htmlImage.width,
+                                height: htmlImage.height,
+                                handle: {
+                                    x: autoMidHandleActive ? htmlImage.width / 2 : 0,
+                                    y: autoMidHandleActive ? htmlImage.height / 2 : 0
+                                }
+                            });
+                            observer.complete();
+                        };
+                        htmlImage.src = reader.result as string;
+                    }, false);
+
+                    if (imageAsBlob) {
+                        reader.readAsDataURL(imageAsBlob);
+                    }
+                });
+        });
+    }
+
+    maskImage(image: GameImage2D, red: number, green: number, blue: number): Observable<void> {
+        return this.graphics2d.maskImage(image, red, green, blue);
+    }
+
+    midHandle(image: GameImage2D): Observable<void> {
+        return new Observable<void>((observer: Subscriber<void>) => {
+            image.handle.x = image.width / 2;
+            image.handle.y = image.height / 2;
+
+            observer.next();
+            observer.complete();
+        });
+    }
+
+    rectsOverlap(x1: number, y1: number, width1: number, height1: number, x2: number, y2: number, width2: number, height2: number): Observable<boolean> {
+        return of(x1 < x2 + width2 &&
+            x1 + width1 > x2 &&
+            y1 < y2 + height2 &&
+            y1 + height1 > y2);
+    }
+
+    resizeImage(image: GameImage2D, width: number, height: number): Observable<void> {
+        return new Observable<void>((observer: Subscriber<void>) => {
+            image.element.onload = () => {
+                console.info('Resized image:', image);
+
+                observer.next();
+                observer.complete();
+            };
+
+            let canvas = document.createElement('canvas');
+            canvas.width = width;
+            canvas.height = height;
+            let ctx = canvas.getContext('2d');
+            ctx.drawImage(image.element, 0, 0, width, height);
+
+            image.element.src = canvas.toDataURL();
+        });
+    }
+
+    rotateImage(): Observable<void> {
+        return new Observable<any>((observer: Subscriber<any>) => {
+            observer.next('TODO');
+            observer.complete();
+        });
+    }
+
+    saveImage(): Observable<void> {
+        return new Observable<any>((observer: Subscriber<any>) => {
+            observer.next('TODO');
+            observer.complete();
+        });
+    }
+
+    scaleImage(image: GameImage2D, zoomX: number, zoomY: number): Observable<void> {
+        let newWidth = Math.trunc(image.width * zoomX);
+        let newHeight = Math.trunc(image.height * zoomY);
+
+        return this.resizeImage(image, newWidth, newHeight);
+    }
+
+    tileBlock(image: GameImage2D, offsetX: number, offsetY: number, frame?: number): Observable<void> {
+        return this.graphics2d.tileBlock(image, offsetX, offsetY, frame);
+    }
+
+    tileImage(): Observable<void> {
+        return new Observable<any>((observer: Subscriber<any>) => {
+            observer.next('TODO');
+            observer.complete();
+        });
+    }
 }

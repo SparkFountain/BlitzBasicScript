@@ -2,28 +2,28 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsSoundChannels {
-  constructor() {
+    constructor() {
 
-  }
+    }
 
-  channelPan() {
-  }
+    channelPan() {
+    }
 
-  channelPitch() {
-  }
+    channelPitch() {
+    }
 
-  channelPlaying() {
-  }
+    channelPlaying() {
+    }
 
-  channelVolume() {
-  }
+    channelVolume() {
+    }
 
-  pauseChannel() {
-  }
+    pauseChannel() {
+    }
 
-  resumeChannel() {
-  }
+    resumeChannel() {
+    }
 
-  stopChannel() {
-  }
+    stopChannel() {
+    }
 }

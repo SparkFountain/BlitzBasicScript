@@ -2,91 +2,91 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGraphics3dSurfaces {
-  constructor() {
+    constructor() {
 
-  }
+    }
 
-  addTriangle() {
-  }
+    addTriangle() {
+    }
 
-  addVertex() {
-  }
+    addVertex() {
+    }
 
-  clearSurface() {
-  }
+    clearSurface() {
+    }
 
-  countSurfaces() {
-  }
+    countSurfaces() {
+    }
 
-  countTriangles() {
-  }
+    countTriangles() {
+    }
 
-  countVertices() {
-  }
+    countVertices() {
+    }
 
-  createSurface() {
-  }
+    createSurface() {
+    }
 
-  findSurface() {
-  }
+    findSurface() {
+    }
 
-  getSurface() {
-  }
+    getSurface() {
+    }
 
-  triangleVertex() {
-  }
+    triangleVertex() {
+    }
 
-  updateNormals() {
-  }
+    updateNormals() {
+    }
 
-  vertexAlpha() {
-  }
+    vertexAlpha() {
+    }
 
-  vertexBlue() {
-  }
+    vertexBlue() {
+    }
 
-  vertexColor() {
-  }
+    vertexColor() {
+    }
 
-  vertexCoords() {
-  }
+    vertexCoords() {
+    }
 
-  vertexGreen() {
-  }
+    vertexGreen() {
+    }
 
-  vertexNormal() {
-  }
+    vertexNormal() {
+    }
 
-  vertexNX() {
-  }
+    vertexNX() {
+    }
 
-  vertexNY() {
-  }
+    vertexNY() {
+    }
 
-  vertexNZ() {
-  }
+    vertexNZ() {
+    }
 
-  vertexRed() {
-  }
+    vertexRed() {
+    }
 
-  vertexTexCoords() {
-  }
+    vertexTexCoords() {
+    }
 
-  vertexU() {
-  }
+    vertexU() {
+    }
 
-  vertexV() {
-  }
+    vertexV() {
+    }
 
-  vertexW() {
-  }
+    vertexW() {
+    }
 
-  vertexX() {
-  }
+    vertexX() {
+    }
 
-  vertexY() {
-  }
+    vertexY() {
+    }
 
-  vertexZ() {
-  }
+    vertexZ() {
+    }
 }

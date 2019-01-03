@@ -2,31 +2,31 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGraphics2dMovies {
-  constructor() {
+    constructor() {
 
-  }
+    }
 
-  closeMovie() {
+    closeMovie() {
 
-  }
+    }
 
-  drawMovie() {
+    drawMovie() {
 
-  }
+    }
 
-  movieHeight() {
+    movieHeight() {
 
-  }
+    }
 
-  moviePlaying() {
+    moviePlaying() {
 
-  }
+    }
 
-  movieWidth() {
+    movieWidth() {
 
-  }
+    }
 
-  openMovie() {
+    openMovie() {
 
-  }
+    }
 }
