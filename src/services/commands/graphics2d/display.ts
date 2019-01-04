@@ -6,54 +6,54 @@ import {GameStateService} from '../../game-state/game-state.service';
 
 @Injectable()
 export class CommandsGraphics2dDisplay {
-  constructor(private babylonjs: BabylonJSService,
-              private graphics2d: Graphics2dService,
-              private gameState: GameStateService
-  ) {
+    constructor(private babylonjs: BabylonJSService,
+                private graphics2d: Graphics2dService,
+                private gameState: GameStateService
+    ) {
 
-  }
+    }
 
-  endGraphics() {
+    endGraphics() {
 
-  }
+    }
 
-  gfxDriverName() {
+    gfxDriverName() {
 
-  }
+    }
 
-  gfxModeDepth(): Observable<number> {
-    return of(32);
-  }
+    gfxModeDepth(): Observable<number> {
+        return of(32);
+    }
 
-  gfxModeExists(): Observable<boolean> {
-    return of(true);
-  }
+    gfxModeExists(): Observable<boolean> {
+        return of(true);
+    }
 
-  graphics(width: number, height: number): Observable<void> {
-    this.gameState.setScreenWidth(width);
-    this.gameState.setScreenHeight(height);
-    this.gameState.setScreenViewport({
-      beginX: 0,
-      beginY: 0,
-      width: width,
-      height: height
-    });
+    graphics(width: number, height: number): Observable<void> {
+        this.gameState.setScreenWidth(width);
+        this.gameState.setScreenHeight(height);
+        this.gameState.setScreenViewport({
+            beginX: 0,
+            beginY: 0,
+            width: width,
+            height: height
+        });
 
-    return concat(
-      this.babylonjs.initGraphics(width, height),
-      this.graphics2d.initGraphics(width, height)
-    );
-  }
+        return concat(
+            this.babylonjs.initGraphics(width, height),
+            this.graphics2d.initGraphics(width, height)
+        );
+    }
 
-  graphicsDepth(): Observable<number> {
-    return of(32);
-  }
+    graphicsDepth(): Observable<number> {
+        return of(32);
+    }
 
-  graphicsHeight(): Observable<number> {
-    return of(this.gameState.getScreenProperties().height);
-  }
+    graphicsHeight(): Observable<number> {
+        return of(this.gameState.getScreenProperties().height);
+    }
 
-  graphicsWidth(): Observable<number> {
-    return of(this.gameState.getScreenProperties().width);
-  }
+    graphicsWidth(): Observable<number> {
+        return of(this.gameState.getScreenProperties().width);
+    }
 }

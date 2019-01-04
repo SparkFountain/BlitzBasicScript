@@ -2,13 +2,13 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGuiCanvas {
-  constructor() {
+    constructor() {
 
-  }
+    }
 
-  createCanvas() {
-  }
+    createCanvas() {
+    }
 
-  flipCanvas() {
-  }
+    flipCanvas() {
+    }
 }

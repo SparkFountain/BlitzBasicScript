@@ -2,16 +2,16 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGuiButton {
-  constructor() {
+    constructor() {
 
-  }
+    }
 
-  buttonState() {
-  }
+    buttonState() {
+    }
 
-  createButton() {
-  }
+    createButton() {
+    }
 
-  setButtonState() {
-  }
+    setButtonState() {
+    }
 }

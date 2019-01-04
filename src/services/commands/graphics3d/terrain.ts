@@ -2,37 +2,37 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGraphics3dTerrain {
-  constructor() {
+    constructor() {
 
-  }
+    }
 
-  createTerrain() {
-  }
+    createTerrain() {
+    }
 
-  loadTerrain() {
-  }
+    loadTerrain() {
+    }
 
-  modifyTerrain() {
-  }
+    modifyTerrain() {
+    }
 
-  terrainDetail() {
-  }
+    terrainDetail() {
+    }
 
-  terrainHeight() {
-  }
+    terrainHeight() {
+    }
 
-  terrainShading() {
-  }
+    terrainShading() {
+    }
 
-  terrainSize() {
-  }
+    terrainSize() {
+    }
 
-  terrainX() {
-  }
+    terrainX() {
+    }
 
-  terrainY() {
-  }
+    terrainY() {
+    }
 
-  terrainZ() {
-  }
+    terrainZ() {
+    }
 }

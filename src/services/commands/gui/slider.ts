@@ -2,19 +2,19 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGuiSlider {
-  constructor() {
+    constructor() {
 
-  }
+    }
 
-  createSlider() {
-  }
+    createSlider() {
+    }
 
-  setSliderRange() {
-  }
+    setSliderRange() {
+    }
 
-  setSliderValue() {
-  }
+    setSliderValue() {
+    }
 
-  sliderValue() {
-  }
+    sliderValue() {
+    }
 }

@@ -2,19 +2,19 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGuiDiverse {
-  constructor() {
+    constructor() {
 
-  }
+    }
 
-  activeObjects() {
-  }
+    activeObjects() {
+    }
 
-  autoSuspend() {
-  }
+    autoSuspend() {
+    }
 
-  createProcess() {
-  }
+    createProcess() {
+    }
 
-  debugObjects() {
-  }
+    debugObjects() {
+    }
 }

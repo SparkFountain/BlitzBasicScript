@@ -1,3 +1,3 @@
 export interface RepeatUntil {
-  condition: boolean;
+    condition: boolean;
 }

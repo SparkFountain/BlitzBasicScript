@@ -3,75 +3,75 @@ import {Observable, Subscriber} from 'rxjs';
 
 @Injectable()
 export class CommandsGraphics3dCollisions {
-  constructor() {
+    constructor() {
 
-  }
+    }
 
-  clearCollisions(): Observable<void> {
-    return new Observable<void>((observer: Subscriber<void>) => {
-      observer.next();
-      observer.complete();
-    });
-  }
+    clearCollisions(): Observable<void> {
+        return new Observable<void>((observer: Subscriber<void>) => {
+            observer.next();
+            observer.complete();
+        });
+    }
 
-  collisionEntity(entity: any, index: number): any {
-  }
+    collisionEntity(entity: any, index: number): any {
+    }
 
-  collisionNX(entity: any, index: number): number {
-    return 0;
-  }
+    collisionNX(entity: any, index: number): number {
+        return 0;
+    }
 
-  collisionNY(entity: any, index: number): number {
-    return 0;
-  }
+    collisionNY(entity: any, index: number): number {
+        return 0;
+    }
 
-  collisionNZ(entity: any, index: number): number {
-    return 0;
-  }
+    collisionNZ(entity: any, index: number): number {
+        return 0;
+    }
 
-  collisions(sourceEntity: any, targetEntity: any, method: number, reaction: number): void {
-  }
+    collisions(sourceEntity: any, targetEntity: any, method: number, reaction: number): void {
+    }
 
-  collisionSurface(entity: any, index: number): any {
-  }
+    collisionSurface(entity: any, index: number): any {
+    }
 
-  collisionTime(entity: any, index: number): number {
-    return 0;
-  }
+    collisionTime(entity: any, index: number): number {
+        return 0;
+    }
 
-  collisionTriangle() {
-  }
+    collisionTriangle() {
+    }
 
-  collisionX() {
-  }
+    collisionX() {
+    }
 
-  collisionY() {
-  }
+    collisionY() {
+    }
 
-  collisionZ() {
-  }
+    collisionZ() {
+    }
 
-  countCollisions() {
-  }
+    countCollisions() {
+    }
 
-  entityBox() {
-  }
+    entityBox() {
+    }
 
-  entityCollided() {
-  }
+    entityCollided() {
+    }
 
-  entityRadius() {
-  }
+    entityRadius() {
+    }
 
-  entityType() {
-  }
+    entityType() {
+    }
 
-  getEntityType() {
-  }
+    getEntityType() {
+    }
 
-  meshesIntersect() {
-  }
+    meshesIntersect() {
+    }
 
-  resetEntity() {
-  }
+    resetEntity() {
+    }
 }
