@@ -1,68 +1,124 @@
 import {Injectable} from '@angular/core';
+import {Observable, of, Subscriber} from 'rxjs';
+import {Graphics2dService} from '../../2d/graphics2d.service';
+import {GameStateService} from '../../game-state/game-state.service';
+import {GameFont} from '../../../interfaces/game/font';
 
 @Injectable()
 export class CommandsGraphics2dText {
-    constructor() {
+  constructor(private graphics2d: Graphics2dService,
+              private gameState: GameStateService) {
 
-    }
+  }
 
-    fontAscent() {
+  fontAscent() {
 
-    }
+  }
 
-    fontDescent() {
+  fontDescent() {
 
-    }
+  }
 
-    fontHeight() {
+  fontHeight() {
 
-    }
+  }
 
-    fontName() {
+  fontName(font: GameFont): Observable<string> {
+    return of(font.name);
+  }
 
-    }
+  fontSize(font: GameFont): Observable<number> {
+    return of(font.size);
+  }
 
-    fontSize() {
+  fontStyle(font: GameFont): Observable<number> {
+    return new Observable<number>((observer: Subscriber<number>) => {
+      let result = 0;
+      if(font.bold) {
+        result += 1;
+      }
+      if(font.italic) {
+        result += 2;
+      }
+      if(font.underline) {
+        result += 4;
+      }
 
-    }
+      observer.next(result);
+      observer.complete();
+    });
+  }
 
-    fontStyle() {
+  fontWidth() {
 
-    }
+  }
 
-    fontWidth() {
+  freeFont(font: GameFont): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      font = null;
 
-    }
+      observer.next();
+      observer.complete();
+    });
 
-    freeFont() {
+  }
 
-    }
+  loadFont(fontName: string, size: number, bold?: boolean, italic?: boolean, underline?: boolean): Observable<GameFont> {
+    return new Observable<GameFont>((observer: Subscriber<GameFont>) => {
+      observer.next({
+        name: fontName,
+        size: size,
+        bold: bold,
+        italic: italic,
+        underline: underline
+      });
+      observer.complete();
+    });
+  }
 
-    loadFont() {
+  locate(x: number, y: number): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      this.gameState.setTextModeOffset({x: x, y: y});
 
-    }
+      observer.next();
+      observer.complete();
+    });
+  }
 
-    locate() {
+  print(text: string): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      let textModeOffset: { x: number, y: number } = this.gameState.getTextModeProperties().offset;
+      this.text(textModeOffset.x, textModeOffset.y, text).subscribe(() => {
+        //TODO calculate new text mode offset
 
-    }
+        observer.next();
+        observer.complete();
+      });
+    });
+  }
 
-    print() {
+  setFont(font: GameFont): Observable<void> {
+    return this.graphics2d.setFont(font);
+  }
 
-    }
+  stringHeight() {
 
-    setFont() {
+  }
 
-    }
+  stringWidth(text: string): Observable<number> {
+    return this.graphics2d.stringWidth(text);
+  }
 
-    stringHeight() {
+  text(x: number, y: number, text: string, centerX?: boolean, centerY?: boolean): Observable<void> {
+    return this.graphics2d.text(x, y, text, centerX, centerY);
+  }
 
-    }
+  write(text: string): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      //TODO
 
-    stringWidth() {
-
-    }
-
-    text() {
-
-    }
+      observer.next();
+      observer.complete();
+    });
+  }
 }

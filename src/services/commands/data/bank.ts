@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {Observable, of} from 'rxjs';
 
 @Injectable()
 export class CommandsDataBank {
@@ -6,48 +7,49 @@ export class CommandsDataBank {
 
     }
 
-    bankSize() {
+    bankSize(bank: any): Observable<number> {
+      return of(0);
     }
 
-    copyBank() {
+    copyBank(sourceBank: any, sourcePos: number, targetBank: any, targetPos: number, length?: number) {
     }
 
-    createBank() {
+    createBank(bytes?: number) {
     }
 
-    freeBank() {
+    freeBank(bank: any) {
     }
 
-    peekByte() {
+    peekByte(bank: any, pos: number) {
     }
 
-    peekFloat() {
+    peekFloat(bank: any, pos: number) {
     }
 
-    peekInt() {
+    peekInt(bank: any, pos: number) {
     }
 
-    peekShort() {
+    peekShort(bank: any, pos: number) {
     }
 
-    pokeByte() {
+    pokeByte(bank: any, pos: number, value: number) {
     }
 
-    pokeFloat() {
+    pokeFloat(bank: any, pos: number, value: number) {
     }
 
-    pokeInt() {
+    pokeInt(bank: any, pos: number, value: number) {
     }
 
-    pokeShort() {
+    pokeShort(bank: any, pos: number, value: number) {
     }
 
-    readBytes() {
+    readBytes(bank: any, stream: any, startPos: number, length: number) {
     }
 
-    resizeBank() {
+    resizeBank(bank: any, bytes?: number) {
     }
 
-    writeBytes() {
+    writeBytes(bank: any, stream: any, startPos: number, length: number) {
     }
 }

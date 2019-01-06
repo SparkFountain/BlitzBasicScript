@@ -112,6 +112,8 @@ export class CommandsSoundMusicSamples {
 
   soundPitch(sound: GameSound, frequency: number): Observable<void> {
     return new Observable<void>((observer: Subscriber<void>) => {
+      //TODO check how many channels exist and copy all of them successively
+
       let newBufferNode = sound.context.createBufferSource();
       newBufferNode.buffer = sound.context.createBuffer(2, sound.source.buffer.length, frequency);
       let leftChannel = sound.source.buffer.getChannelData(0);

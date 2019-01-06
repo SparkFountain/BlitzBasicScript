@@ -21,6 +21,7 @@ import {CommandsGraphics2dImages} from '../services/commands/graphics2d/images';
 import {DebugEnvironment} from '../services/environment/debug.environment';
 import {CommandsGraphics3dLightShadow} from '../services/commands/graphics3d/light-shadow';
 import {CommandsSoundMusicSamples} from '../services/commands/sound/music-samples';
+import {CommandsGraphics2dText} from '../services/commands/graphics2d/text';
 
 @NgModule({
   declarations: [
@@ -47,6 +48,7 @@ import {CommandsSoundMusicSamples} from '../services/commands/sound/music-sample
     CommandsGraphics2dGraphics,
     CommandsGraphics2dImages,
     CommandsGraphics2dPixel,
+    CommandsGraphics2dText,
 
     CommandsGraphics3dCamera,
     CommandsGraphics3dCoordinates,

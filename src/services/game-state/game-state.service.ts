@@ -30,6 +30,13 @@ export interface ImagesProperties {
     autoMidHandle: boolean
 }
 
+export interface TextModeProperties {
+  offset: {
+    x: number,
+    y: number
+  }
+}
+
 @Injectable()
 export class GameStateService {
     private global: object;
@@ -38,8 +45,8 @@ export class GameStateService {
     private type: object;
 
     private screen: ScreenProperties;
-
     private images: ImagesProperties;
+    private textMode: TextModeProperties;
 
     constructor() {
         this.global = {};
@@ -75,6 +82,10 @@ export class GameStateService {
         this.images = {
             autoMidHandle: false
         };
+
+        this.textMode = {
+          offset: {x: 0, y: 0}
+        }
     }
 
     public get(property: string): any {
@@ -120,6 +131,14 @@ export class GameStateService {
 
     public setImagesAutoMidHandle(active: boolean) {
         this.images.autoMidHandle = active;
+    }
+
+    public getTextModeProperties(): TextModeProperties {
+      return this.textMode;
+    }
+
+    public setTextModeOffset(offset: {x: number, y: number}): void {
+      this.textMode.offset = offset;
     }
 
 
