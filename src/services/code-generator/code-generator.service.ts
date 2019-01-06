@@ -171,7 +171,7 @@ export class CodeGenerator {
           });
         }),
         this.commandsGraphics2dGraphics.rect(195, 245, 10, 10, true),
-        this.commandsGraphics2dGraphics.rect(195 - 64, 245 - 64, 10, 10, true)
+        this.commandsGraphics2dGraphics.rect(195 - 64, 245 - 64, 10, 10, true),
                 /*new Observable((observer) => {
                     this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
                         this.commandsGraphics2dImages.maskImage(image, 255, 0, 255).subscribe(() => {

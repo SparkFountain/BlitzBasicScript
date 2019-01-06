@@ -117,14 +117,14 @@ export class CommandsSoundMusicSamples {
 
     soundPitch(sound: GameSound, frequency: number): Observable<void> {
     return new Observable<void>((observer: Subscriber<void>) => {
-      let srcBuffer = sound.source.buffer;
+      /*let srcBuffer = sound.source.buffer;
 
       let c = new OfflineAudioContext(1, srcBuffer.duration, 48000);
       let b = c.createBuffer(1, srcBuffer.duration, 44100);
       b.copyToChannel(srcBuffer, 0);
       sound.source = c.createBufferSource();
       sound.source.buffer = b;
-      sound.source.connect(sound.context.destination);
+      sound.source.connect(sound.context.destination);*/
 
       observer.next();
       observer.complete();
