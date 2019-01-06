@@ -20,6 +20,7 @@ import {CommandsGraphics2dPixel} from '../services/commands/graphics2d/pixel';
 import {CommandsGraphics2dImages} from '../services/commands/graphics2d/images';
 import {DebugEnvironment} from '../services/environment/debug.environment';
 import {CommandsGraphics3dLightShadow} from '../services/commands/graphics3d/light-shadow';
+import {CommandsSoundMusicSamples} from '../services/commands/sound/music-samples';
 
 @NgModule({
   declarations: [
@@ -51,6 +52,8 @@ import {CommandsGraphics3dLightShadow} from '../services/commands/graphics3d/lig
     CommandsGraphics3dCoordinates,
     CommandsGraphics3dLightShadow,
     CommandsGraphics3dMeshes,
+
+    CommandsSoundMusicSamples,
 
     GameStateService,
     BabylonJSService,

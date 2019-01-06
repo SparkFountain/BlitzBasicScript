@@ -10,12 +10,14 @@ import {CameraType} from '../../enums/camera/camera-type';
 import {CommandsGraphics3dMeshes} from '../commands/graphics3d/meshes';
 import {CommandsGraphics3dCoordinates} from '../commands/graphics3d/coordinates';
 import {GameStateService} from '../game-state/game-state.service';
-import {Observable, of} from 'rxjs';
+import {concat, Observable, of} from 'rxjs';
 import {CommandsGraphics2dPixel} from '../commands/graphics2d/pixel';
 import {CommandsBasicsTimeRandom} from '../commands/basics/time-random';
 import {CommandsGraphics2dImages} from '../commands/graphics2d/images';
 import {CommandsGraphics3dLightShadow} from '../commands/graphics3d/light-shadow';
 import {GameImage2D} from '../../interfaces/game/image-2d';
+import {CommandsSoundMusicSamples} from '../commands/sound/music-samples';
+import {GameSound} from '../../interfaces/game/sound';
 import Camera = BABYLON.Camera;
 import Mesh = BABYLON.Mesh;
 import Light = BABYLON.Light;
@@ -36,7 +38,8 @@ export class CodeGenerator {
     private commandsGraphics3dLightShadow: CommandsGraphics3dLightShadow,
     private commandsGraphics3dMeshes: CommandsGraphics3dMeshes,
     private commandsBasicsDiverse: CommandsBasicsDiverse,
-    private commandsBasicsTimeRandom: CommandsBasicsTimeRandom
+    private commandsBasicsTimeRandom: CommandsBasicsTimeRandom,
+    private commandsSoundMusicSamples: CommandsSoundMusicSamples
   ) {
 
   }
@@ -144,31 +147,31 @@ export class CodeGenerator {
           }
         }),
         new Observable((observer) => {
-            this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
-                this.commandsGraphics2dImages.resizeImage(image, 128, 128).subscribe(() => {
-                    observer.next();
-                    observer.complete();
-                });
+          this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
+            this.commandsGraphics2dImages.resizeImage(image, 128, 128).subscribe(() => {
+              observer.next();
+              observer.complete();
             });
+          });
         }),
         new Observable((observer) => {
-            this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
-                this.commandsGraphics2dImages.rotateImage(image, 30).subscribe(() => {
-                    observer.next();
-                    observer.complete();
-                });
+          this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
+            this.commandsGraphics2dImages.rotateImage(image, 30).subscribe(() => {
+              observer.next();
+              observer.complete();
             });
+          });
         }),
         new Observable((observer) => {
-            this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
-                this.commandsGraphics2dImages.drawBlock(image, 200, 250).subscribe(() => {
-                    observer.next();
-                    observer.complete();
-                });
+          this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
+            this.commandsGraphics2dImages.drawBlock(image, 200, 250).subscribe(() => {
+              observer.next();
+              observer.complete();
             });
+          });
         }),
         this.commandsGraphics2dGraphics.rect(195, 245, 10, 10, true),
-        this.commandsGraphics2dGraphics.rect(195-64, 245-64, 10, 10, true),
+        this.commandsGraphics2dGraphics.rect(195 - 64, 245 - 64, 10, 10, true),
         /*new Observable((observer) => {
             this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
                 this.commandsGraphics2dImages.maskImage(image, 255, 0, 255).subscribe(() => {
@@ -205,6 +208,46 @@ export class CodeGenerator {
         }),
 
         this.commandService.basics.diverse.appTitle('Carribico')*/
+
+        //MUSIC
+        /*this.generalService.assign({
+          variable: 'music',
+          type: 'global',
+          expression: {
+            value: this.commandsSoundMusicSamples.playMusic('/assets/sfx/music.mid', 0)
+          }
+        }),
+        new Observable((observer) => {
+          this.gameState.getGlobalAsync('music').subscribe((sound: GameSound) => {
+            console.info('SOUND:', sound);
+            this.commandsSoundMusicSamples.playSound(sound).subscribe(() => {
+              observer.next();
+              observer.complete();
+            });
+          });
+        }),*/
+
+        //SOUND
+        this.generalService.assign({
+          variable: 'sound',
+          type: 'global',
+          expression: {
+            value: this.commandsSoundMusicSamples.loadSound('/assets/sfx/tada.mp3')
+          }
+        }),
+        new Observable((observer) => {
+          this.gameState.getGlobalAsync('sound').subscribe((sound: GameSound) => {
+            concat(
+              this.commandsSoundMusicSamples.soundVolume(sound, 0.01),
+              this.commandsSoundMusicSamples.soundPan(sound, -1),
+              //this.commandsSoundMusicSamples.soundPitch(sound, 11000),
+              this.commandsSoundMusicSamples.playSound(sound)
+            ).subscribe(() => {
+              observer.next();
+              observer.complete();
+            });
+          });
+        })
       ],
       mainLoop: [
         //this.commandsBasicsDiverse.debugLog('Hello World' + new Date().getTime())

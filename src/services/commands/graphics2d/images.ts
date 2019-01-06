@@ -198,7 +198,7 @@ export class CommandsGraphics2dImages {
       image.width = width;
       image.height = height;
 
-      if(this.autoMidHandleActive()) {
+      if (this.autoMidHandleActive()) {
         image.handle.x = width / 2;
         image.handle.y = height / 2;
       } else {
