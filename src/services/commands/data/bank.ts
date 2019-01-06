@@ -2,52 +2,52 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsDataBank {
-  constructor() {
+    constructor() {
 
-  }
+    }
 
-  bankSize() {
-  }
+    bankSize() {
+    }
 
-  copyBank() {
-  }
+    copyBank() {
+    }
 
-  createBank() {
-  }
+    createBank() {
+    }
 
-  freeBank() {
-  }
+    freeBank() {
+    }
 
-  peekByte() {
-  }
+    peekByte() {
+    }
 
-  peekFloat() {
-  }
+    peekFloat() {
+    }
 
-  peekInt() {
-  }
+    peekInt() {
+    }
 
-  peekShort() {
-  }
+    peekShort() {
+    }
 
-  pokeByte() {
-  }
+    pokeByte() {
+    }
 
-  pokeFloat() {
-  }
+    pokeFloat() {
+    }
 
-  pokeInt() {
-  }
+    pokeInt() {
+    }
 
-  pokeShort() {
-  }
+    pokeShort() {
+    }
 
-  readBytes() {
-  }
+    readBytes() {
+    }
 
-  resizeBank() {
-  }
+    resizeBank() {
+    }
 
-  writeBytes() {
-  }
+    writeBytes() {
+    }
 }

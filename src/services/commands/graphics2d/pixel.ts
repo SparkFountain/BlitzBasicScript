@@ -5,24 +5,24 @@ import {GameStateService} from '../../game-state/game-state.service';
 
 @Injectable()
 export class CommandsGraphics2dPixel {
-  constructor(private graphics2d: Graphics2dService,
-              private gameState: GameStateService) {
+    constructor(private graphics2d: Graphics2dService,
+                private gameState: GameStateService) {
 
-  }
+    }
 
-  colorBlue(): Observable<number> {
-    return of(this.gameState.getScreenProperties().color.blue);
-  }
+    colorBlue(): Observable<number> {
+        return of(this.gameState.getScreenProperties().color.blue);
+    }
 
-  colorGreen(): Observable<number> {
-    return of(this.gameState.getScreenProperties().color.green);
-  }
+    colorGreen(): Observable<number> {
+        return of(this.gameState.getScreenProperties().color.green);
+    }
 
-  colorRed(): Observable<number> {
-    return of(this.gameState.getScreenProperties().color.red);
-  }
+    colorRed(): Observable<number> {
+        return of(this.gameState.getScreenProperties().color.red);
+    }
 
-  plot(x: number, y: number): Observable<void> {
-    return this.graphics2d.plot(x, y);
-  }
+    plot(x: number, y: number): Observable<void> {
+        return this.graphics2d.plot(x, y);
+    }
 }

@@ -23,119 +23,119 @@ import Mesh = BABYLON.Mesh;
 import Light = BABYLON.Light;
 
 @Injectable({
-  providedIn: 'root'
+    providedIn: 'root'
 })
 export class CodeGenerator {
-  constructor(
-    private gameState: GameStateService,
-    private generalService: GeneralService,
-    private commandsGraphics2dDisplay: CommandsGraphics2dDisplay,
-    private commandsGraphics2dGraphics: CommandsGraphics2dGraphics,
-    private commandsGraphics2dImages: CommandsGraphics2dImages,
-    private commandsGraphics2dPixel: CommandsGraphics2dPixel,
-    private commandsGraphics3dCamera: CommandsGraphics3dCamera,
-    private commandsGraphics3dCoordinates: CommandsGraphics3dCoordinates,
-    private commandsGraphics3dLightShadow: CommandsGraphics3dLightShadow,
-    private commandsGraphics3dMeshes: CommandsGraphics3dMeshes,
-    private commandsBasicsDiverse: CommandsBasicsDiverse,
-    private commandsBasicsTimeRandom: CommandsBasicsTimeRandom,
+    constructor(
+        private gameState: GameStateService,
+        private generalService: GeneralService,
+        private commandsGraphics2dDisplay: CommandsGraphics2dDisplay,
+        private commandsGraphics2dGraphics: CommandsGraphics2dGraphics,
+        private commandsGraphics2dImages: CommandsGraphics2dImages,
+        private commandsGraphics2dPixel: CommandsGraphics2dPixel,
+        private commandsGraphics3dCamera: CommandsGraphics3dCamera,
+        private commandsGraphics3dCoordinates: CommandsGraphics3dCoordinates,
+        private commandsGraphics3dLightShadow: CommandsGraphics3dLightShadow,
+        private commandsGraphics3dMeshes: CommandsGraphics3dMeshes,
+        private commandsBasicsDiverse: CommandsBasicsDiverse,
+        private commandsBasicsTimeRandom: CommandsBasicsTimeRandom,
     private commandsSoundMusicSamples: CommandsSoundMusicSamples
   ) {
 
-  }
+    }
 
-  createTargetCode(abstractSyntaxTree: AbstractSyntaxTree): BbscriptCode {
-    return null;
-  }
+    createTargetCode(abstractSyntaxTree: AbstractSyntaxTree): BbscriptCode {
+        return null;
+    }
 
-  getFakeTargetCode(): BbscriptCode {
-    return {
-      globals: [],
-      statements: [
-        //TODO wait with target code execution until all services are initialized
+    getFakeTargetCode(): BbscriptCode {
+        return {
+            globals: [],
+            statements: [
+                //TODO wait with target code execution until all services are initialized
 
-        this.commandsGraphics2dDisplay.graphics(800, 600),
-        //this.commandsGraphics2dGraphics.cameraClsColor(255,0,0),  //TODO wrong implementation, fix
-        this.generalService.assign({
-          variable: 'i',
-          type: 'global',
-          expression: {
-            value: of(42)
-          }
-        }),
+                this.commandsGraphics2dDisplay.graphics(800, 600),
+                //this.commandsGraphics2dGraphics.cameraClsColor(255,0,0),  //TODO wrong implementation, fix
+                this.generalService.assign({
+                    variable: 'i',
+                    type: 'global',
+                    expression: {
+                        value: of(42)
+                    }
+                }),
 
-        //CAMERA
-        this.generalService.assign({
-          variable: 'camera',
-          type: 'global',
-          expression: {
-            value: this.commandsGraphics3dCamera.createCamera(CameraType.FREE)
-          }
-        }),
-        new Observable((observer) => {
-          this.gameState.getGlobalAsync('camera').subscribe((camera: Camera) => {
-            this.commandsGraphics3dCoordinates.positionEntity(camera, 0, 1, -10).subscribe(() => {
-              observer.next();
-              observer.complete();
-            });
-          });
-        }),
-        new Observable((observer) => {
-          this.gameState.getGlobalAsync('camera').subscribe((camera: Camera) => {
-            this.commandsGraphics3dCamera.cameraClsColor(camera, 50, 200, 240).subscribe(() => {
-              observer.next();
-              observer.complete();
-            });
-          });
-        }),
+                //CAMERA
+                this.generalService.assign({
+                    variable: 'camera',
+                    type: 'global',
+                    expression: {
+                        value: this.commandsGraphics3dCamera.createCamera(CameraType.FREE)
+                    }
+                }),
+                new Observable((observer) => {
+                    this.gameState.getGlobalAsync('camera').subscribe((camera: Camera) => {
+                        this.commandsGraphics3dCoordinates.positionEntity(camera, 0, 1, -10).subscribe(() => {
+                            observer.next();
+                            observer.complete();
+                        });
+                    });
+                }),
+                new Observable((observer) => {
+                    this.gameState.getGlobalAsync('camera').subscribe((camera: Camera) => {
+                        this.commandsGraphics3dCamera.cameraClsColor(camera, 50, 200, 240).subscribe(() => {
+                            observer.next();
+                            observer.complete();
+                        });
+                    });
+                }),
 
-        //LIGHT
-        this.generalService.assign({
-          variable: 'light',
-          type: 'global',
-          expression: {
-            value: this.commandsGraphics3dLightShadow.createLight(1)
-          }
-        }),
-        new Observable((observer) => {
-          this.gameState.getGlobalAsync('light').subscribe((light: Light) => {
-            this.commandsGraphics3dLightShadow.lightColor(light, 255, 255, 0).subscribe(() => {
-              observer.next();
-              observer.complete();
-            });
-          });
-        }),
+                //LIGHT
+                this.generalService.assign({
+                    variable: 'light',
+                    type: 'global',
+                    expression: {
+                        value: this.commandsGraphics3dLightShadow.createLight(1)
+                    }
+                }),
+                new Observable((observer) => {
+                    this.gameState.getGlobalAsync('light').subscribe((light: Light) => {
+                        this.commandsGraphics3dLightShadow.lightColor(light, 255, 255, 0).subscribe(() => {
+                            observer.next();
+                            observer.complete();
+                        });
+                    });
+                }),
 
-        //PRIMITIVE MESH
-        this.generalService.assign({
-          variable: 'cone',
-          type: 'global',
-          expression: {
-            value: this.commandsGraphics3dMeshes.createTorusKnot()
-          }
-        }),
-        new Observable((observer) => {
-          this.gameState.getGlobalAsync('cone').subscribe((cone: Mesh) => {
-            this.commandsGraphics3dCoordinates.positionEntity(cone, 0, 1, 5).subscribe((done) => {
-              observer.next();
-              observer.complete();
-            });
-          });
-        }),
+                //PRIMITIVE MESH
+                this.generalService.assign({
+                    variable: 'cone',
+                    type: 'global',
+                    expression: {
+                        value: this.commandsGraphics3dMeshes.createTorusKnot()
+                    }
+                }),
+                new Observable((observer) => {
+                    this.gameState.getGlobalAsync('cone').subscribe((cone: Mesh) => {
+                        this.commandsGraphics3dCoordinates.positionEntity(cone, 0, 1, 5).subscribe((done) => {
+                            observer.next();
+                            observer.complete();
+                        });
+                    });
+                }),
 
-        this.commandsGraphics3dLightShadow.ambientLight(128, 200, 50),
+                this.commandsGraphics3dLightShadow.ambientLight(128, 200, 50),
 
 
-        //2D GRAPHICS
-        this.commandsGraphics2dGraphics.color(255, 0, 0),
+                //2D GRAPHICS
+                this.commandsGraphics2dGraphics.color(0, 128, 0),
 
-        //this.commandsBasicsTimeRandom.delay(2000),
+                //this.commandsBasicsTimeRandom.delay(2000),
 
-        this.commandsGraphics2dGraphics.oval(50, 200, 20, 40, false),
-        this.commandsGraphics2dGraphics.line(300, 40, 350, 120),
+                this.commandsGraphics2dGraphics.oval(50, 200, 20, 40, false),
+                this.commandsGraphics2dGraphics.line(300, 40, 350, 120),
 
-        //this.commandsGraphics2dGraphics.color(255, 255, 0),
-        this.commandsGraphics2dPixel.plot(200, 200),
+                //this.commandsGraphics2dGraphics.color(255, 255, 0),
+                this.commandsGraphics2dPixel.plot(200, 200),
 
         //IMAGE
         this.commandsGraphics2dImages.autoMidHandle(true),
@@ -171,41 +171,41 @@ export class CodeGenerator {
           });
         }),
         this.commandsGraphics2dGraphics.rect(195, 245, 10, 10, true),
-        this.commandsGraphics2dGraphics.rect(195 - 64, 245 - 64, 10, 10, true),
-        /*new Observable((observer) => {
-            this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
-                this.commandsGraphics2dImages.maskImage(image, 255, 0, 255).subscribe(() => {
-                    observer.next();
-                    observer.complete();
-                });
-            });
-        }),*/
-        /*new Observable((observer) => {
-            this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
-                this.commandsGraphics2dImages.resizeImage(image, 16, 16).subscribe(() => {
-                    observer.next();
-                    observer.complete();
-                });
-            });
-        }),*/
-        /*new Observable((observer) => {
-          this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
-            this.commandsGraphics2dImages.tileBlock(image, 0, 0).subscribe(() => {
-              observer.next();
-              observer.complete();
-            });
-          });
-        })*/
+        this.commandsGraphics2dGraphics.rect(195 - 64, 245 - 64, 10, 10, true)
+                /*new Observable((observer) => {
+                    this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
+                        this.commandsGraphics2dImages.maskImage(image, 255, 0, 255).subscribe(() => {
+                            observer.next();
+                            observer.complete();
+                        });
+                    });
+                }),*/
+                /*new Observable((observer) => {
+                    this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
+                        this.commandsGraphics2dImages.resizeImage(image, 16, 16).subscribe(() => {
+                            observer.next();
+                            observer.complete();
+                        });
+                    });
+                }),*/
+                /*new Observable((observer) => {
+                  this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
+                    this.commandsGraphics2dImages.tileBlock(image, 0, 0).subscribe(() => {
+                      observer.next();
+                      observer.complete();
+                    });
+                  });
+                })*/
 
-        /*this.generalService.forToNext({
-          assignment: {
-            variable: 'i',
-            expression: 10
-          },
-          limit: 10,
-          increment: 1,
-          statements: []
-        }),
+                /*this.generalService.forToNext({
+                  assignment: {
+                    variable: 'i',
+                    expression: 10
+                  },
+                  limit: 10,
+                  increment: 1,
+                  statements: []
+                }),
 
         this.commandService.basics.diverse.appTitle('Carribico')*/
 

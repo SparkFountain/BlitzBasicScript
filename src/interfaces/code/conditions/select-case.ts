@@ -1,3 +1,3 @@
 export interface SelectCase {
-  expression: any;
+    expression: any;
 }

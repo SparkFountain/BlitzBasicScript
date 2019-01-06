@@ -2,37 +2,37 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGuiEvent {
-  constructor() {
+    constructor() {
 
-  }
+    }
 
-  eventData() {
-  }
+    eventData() {
+    }
 
-  eventId() {
-  }
+    eventId() {
+    }
 
-  eventSource() {
-  }
+    eventSource() {
+    }
 
-  eventX() {
-  }
+    eventX() {
+    }
 
-  eventY() {
-  }
+    eventY() {
+    }
 
-  eventZ() {
-  }
+    eventZ() {
+    }
 
-  flushEvents() {
-  }
+    flushEvents() {
+    }
 
-  hotKeyEvent() {
-  }
+    hotKeyEvent() {
+    }
 
-  peekEvent() {
-  }
+    peekEvent() {
+    }
 
-  waitEvent() {
-  }
+    waitEvent() {
+    }
 }

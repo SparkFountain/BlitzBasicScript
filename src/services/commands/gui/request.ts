@@ -2,37 +2,37 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGuiRequest {
-  constructor() {
+    constructor() {
 
-  }
+    }
 
-  confirm() {
-  }
+    confirm() {
+    }
 
-  notify() {
-  }
+    notify() {
+    }
 
-  proceed() {
-  }
+    proceed() {
+    }
 
-  requestColor() {
-  }
+    requestColor() {
+    }
 
-  requestDir() {
-  }
+    requestDir() {
+    }
 
-  requestedBlue() {
-  }
+    requestedBlue() {
+    }
 
-  requestedGreen() {
-  }
+    requestedGreen() {
+    }
 
-  requestedRed() {
-  }
+    requestedRed() {
+    }
 
-  requestFile() {
-  }
+    requestFile() {
+    }
 
-  requestFont() {
-  }
+    requestFont() {
+    }
 }

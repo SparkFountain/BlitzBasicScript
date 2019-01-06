@@ -2,43 +2,43 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGuiTreeView {
-  constructor() {
+    constructor() {
 
-  }
+    }
 
-  addTreeViewNode() {
-  }
+    addTreeViewNode() {
+    }
 
-  collapseTreeViewNode() {
-  }
+    collapseTreeViewNode() {
+    }
 
-  countTreeViewNodes() {
-  }
+    countTreeViewNodes() {
+    }
 
-  createTreeView() {
-  }
+    createTreeView() {
+    }
 
-  expandTreeViewNode() {
-  }
+    expandTreeViewNode() {
+    }
 
-  freeTreeViewNode() {
-  }
+    freeTreeViewNode() {
+    }
 
-  insertTreeViewNode() {
-  }
+    insertTreeViewNode() {
+    }
 
-  modifyTreeViewNode() {
-  }
+    modifyTreeViewNode() {
+    }
 
-  selectedTreeViewNode() {
-  }
+    selectedTreeViewNode() {
+    }
 
-  selectTreeViewNode() {
-  }
+    selectTreeViewNode() {
+    }
 
-  treeViewNodeText() {
-  }
+    treeViewNodeText() {
+    }
 
-  treeViewRoot() {
-  }
+    treeViewRoot() {
+    }
 }

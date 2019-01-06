@@ -23,37 +23,37 @@ import {CommandsGraphics3dLightShadow} from '../services/commands/graphics3d/lig
 import {CommandsSoundMusicSamples} from '../services/commands/sound/music-samples';
 
 @NgModule({
-  declarations: [
-    BlitzBasicScriptComponent
-  ],
-  imports: [
-    HttpClientModule,
-    CommonModule
-  ],
-  exports: [
-    BlitzBasicScriptComponent
-  ],
-  providers: [
-    DebugEnvironment,
+    declarations: [
+        BlitzBasicScriptComponent
+    ],
+    imports: [
+        HttpClientModule,
+        CommonModule
+    ],
+    exports: [
+        BlitzBasicScriptComponent
+    ],
+    providers: [
+        DebugEnvironment,
 
-    GeneralService,
+        GeneralService,
 
-    CommandsBasicsDiverse,
-    CommandsBasicsMaths,
-    CommandsBasicsStrings,
-    CommandsBasicsTimeRandom,
+        CommandsBasicsDiverse,
+        CommandsBasicsMaths,
+        CommandsBasicsStrings,
+        CommandsBasicsTimeRandom,
 
-    CommandsGraphics2dDisplay,
-    CommandsGraphics2dGraphics,
-    CommandsGraphics2dImages,
-    CommandsGraphics2dPixel,
+        CommandsGraphics2dDisplay,
+        CommandsGraphics2dGraphics,
+        CommandsGraphics2dImages,
+        CommandsGraphics2dPixel,
 
-    CommandsGraphics3dCamera,
-    CommandsGraphics3dCoordinates,
-    CommandsGraphics3dLightShadow,
-    CommandsGraphics3dMeshes,
+        CommandsGraphics3dCamera,
+        CommandsGraphics3dCoordinates,
+        CommandsGraphics3dLightShadow,
+        CommandsGraphics3dMeshes,
 
-    CommandsSoundMusicSamples,
+        CommandsSoundMusicSamples,
 
     GameStateService,
     BabylonJSService,
