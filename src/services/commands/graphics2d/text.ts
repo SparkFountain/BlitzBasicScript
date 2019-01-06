@@ -1,5 +1,5 @@
 import {Injectable} from '@angular/core';
-import {Observable, of, Subscriber} from 'rxjs';
+import {forkJoin, Observable, of, Subscriber} from 'rxjs';
 import {Graphics2dService} from '../../2d/graphics2d.service';
 import {GameStateService} from '../../game-state/game-state.service';
 import {GameFont} from '../../../interfaces/game/font';
@@ -11,15 +11,21 @@ export class CommandsGraphics2dText {
 
   }
 
-  fontAscent() {
-
+  fontAscent(font: GameFont): Observable<number> {
+    return this.graphics2d.fontAscent(font);
   }
 
-  fontDescent() {
-
+  fontDescent(font: GameFont): Observable<number> {
+    return this.graphics2d.fontDescent(font);
   }
 
-  fontHeight() {
+  fontHeight(font: GameFont): Observable<number> {
+    return new Observable<number>((observer: Subscriber<number>) => {
+      forkJoin([this.fontAscent(font), this.fontDescent(font)]).subscribe((values: number[]) => {
+        observer.next(values[0] + values[1]);
+        observer.complete();
+      });
+    });
 
   }
 
@@ -34,13 +40,13 @@ export class CommandsGraphics2dText {
   fontStyle(font: GameFont): Observable<number> {
     return new Observable<number>((observer: Subscriber<number>) => {
       let result = 0;
-      if(font.bold) {
+      if (font.bold) {
         result += 1;
       }
-      if(font.italic) {
+      if (font.italic) {
         result += 2;
       }
-      if(font.underline) {
+      if (font.underline) {
         result += 4;
       }
 
@@ -101,8 +107,8 @@ export class CommandsGraphics2dText {
     return this.graphics2d.setFont(font);
   }
 
-  stringHeight() {
-
+  stringHeight(text: string): Observable<number> {
+    return this.graphics2d.stringHeight();
   }
 
   stringWidth(text: string): Observable<number> {

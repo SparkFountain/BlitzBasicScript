@@ -266,10 +266,10 @@ export class Graphics2dService {
   setFont(font: GameFont): Observable<void> {
     return new Observable<void>((observer: Subscriber<void>) => {
       let fontString: string = '';
-      if(font.italic) {
+      if (font.italic) {
         fontString += 'italic ';
       }
-      if(font.bold) {
+      if (font.bold) {
         fontString += 'bold ';
       }
       fontString += font.size + 'px ';
@@ -282,7 +282,22 @@ export class Graphics2dService {
     });
   }
 
+  fontAscent(font: GameFont): Observable<number> {
+    return of(0);
+  }
+
+  fontDescent(font: GameFont): Observable<number> {
+    return of(0);
+  }
+
   stringWidth(text: string): Observable<number> {
-    return of(this._context2d.measureText(text) as number);
+    return of(this._context2d.measureText(text).width);
+  }
+
+  stringHeight(): Observable<number> {
+    return new Observable<number>((observer: Subscriber<number>) => {
+      observer.next(Number(this._context2d.font.match(/([0-9]+)px/)[1]));
+      observer.complete();
+    });
   }
 }

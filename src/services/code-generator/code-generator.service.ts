@@ -194,6 +194,8 @@ export class CodeGenerator {
         }),
 
         this.commandsGraphics2dText.text(50,50, "HELLO WORLD!"),
+        this.commandsGraphics2dText.stringWidth("HELLO WORLD!"),
+        this.commandsGraphics2dText.stringHeight("HELLO WORLD!"),
         /*new Observable((observer) => {
                     this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
                         this.commandsGraphics2dImages.maskImage(image, 255, 0, 255).subscribe(() => {
