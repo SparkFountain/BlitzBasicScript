@@ -238,9 +238,9 @@ export class CodeGenerator {
         new Observable((observer) => {
           this.gameState.getGlobalAsync('sound').subscribe((sound: GameSound) => {
             concat(
-              this.commandsSoundMusicSamples.soundVolume(sound, 0.01),
+              this.commandsSoundMusicSamples.soundVolume(sound, 0.1),
               this.commandsSoundMusicSamples.soundPan(sound, -1),
-              //this.commandsSoundMusicSamples.soundPitch(sound, 11000),
+              this.commandsSoundMusicSamples.soundPitch(sound, 22050),
               this.commandsSoundMusicSamples.playSound(sound)
             ).subscribe(() => {
               observer.next();

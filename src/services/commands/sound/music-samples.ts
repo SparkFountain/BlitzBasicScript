@@ -1,20 +1,21 @@
-import {Injectable} from '@angular/core';
 import {GameSound} from '../../../interfaces/game/sound';
 import {Observable, Subscriber} from 'rxjs';
-import {HttpClient} from '@angular/common/http';
 import {DebugEnvironment} from '../../environment/debug.environment';
+import {Injectable} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+
 
 @Injectable()
 export class CommandsSoundMusicSamples {
-    constructor(private http: HttpClient,
+  constructor(private http: HttpClient,
               private environment: DebugEnvironment) {
 
-    }
+  }
 
-    playCDTrack() {
-    }
+  playCDTrack() {
+  }
 
-    //TODO Midi will not be natively supported, use MIDI.js or similar library
+  //TODO Midi will not be natively supported, use MIDI.js or similar library
   playMusic(filePath: string, mode?: number): Observable<GameSound> {
     return new Observable<GameSound>((observer: Subscriber<GameSound>) => {
       this.loadSound(filePath).subscribe((sound: GameSound) => {
@@ -35,48 +36,42 @@ export class CommandsSoundMusicSamples {
         }
       });
     });
-    }
+  }
 
-    freeSound(sound: GameSound): Observable<void> {
+  freeSound(sound: GameSound): Observable<void> {
     return new Observable<void>((observer: Subscriber<void>) => {
       sound = null;
 
       observer.next();
       observer.complete();
     });
-    }
+  }
 
-    loadSound(filePath: string): Observable<GameSound> {
+  loadSound(filePath: string): Observable<GameSound> {
     return new Observable<GameSound>((observer: Subscriber<GameSound>) => {
       //info: the responseType conversion to JSON is a workaround, see https://github.com/angular/angular/issues/18586
       this.http.get<ArrayBuffer>(this.environment.getServer() + filePath, {responseType: 'arraybuffer' as 'json'})
         .subscribe((soundAsBlob: ArrayBuffer) => {
           let audioCtx: AudioContext = new AudioContext();
-          let src = audioCtx.createBufferSource();
+          let bufferSourceNode: AudioBufferSourceNode = audioCtx.createBufferSource();
           let volumeGain: GainNode = audioCtx.createGain();
-          let biquadFilter: BiquadFilterNode = audioCtx.createBiquadFilter();
           let pannerNode: StereoPannerNode = audioCtx.createStereoPanner();
 
-          audioCtx.decodeAudioData(soundAsBlob).then((buffer) => {
-              src.buffer = buffer;
+          audioCtx.decodeAudioData(soundAsBlob).then((buffer: AudioBuffer) => {
+              bufferSourceNode.buffer = buffer;
 
               volumeGain.gain.value = 0.1;
               volumeGain.connect(audioCtx.destination);
 
-              //biquadFilter.connect(volumeGain);
-
               pannerNode.pan.value = 0;
               pannerNode.connect(volumeGain);
 
-              src.connect(pannerNode);
-              //src.connect(pannerNode);
-              //src.connect(audioCtx.destination);
+              bufferSourceNode.connect(pannerNode);
 
               observer.next({
                 context: audioCtx,
-                source: src,
+                source: bufferSourceNode,
                 volumeGain: volumeGain,
-                biquadFilter: biquadFilter,
                 stereoPanner: pannerNode
               });
               observer.complete();
@@ -86,57 +81,58 @@ export class CommandsSoundMusicSamples {
             });
         });
     });
-    }
+  }
 
-    loopSound(sound: GameSound): Observable<void> {
+  loopSound(sound: GameSound): Observable<void> {
     return new Observable<void>((observer: Subscriber<void>) => {
       sound.source.loop = true;
 
       observer.next();
       observer.complete();
     });
-    }
+  }
 
-    playSound(sound: GameSound): Observable<void> {
+  playSound(sound: GameSound): Observable<void> {
     return new Observable<void>((observer: Subscriber<void>) => {
       sound.source.start(0);
 
       observer.next();
       observer.complete();
     });
-    }
+  }
 
-    soundPan(sound: GameSound, pan: number): Observable<void> {
+  soundPan(sound: GameSound, pan: number): Observable<void> {
     return new Observable<void>((observer: Subscriber<void>) => {
       sound.stereoPanner.pan.value = pan;
 
       observer.next();
       observer.complete();
     });
-    }
+  }
 
-    soundPitch(sound: GameSound, frequency: number): Observable<void> {
+  soundPitch(sound: GameSound, frequency: number): Observable<void> {
     return new Observable<void>((observer: Subscriber<void>) => {
-      /*let srcBuffer = sound.source.buffer;
+      let newBufferNode = sound.context.createBufferSource();
+      newBufferNode.buffer = sound.context.createBuffer(2, sound.source.buffer.length, frequency);
+      let leftChannel = sound.source.buffer.getChannelData(0);
+      let rightChannel = sound.source.buffer.getChannelData(1);
+      newBufferNode.buffer.copyToChannel(leftChannel, 0);
+      newBufferNode.buffer.copyToChannel(rightChannel, 1);
 
-      let c = new OfflineAudioContext(1, srcBuffer.duration, 48000);
-      let b = c.createBuffer(1, srcBuffer.duration, 44100);
-      b.copyToChannel(srcBuffer, 0);
-      sound.source = c.createBufferSource();
-      sound.source.buffer = b;
-      sound.source.connect(sound.context.destination);*/
+      sound.source = newBufferNode;
+      sound.source.connect(sound.stereoPanner);
 
       observer.next();
       observer.complete();
     });
-    }
+  }
 
-    soundVolume(sound: GameSound, volume: number): Observable<void> {
+  soundVolume(sound: GameSound, volume: number): Observable<void> {
     return new Observable<void>((observer: Subscriber<void>) => {
       sound.volumeGain.gain.value = volume;
 
       observer.next();
       observer.complete();
     });
-    }
+  }
 }
