@@ -1,4 +1,4 @@
 export enum ParserCodeTarget {
-    JAVASCRIPT,
-    MAIN_LOOP
+  JAVASCRIPT,
+  MAIN_LOOP
 }

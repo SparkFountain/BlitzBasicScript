@@ -5,23 +5,23 @@ import {GuiButtonStyle} from '../../../enums/gui/button-style';
 
 @Injectable()
 export class CommandsGuiButton {
-    constructor() {
+  constructor() {
 
-    }
+  }
 
-    buttonState(button: ButtonComponent): Observable<boolean> {
-        //TODO
-        return of(false);
-    }
+  buttonState(button: ButtonComponent): Observable<boolean> {
+    //TODO
+    return of(false);
+  }
 
-    createButton(text: string, x: number, y: number, width: number, height: number, group: any, style?: GuiButtonStyle): Observable<ButtonComponent> {
-        //TODO
-        return of(null);
-    }
+  createButton(text: string, x: number, y: number, width: number, height: number, group: any, style?: GuiButtonStyle): Observable<ButtonComponent> {
+    //TODO
+    return of(null);
+  }
 
-    setButtonState(button: ButtonComponent, active: boolean): Observable<void> {
-        return new Observable<void>((observer: Subscriber<void>) => {
-            //TODO
-        });
-    }
+  setButtonState(button: ButtonComponent, active: boolean): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      //TODO
+    });
+  }
 }

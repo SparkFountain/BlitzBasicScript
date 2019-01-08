@@ -6,53 +6,53 @@ import Light = BABYLON.Light;
 
 @Injectable()
 export class CommandsGraphics3dLightShadow {
-    constructor(private babylonjs: BabylonJSService) {
+  constructor(private babylonjs: BabylonJSService) {
 
-    }
+  }
 
-    ambientLight(red: number, green: number, blue: number): Observable<void> {
-        return this.babylonjs.ambientLight(red, green, blue);
-    }
+  ambientLight(red: number, green: number, blue: number): Observable<void> {
+    return this.babylonjs.ambientLight(red, green, blue);
+  }
 
-    createLight(type?: LightType, parent?: any): Observable<any> {
-        return new Observable((observer: Subscriber<any>) => {
-            this.babylonjs.createLight(type).subscribe((light: any) => {
-                if (parent) {
-                    light.parent = parent;
-                }
+  createLight(type?: LightType, parent?: any): Observable<any> {
+    return new Observable((observer: Subscriber<any>) => {
+      this.babylonjs.createLight(type).subscribe((light: any) => {
+        if (parent) {
+          light.parent = parent;
+        }
 
-                observer.next(light);
-                observer.complete();
-            });
-        });
-    }
+        observer.next(light);
+        observer.complete();
+      });
+    });
+  }
 
-    lightColor(light: Light, red: number, green: number, blue: number): Observable<void> {
-        return this.babylonjs.lightColor(light, red, green, blue);
-    }
+  lightColor(light: Light, red: number, green: number, blue: number): Observable<void> {
+    return this.babylonjs.lightColor(light, red, green, blue);
+  }
 
-    lightConeAngles() {
-    }
+  lightConeAngles() {
+  }
 
-    lightMesh() {
-    }
+  lightMesh() {
+  }
 
-    lightRange(light: Light, range: number): Observable<void> {
-        return this.babylonjs.lightRange(light, range);
-    }
+  lightRange(light: Light, range: number): Observable<void> {
+    return this.babylonjs.lightRange(light, range);
+  }
 
-    createShadowMap() {
-    }
+  createShadowMap() {
+  }
 
-    deleteShadowMap() {
-    }
+  deleteShadowMap() {
+  }
 
-    castShadow() {
-    }
+  castShadow() {
+  }
 
-    receiveShadows() {
-    }
+  receiveShadows() {
+  }
 
-    shadowDarkness() {
-    }
+  shadowDarkness() {
+  }
 }

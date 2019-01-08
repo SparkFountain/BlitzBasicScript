@@ -1,45 +1,45 @@
 import {Observable, Subscriber} from 'rxjs';
 
 export class CommandsBasicsDiverse {
-    constructor() {
+  constructor() {
 
-    }
+  }
 
-    appTitle(title: string): Observable<any> {
-        return new Observable<any>((observer: Subscriber<any>) => {
-            console.info('Setting AppTitle to', title);
+  appTitle(title: string): Observable<any> {
+    return new Observable<any>((observer: Subscriber<any>) => {
+      console.info('Setting AppTitle to', title);
 
-            observer.next();
-            observer.complete();
-        });
-    }
+      observer.next();
+      observer.complete();
+    });
+  }
 
-    commandLine() {
+  commandLine() {
 
-    }
+  }
 
-    debugLog(message: string): Observable<void> {
-        return new Observable<void>((observer: Subscriber<void>) => {
-            console.log(message);
+  debugLog(message: string): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      console.log(message);
 
-            observer.next();
-            observer.complete();
-        });
-    }
+      observer.next();
+      observer.complete();
+    });
+  }
 
-    getEnv() {
-    }
+  getEnv() {
+  }
 
-    runtimeError() {
+  runtimeError() {
 
-    }
+  }
 
-    runtimeStats() {
-    }
+  runtimeStats() {
+  }
 
-    setEnv() {
-    }
+  setEnv() {
+  }
 
-    systemProperty() {
-    }
+  systemProperty() {
+  }
 }

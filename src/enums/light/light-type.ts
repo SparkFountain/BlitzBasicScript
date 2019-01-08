@@ -1,6 +1,6 @@
 export enum LightType {
-    DIRECTIONAL = 1,
-    POINT,
-    SPOT,
-    HEMISPHERIC
+  DIRECTIONAL = 1,
+  POINT,
+  SPOT,
+  HEMISPHERIC
 }

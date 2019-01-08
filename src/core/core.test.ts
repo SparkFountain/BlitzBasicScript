@@ -4,9 +4,9 @@ const expect = chai.expect;
 
 describe('BBScript Core Library Functions', () => {
 
-    it('should lex and parse a source code correctly', () => {
-        let sourceCode = ['Global x = 3', 'While Not KeyHit(1)', 'DebugLog "bla"', 'Wend', 'End'];
-        //expect(lexAndParse(sourceCode)).to.equal('');
-    });
+  it('should lex and parse a source code correctly', () => {
+    let sourceCode = ['Global x = 3', 'While Not KeyHit(1)', 'DebugLog "bla"', 'Wend', 'End'];
+    //expect(lexAndParse(sourceCode)).to.equal('');
+  });
 
 });

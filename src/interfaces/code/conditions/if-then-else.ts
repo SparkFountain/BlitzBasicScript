@@ -1,10 +1,10 @@
 import {Observable} from 'rxjs';
 
 export interface IfThenElse {
-    conditions: ConditionalBlock[];
+  conditions: ConditionalBlock[];
 }
 
 type ConditionalBlock = {
-    condition: boolean;
-    statements: Observable<any>[];
+  condition: boolean;
+  statements: Observable<any>[];
 }

@@ -2,16 +2,16 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGuiTextField {
-    constructor() {
+  constructor() {
 
-    }
+  }
 
-    createLabel() {
-    }
+  createLabel() {
+  }
 
-    createTextField() {
-    }
+  createTextField() {
+  }
 
-    textFieldText() {
-    }
+  textFieldText() {
+  }
 }

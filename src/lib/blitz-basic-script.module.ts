@@ -32,54 +32,54 @@ import {BlitzBasicScriptPanelModule} from '../components/panel/panel.module';
 import {BlitzBasicScriptProgressBarModule} from '../components/progress-bar/progress-bar.module';
 
 @NgModule({
-    declarations: [
-        BlitzBasicScriptComponent
-    ],
-    imports: [
-        HttpClientModule,
-        CommonModule,
+  declarations: [
+    BlitzBasicScriptComponent
+  ],
+  imports: [
+    HttpClientModule,
+    CommonModule,
 
-        BlitzBasicScriptButtonModule,
-        BlitzBasicScriptCanvasModule,
-        BlitzBasicScriptComboBoxModule,
-        BlitzBasicScriptHtmlModule,
-        BlitzBasicScriptListBoxModule,
-        BlitzBasicScriptMenuModule,
-        BlitzBasicScriptPanelModule,
-        BlitzBasicScriptProgressBarModule,
+    BlitzBasicScriptButtonModule,
+    BlitzBasicScriptCanvasModule,
+    BlitzBasicScriptComboBoxModule,
+    BlitzBasicScriptHtmlModule,
+    BlitzBasicScriptListBoxModule,
+    BlitzBasicScriptMenuModule,
+    BlitzBasicScriptPanelModule,
+    BlitzBasicScriptProgressBarModule
 
-    ],
-    exports: [
-        BlitzBasicScriptComponent
-    ],
-    providers: [
-        DebugEnvironment,
+  ],
+  exports: [
+    BlitzBasicScriptComponent
+  ],
+  providers: [
+    DebugEnvironment,
 
-        GeneralService,
+    GeneralService,
 
-        CommandsBasicsDiverse,
-        CommandsBasicsMaths,
-        CommandsBasicsStrings,
-        CommandsBasicsTimeRandom,
+    CommandsBasicsDiverse,
+    CommandsBasicsMaths,
+    CommandsBasicsStrings,
+    CommandsBasicsTimeRandom,
 
-        CommandsGraphics2dDisplay,
-        CommandsGraphics2dGraphics,
-        CommandsGraphics2dImages,
-        CommandsGraphics2dPixel,
-        CommandsGraphics2dText,
+    CommandsGraphics2dDisplay,
+    CommandsGraphics2dGraphics,
+    CommandsGraphics2dImages,
+    CommandsGraphics2dPixel,
+    CommandsGraphics2dText,
 
-        CommandsGraphics3dCamera,
-        CommandsGraphics3dCoordinates,
-        CommandsGraphics3dLightShadow,
-        CommandsGraphics3dMeshes,
+    CommandsGraphics3dCamera,
+    CommandsGraphics3dCoordinates,
+    CommandsGraphics3dLightShadow,
+    CommandsGraphics3dMeshes,
 
-        CommandsSoundMusicSamples,
+    CommandsSoundMusicSamples,
 
-        GameStateService,
-        BabylonJSService,
-        Graphics2dService,
-        GuiService
-    ]
+    GameStateService,
+    BabylonJSService,
+    Graphics2dService,
+    GuiService
+  ]
 })
 
 export class BlitzBasicScriptModule {

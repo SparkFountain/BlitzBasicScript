@@ -2,103 +2,103 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsDataFileSystem {
-    constructor() {
+  constructor() {
 
-    }
+  }
 
-    changeDir() {
-    }
+  changeDir() {
+  }
 
-    closeDir() {
-    }
+  closeDir() {
+  }
 
-    closeFile() {
-    }
+  closeFile() {
+  }
 
-    copyFile() {
-    }
+  copyFile() {
+  }
 
-    createDir() {
-    }
+  createDir() {
+  }
 
-    currentDir() {
-    }
+  currentDir() {
+  }
 
-    deleteDir() {
-    }
+  deleteDir() {
+  }
 
-    deleteFile() {
-    }
+  deleteFile() {
+  }
 
-    eof() {
-    }
+  eof() {
+  }
 
-    filePos() {
-    }
+  filePos() {
+  }
 
-    fileSize() {
-    }
+  fileSize() {
+  }
 
-    fileType() {
-    }
+  fileType() {
+  }
 
-    moreFiles() {
-    }
+  moreFiles() {
+  }
 
-    nextFile() {
-    }
+  nextFile() {
+  }
 
-    openFile() {
-    }
+  openFile() {
+  }
 
-    readAvail() {
-    }
+  readAvail() {
+  }
 
-    readByte() {
-    }
+  readByte() {
+  }
 
-    readDir() {
-    }
+  readDir() {
+  }
 
-    readFile() {
-    }
+  readFile() {
+  }
 
-    readFloat() {
-    }
+  readFloat() {
+  }
 
-    readInt() {
-    }
+  readInt() {
+  }
 
-    readLine() {
-    }
+  readLine() {
+  }
 
-    readShort() {
-    }
+  readShort() {
+  }
 
-    readString() {
-    }
+  readString() {
+  }
 
-    seekFile() {
-    }
+  seekFile() {
+  }
 
-    writeByte() {
-    }
+  writeByte() {
+  }
 
-    writeFile() {
-    }
+  writeFile() {
+  }
 
-    writeFloat() {
-    }
+  writeFloat() {
+  }
 
-    writeInt() {
-    }
+  writeInt() {
+  }
 
-    writeLine() {
-    }
+  writeLine() {
+  }
 
-    writeShort() {
-    }
+  writeShort() {
+  }
 
-    writeString() {
-    }
+  writeString() {
+  }
 }

@@ -1,4 +1,4 @@
 export enum LexerContext {
-    DEFAULT,
-    STRING
+  DEFAULT,
+  STRING
 }

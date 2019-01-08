@@ -3,16 +3,16 @@ import {CommonModule} from '@angular/common';
 import {PanelComponent} from './panel.component';
 
 @NgModule({
-    declarations: [
-        PanelComponent
-    ],
-    imports: [
-        CommonModule
-    ],
-    exports: [
-        PanelComponent
-    ],
-    providers: []
+  declarations: [
+    PanelComponent
+  ],
+  imports: [
+    CommonModule
+  ],
+  exports: [
+    PanelComponent
+  ],
+  providers: []
 })
 
 export class BlitzBasicScriptPanelModule {

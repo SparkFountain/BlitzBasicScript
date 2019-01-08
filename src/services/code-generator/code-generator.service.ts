@@ -18,11 +18,11 @@ import {CommandsGraphics3dLightShadow} from '../commands/graphics3d/light-shadow
 import {GameImage2D} from '../../interfaces/game/image-2d';
 import {CommandsSoundMusicSamples} from '../commands/sound/music-samples';
 import {GameSound} from '../../interfaces/game/sound';
+import {CommandsGraphics2dText} from '../commands/graphics2d/text';
+import {GameFont} from '../../interfaces/game/font';
 import Camera = BABYLON.Camera;
 import Mesh = BABYLON.Mesh;
 import Light = BABYLON.Light;
-import {CommandsGraphics2dText} from '../commands/graphics2d/text';
-import {GameFont} from '../../interfaces/game/font';
 
 @Injectable({
   providedIn: 'root'
@@ -193,9 +193,9 @@ export class CodeGenerator {
           });
         }),
 
-        this.commandsGraphics2dText.text(50,50, "HELLO WORLD!"),
-        this.commandsGraphics2dText.stringWidth("HELLO WORLD!"),
-        this.commandsGraphics2dText.stringHeight("HELLO WORLD!"),
+        this.commandsGraphics2dText.text(50, 50, 'HELLO WORLD!'),
+        this.commandsGraphics2dText.stringWidth('HELLO WORLD!'),
+        this.commandsGraphics2dText.stringHeight('HELLO WORLD!'),
         /*new Observable((observer) => {
                     this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
                         this.commandsGraphics2dImages.maskImage(image, 255, 0, 255).subscribe(() => {
