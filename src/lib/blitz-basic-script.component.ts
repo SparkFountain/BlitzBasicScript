@@ -10,6 +10,7 @@ import {GameStateService} from '../services/game-state/game-state.service';
 import {BabylonJSService} from '../services/babylon-js/babylon-js.service';
 import {Graphics2dService} from '../services/2d/graphics2d.service';
 import {GuiService} from '../services/gui/gui.service';
+import {LanguageService} from '../services/language/language.service';
 
 @Component({
   selector: 'blitz-basic-script-canvas',
@@ -52,7 +53,8 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     }
   }
 
-  constructor(private lexer: Lexer,
+  constructor(private language: LanguageService,
+              private lexer: Lexer,
               private parser: Parser,
               private codeGenerator: CodeGenerator,
               private gameState: GameStateService,
@@ -83,13 +85,16 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
 
     //console.info('Source code:', this.code);
 
-    //initialize lexer
-    this.lexer.initialize().subscribe(() => {
+    //initialize language service
+    this.language.initialize().subscribe(() => {
+      console.info(this.code[0].join(''));
       let lexerTokens: LexerToken[][] = this.lexer.lexCode(this.code);
-      //console.info('Lexer Tokens:', lexerTokens);
+      console.info('Lexer Tokens:', lexerTokens);
 
-      let abstractSyntaxTree: AbstractSyntaxTree = this.parser.getAbstractSyntaxTree(lexerTokens);
-      console.info('Abstract Syntax Tree:', abstractSyntaxTree);
+      this.parser.parseCondition(lexerTokens[0], 1);
+
+      //let abstractSyntaxTree: AbstractSyntaxTree = this.parser.getAbstractSyntaxTree(lexerTokens);
+      //console.info('Abstract Syntax Tree:', abstractSyntaxTree);
 
       //let bbscriptCode = this.codeGenerator.getFakeTargetCode();  //createTargetCode(abstractSyntaxTree);
       //console.info('Target Code:', bbscriptCode);

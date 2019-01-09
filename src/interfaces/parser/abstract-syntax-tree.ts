@@ -1,5 +1,6 @@
-import {TreeNode} from './tree-node';
-
 export interface AbstractSyntaxTree {
-  root: TreeNode
+  statements: any[];
+  functions: {};
+  types: {};
+  mainLoop: any[];
 }

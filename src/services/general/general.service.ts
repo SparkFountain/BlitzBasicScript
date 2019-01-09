@@ -50,7 +50,7 @@ export class GeneralService {
           observer.complete();
         }
       } else {
-        //TODO parse abstract syntax tree
+        //TODO _deprecated_parse abstract syntax tree
         forkJoin([this.evaluateExpression(e.left), this.evaluateExpression(e.right)])
           .subscribe((innerValues: any[]) => {
             console.info('innerValues:', innerValues);

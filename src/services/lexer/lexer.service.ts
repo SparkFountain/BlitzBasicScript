@@ -3,63 +3,12 @@ import {LexerContext} from '../../enums/lexer/lexerContext';
 import {LexerTokenCategory} from '../../enums/lexer/lexerTokenCategory';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
-import {ApiKeyword} from '../../interfaces/api/api-keyword';
-import {ApiCommand} from '../../interfaces/api/api-command';
-import {forkJoin, Observable, Subscriber} from 'rxjs';
+import {LanguageService} from '../language/language.service';
 
 @Injectable()
 export class Lexer {
-  private keywords: object;
-  private deprecatedKeywords: object;
-  private commands: object;
-  private deprecatedCommands: object;
-
-  constructor(private http: HttpClient) {
-  }
-
-  public initialize(): Observable<void> {
-    return new Observable((observer: Subscriber<void>) => {
-      this.keywords = {};
-      this.deprecatedKeywords = {};
-      this.commands = {};
-      this.deprecatedCommands = {};
-
-      let backendRequests: any[] = [
-        this.http.get('http://api.blitzbasicscript.com/keywords?deprecated=false'),
-        this.http.get('http://api.blitzbasicscript.com/keywords?deprecated=true'),
-        this.http.get('http://api.blitzbasicscript.com/commands?deprecated=false'),
-        this.http.get('http://api.blitzbasicscript.com/keywords?deprecated=true')
-      ];
-
-      forkJoin(backendRequests).subscribe((responses: any[]) => {
-        if (responses[0].status === 'success') {
-          responses[0].data.forEach((apiKeyword: ApiKeyword) => {
-            this.keywords[apiKeyword.name.toLowerCase()] = true;
-          });
-        }
-
-        if (responses[1].status === 'success') {
-          responses[1].data.forEach((apiKeyword: ApiKeyword) => {
-            this.deprecatedKeywords[apiKeyword.name.toLowerCase()] = true;
-          });
-        }
-
-        if (responses[2].status === 'success') {
-          responses[2].data.forEach((apiCommand: ApiCommand) => {
-            this.commands[apiCommand.name.toLowerCase()] = true;
-          });
-        }
-
-        if (responses[3].status === 'success') {
-          responses[3].data.forEach((apiCommand: ApiCommand) => {
-            this.deprecatedCommands[apiCommand.name.toLowerCase()] = true;
-          });
-        }
-
-        observer.next();
-        observer.complete();
-      });
-    });
+  constructor(private http: HttpClient,
+              private language: LanguageService) {
   }
 
   /**
@@ -95,13 +44,13 @@ export class Lexer {
    */
   getTokenObject(chars: string, i: number): LexerToken {
     let charsLowerCase = chars.toLowerCase();
-    if (this.keywords.hasOwnProperty(charsLowerCase)) {
+    if (this.language.keywords.hasOwnProperty(charsLowerCase)) {
       return {which: LexerTokenCategory.KEYWORD, value: chars, offset: {x: i, y: 0}};
-    } else if (this.deprecatedKeywords.hasOwnProperty(charsLowerCase)) {
+    } else if (this.language.deprecatedKeywords.hasOwnProperty(charsLowerCase)) {
       return {which: LexerTokenCategory.DEPRECATED_KEYWORD, value: chars, offset: {x: i, y: 0}};
-    } else if (this.commands.hasOwnProperty(charsLowerCase)) {
+    } else if (this.language.commands.hasOwnProperty(charsLowerCase)) {
       return {which: LexerTokenCategory.COMMAND, value: chars, offset: {x: i, y: 0}};
-    } else if (this.deprecatedCommands.hasOwnProperty(charsLowerCase)) {
+    } else if (this.language.deprecatedCommands.hasOwnProperty(charsLowerCase)) {
       return {which: LexerTokenCategory.DEPRECATED_COMMAND, value: chars, offset: {x: i, y: 0}};
     } else if (this.isInteger(chars)) {
       return {which: LexerTokenCategory.INTEGER, value: chars, offset: {x: i, y: 0}};
@@ -152,7 +101,7 @@ export class Lexer {
    * @return An array of arrays, containing all tokens per code line
    */
   lexCode(code: string[][]): Array<LexerToken[]> {
-    console.info('Key Words:', this.keywords);
+    //console.info('Key Words:', this.language.keywords);
 
     let lexer: Lexer = this;
 
@@ -446,16 +395,16 @@ export class Lexer {
       let uniformValue;
       switch (tokens[i].which) {
         case LexerTokenCategory.KEYWORD:
-          uniformValue = this.keywords[lowerCaseValue].bbscript;
+          uniformValue = this.language.keywords[lowerCaseValue].bbscript;
           break;
         case LexerTokenCategory.DEPRECATED_KEYWORD:
-          uniformValue = this.deprecatedKeywords[lowerCaseValue].bbscript;
+          uniformValue = this.language.deprecatedKeywords[lowerCaseValue].bbscript;
           break;
         case LexerTokenCategory.COMMAND:
-          uniformValue = this.commands[lowerCaseValue].bbscript;
+          uniformValue = this.language.commands[lowerCaseValue].bbscript;
           break;
         case LexerTokenCategory.DEPRECATED_COMMAND:
-          uniformValue = this.deprecatedCommands[lowerCaseValue].bbscript;
+          uniformValue = this.language.deprecatedCommands[lowerCaseValue].bbscript;
           break;
         default:
           uniformValue = tokens[i].value;

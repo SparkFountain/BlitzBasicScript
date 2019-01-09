@@ -30,6 +30,9 @@ import {BlitzBasicScriptListBoxModule} from '../components/list-box/list-box.mod
 import {BlitzBasicScriptMenuModule} from '../components/menu/menu.module';
 import {BlitzBasicScriptPanelModule} from '../components/panel/panel.module';
 import {BlitzBasicScriptProgressBarModule} from '../components/progress-bar/progress-bar.module';
+import {LanguageService} from '../services/language/language.service';
+import {Lexer} from '../services/lexer/lexer.service';
+import {Parser} from '../services/parser/parser.service';
 
 @NgModule({
   declarations: [
@@ -56,6 +59,9 @@ import {BlitzBasicScriptProgressBarModule} from '../components/progress-bar/prog
     DebugEnvironment,
 
     GeneralService,
+    LanguageService,
+    Lexer,
+    Parser,
 
     CommandsBasicsDiverse,
     CommandsBasicsMaths,
