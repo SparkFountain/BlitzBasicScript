@@ -1,8 +1,10 @@
 import {Injectable} from '@angular/core';
+import {Observable, of} from 'rxjs';
+import {GameStateService} from '../../game-state/game-state.service';
 
 @Injectable()
 export class CommandsIOKeyboard {
-  constructor() {
+  constructor(private gameState: GameStateService) {
 
   }
 
@@ -15,7 +17,8 @@ export class CommandsIOKeyboard {
   input() {
   }
 
-  keyDown() {
+  keyDown(code: number): Observable<boolean> {
+    return of(this.gameState.isKeyDown(code));
   }
 
   keyHit() {

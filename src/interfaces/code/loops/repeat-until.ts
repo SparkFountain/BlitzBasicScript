@@ -1,3 +1,6 @@
+import {Observable} from 'rxjs';
+
 export interface RepeatUntil {
-  condition: boolean;
+  condition: Observable<any>[];
+  statements: Observable<any>[];
 }

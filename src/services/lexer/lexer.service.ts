@@ -4,6 +4,7 @@ import {LexerTokenCategory} from '../../enums/lexer/lexerTokenCategory';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {LanguageService} from '../language/language.service';
+import {fromArray} from 'rxjs/internal/observable/fromArray';
 
 @Injectable()
 export class Lexer {
@@ -113,6 +114,22 @@ export class Lexer {
       }
       result.push(tokens);
     });
+    return result;
+  }
+
+  lexCodeReactive(code: Array<string[]>): Array<LexerToken[]> {
+    let constants: string[] = [];
+    let globals: string[] = [];
+    let functions: string[] = [];
+
+    let result: Array<LexerToken[]> = [];
+
+    code.forEach((line: string[]) => {
+      fromArray(line).subscribe((char: string) => {
+        console.info(char);
+      });
+    });
+
     return result;
   }
 

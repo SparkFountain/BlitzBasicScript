@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 
 import * as BABYLON from 'babylonjs';
-import {Observable, Subscriber} from 'rxjs';
+import {concat, Observable, Subscriber} from 'rxjs';
 import {CameraType} from '../../enums/camera/camera-type';
 import {Axis} from '../../enums/axis';
 import {LightType} from '../../enums/light/light-type';
@@ -91,17 +91,15 @@ export class BabylonJSService {
     this._engine.runRenderLoop(() => {
       this._scene.render();
 
-      //TODO observables are only evaluated one single time
-      //TODO find out how to reset (or re-send) observables
-      /*concat(...statements).subscribe(() => {
-          console.info('Next mainLoop statement has been executed.');
+      concat(...statements).subscribe(() => {
+          //console.info('Next mainLoop statement has been executed.');
         },
         () => {
         },
         () => {
-          console.info('### ALL MAIN LOOP STATEMENTS EXECUTED ###');
+          //console.info('### ALL MAIN LOOP STATEMENTS EXECUTED ###');
         }
-      );*/
+      );
     });
   }
 

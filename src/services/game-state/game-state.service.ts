@@ -44,6 +44,11 @@ export class GameStateService {
   private function: object;
   private type: object;
 
+  private keyDown: object;
+  private keyHit: object;
+  private mouseDown: object;
+  private mouseHit: object;
+
   private screen: ScreenProperties;
   private images: ImagesProperties;
   private textMode: TextModeProperties;
@@ -53,6 +58,11 @@ export class GameStateService {
     this.dim = {};
     this.function = {};
     this.type = {};
+
+    this.keyDown = {};
+    this.keyHit = {};
+    this.mouseDown = {};
+    this.mouseHit = {};
 
     this.screen = {
       width: 400,
@@ -175,5 +185,33 @@ export class GameStateService {
 
   getFunction(functionName: string): any {
     return this.function[functionName];
+  }
+
+  setKeyDown(code: number, isDown: boolean): void {
+    if(isDown) {
+      this.keyDown[code] = isDown;
+    } else {
+      if(this.keyDown.hasOwnProperty(code)) {
+        delete this.keyDown[code];
+      }
+    }
+  }
+
+  isKeyDown(code: number): boolean {
+    return this.keyDown[code];
+  }
+
+  setMouseDown(code: number, isDown: boolean): void {
+    if(isDown) {
+      this.mouseDown[code] = isDown;
+    } else {
+      if(this.mouseDown.hasOwnProperty(code)) {
+        delete this.mouseDown[code];
+      }
+    }
+  }
+
+  isMouseDown(code: number): boolean {
+    return this.mouseDown[code];
   }
 }

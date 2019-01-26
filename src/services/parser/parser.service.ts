@@ -172,7 +172,7 @@ export class Parser {
   // [Num]: int | float | Pi
   // [Str]: string
   // [Bool]: True | False
-  // [Expr]: [NumExpr] | [StrExpr] | [BoolExpr]
+  // [Expr]: [NumExpr] | [StrExpr] | [BoolExpr] | [Bool] | [Num] | [Str]
   // [NumExpr]: [Num] + [Num] | [Num] - [Num] | [Num] * [Num] | [Num] / [Num] | [Num] ^ [Num]
   // [StrExpr]: [Str] | [Str] + [Str] | [Str] + [Num] | [Str] + [Bool]
   // [BoolExpr]: [Bool] | [And] | [Or] | [Xor] | [Not]
@@ -480,49 +480,35 @@ export class Parser {
     return null; //globalEntryPoint;
   }
 
-  parseCondition(tokens: LexerToken[], begin: number) {
-    let stack: LexerToken[] = [];
+  parseCondition(tokens: LexerToken[]) {
+    let linkValues: string[] = ['And', 'Or', 'Xor'];
 
-    //a single boolean value
-    if (tokens.length - 1 === begin) {
-      if (tokens[begin].which === LexerTokenCategory.KEYWORD) {
-        if (tokens[begin].value === 'True' || tokens[begin].value === 'False') {
-          //TODO return condition object
-        } else {
-          console.error('Invalid key word:', tokens[begin]);
+    //find all expressions
+    let expressions: Array<LexerToken[]> = [];
+    let currentExpression: LexerToken[] = [];
+    let links: LexerToken[] = [];
+    tokens.forEach((token: LexerToken) => {
+      if (token.which === LexerTokenCategory.KEYWORD && linkValues.indexOf(token.value) > -1) {
+        links.push(token);
+
+        if (currentExpression.length > 0) {
+          expressions.push(currentExpression);
+          currentExpression = [];
         }
       } else {
-        console.error('Invalid token:', tokens[begin]);
+        currentExpression.push(token);
       }
-    } else {
-      //find all relevant tokens for further expressions
-      let not = [];
-      let link = [];
-      let comp = [];
-      for (let i = begin; i < tokens.length; i++) {
-        let currentToken: LexerToken = tokens[i];
-        switch (currentToken.which) {
-          case LexerTokenCategory.KEYWORD:
-            if (['And', 'Or', 'Xor'].indexOf(currentToken.value) > -1) {
-              link.push(i);
-            } else if (currentToken.value === 'Not') {
-              not.push(i);
-            }
-            break;
-          case LexerTokenCategory.COMPARISON:
-            comp.push(i);
-            break;
-        }
-      }
-      console.info('Logical links:', link);
-      console.info('Comparisons:', comp);
-
-      //resolve comparisons
-      comp.forEach(compIndex => this.parseComparison(tokens, compIndex));
-
-      //resolve logical links
-      link.forEach(linkIndex => this.parseLogicalLink(tokens, linkIndex));
+    });
+    if (currentExpression.length > 0) {
+      expressions.push(currentExpression);
     }
+
+    console.info('Expressions:', expressions);
+    console.info('Links:', links);
+
+    expressions.forEach((expression: LexerToken[]) => {
+      this.parseExpression(expression);
+    });
   }
 
   /**
@@ -533,21 +519,7 @@ export class Parser {
   parseComparison(tokens: LexerToken[], compIndex: number) {
     //[Expr] = [Expr] | [Expr] < [Expr] | [Expr] > [Expr] | [Expr] <= [Expr] | [Expr] >= [Expr] | [Expr] <> [Expr]
 
-    //parse left hand expression
-    let leftHandExpression: any = null;
-    let validTokenCategories: LexerTokenCategory[] = [
-      LexerTokenCategory.INDIVIDUAL,
-      LexerTokenCategory.INTEGER,
-      LexerTokenCategory.STRING,
-      LexerTokenCategory.FLOAT,
-      LexerTokenCategory.KEYWORD
-    ];
-    for (let leftIndex = compIndex - 1; leftIndex >= 0; leftIndex--) {
-      let currentToken = tokens[leftIndex];
-      switch(currentToken.which) {
-        //TODO implement some nice strategy...
-      }
-    }
+    //TODO
   }
 
   parseLogicalLink(tokens: LexerToken[], linkIndex: number) {
@@ -555,10 +527,59 @@ export class Parser {
     // [Or]: [BoolExpr] Or [BoolExpr]
     // [Xor]: [BoolExpr] Xor [BoolExpr]
 
+    let expectedTokens = [
+      LexerTokenCategory.INTEGER,
+      LexerTokenCategory.FLOAT,
+      LexerTokenCategory.STRING
+    ];
+    let validLeftExpression;
+
     //parse left hand boolean expression
     for (let leftIndex = linkIndex - 1; leftIndex >= 0; leftIndex--) {
+      let currentToken = tokens[leftIndex];
+      if (expectedTokens.indexOf(currentToken.which) > -1) {
 
+      }
     }
+  }
+
+  parseExpression(tokens: LexerToken[]) {
+    let validTokenCategories: any = {
+      value: [
+        LexerTokenCategory.KEYWORD,
+        LexerTokenCategory.INTEGER,
+        LexerTokenCategory.STRING,
+        LexerTokenCategory.FLOAT,
+        LexerTokenCategory.INDIVIDUAL
+      ],
+      algebraicComparison: [
+        LexerTokenCategory.ALGEBRAIC,
+        LexerTokenCategory.COMPARISON
+      ]
+    };
+    let validKeywords: any = {
+      value: ['Not', 'Pi']
+    };
+
+    let state = 'value';
+
+    tokens.forEach((token: LexerToken) => {
+      //check if current token is valid
+      let validToken = validTokenCategories[state].indexOf(token.which) > -1;
+      if(token.which === LexerTokenCategory.KEYWORD) {
+        validToken = validKeywords[state].indexOf(token.value) > -1;
+      }
+
+      if(validToken) {
+        switch(token.which) {
+          case LexerTokenCategory.INTEGER:
+          case LexerTokenCategory.FLOAT:
+            state = 'algebraicComparison';
+        }
+      } else {
+        console.error('Invalid token:', token);
+      }
+    });
   }
 
 

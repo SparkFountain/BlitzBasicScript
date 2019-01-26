@@ -5,6 +5,6 @@ export interface IfThenElse {
 }
 
 type ConditionalBlock = {
-  condition: boolean;
+  condition: Observable<any>[]; //must be evaluated to a boolean value
   statements: Observable<any>[];
 }
