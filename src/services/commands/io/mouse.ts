@@ -1,24 +1,34 @@
 import {Injectable} from '@angular/core';
+import {Observable, of, Subscriber} from 'rxjs';
+import {GameStateService} from '../../game-state/game-state.service';
 
 @Injectable()
 export class CommandsIOMouse {
-  constructor() {
+  constructor(private gameState: GameStateService) {
 
   }
 
-  flushMouse() {
+  flushMouse(): Observable<void> {
+    return of(this.gameState.flushMouse());
   }
 
   getMouse() {
   }
 
-  hidePointer() {
+  hidePointer(): Observable<void> {
+    return new Observable<void>((observer: Subscriber<void>) => {
+      //TODO set CSS class on canvas
+      observer.next();
+      observer.complete();
+    });
   }
 
-  mouseDown() {
+  mouseDown(code: number): Observable<boolean> {
+    return of(this.gameState.isMouseDown(code));
   }
 
-  mouseHit() {
+  mouseHit(code: number): Observable<number> {
+    return of(this.gameState.getMouseHits(code));
   }
 
   mouseWait() {

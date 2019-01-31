@@ -136,7 +136,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:keyup', ['$event'])
   keyUpEvent(event: KeyboardEvent) {
-    this.gameState.setKeyDown(this.keyCodes[event.code], false);
+    this.gameState.incrementKeyHit(this.keyCodes[event.code]);
   }
 
   @HostListener('window:mousedown', ['$event'])
@@ -146,7 +146,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:mouseup', ['$event'])
   mouseUpEvent(event: MouseEvent) {
-    this.gameState.setMouseDown(this.mouseCodes[event.button], true);
+    this.gameState.incrementMouseHit(this.mouseCodes[event.button]);
   }
 
   constructor(private language: LanguageService,

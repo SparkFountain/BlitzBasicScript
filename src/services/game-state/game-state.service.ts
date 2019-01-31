@@ -197,8 +197,29 @@ export class GameStateService {
     }
   }
 
+  incrementKeyHit(code: number): void {
+    if(this.keyHit[code]) {
+      this.keyHit[code]++;
+    } else {
+      this.keyHit[code] = 1;
+    }
+  }
+
+  getKeyHits(code: number): number {
+    if(this.keyHit.hasOwnProperty(code)) {
+      return this.keyHit[code];
+    } else {
+      return 0;
+    }
+  }
+
   isKeyDown(code: number): boolean {
     return this.keyDown[code];
+  }
+
+  flushKeys() {
+    this.keyDown = {};
+    this.keyHit = {};
   }
 
   setMouseDown(code: number, isDown: boolean): void {
@@ -211,7 +232,28 @@ export class GameStateService {
     }
   }
 
+  incrementMouseHit(code: number): void {
+    if(this.mouseHit[code]) {
+      this.mouseHit[code]++;
+    } else {
+      this.mouseHit[code] = 1;
+    }
+  }
+
+  getMouseHits(code: number): number {
+    if(this.mouseHit.hasOwnProperty(code)) {
+      return this.mouseHit[code];
+    } else {
+      return 0;
+    }
+  }
+
   isMouseDown(code: number): boolean {
     return this.mouseDown[code];
+  }
+
+  flushMouse() {
+    this.mouseDown = {};
+    this.mouseHit = {};
   }
 }
