@@ -1,26 +1,38 @@
 import {Injectable} from '@angular/core';
+import {Observable, of} from 'rxjs';
+import {GameStateService} from '../../game-state/game-state.service';
 
 @Injectable()
 export class CommandsGraphics3dScenery {
-  constructor() {
+  constructor(private gameState: GameStateService) {
 
   }
 
-  antiAlias() {
+  antiAlias(enabled: boolean): Observable<void> {
+    return of(this.gameState.setAntiAliasing(enabled));
   }
 
-  captureWorld() {
+  captureWorld(): Observable<void> {
+    //TODO implementation
+    return of(null);
   }
 
-  clearWorld() {
+  clearWorld(removeEntities?: boolean, removeBrushes?: boolean, removeTextures?: boolean): Observable<void> {
+    //TODO implementation
+    return of(null);
   }
 
-  renderWorld() {
+  renderWorld(animationStep: number): Observable<void> {
+    //TODO implementation
+    return of(null);
   }
 
-  updateWorld() {
+  updateWorld(updateSpeed?: number): Observable<void> {
+    //TODO implementation
+    return of(null);
   }
 
-  wireFrame() {
+  wireFrame(enabled: boolean): Observable<void> {
+    return of(this.gameState.setWireFrame(enabled));
   }
 }

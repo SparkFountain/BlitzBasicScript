@@ -63,6 +63,11 @@ import {Parser} from '../services/parser/parser.service';
     Lexer,
     Parser,
 
+    GameStateService,
+    BabylonJSService,
+    Graphics2dService,
+    GuiService,
+
     CommandsBasicsDiverse,
     CommandsBasicsMaths,
     CommandsBasicsStrings,
@@ -80,11 +85,6 @@ import {Parser} from '../services/parser/parser.service';
     CommandsGraphics3dMeshes,
 
     CommandsSoundMusicSamples,
-
-    GameStateService,
-    BabylonJSService,
-    Graphics2dService,
-    GuiService
   ]
 })
 

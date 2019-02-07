@@ -274,7 +274,7 @@ this.commandService.basics.diverse.appTitle('Carribico')*/
         })
       ],
       mainLoop: [
-        this.commandsBasicsDiverse.debugLog('Hello World')
+        //this.commandsBasicsDiverse.debugLog('Hello World')
       ],
       functions: [],
       types: []

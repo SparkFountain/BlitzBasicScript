@@ -1,5 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
+import int = BABYLON.int;
 
 export interface ScreenProperties {
   width: number,
@@ -37,6 +38,12 @@ export interface TextModeProperties {
   }
 }
 
+export interface AppProperties {
+  title: string,
+  antiAliasing: boolean,
+  wireFrame: boolean
+}
+
 @Injectable()
 export class GameStateService {
   private global: object;
@@ -53,6 +60,8 @@ export class GameStateService {
   private images: ImagesProperties;
   private textMode: TextModeProperties;
 
+  private app: AppProperties;
+
   constructor() {
     this.global = {};
     this.dim = {};
@@ -63,6 +72,12 @@ export class GameStateService {
     this.keyHit = {};
     this.mouseDown = {};
     this.mouseHit = {};
+
+    this.app = {
+      title: '',
+      antiAliasing: true,
+      wireFrame: false
+    };
 
     this.screen = {
       width: 400,
@@ -139,7 +154,7 @@ export class GameStateService {
     return this.images;
   }
 
-  public setImagesAutoMidHandle(active: boolean) {
+  public setImagesAutoMidHandle(active: boolean): void {
     this.images.autoMidHandle = active;
   }
 
@@ -217,7 +232,7 @@ export class GameStateService {
     return this.keyDown[code];
   }
 
-  flushKeys() {
+  flushKeys(): void {
     this.keyDown = {};
     this.keyHit = {};
   }
@@ -255,5 +270,18 @@ export class GameStateService {
   flushMouse() {
     this.mouseDown = {};
     this.mouseHit = {};
+  }
+
+  setAppTitle(title: string): void {
+    this.app.title = title;
+  }
+
+  setAntiAliasing(enabled: boolean): void {
+    //TODO re-initialize BabylonJS engine to apply the new settings
+    this.app.antiAliasing = enabled;
+  }
+
+  setWireFrame(enabled: boolean): void {
+    this.app.wireFrame = enabled;
   }
 }

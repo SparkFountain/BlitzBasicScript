@@ -1,17 +1,13 @@
-import {Observable, Subscriber} from 'rxjs';
+import {Observable, of, Subscriber} from 'rxjs';
+import {GameStateService} from '../../game-state/game-state.service';
 
 export class CommandsBasicsDiverse {
-  constructor() {
+  constructor(private gameState: GameStateService) {
 
   }
 
-  appTitle(title: string): Observable<any> {
-    return new Observable<any>((observer: Subscriber<any>) => {
-      console.info('Setting AppTitle to', title);
-
-      observer.next();
-      observer.complete();
-    });
+  appTitle(title: string): Observable<void> {
+    return of(this.gameState.setAppTitle(title));
   }
 
   commandLine() {
