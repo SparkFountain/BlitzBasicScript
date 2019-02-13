@@ -2,12 +2,12 @@ import {Observable, of, Subscriber} from 'rxjs';
 import {GameStateService} from '../../game-state/game-state.service';
 
 export class CommandsBasicsDiverse {
-  constructor(private gameState: GameStateService) {
+  constructor(/*private gameState: GameStateService*/) {
 
   }
 
   appTitle(title: string): Observable<void> {
-    return of(this.gameState.setAppTitle(title));
+    return of(null/*this.gameState.setAppTitle(title)*/);
   }
 
   commandLine() {
