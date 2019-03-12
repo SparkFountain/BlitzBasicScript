@@ -2,40 +2,40 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGuiMenu {
-  constructor() {
+    constructor() {
 
-  }
+    }
 
-  checkMenu() {
-  }
+    checkMenu() {
+    }
 
-  createMenu() {
-  }
+    createMenu() {
+    }
 
-  disableMenu() {
-  }
+    disableMenu() {
+    }
 
-  enableMenu() {
-  }
+    enableMenu() {
+    }
 
-  menuChecked() {
-  }
+    menuChecked() {
+    }
 
-  menuEnabled() {
-  }
+    menuEnabled() {
+    }
 
-  menuText() {
-  }
+    menuText() {
+    }
 
-  setMenuText() {
-  }
+    setMenuText() {
+    }
 
-  uncheckMenu() {
-  }
+    uncheckMenu() {
+    }
 
-  updateWindowMenu() {
-  }
+    updateWindowMenu() {
+    }
 
-  windowMenu() {
-  }
+    windowMenu() {
+    }
 }

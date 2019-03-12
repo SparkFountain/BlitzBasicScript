@@ -1,4 +1,5 @@
-<button *ngIf="style === GuiButtonStyle.BUTTON" [ngStyle]="{
+<button *ngIf="style === GuiButtonStyle.BUTTON"
+        [ngStyle]="{
     'position': 'absolute',
     'left': x + 'px',
     'top': y + 'px',
@@ -6,7 +7,9 @@
     'height': height + 'px'
 }">{{text}}</button>
 
-<input type="checkbox" *ngIf="style === GuiButtonStyle.CHECKBOX" [ngStyle]="{
+<input type="checkbox"
+       *ngIf="style === GuiButtonStyle.CHECKBOX"
+       [ngStyle]="{
     'position': 'absolute',
     'left': x + 'px',
     'top': y + 'px',

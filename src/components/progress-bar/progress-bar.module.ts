@@ -3,16 +3,16 @@ import {CommonModule} from '@angular/common';
 import {ProgressBarComponent} from './progress-bar.component';
 
 @NgModule({
-  declarations: [
-    ProgressBarComponent
-  ],
-  imports: [
-    CommonModule
-  ],
-  exports: [
-    ProgressBarComponent
-  ],
-  providers: []
+    declarations: [
+        ProgressBarComponent
+    ],
+    imports: [
+        CommonModule
+    ],
+    exports: [
+        ProgressBarComponent
+    ],
+    providers: []
 })
 
 export class BlitzBasicScriptProgressBarModule {

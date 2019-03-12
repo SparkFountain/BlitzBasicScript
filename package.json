@@ -5,14 +5,15 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "peerDependencies": {
-    "babylonjs": "~3.3.0"
+    "babylonjs": "~3.3.0",
+    "seedrandom": "~3.0.1"
   },
   "devDependencies": {
     "@types/chai": "~4.1.7",
     "@types/mocha": "~5.2.6",
     "chai": "~4.2.0",
     "mocha": "~6.0.2",
-    "ts-node": "~8.0.2",
+    "ts-node": "~8.0.3",
     "typescript": "3.2.4"
   },
   "scripts": {

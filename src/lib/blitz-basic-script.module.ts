@@ -35,57 +35,57 @@ import {Lexer} from '../services/lexer/lexer.service';
 import {Parser} from '../services/parser/parser.service';
 
 @NgModule({
-  declarations: [
-    BlitzBasicScriptComponent
-  ],
-  imports: [
-    HttpClientModule,
-    CommonModule,
+    declarations: [
+        BlitzBasicScriptComponent
+    ],
+    imports: [
+        HttpClientModule,
+        CommonModule,
 
-    BlitzBasicScriptButtonModule,
-    BlitzBasicScriptCanvasModule,
-    BlitzBasicScriptComboBoxModule,
-    BlitzBasicScriptHtmlModule,
-    BlitzBasicScriptListBoxModule,
-    BlitzBasicScriptMenuModule,
-    BlitzBasicScriptPanelModule,
-    BlitzBasicScriptProgressBarModule
+        BlitzBasicScriptButtonModule,
+        BlitzBasicScriptCanvasModule,
+        BlitzBasicScriptComboBoxModule,
+        BlitzBasicScriptHtmlModule,
+        BlitzBasicScriptListBoxModule,
+        BlitzBasicScriptMenuModule,
+        BlitzBasicScriptPanelModule,
+        BlitzBasicScriptProgressBarModule
 
-  ],
-  exports: [
-    BlitzBasicScriptComponent
-  ],
-  providers: [
-    DebugEnvironment,
+    ],
+    exports: [
+        BlitzBasicScriptComponent
+    ],
+    providers: [
+        DebugEnvironment,
 
-    GeneralService,
-    LanguageService,
-    Lexer,
-    Parser,
+        GeneralService,
+        LanguageService,
+        Lexer,
+        Parser,
 
-    GameStateService,
-    BabylonJSService,
-    Graphics2dService,
-    GuiService,
+        GameStateService,
+        BabylonJSService,
+        Graphics2dService,
+        GuiService,
 
-    CommandsBasicsDiverse,
-    CommandsBasicsMaths,
-    CommandsBasicsStrings,
-    CommandsBasicsTimeRandom,
+        CommandsBasicsDiverse,
+        CommandsBasicsMaths,
+        CommandsBasicsStrings,
+        CommandsBasicsTimeRandom,
 
-    CommandsGraphics2dDisplay,
-    CommandsGraphics2dGraphics,
-    CommandsGraphics2dImages,
-    CommandsGraphics2dPixel,
-    CommandsGraphics2dText,
+        CommandsGraphics2dDisplay,
+        CommandsGraphics2dGraphics,
+        CommandsGraphics2dImages,
+        CommandsGraphics2dPixel,
+        CommandsGraphics2dText,
 
-    CommandsGraphics3dCamera,
-    CommandsGraphics3dCoordinates,
-    CommandsGraphics3dLightShadow,
-    CommandsGraphics3dMeshes,
+        CommandsGraphics3dCamera,
+        CommandsGraphics3dCoordinates,
+        CommandsGraphics3dLightShadow,
+        CommandsGraphics3dMeshes,
 
-    CommandsSoundMusicSamples,
-  ]
+        CommandsSoundMusicSamples
+    ]
 })
 
 export class BlitzBasicScriptModule {

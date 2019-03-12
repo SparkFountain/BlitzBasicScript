@@ -4,60 +4,60 @@ import {GameStateService} from '../../game-state/game-state.service';
 
 @Injectable()
 export class CommandsIOMouse {
-  constructor(private gameState: GameStateService) {
+    constructor(private gameState: GameStateService) {
 
-  }
+    }
 
-  flushMouse(): Observable<void> {
-    return of(this.gameState.flushMouse());
-  }
+    flushMouse(): Observable<void> {
+        return of(this.gameState.flushMouse());
+    }
 
-  getMouse() {
-  }
+    getMouse() {
+    }
 
-  hidePointer(): Observable<void> {
-    return new Observable<void>((observer: Subscriber<void>) => {
-      //TODO set CSS class on canvas
-      observer.next();
-      observer.complete();
-    });
-  }
+    hidePointer(): Observable<void> {
+        return new Observable<void>((observer: Subscriber<void>) => {
+            //TODO set CSS class on canvas
+            observer.next();
+            observer.complete();
+        });
+    }
 
-  mouseDown(code: number): Observable<boolean> {
-    return of(this.gameState.isMouseDown(code));
-  }
+    mouseDown(code: number): Observable<boolean> {
+        return of(this.gameState.isMouseDown(code));
+    }
 
-  mouseHit(code: number): Observable<number> {
-    return of(this.gameState.getMouseHits(code));
-  }
+    mouseHit(code: number): Observable<number> {
+        return of(this.gameState.getMouseHits(code));
+    }
 
-  mouseWait() {
-  }
+    mouseWait() {
+    }
 
-  mouseX() {
-  }
+    mouseX() {
+    }
 
-  mouseXSpeed() {
-  }
+    mouseXSpeed() {
+    }
 
-  mouseY() {
-  }
+    mouseY() {
+    }
 
-  mouseYSpeed() {
-  }
+    mouseYSpeed() {
+    }
 
-  mouseZ() {
-  }
+    mouseZ() {
+    }
 
-  mouseZSpeed() {
-  }
+    mouseZSpeed() {
+    }
 
-  moveMouse() {
-  }
+    moveMouse() {
+    }
 
-  showPointer() {
-  }
+    showPointer() {
+    }
 
-  waitMouse() {
-  }
+    waitMouse() {
+    }
 }

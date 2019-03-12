@@ -2,16 +2,16 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGuiIconStrip {
-  constructor() {
+    constructor() {
 
-  }
+    }
 
-  freeIconStrip() {
-  }
+    freeIconStrip() {
+    }
 
-  loadIconStrip() {
-  }
+    loadIconStrip() {
+    }
 
-  setGadgetIconStrip() {
-  }
+    setGadgetIconStrip() {
+    }
 }

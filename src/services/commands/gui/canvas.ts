@@ -4,15 +4,15 @@ import {CanvasComponent} from '../../../components/canvas/canvas.component';
 
 @Injectable()
 export class CommandsGuiCanvas {
-  constructor() {
+    constructor() {
 
-  }
+    }
 
-  createCanvas(x: number, y: number, width: number, height: number, group: any, style?: any): Observable<CanvasComponent> {
-    return of(null);
-  }
+    createCanvas(x: number, y: number, width: number, height: number, group: any, style?: any): Observable<CanvasComponent> {
+        return of(null);
+    }
 
-  //TODO implement or deprecated?
-  flipCanvas(canvas: CanvasComponent, flip: boolean) {
-  }
+    //TODO implement or deprecated?
+    flipCanvas(canvas: CanvasComponent, flip: boolean) {
+    }
 }

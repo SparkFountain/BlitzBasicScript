@@ -2,55 +2,55 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGuiTextArea {
-  constructor() {
+    constructor() {
 
-  }
+    }
 
-  addTextAreaText() {
-  }
+    addTextAreaText() {
+    }
 
-  createTextArea() {
-  }
+    createTextArea() {
+    }
 
-  formatTextAreaText() {
-  }
+    formatTextAreaText() {
+    }
 
-  lockTextArea() {
-  }
+    lockTextArea() {
+    }
 
-  setTextAreaColor() {
-  }
+    setTextAreaColor() {
+    }
 
-  setTextAreaFont() {
-  }
+    setTextAreaFont() {
+    }
 
-  setTextAreaTabs() {
-  }
+    setTextAreaTabs() {
+    }
 
-  setTextAreaText() {
-  }
+    setTextAreaText() {
+    }
 
-  textAreaChar() {
-  }
+    textAreaChar() {
+    }
 
-  textAreaCursor() {
-  }
+    textAreaCursor() {
+    }
 
-  textAreaLen() {
-  }
+    textAreaLen() {
+    }
 
-  textAreaLine() {
-  }
+    textAreaLine() {
+    }
 
-  textAreaLineLen() {
-  }
+    textAreaLineLen() {
+    }
 
-  textAreaSelLen() {
-  }
+    textAreaSelLen() {
+    }
 
-  textAreaText() {
-  }
+    textAreaText() {
+    }
 
-  unlockTextArea() {
-  }
+    unlockTextArea() {
+    }
 }

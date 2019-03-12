@@ -1,7 +1,7 @@
 export interface GameFont {
-  name: string,
-  size: number,
-  bold: boolean,
-  italic: boolean,
-  underline: boolean
+    name: string,
+    size: number,
+    bold: boolean,
+    italic: boolean,
+    underline: boolean
 }

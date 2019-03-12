@@ -1,41 +1,40 @@
 import {Observable, of, Subscriber} from 'rxjs';
-import {GameStateService} from '../../game-state/game-state.service';
 
 export class CommandsBasicsDiverse {
-  constructor(/*private gameState: GameStateService*/) {
+    constructor(/*private gameState: GameStateService*/) {
 
-  }
+    }
 
-  appTitle(title: string): Observable<void> {
-    return of(null/*this.gameState.setAppTitle(title)*/);
-  }
+    appTitle(title: string): Observable<void> {
+        return of(null/*this.gameState.setAppTitle(title)*/);
+    }
 
-  commandLine() {
+    commandLine() {
 
-  }
+    }
 
-  debugLog(message: string): Observable<void> {
-    return new Observable<void>((observer: Subscriber<void>) => {
-      console.log(message);
+    debugLog(message: string): Observable<void> {
+        return new Observable<void>((observer: Subscriber<void>) => {
+            console.log(message);
 
-      observer.next();
-      observer.complete();
-    });
-  }
+            observer.next();
+            observer.complete();
+        });
+    }
 
-  getEnv() {
-  }
+    getEnv() {
+    }
 
-  runtimeError() {
+    runtimeError() {
 
-  }
+    }
 
-  runtimeStats() {
-  }
+    runtimeStats() {
+    }
 
-  setEnv() {
-  }
+    setEnv() {
+    }
 
-  systemProperty() {
-  }
+    systemProperty() {
+    }
 }

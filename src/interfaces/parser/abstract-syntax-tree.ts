@@ -1,6 +1,6 @@
 export interface AbstractSyntaxTree {
-  statements: any[];
-  functions: {};
-  types: {};
-  mainLoop: any[];
+    statements: any[];
+    functions: {};
+    types: {};
+    mainLoop: any[];
 }

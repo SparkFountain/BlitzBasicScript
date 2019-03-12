@@ -2,67 +2,67 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGuiGadget {
-  constructor() {
+    constructor() {
 
-  }
+    }
 
-  activateGadget() {
-  }
+    activateGadget() {
+    }
 
-  clientHeight() {
-  }
+    clientHeight() {
+    }
 
-  clientWidth() {
-  }
+    clientWidth() {
+    }
 
-  disableGadget() {
-  }
+    disableGadget() {
+    }
 
-  enableGadget() {
-  }
+    enableGadget() {
+    }
 
-  freeGadget() {
-  }
+    freeGadget() {
+    }
 
-  gadgetFont() {
-  }
+    gadgetFont() {
+    }
 
-  gadgetGroup() {
-  }
+    gadgetGroup() {
+    }
 
-  gadgetHeight() {
-  }
+    gadgetHeight() {
+    }
 
-  gadgetText() {
-  }
+    gadgetText() {
+    }
 
-  gadgetWidth() {
-  }
+    gadgetWidth() {
+    }
 
-  gadgetX() {
-  }
+    gadgetX() {
+    }
 
-  gadgetY() {
-  }
+    gadgetY() {
+    }
 
-  hideGadget() {
-  }
+    hideGadget() {
+    }
 
-  queryObject() {
-  }
+    queryObject() {
+    }
 
-  setGadgetFont() {
-  }
+    setGadgetFont() {
+    }
 
-  setGadgetLayout() {
-  }
+    setGadgetLayout() {
+    }
 
-  setGadgetShape() {
-  }
+    setGadgetShape() {
+    }
 
-  setGadgetText() {
-  }
+    setGadgetText() {
+    }
 
-  showGadget() {
-  }
+    showGadget() {
+    }
 }

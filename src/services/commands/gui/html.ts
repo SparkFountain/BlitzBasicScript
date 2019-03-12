@@ -2,31 +2,31 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGuiHTML {
-  constructor() {
+    constructor() {
 
-  }
+    }
 
-  createHtmlView() {
-  }
+    createHtmlView() {
+    }
 
-  htmlViewBack() {
-  }
+    htmlViewBack() {
+    }
 
-  htmlViewCurrentUrl() {
-  }
+    htmlViewCurrentUrl() {
+    }
 
-  htmlViewEventUrl() {
-  }
+    htmlViewEventUrl() {
+    }
 
-  htmlViewForward() {
-  }
+    htmlViewForward() {
+    }
 
-  htmlViewGo() {
-  }
+    htmlViewGo() {
+    }
 
-  htmlViewRun() {
-  }
+    htmlViewRun() {
+    }
 
-  htmlViewStatus() {
-  }
+    htmlViewStatus() {
+    }
 }

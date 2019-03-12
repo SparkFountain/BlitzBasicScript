@@ -2,32 +2,32 @@ import {Injectable} from '@angular/core';
 
 @Injectable()
 export class CommandsGraphics3dDiverse {
-  constructor() {
+    constructor() {
 
-  }
+    }
 
-  createMirror() {
+    createMirror() {
 
-  }
+    }
 
-  createPivot() {
-  }
+    createPivot() {
+    }
 
-  createPlane() {
-  }
+    createPlane() {
+    }
 
-  getMatElement() {
-  }
+    getMatElement() {
+    }
 
-  loaderMatrix() {
-  }
+    loaderMatrix() {
+    }
 
-  trisRendered() {
-  }
+    trisRendered() {
+    }
 
-  vectorPitch() {
-  }
+    vectorPitch() {
+    }
 
-  vectorYaw() {
-  }
+    vectorYaw() {
+    }
 }
