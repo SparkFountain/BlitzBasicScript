@@ -1,4 +1,7 @@
 import {Injectable} from '@angular/core';
+import {GameEntity} from '../../../interfaces/game/entity';
+import {Observable, of} from 'rxjs';
+import {PickGeometry} from '../../../enums/pick/geometry';
 
 @Injectable()
 export class CommandsGraphics3dPicking {
@@ -6,28 +9,36 @@ export class CommandsGraphics3dPicking {
 
     }
 
-    cameraPick() {
+    cameraPick(camera: GameEntity, x: number, y: number): Observable<GameEntity> {
+        return of(null);
     }
 
-    entityPick() {
+    entityPick(entity: GameEntity, distance: number): Observable<GameEntity> {
+        return of(null);
     }
 
-    entityPickMode() {
+    entityPickMode(entity: GameEntity, geometry: PickGeometry, coverOtherObjects?: boolean): Observable<void> {
+        return of(null);
     }
 
-    linePick() {
+    linePick(x: number, y: number, z: number, dx: number, dy: number, dz: number, radius?: number): Observable<GameEntity> {
+        return of(null);
     }
 
-    pickedEntity() {
+    pickedEntity(): Observable<GameEntity> {
+        return of(null);
     }
 
-    pickedNX() {
+    pickedNX(): Observable<number> {
+        return of(0);
     }
 
-    pickedNY() {
+    pickedNY(): Observable<number> {
+        return of(0);
     }
 
-    pickedNZ() {
+    pickedNZ(): Observable<number> {
+        return of(0);
     }
 
     pickedSurface() {
@@ -39,12 +50,15 @@ export class CommandsGraphics3dPicking {
     pickedTriangle() {
     }
 
-    pickedX() {
+    pickedX(): Observable<number> {
+        return of(0);
     }
 
-    pickedY() {
+    pickedY(): Observable<number> {
+        return of(0);
     }
 
-    pickedZ() {
+    pickedZ(): Observable<number> {
+        return of(0);
     }
 }

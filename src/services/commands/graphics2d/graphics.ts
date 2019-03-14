@@ -67,7 +67,17 @@ export class CommandsGraphics2dGraphics {
         return this.graphics2dService.rect(x, y, width, height, filled);
     }
 
-    viewport() {
+    viewport(beginX: number, beginY: number, width: number, height: number): Observable<void> {
+        return new Observable<void>((observer: Subscriber<void>) => {
+            this.gameState.setScreenViewport({
+                beginX: beginX,
+                beginY: beginY,
+                width: width,
+                height: height
+            });
 
+            observer.next();
+            observer.complete();
+        });
     }
 }

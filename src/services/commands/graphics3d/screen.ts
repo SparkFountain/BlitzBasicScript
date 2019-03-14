@@ -1,4 +1,5 @@
 import {Injectable} from '@angular/core';
+import {Observable, of} from 'rxjs';
 
 @Injectable()
 export class CommandsGraphics3dScreen {
@@ -6,21 +7,27 @@ export class CommandsGraphics3dScreen {
 
     }
 
-    countGfxModes3d() {
+    countGfxModes3d(): Observable<number> {
+        return of(1);
     }
 
-    gfxDriver3D() {
+    gfxDriver3D(): Observable<boolean> {
+        return of(BABYLON.Engine.isSupported());
     }
 
-    gfxDriverCaps3D() {
+    gfxDriverCaps3D(): Observable<number> {
+        return of(110);
     }
 
-    gfxMode3D() {
+    gfxMode3D(mode: number): Observable<boolean> {
+        return of(true);
     }
 
-    gfxMode3DExists() {
+    gfxMode3DExists(width: number, height: number, depth: number): Observable<boolean> {
+        return of(true);
     }
 
-    windowed3D() {
+    windowed3D(): Observable<boolean> {
+        return of(true);
     }
 }

@@ -12,9 +12,12 @@ export class LanguageService {
     public deprecatedCommands: object;
 
     constructor(private http: HttpClient) {
+        this.initialize().subscribe();
     }
 
     public initialize(): Observable<void> {
+        console.info('Initializing Lexer...');
+
         return new Observable((observer: Subscriber<void>) => {
             this.keywords = {};
             this.deprecatedKeywords = {};

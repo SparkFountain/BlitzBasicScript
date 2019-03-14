@@ -23,6 +23,8 @@ import {GameFont} from '../../interfaces/game/font';
 import Camera = BABYLON.Camera;
 import Mesh = BABYLON.Mesh;
 import Light = BABYLON.Light;
+import {CommandsGraphics3dControls} from '../commands/graphics3d/controls';
+import {GameEntity} from '../../interfaces/game/entity';
 
 @Injectable({
     providedIn: 'root'
@@ -38,6 +40,7 @@ export class CodeGenerator {
         private commandsGraphics2dText: CommandsGraphics2dText,
         private commandsGraphics3dCamera: CommandsGraphics3dCamera,
         private commandsGraphics3dCoordinates: CommandsGraphics3dCoordinates,
+        private commandsGraphics3dControls: CommandsGraphics3dControls,
         private commandsGraphics3dLightShadow: CommandsGraphics3dLightShadow,
         private commandsGraphics3dMeshes: CommandsGraphics3dMeshes,
         private commandsBasicsDiverse: CommandsBasicsDiverse,
@@ -76,8 +79,8 @@ export class CodeGenerator {
                     }
                 }),
                 new Observable((observer) => {
-                    this.gameState.getGlobalAsync('camera').subscribe((camera: Camera) => {
-                        this.commandsGraphics3dCoordinates.positionEntity(camera, 0, 1, -10).subscribe(() => {
+                    this.gameState.getGlobalAsync('camera').subscribe((camera: GameEntity) => {
+                        this.commandsGraphics3dCoordinates.positionEntity(camera, 0, 2, -5).subscribe(() => {
                             observer.next();
                             observer.complete();
                         });
@@ -111,15 +114,23 @@ export class CodeGenerator {
 
                 //PRIMITIVE MESH
                 this.generalService.assign({
-                    variable: 'cone',
+                    variable: 'cube',
                     type: 'global',
                     expression: {
-                        value: this.commandsGraphics3dMeshes.createTorusKnot()
+                        value: this.commandsGraphics3dMeshes.createCube()
                     }
                 }),
                 new Observable((observer) => {
-                    this.gameState.getGlobalAsync('cone').subscribe((cone: Mesh) => {
-                        this.commandsGraphics3dCoordinates.positionEntity(cone, 0, 1, 5).subscribe((done) => {
+                    this.gameState.getGlobalAsync('cube').subscribe((cube: GameEntity) => {
+                        this.commandsGraphics3dCoordinates.positionEntity(cube, 0, 1, 0).subscribe((done) => {
+                            observer.next();
+                            observer.complete();
+                        });
+                    });
+                }),
+                new Observable((observer) => {
+                    this.gameState.getGlobalAsync('cube').subscribe((cube: GameEntity) => {
+                        this.commandsGraphics3dControls.entityColor(cube, 0, 255, 0).subscribe((done) => {
                             observer.next();
                             observer.complete();
                         });

@@ -17,10 +17,6 @@ export class CommandsGraphics2dDisplay {
 
     }
 
-    gfxDriverName() {
-
-    }
-
     gfxModeDepth(): Observable<number> {
         return of(32);
     }

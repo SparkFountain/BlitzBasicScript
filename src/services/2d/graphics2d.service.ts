@@ -290,6 +290,10 @@ export class Graphics2dService {
         return of(0);
     }
 
+    fontWidth(): Observable<number> {
+        return of(this._context2d.measureText('M').width);
+    }
+
     stringWidth(text: string): Observable<number> {
         return of(this._context2d.measureText(text).width);
     }

@@ -101,13 +101,13 @@ export class Lexer {
      * @param code An array of BBScript code lines
      * @return An array of arrays, containing all tokens per code line
      */
-    lexCode(code: string[][]): Array<LexerToken[]> {
-        //console.info('Key Words:', this.language.keywords);
-
+    lexCode(code: string[]): Array<LexerToken[]> {
+        console.info('Code:', code);
+        console.info('Key Words:', this.language.keywords);
         let lexer: Lexer = this;
 
         let result: Array<LexerToken[]> = [];
-        code.forEach((line: string[], index: number) => {
+        code.forEach((line: string, index: number) => {
             let tokens: LexerToken[] = lexer.lexLine(line);
             for (let i = 0; i < tokens.length; i++) {
                 tokens[i].offset.y = index + 1;
@@ -135,12 +135,10 @@ export class Lexer {
 
     /**
      * Performs lexing operations on a BBScript code line.
-     * @param codeCharArray A string consisting of plain BBScript code
+     * @param codeLine A string consisting of plain BBScript code
      * @return An array of tokens which represent the code's components
      */
-    lexLine(codeCharArray: string[]): LexerToken[] {
-        let codeLine: string = codeCharArray.join('');
-
+    lexLine(codeLine: string): LexerToken[] {
         //replace tabs by 2 spaces
         codeLine = codeLine.replace(new RegExp('\\t', 'g'), '  ');
 
@@ -360,7 +358,7 @@ export class Lexer {
         let variables = {};
 
         let result: string = '';
-        let tokens: LexerToken[] = this.lexLine(codeLine.split(''));
+        let tokens: LexerToken[] = this.lexLine(codeLine);
         //console.info('tokens:', tokens);
         for (let i = 0; i < tokens.length; i++) {
             let whitespace: number;

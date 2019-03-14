@@ -33,6 +33,7 @@ import {BlitzBasicScriptProgressBarModule} from '../components/progress-bar/prog
 import {LanguageService} from '../services/language/language.service';
 import {Lexer} from '../services/lexer/lexer.service';
 import {Parser} from '../services/parser/parser.service';
+import {CommandsGraphics3dControls} from '../services/commands/graphics3d/controls';
 
 @NgModule({
     declarations: [
@@ -81,9 +82,9 @@ import {Parser} from '../services/parser/parser.service';
 
         CommandsGraphics3dCamera,
         CommandsGraphics3dCoordinates,
+        CommandsGraphics3dControls,
         CommandsGraphics3dLightShadow,
         CommandsGraphics3dMeshes,
-
         CommandsSoundMusicSamples
     ]
 })

@@ -11,6 +11,7 @@ import Light = BABYLON.Light;
 import PointLight = BABYLON.PointLight;
 import SpotLight = BABYLON.SpotLight;
 import Color3 = BABYLON.Color3;
+import StandardMaterial = BABYLON.StandardMaterial;
 
 @Injectable({
     providedIn: 'root'
@@ -38,10 +39,10 @@ export class BabylonJSService {
         this.antiAlias = true;
     }
 
-    defaultMaterial() {
-        let material = new BABYLON.StandardMaterial('1', this._scene);
+    defaultMaterial(): StandardMaterial {
+        let material: StandardMaterial = new BABYLON.StandardMaterial('1', this._scene);
         let white = new BABYLON.Color3(1, 1, 1);
-        material.diffuseColor = white;
+        material.diffuseColor = BABYLON.Color3.Red();
         material.specularColor = white;
         material.emissiveColor = white;
         material.ambientColor = white;
@@ -310,6 +311,8 @@ export class BabylonJSService {
 
     positionMesh(entity: Mesh | Camera, x: number, y: number, z: number, parentCoordinates?: boolean): Observable<void> {
         return new Observable<void>((observer: Subscriber<void>) => {
+            console.info('Entity:', entity);
+
             //TODO regard parent coordinates
             entity.position = new BABYLON.Vector3(x, y, z);
             console.info('New position of entity:', x, y, z);
@@ -396,6 +399,15 @@ export class BabylonJSService {
     pointEntity(sourceEntity: any, targetEntity: any, roll: number): Observable<void> {
         return new Observable<void>((observer: Subscriber<void>) => {
             //TODO implementation
+
+            observer.next();
+            observer.complete();
+        });
+    }
+
+    colorMesh(mesh: Mesh, red: number, green: number, blue: number): Observable<void> {
+        return new Observable<void>((observer: Subscriber<void>) => {
+            //mesh.material.ambientColor = new BABYLON.Color3(Math.trunc(red) / 255, Math.trunc(green) / 255, Math.trunc(blue) / 255);
 
             observer.next();
             observer.complete();

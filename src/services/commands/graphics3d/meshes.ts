@@ -1,6 +1,8 @@
 import {Observable, Subscriber} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {BabylonJSService} from '../../babylon-js/babylon-js.service';
+import {GameEntity} from '../../../interfaces/game/entity';
+import {EntityClass} from '../../../enums/entity/entity-class';
 import Mesh = BABYLON.Mesh;
 
 @Injectable()
@@ -23,92 +25,113 @@ export class CommandsGraphics3dMeshes {
         });
     }
 
-    createCone(segments?: number, hasFloor?: boolean, parent?: Mesh): Observable<Mesh> {
-        return new Observable<Mesh>((observer: Subscriber<Mesh>) => {
-            this.babylonjs.createCone(segments, hasFloor).subscribe((cone: Mesh) => {
-                if (parent) {
-                    cone.parent = parent;
-                }
+    createCone(segments?: number, hasFloor?: boolean, parent?: GameEntity): Observable<GameEntity> {
+        return new Observable<GameEntity>((observer: Subscriber<GameEntity>) => {
+            this.babylonjs.createCone(segments, hasFloor).subscribe((coneMesh: Mesh) => {
+                let coneEntity: GameEntity = {
+                    name: 'TODO',
+                    class: 'Mesh',
+                    parent: parent ? parent : null,
+                    mesh: coneMesh
+                };
 
-                observer.next(cone);
+                observer.next(coneEntity);
                 observer.complete();
             });
         });
     }
 
-    createSphere(segments?: number, parent?: Mesh): Observable<Mesh> {
-        return new Observable<Mesh>((observer: Subscriber<Mesh>) => {
-            this.babylonjs.createSphere(segments).subscribe((sphere: Mesh) => {
-                if (parent) {
-                    sphere.parent = parent;
-                }
+    createSphere(segments?: number, parent?: GameEntity): Observable<GameEntity> {
+        return new Observable<GameEntity>((observer: Subscriber<GameEntity>) => {
+            this.babylonjs.createSphere(segments).subscribe((sphereMesh: Mesh) => {
+                let sphereEntity: GameEntity = {
+                    name: 'TODO',
+                    class: 'Mesh',
+                    parent: parent ? parent : null,
+                    mesh: sphereMesh
+                };
 
-                observer.next(sphere);
+                observer.next(sphereEntity);
                 observer.complete();
             });
         });
     }
 
-    createCube(parent?: Mesh): Observable<Mesh> {
-        return new Observable<Mesh>((observer: Subscriber<Mesh>) => {
-            this.babylonjs.createCube().subscribe((cube: Mesh) => {
-                if (parent) {
-                    cube.parent = parent;
-                }
+    createCube(parent?: GameEntity): Observable<GameEntity> {
+        return new Observable<GameEntity>((observer: Subscriber<GameEntity>) => {
+            this.babylonjs.createCube().subscribe((cubeMesh: Mesh) => {
+                let cubeEntity: GameEntity = {
+                    name: 'TODO',
+                    class: 'Mesh',
+                    parent: parent ? parent : null,
+                    mesh: cubeMesh
+                };
 
-                observer.next(cube);
+                observer.next(cubeEntity);
                 observer.complete();
             });
         });
     }
 
-    createCylinder(segments?: number, hasFloor?: boolean, parent?: any): any {
-        return new Observable<Mesh>((observer: Subscriber<Mesh>) => {
-            this.babylonjs.createCylinder(segments, hasFloor).subscribe((cylinder: Mesh) => {
-                if (parent) {
-                    cylinder.parent = parent;
-                }
+    createCylinder(segments?: number, hasFloor?: boolean, parent?: GameEntity): Observable<GameEntity> {
+        return new Observable<GameEntity>((observer: Subscriber<GameEntity>) => {
+            this.babylonjs.createCylinder(segments, hasFloor).subscribe((cylinderMesh: Mesh) => {
+                let cylinderEntity: GameEntity = {
+                    name: 'TODO',
+                    class: 'Mesh',
+                    parent: parent ? parent : null,
+                    mesh: cylinderMesh
+                };
 
-                observer.next(cylinder);
+                observer.next(cylinderEntity);
                 observer.complete();
             });
         });
     }
 
-    createPyramid(baseVertexNumber?: number, parent?: any): any {
-        return new Observable<Mesh>((observer: Subscriber<Mesh>) => {
-            this.babylonjs.createPyramid(baseVertexNumber).subscribe((pyramid: Mesh) => {
-                if (parent) {
-                    pyramid.parent = parent;
-                }
+    createPyramid(baseVertexNumber?: number, parent?: any): Observable<GameEntity> {
+        return new Observable<GameEntity>((observer: Subscriber<GameEntity>) => {
+            this.babylonjs.createPyramid(baseVertexNumber).subscribe((pyramidMesh: Mesh) => {
+                let pyramidEntity: GameEntity = {
+                    name: 'TODO',
+                    class: 'Mesh',
+                    parent: parent ? parent : null,
+                    mesh: pyramidMesh
+                };
 
-                observer.next(pyramid);
+                observer.next(pyramidEntity);
                 observer.complete();
             });
         });
     }
 
-    createTorus(parent?: Mesh): Observable<Mesh> {
-        return new Observable<Mesh>((observer: Subscriber<Mesh>) => {
-            this.babylonjs.createTorus().subscribe((torus: Mesh) => {
-                if (parent) {
-                    torus.parent = parent;
-                }
+    createTorus(parent?: GameEntity): Observable<GameEntity> {
+        return new Observable<GameEntity>((observer: Subscriber<GameEntity>) => {
+            this.babylonjs.createTorus().subscribe((torusMesh: Mesh) => {
+                let torusEntity: GameEntity = {
+                    name: 'TODO',
+                    class: 'Mesh',
+                    parent: parent ? parent : null,
+                    mesh: torusMesh
+                };
 
-                observer.next(torus);
+                observer.next(torusEntity);
                 observer.complete();
             });
         });
     }
 
-    createTorusKnot(parent?: Mesh): Observable<Mesh> {
-        return new Observable<Mesh>((observer: Subscriber<Mesh>) => {
-            this.babylonjs.createTorusKnot().subscribe((torusKnot: Mesh) => {
-                if (parent) {
-                    torusKnot.parent = parent;
-                }
+    createTorusKnot(parent?: GameEntity): Observable<GameEntity> {
+        return new Observable<GameEntity>((observer: Subscriber<GameEntity>) => {
+            this.babylonjs.createTorusKnot().subscribe((torusKnotMesh: Mesh) => {
+                let torusKnotEntity: GameEntity = {
+                    name: 'TODO',
+                    class: 'Mesh',
+                    parent: parent ? parent : null,
+                    mesh: torusKnotMesh
+                };
 
-                observer.next(torusKnot);
+                observer.next(torusKnotEntity);
                 observer.complete();
             });
         });
@@ -152,21 +175,21 @@ export class CommandsGraphics3dMeshes {
         });
     }
 
-    positionMesh(mesh: any, x: number, y: number, z: number): Observable<void> {
+    positionMesh(mesh: Mesh, x: number, y: number, z: number): Observable<void> {
         return new Observable<void>((observer: Subscriber<void>) => {
             observer.next();
             observer.complete();
         });
     }
 
-    rotateMesh(mesh: any, pitch: number, yaw: number, roll: number): Observable<void> {
+    rotateMesh(mesh: Mesh, pitch: number, yaw: number, roll: number): Observable<void> {
         return new Observable<void>((observer: Subscriber<void>) => {
             observer.next();
             observer.complete();
         });
     }
 
-    scaleMesh(mesh: any, scaleX: number, scaleY: number, scaleZ: number): Observable<void> {
+    scaleMesh(mesh: Mesh, scaleX: number, scaleY: number, scaleZ: number): Observable<void> {
         return new Observable<void>((observer: Subscriber<void>) => {
             observer.next();
             observer.complete();

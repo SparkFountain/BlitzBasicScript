@@ -1,9 +1,10 @@
 import {Injectable} from '@angular/core';
 import {BabylonJSService} from '../../babylon-js/babylon-js.service';
 import {Axis} from '../../../enums/axis';
-import {Observable} from 'rxjs';
+import {Observable, of} from 'rxjs';
 import Mesh = BABYLON.Mesh;
 import Camera = BABYLON.Camera;
+import {GameEntity} from '../../../interfaces/game/entity';
 
 @Injectable()
 export class CommandsGraphics3dCoordinates {
@@ -23,8 +24,15 @@ export class CommandsGraphics3dCoordinates {
         return this.babylonjs.pointEntity(sourceEntity, targetEntity, roll);
     }
 
-    positionEntity(entity: Mesh | Camera, x: number, y: number, z: number, parentCoordinates?: boolean): Observable<void> {
-        return this.babylonjs.positionMesh(entity, x, y, z, parentCoordinates);
+    positionEntity(entity: GameEntity, x: number, y: number, z: number, parentCoordinates?: boolean): Observable<void> {
+        //TODO distinguish between positionMesh and positionEntity!
+        let mesh: Mesh | Camera;
+        if(entity.camera) {
+            mesh = entity.camera;
+        } else if(entity.mesh) {
+            mesh = entity.mesh;
+        }
+        return this.babylonjs.positionMesh(mesh, x, y, z, parentCoordinates);
     }
 
     rotateEntity(entity: Mesh | Camera, pitch: number, yaw: number, roll: number, parentCoordinates?: boolean) {
@@ -43,21 +51,27 @@ export class CommandsGraphics3dCoordinates {
         return this.babylonjs.turnEntity(entity, pitch, yaw, roll, parentAngle);
     }
 
-    tFormedX() {
+    tFormedX(): Observable<number> {
+        return of(0);
     }
 
-    tFormedY() {
+    tFormedY(): Observable<number> {
+        return of(0);
     }
 
-    tFormedZ() {
+    tFormedZ(): Observable<number> {
+        return of(0);
     }
 
-    tFormNormal() {
+    tFormNormal(x: number, y: number, z: number, source: GameEntity, target: GameEntity): Observable<void> {
+        return of(null);
     }
 
-    tFormPoint() {
+    tFormPoint(x: number, y: number, z: number, source: GameEntity, target: GameEntity): Observable<void> {
+        return of(null);
     }
 
-    tFormVector() {
+    tFormVector(x: number, y: number, z: number, source: GameEntity, target: GameEntity): Observable<void> {
+        return of(null);
     }
 }

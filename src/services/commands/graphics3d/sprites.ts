@@ -2,6 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 import {TextureMode} from '../../../enums/texture/texture-mode';
 import {SpriteViewMode} from '../../../enums/sprite/sprite-view-mode';
+import {GameEntity} from '../../../interfaces/game/entity';
 
 @Injectable()
 export class CommandsGraphics3dSprites {
@@ -9,32 +10,32 @@ export class CommandsGraphics3dSprites {
 
     }
 
-    createSprite(parent?: any): Observable<BABYLON.Sprite> {
+    createSprite(parent?: GameEntity): Observable<GameEntity> {
         //TODO implementation
         return of(null);
     }
 
-    handleSprite(sprite: BABYLON.Sprite, x: number, y: number): Observable<void> {
+    handleSprite(sprite: GameEntity, x: number, y: number): Observable<void> {
         //TODO implementation
         return of(null);
     }
 
-    loadSprite(filePath: string, mode: TextureMode, parent?: any): Observable<BABYLON.Sprite> {
+    loadSprite(filePath: string, mode: TextureMode, parent?: any): Observable<GameEntity> {
         //TODO implementation
         return of(null);
     }
 
-    rotateSprite(sprite: BABYLON.Sprite, angle: number): Observable<void> {
+    rotateSprite(sprite: GameEntity, angle: number): Observable<void> {
         //TODO implementation
         return of(null);
     }
 
-    scaleSprite(sprite: BABYLON.Sprite, x: number, y: number): Observable<void> {
+    scaleSprite(sprite: GameEntity, x: number, y: number): Observable<void> {
         //TODO implementation
         return of(null);
     }
 
-    spriteViewMode(sprite: BABYLON.Sprite, mode: SpriteViewMode): Observable<void> {
+    spriteViewMode(sprite: GameEntity, mode: SpriteViewMode): Observable<void> {
         //TODO implementation
         return of(null);
     }

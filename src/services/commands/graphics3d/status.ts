@@ -1,4 +1,6 @@
 import {Injectable} from '@angular/core';
+import {GameEntity} from '../../../interfaces/game/entity';
+import {Observable, of, Subscriber} from 'rxjs';
 
 @Injectable()
 export class CommandsGraphics3dStatus {
@@ -6,60 +8,80 @@ export class CommandsGraphics3dStatus {
 
     }
 
-    countChildren() {
+    countChildren(entity: GameEntity): Observable<number> {
+        return of(-1);
     }
 
-    deltaPitch() {
+    deltaPitch(sourceEntity: GameEntity, targetEntity: GameEntity): Observable<number> {
+        return of(-1);
     }
 
-    deltaYaw() {
+    deltaYaw(sourceEntity: GameEntity, targetEntity: GameEntity): Observable<number> {
+        return of(-1);
     }
 
-    deltaRoll() {
+    entityClass(entity: GameEntity): string {
+        return entity.class;
     }
 
-    entityClass() {
+    entityDistance(entity1: GameEntity, entity2: GameEntity): Observable<number> {
+        return of(-1);
     }
 
-    entityDistance() {
+    entityInView(entity: GameEntity, camera: GameEntity): Observable<boolean> {
+        return of(false);
     }
 
-    entityInView() {
+    entityName(entity: GameEntity): Observable<string> {
+        return of(entity.name);
     }
 
-    entityName() {
+    entityPitch(entity: GameEntity, global?: boolean): Observable<number> {
+        return of(0);
     }
 
-    entityPitch() {
+    entityRoll(entity: GameEntity, global?: boolean): Observable<number> {
+        return of(0);
     }
 
-    entityRoll() {
+    entityVisible(entity1: GameEntity, entity2: GameEntity): Observable<boolean> {
+        return of(false);
     }
 
-    entityVisible() {
+    entityX(entity: GameEntity, global?: boolean): Observable<number> {
+        return of(null);
     }
 
-    entityX() {
+    entityY(entity: GameEntity, global?: boolean): Observable<number> {
+        return of(null);
     }
 
-    entityY() {
+    entityYaw(entity: GameEntity, global?: boolean): Observable<number> {
+        return of(null);
     }
 
-    entityYaw() {
+    entityZ(entity: GameEntity, global?: boolean): Observable<number> {
+        return of(null);
     }
 
-    entityZ() {
+    findChild(entity: GameEntity, childName: string): Observable<GameEntity | null> {
+        return of(null);
     }
 
-    findChild() {
+    getChild(entity: GameEntity, index: number): Observable<GameEntity | null> {
+        return of(null);
     }
 
-    getChild() {
+    getParent(entity: GameEntity): Observable<GameEntity> {
+        return of(entity.parent);
     }
 
-    getParent() {
-    }
+    nameEntity(entity: GameEntity, name: string): Observable<void> {
+        return new Observable<void>((observer: Subscriber<void>) => {
+            entity.name = name;
 
-    nameEntity() {
+            observer.next();
+            observer.complete();
+        });
     }
 }

@@ -19,6 +19,7 @@ export class CommandsGraphics2dText {
         return this.graphics2d.fontDescent(font);
     }
 
+    //TODO according to BlitzForum Online Help, the font parameter should not be set: https://www.blitzforum.de/help/fontHeight
     fontHeight(font: GameFont): Observable<number> {
         return new Observable<number>((observer: Subscriber<number>) => {
             forkJoin([this.fontAscent(font), this.fontDescent(font)]).subscribe((values: number[]) => {
@@ -26,7 +27,6 @@ export class CommandsGraphics2dText {
                 observer.complete();
             });
         });
-
     }
 
     fontName(font: GameFont): Observable<string> {
@@ -56,7 +56,7 @@ export class CommandsGraphics2dText {
     }
 
     fontWidth() {
-
+        return this.graphics2d.fontWidth();
     }
 
     freeFont(font: GameFont): Observable<void> {

@@ -1,6 +1,8 @@
 import {BabylonJSService} from '../../babylon-js/babylon-js.service';
-import {Observable, Subscriber} from 'rxjs';
+import {Observable, of, Subscriber} from 'rxjs';
 import {Injectable} from '@angular/core';
+import {GameEntity} from '../../../interfaces/game/entity';
+import {CameraType} from '../../../enums/camera/camera-type';
 import Camera = BABYLON.Camera;
 
 @Injectable()
@@ -9,10 +11,13 @@ export class CommandsGraphics3dCamera {
 
     }
 
+    /** PRIVATE **/
     private normalize(value: number): number {
         return value / Math.trunc(255);
     }
 
+
+    /** PUBLIC **/
     cameraClsColor(camera: any, red: number, green: number, blue: number): Observable<void> {
         return this.babylonjs.setClearColor(this.normalize(red), this.normalize(green), this.normalize(blue));
     }
@@ -108,28 +113,31 @@ export class CommandsGraphics3dCamera {
         //camera.zoomOnFactor = value;
     }
 
-    createCamera(type: any, parent?: any): Observable<Camera> {
-        return new Observable<Camera>((observer: Subscriber<Camera>) => {
+    createCamera(type: CameraType, parent?: GameEntity): Observable<GameEntity> {
+        return new Observable<GameEntity>((observer: Subscriber<GameEntity>) => {
             this.babylonjs.createCamera(type).subscribe((camera: Camera) => {
-                if (parent) {
-                    camera.parent = parent;
-                }
+                let cameraEntity: GameEntity = {
+                    name: 'TODO',
+                    class: 'Camera',
+                    parent: parent ? parent : null,
+                    camera: camera
+                };
 
-                observer.next(camera);
+                observer.next(cameraEntity);
                 observer.complete();
             });
         });
     }
 
-    projectedX(): number {
-        return 0;
+    projectedX(): Observable<number> {
+        return of(0);
     }
 
-    projectedY(): number {
-        return 0;
+    projectedY(): Observable<number> {
+        return of(0);
     }
 
-    projectedZ(): boolean {
-        return false;
+    projectedZ(): Observable<boolean> {
+        return of(false);
     }
 }
