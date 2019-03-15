@@ -8,8 +8,16 @@ import {fromArray} from 'rxjs/internal/observable/fromArray';
 
 @Injectable()
 export class Lexer {
+    private individuals: any;
+
     constructor(private http: HttpClient,
                 private language: LanguageService) {
+        this.individuals = {
+            functions: [],
+            types: [],
+            globals: [],
+            dims: []
+        };
     }
 
     /**
@@ -57,9 +65,20 @@ export class Lexer {
             return {which: LexerTokenCategory.INTEGER, value: chars, offset: {x: i, y: 0}};
         } else if (this.isFloat(chars)) {
             return {which: LexerTokenCategory.FLOAT, value: chars, offset: {x: i, y: 0}};
+        } else if(this.individuals.functions.indexOf(chars) > -1) {
+            return {which: LexerTokenCategory.FUNCTION, value: chars, offset: {x: i, y: 0}}
+        } else if(this.individuals.types.indexOf(chars) > -1) {
+            return {which: LexerTokenCategory.TYPE, value: chars, offset: {x: i, y: 0}}
+        } else if(this.individuals.types.indexOf(chars) > -1) {
+            return {which: LexerTokenCategory.TYPE, value: chars, offset: {x: i, y: 0}}
+        } else if(this.individuals.globals.indexOf(chars) > -1) {
+            return {which: LexerTokenCategory.GLOBAL, value: chars, offset: {x: i, y: 0}}
+        } else if(this.individuals.globals.indexOf(chars) > -1) {
+            return {which: LexerTokenCategory.DIM, value: chars, offset: {x: i, y: 0}}
         } else {
             if (chars.length > 0) {
                 //individuals can be user functions or variable names
+                //TODO decide what kind of individual (function / type / global / dim)
                 return {which: LexerTokenCategory.INDIVIDUAL, value: chars, offset: {x: i, y: 0}};
             } else {
                 return {which: LexerTokenCategory.EMPTY, value: '', offset: {x: i, y: 0}};

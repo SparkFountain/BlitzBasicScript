@@ -26,5 +26,7 @@ export enum LexerTokenCategory {
     INTEGER,
     FLOAT,
     STRING,
-    UNIDENTIFIED
+    UNIDENTIFIED,
+    GLOBAL,
+    DIM
 }
