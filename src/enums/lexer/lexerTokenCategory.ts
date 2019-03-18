@@ -28,5 +28,6 @@ export enum LexerTokenCategory {
     STRING,
     UNIDENTIFIED,
     GLOBAL,
+    LOCAL,
     DIM
 }

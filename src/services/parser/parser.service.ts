@@ -1,11 +1,64 @@
 //TODO refactor package access structure (like BBScript.game.xyz)
 import {LexerToken} from '../../interfaces/lexer-token';
-import {ParserStackElement} from '../../enums/parser/parserStackElement';
+import {ParserStackElement} from '../../enums/parser/parser-stack-element';
 import {LexerTokenCategory} from '../../enums/lexer/lexerTokenCategory';
-import {ParserEntryPoint} from '../../enums/parser/parserEntryPoint';
+import {ParserEntryPoint} from '../../enums/parser/parser-entry-point';
 import {Injectable} from '@angular/core';
-import {AbstractSyntaxTree} from '../../interfaces/parser/abstract-syntax-tree';
-import {Lexer} from '../lexer/lexer.service';
+import {CommandsBasicsDiverse} from '../commands/basics/diverse';
+import {CommandsBasicsMaths} from '../commands/basics/maths';
+import {CommandsBasicsStrings} from '../commands/basics/strings';
+import {CommandsBasicsTimeRandom} from '../commands/basics/time-random';
+import {CommandsDataBank} from '../commands/data/bank';
+import {CommandsDataFileSystem} from '../commands/data/file-system';
+import {CommandsGraphics2dDisplay} from '../commands/graphics2d/display';
+import {CommandsGraphics2dGraphics} from '../commands/graphics2d/graphics';
+import {CommandsGraphics2dImages} from '../commands/graphics2d/images';
+import {CommandsGraphics2dMovies} from '../commands/graphics2d/movies';
+import {CommandsGraphics2dPixel} from '../commands/graphics2d/pixel';
+import {CommandsGraphics2dText} from '../commands/graphics2d/text';
+import {CommandsGraphics3dAnimations} from '../commands/graphics3d/animations';
+import {CommandsGraphics3dBrushes} from '../commands/graphics3d/brushes';
+import {CommandsGraphics3dCamera} from '../commands/graphics3d/camera';
+import {CommandsGraphics3dCollisions} from '../commands/graphics3d/collisions';
+import {CommandsGraphics3dControls} from '../commands/graphics3d/controls';
+import {CommandsGraphics3dCoordinates} from '../commands/graphics3d/coordinates';
+import {CommandsGraphics3dDiverse} from '../commands/graphics3d/diverse';
+import {CommandsGraphics3dLightShadow} from '../commands/graphics3d/light-shadow';
+import {CommandsGraphics3dMeshes} from '../commands/graphics3d/meshes';
+import {CommandsGraphics3dPicking} from '../commands/graphics3d/picking';
+import {CommandsGraphics3dScene} from '../commands/graphics3d/scene';
+import {CommandsGraphics3dScenery} from '../commands/graphics3d/scenery';
+import {CommandsGraphics3dScreen} from '../commands/graphics3d/screen';
+import {CommandsGraphics3dSprites} from '../commands/graphics3d/sprites';
+import {CommandsGraphics3dStatus} from '../commands/graphics3d/status';
+import {CommandsGraphics3dSurfaces} from '../commands/graphics3d/surfaces';
+import {CommandsGraphics3dTerrain} from '../commands/graphics3d/terrain';
+import {CommandsGraphics3dTextures} from '../commands/graphics3d/textures';
+import {CommandsGuiButton} from '../commands/gui/button';
+import {CommandsGuiCanvas} from '../commands/gui/canvas';
+import {CommandsGuiDesktop} from '../commands/gui/desktop';
+import {CommandsGuiDiverse} from '../commands/gui/diverse';
+import {CommandsGuiEvent} from '../commands/gui/event';
+import {CommandsGuiGadget} from '../commands/gui/gadget';
+import {CommandsGuiHTML} from '../commands/gui/html';
+import {CommandsGuiIconStrip} from '../commands/gui/icon-strip';
+import {CommandsGuiListTabber} from '../commands/gui/list-tabber';
+import {CommandsGuiMenu} from '../commands/gui/menu';
+import {CommandsGuiPanel} from '../commands/gui/panel';
+import {CommandsGuiProgressBar} from '../commands/gui/progress-bar';
+import {CommandsGuiRequest} from '../commands/gui/request';
+import {CommandsGuiSlider} from '../commands/gui/slider';
+import {CommandsGuiTextArea} from '../commands/gui/text-area';
+import {CommandsGuiTextField} from '../commands/gui/text-field';
+import {CommandsGuiToolbar} from '../commands/gui/toolbar';
+import {CommandsGuiTreeView} from '../commands/gui/tree-view';
+import {CommandsGuiWindow} from '../commands/gui/window';
+import {CommandsIOGamepad} from '../commands/io/gamepad';
+import {CommandsIOKeyboard} from '../commands/io/keyboard';
+import {CommandsIOMouse} from '../commands/io/mouse';
+import {CommandsSound3D} from '../commands/sound/3d';
+import {CommandsSoundChannels} from '../commands/sound/channels';
+import {CommandsSoundMusicSamples} from '../commands/sound/music-samples';
 
 @Injectable({
     providedIn: 'root'
@@ -74,12 +127,67 @@ export class Parser {
         'WARNING': {}
     };
 
-    static ASSIGNMENT = '';  //TODO remove because not needed?
     individuals: object;
     stack: ParserStackElement[];
-    state;  //TODO remove because not needed?
+    state;
 
-    constructor(private lexer: Lexer) {
+    constructor(
+        commandsBasicsDiverse: CommandsBasicsDiverse,
+        commandsBasicsMaths: CommandsBasicsMaths,
+        commandsBasicsStrings: CommandsBasicsStrings,
+        commandsBasicsTimeRandom: CommandsBasicsTimeRandom,
+        commandsDataBank: CommandsDataBank,
+        commandsDataFileSystem: CommandsDataFileSystem,
+        commandsGraphics2dDisplay: CommandsGraphics2dDisplay,
+        commandsGraphics2dGraphics: CommandsGraphics2dGraphics,
+        commandsGraphics2dImages: CommandsGraphics2dImages,
+        commandsGraphics2dMovies: CommandsGraphics2dMovies,
+        commandsGraphics2dPixel: CommandsGraphics2dPixel,
+        commandsGraphics2dText: CommandsGraphics2dText,
+        commandsGraphics3dAnimations: CommandsGraphics3dAnimations,
+        commandsGraphics3dBrushes: CommandsGraphics3dBrushes,
+        commandsGraphics3dCamera: CommandsGraphics3dCamera,
+        commandsGraphics3dCollisions: CommandsGraphics3dCollisions,
+        commandsGraphics3dControls: CommandsGraphics3dControls,
+        commandsGraphics3dCoordinates: CommandsGraphics3dCoordinates,
+        commandsGraphics3dDiverse: CommandsGraphics3dDiverse,
+        commandsGraphics3dLightShadow: CommandsGraphics3dLightShadow,
+        commandsGraphics3dMeshes: CommandsGraphics3dMeshes,
+        commandsGraphics3dPicking: CommandsGraphics3dPicking,
+        commandsGraphics3dScene: CommandsGraphics3dScene,
+        commandsGraphics3dScenery: CommandsGraphics3dScenery,
+        commandsGraphics3dScreen: CommandsGraphics3dScreen,
+        commandsGraphics3dSprites: CommandsGraphics3dSprites,
+        commandsGraphics3dStatus: CommandsGraphics3dStatus,
+        commandsGraphics3dSurfaces: CommandsGraphics3dSurfaces,
+        commandsGraphics3dTerrain: CommandsGraphics3dTerrain,
+        commandsGraphics3dTextures: CommandsGraphics3dTextures,
+        commandsGuiButton: CommandsGuiButton,
+        commandsGuiCanvas: CommandsGuiCanvas,
+        commandsGuiDesktop: CommandsGuiDesktop,
+        commandsGuiDiverse: CommandsGuiDiverse,
+        commandsGuiEvent: CommandsGuiEvent,
+        commandsGuiGadget: CommandsGuiGadget,
+        commandsGuiHTML: CommandsGuiHTML,
+        commandsGuiIconStrip: CommandsGuiIconStrip,
+        commandsGuiListTabber: CommandsGuiListTabber,
+        commandsGuiMenu: CommandsGuiMenu,
+        commandsGuiPanel: CommandsGuiPanel,
+        commandsGuiProgressBar: CommandsGuiProgressBar,
+        commandsGuiRequest: CommandsGuiRequest,
+        commandsGuiSlider: CommandsGuiSlider,
+        commandsGuiTextArea: CommandsGuiTextArea,
+        commandsGuiTextField: CommandsGuiTextField,
+        commandsGuiToolbar: CommandsGuiToolbar,
+        commandsGuiTreeView: CommandsGuiTreeView,
+        commandsGuiWindow: CommandsGuiWindow,
+        commandsIOGamepad: CommandsIOGamepad,
+        commandsIOKeyboard: CommandsIOKeyboard,
+        commandsIOMouse: CommandsIOMouse,
+        commandsSound3D: CommandsSound3D,
+        commandsSoundChannels: CommandsSoundChannels,
+        commandsSoundMusicSamples: CommandsSoundMusicSamples
+    ) {
         this.resetParser();
     }
 
@@ -92,12 +200,6 @@ export class Parser {
         //stores code sections (e. g. conditions, selections, loops)
         this.stack = [];
         this.state = '?';
-    }
-
-    //TODO refactor or remove
-    exists(individual: object): boolean {
-        return false;
-        //return individuals.hasOwnProperty(individual);
     }
 
     /**
@@ -230,8 +332,9 @@ export class Parser {
     // [Sar]: [NumExpr] Sar [NumExpr]
     // [Sar]: [NumExpr] Shl [NumExpr]
     // [Sar]: [NumExpr] Shr [NumExpr]
+    createGameCode(lexerCode: Array<LexerToken[]>): any {
+        let targetCode: any[] = [];
 
-    getAbstractSyntaxTree(lexerCode: Array<LexerToken[]>): AbstractSyntaxTree {
         let globalEntryPoint = '';
 
         lexerCode.forEach((lexerTokens: LexerToken[]) => {

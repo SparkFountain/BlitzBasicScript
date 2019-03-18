@@ -5,12 +5,12 @@ that satisfies the lexer input.
 Each line of code of a BBScript program is represented as an array of lexer tokens. Thus, the whole code can
 be represented as an array of many lexer token arrays (equivalent to the number of statements).
 
-# Contexts
-The parser begins doing its job in the "default" context. Depending on the token arrays, the context can change
-over time. A context change can occur at most once per token array.
+# States
+The parser begins doing its job in the "default" state. Depending on the token arrays, the state can change
+over time. A state change can occur at most once per token array.
 
 ## Default
-The default context is the starting point for the parser. In this context, all general statements are allowed
+The default state is the starting point for the parser. In this state, all general statements are allowed
 as well as variable, array, function, type, or label declarations.
 
 This is the full grammar of the default context:

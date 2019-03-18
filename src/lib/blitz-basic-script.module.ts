@@ -34,6 +34,46 @@ import {LanguageService} from '../services/language/language.service';
 import {Lexer} from '../services/lexer/lexer.service';
 import {Parser} from '../services/parser/parser.service';
 import {CommandsGraphics3dControls} from '../services/commands/graphics3d/controls';
+import {CommandsDataBank} from '../services/commands/data/bank';
+import {CommandsDataFileSystem} from '../services/commands/data/file-system';
+import {CommandsGraphics2dMovies} from '../services/commands/graphics2d/movies';
+import {CommandsGraphics3dAnimations} from '../services/commands/graphics3d/animations';
+import {CommandsGraphics3dBrushes} from '../services/commands/graphics3d/brushes';
+import {CommandsGraphics3dCollisions} from '../services/commands/graphics3d/collisions';
+import {CommandsGraphics3dDiverse} from '../services/commands/graphics3d/diverse';
+import {CommandsGraphics3dPicking} from '../services/commands/graphics3d/picking';
+import {CommandsGraphics3dScene} from '../services/commands/graphics3d/scene';
+import {CommandsGraphics3dScenery} from '../services/commands/graphics3d/scenery';
+import {CommandsGraphics3dScreen} from '../services/commands/graphics3d/screen';
+import {CommandsGraphics3dSprites} from '../services/commands/graphics3d/sprites';
+import {CommandsGraphics3dStatus} from '../services/commands/graphics3d/status';
+import {CommandsGraphics3dSurfaces} from '../services/commands/graphics3d/surfaces';
+import {CommandsGraphics3dTerrain} from '../services/commands/graphics3d/terrain';
+import {CommandsGraphics3dTextures} from '../services/commands/graphics3d/textures';
+import {CommandsGuiButton} from '../services/commands/gui/button';
+import {CommandsGuiCanvas} from '../services/commands/gui/canvas';
+import {CommandsGuiDesktop} from '../services/commands/gui/desktop';
+import {CommandsGuiDiverse} from '../services/commands/gui/diverse';
+import {CommandsGuiEvent} from '../services/commands/gui/event';
+import {CommandsGuiGadget} from '../services/commands/gui/gadget';
+import {CommandsGuiHTML} from '../services/commands/gui/html';
+import {CommandsGuiIconStrip} from '../services/commands/gui/icon-strip';
+import {CommandsGuiListTabber} from '../services/commands/gui/list-tabber';
+import {CommandsGuiMenu} from '../services/commands/gui/menu';
+import {CommandsGuiPanel} from '../services/commands/gui/panel';
+import {CommandsGuiProgressBar} from '../services/commands/gui/progress-bar';
+import {CommandsGuiRequest} from '../services/commands/gui/request';
+import {CommandsGuiSlider} from '../services/commands/gui/slider';
+import {CommandsGuiTextArea} from '../services/commands/gui/text-area';
+import {CommandsGuiTextField} from '../services/commands/gui/text-field';
+import {CommandsGuiToolbar} from '../services/commands/gui/toolbar';
+import {CommandsGuiTreeView} from '../services/commands/gui/tree-view';
+import {CommandsGuiWindow} from '../services/commands/gui/window';
+import {CommandsIOGamepad} from '../services/commands/io/gamepad';
+import {CommandsIOKeyboard} from '../services/commands/io/keyboard';
+import {CommandsIOMouse} from '../services/commands/io/mouse';
+import {CommandsSound3D} from '../services/commands/sound/3d';
+import {CommandsSoundChannels} from '../services/commands/sound/channels';
 
 @NgModule({
     declarations: [
@@ -69,22 +109,73 @@ import {CommandsGraphics3dControls} from '../services/commands/graphics3d/contro
         Graphics2dService,
         GuiService,
 
+        // BASICS
         CommandsBasicsDiverse,
         CommandsBasicsMaths,
         CommandsBasicsStrings,
         CommandsBasicsTimeRandom,
 
+        // DATA
+        CommandsDataBank,
+        CommandsDataFileSystem,
+
+        // GRAPHICS 2D
         CommandsGraphics2dDisplay,
         CommandsGraphics2dGraphics,
         CommandsGraphics2dImages,
+        CommandsGraphics2dMovies,
         CommandsGraphics2dPixel,
         CommandsGraphics2dText,
 
+        // GRAPHICS 3D
+        CommandsGraphics3dAnimations,
+        CommandsGraphics3dBrushes,
         CommandsGraphics3dCamera,
-        CommandsGraphics3dCoordinates,
+        CommandsGraphics3dCollisions,
         CommandsGraphics3dControls,
+        CommandsGraphics3dCoordinates,
+        CommandsGraphics3dDiverse,
         CommandsGraphics3dLightShadow,
         CommandsGraphics3dMeshes,
+        CommandsGraphics3dPicking,
+        CommandsGraphics3dScene,
+        CommandsGraphics3dScenery,
+        CommandsGraphics3dScreen,
+        CommandsGraphics3dSprites,
+        CommandsGraphics3dStatus,
+        CommandsGraphics3dSurfaces,
+        CommandsGraphics3dTerrain,
+        CommandsGraphics3dTextures,
+
+        // GUI
+        CommandsGuiButton,
+        CommandsGuiCanvas,
+        CommandsGuiDesktop,
+        CommandsGuiDiverse,
+        CommandsGuiEvent,
+        CommandsGuiGadget,
+        CommandsGuiHTML,
+        CommandsGuiIconStrip,
+        CommandsGuiListTabber,
+        CommandsGuiMenu,
+        CommandsGuiPanel,
+        CommandsGuiProgressBar,
+        CommandsGuiRequest,
+        CommandsGuiSlider,
+        CommandsGuiTextArea,
+        CommandsGuiTextField,
+        CommandsGuiToolbar,
+        CommandsGuiTreeView,
+        CommandsGuiWindow,
+
+        // IO
+        CommandsIOGamepad,
+        CommandsIOKeyboard,
+        CommandsIOMouse,
+
+        // SOUND
+        CommandsSound3D,
+        CommandsSoundChannels,
         CommandsSoundMusicSamples
     ]
 })

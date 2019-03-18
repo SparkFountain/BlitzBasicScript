@@ -2,7 +2,6 @@ import {Injectable} from '@angular/core';
 import {GameEntity} from '../../../interfaces/game/entity';
 import {Observable, of, Subscriber} from 'rxjs';
 import {BlendMode} from '../../../enums/entity/blend-mode';
-import {EntityClass} from '../../../enums/entity/entity-class';
 import {BabylonJSService} from '../../babylon-js/babylon-js.service';
 
 @Injectable()

@@ -190,7 +190,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
 
             //this.parser.parseCondition(lexerTokens[0]);
 
-            let abstractSyntaxTree: AbstractSyntaxTree = this.parser.getAbstractSyntaxTree(lexerTokens);
+            let abstractSyntaxTree: AbstractSyntaxTree = this.parser.createGameCode(lexerTokens);
             //console.info('Abstract Syntax Tree:', abstractSyntaxTree);
 
             let bbscriptCode = this.codeGenerator.getFakeTargetCode();  //createTargetCode(abstractSyntaxTree);

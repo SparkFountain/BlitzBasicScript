@@ -9,6 +9,7 @@ import {fromArray} from 'rxjs/internal/observable/fromArray';
 @Injectable()
 export class Lexer {
     private individuals: any;
+    private individualContext: LexerTokenCategory;
 
     constructor(private http: HttpClient,
                 private language: LanguageService) {
@@ -54,34 +55,50 @@ export class Lexer {
     getTokenObject(chars: string, i: number): LexerToken {
         let charsLowerCase = chars.toLowerCase();
         if (this.language.keywords.hasOwnProperty(charsLowerCase)) {
-            return {which: LexerTokenCategory.KEYWORD, value: chars, offset: {x: i, y: 0}};
+            switch(charsLowerCase) {
+                case 'local':
+                    //TODO distinguish between "global local" and "function local"
+                    break;
+                case 'global':
+                    this.individualContext = LexerTokenCategory.GLOBAL;
+                    break;
+                case 'function':
+                    this.individualContext = LexerTokenCategory.FUNCTION;
+                    break;
+                case 'dim':
+                    this.individualContext = LexerTokenCategory.DIM;
+                    break;
+                case 'type':
+                    this.individualContext = LexerTokenCategory.TYPE;
+                    break;
+            }
+            return {which: LexerTokenCategory.KEYWORD, value: chars, offset: {x: i+1, y: 0}};
         } else if (this.language.deprecatedKeywords.hasOwnProperty(charsLowerCase)) {
-            return {which: LexerTokenCategory.DEPRECATED_KEYWORD, value: chars, offset: {x: i, y: 0}};
+            return {which: LexerTokenCategory.DEPRECATED_KEYWORD, value: chars, offset: {x: i+1, y: 0}};
         } else if (this.language.commands.hasOwnProperty(charsLowerCase)) {
-            return {which: LexerTokenCategory.COMMAND, value: chars, offset: {x: i, y: 0}};
+            return {which: LexerTokenCategory.COMMAND, value: chars, offset: {x: i+1, y: 0}};
         } else if (this.language.deprecatedCommands.hasOwnProperty(charsLowerCase)) {
-            return {which: LexerTokenCategory.DEPRECATED_COMMAND, value: chars, offset: {x: i, y: 0}};
+            return {which: LexerTokenCategory.DEPRECATED_COMMAND, value: chars, offset: {x: i+1, y: 0}};
         } else if (this.isInteger(chars)) {
-            return {which: LexerTokenCategory.INTEGER, value: chars, offset: {x: i, y: 0}};
+            return {which: LexerTokenCategory.INTEGER, value: chars, offset: {x: i+1, y: 0}};
         } else if (this.isFloat(chars)) {
-            return {which: LexerTokenCategory.FLOAT, value: chars, offset: {x: i, y: 0}};
+            return {which: LexerTokenCategory.FLOAT, value: chars, offset: {x: i+1, y: 0}};
         } else if(this.individuals.functions.indexOf(chars) > -1) {
-            return {which: LexerTokenCategory.FUNCTION, value: chars, offset: {x: i, y: 0}}
+            return {which: LexerTokenCategory.FUNCTION, value: chars, offset: {x: i+1, y: 0}}
         } else if(this.individuals.types.indexOf(chars) > -1) {
-            return {which: LexerTokenCategory.TYPE, value: chars, offset: {x: i, y: 0}}
+            return {which: LexerTokenCategory.TYPE, value: chars, offset: {x: i+1, y: 0}}
         } else if(this.individuals.types.indexOf(chars) > -1) {
-            return {which: LexerTokenCategory.TYPE, value: chars, offset: {x: i, y: 0}}
+            return {which: LexerTokenCategory.TYPE, value: chars, offset: {x: i+1, y: 0}}
         } else if(this.individuals.globals.indexOf(chars) > -1) {
-            return {which: LexerTokenCategory.GLOBAL, value: chars, offset: {x: i, y: 0}}
+            return {which: LexerTokenCategory.GLOBAL, value: chars, offset: {x: i+1, y: 0}}
         } else if(this.individuals.globals.indexOf(chars) > -1) {
-            return {which: LexerTokenCategory.DIM, value: chars, offset: {x: i, y: 0}}
+            return {which: LexerTokenCategory.DIM, value: chars, offset: {x: i+1, y: 0}}
         } else {
             if (chars.length > 0) {
                 //individuals can be user functions or variable names
-                //TODO decide what kind of individual (function / type / global / dim)
-                return {which: LexerTokenCategory.INDIVIDUAL, value: chars, offset: {x: i, y: 0}};
+                return {which: this.individualContext, value: chars, offset: {x: i+1, y: 0}};
             } else {
-                return {which: LexerTokenCategory.EMPTY, value: '', offset: {x: i, y: 0}};
+                return {which: LexerTokenCategory.EMPTY, value: '', offset: {x: i+1, y: 0}};
             }
         }
     }
@@ -121,8 +138,7 @@ export class Lexer {
      * @return An array of arrays, containing all tokens per code line
      */
     lexCode(code: string[]): Array<LexerToken[]> {
-        console.info('Code:', code);
-        console.info('Key Words:', this.language.keywords);
+        //console.info('Key Words:', this.language.keywords);
         let lexer: Lexer = this;
 
         let result: Array<LexerToken[]> = [];
@@ -158,6 +174,8 @@ export class Lexer {
      * @return An array of tokens which represent the code's components
      */
     lexLine(codeLine: string): LexerToken[] {
+        this.individualContext = LexerTokenCategory.LOCAL;
+
         //replace tabs by 2 spaces
         codeLine = codeLine.replace(new RegExp('\\t', 'g'), '  ');
 
@@ -203,45 +221,45 @@ export class Lexer {
                             break;
                         case ',':
                             tokens.push(this.getTokenObject(chars, i - chars.length));
-                            tokens.push({which: LexerTokenCategory.COMMA, value: ',', offset: {x: i, y: 0}});
+                            tokens.push({which: LexerTokenCategory.COMMA, value: ',', offset: {x: i+1, y: 0}});
                             chars = '';
                             break;
                         case '"':
                             if (chars.length > 0) {
                                 //this is an erroneous case, thus the parser should throw an error
-                                tokens.push({which: LexerTokenCategory.INDIVIDUAL, value: chars, offset: {x: i - chars.length, y: 0}});
+                                tokens.push({which: LexerTokenCategory.INDIVIDUAL, value: chars, offset: {x: i+1 - chars.length, y: 0}});
                                 chars = '';
                             }
-                            tokens.push({which: LexerTokenCategory.DOUBLE_QUOTE, value: '"', offset: {x: i, y: 0}});
+                            tokens.push({which: LexerTokenCategory.DOUBLE_QUOTE, value: '"', offset: {x: i+1, y: 0}});
                             context = LexerContext.STRING;
                             break;
                         case ';':
                             tokens.push(this.getTokenObject(chars, i - chars.length));
-                            tokens.push({which: LexerTokenCategory.COMMENT_MARKER, value: ';', offset: {x: i, y: 0}});
-                            tokens.push({which: LexerTokenCategory.COMMENT, value: codeLine.substr(i + 1), offset: {x: i, y: 0}});
+                            tokens.push({which: LexerTokenCategory.COMMENT_MARKER, value: ';', offset: {x: i+1, y: 0}});
+                            tokens.push({which: LexerTokenCategory.COMMENT, value: codeLine.substr(i + 1), offset: {x: i+1, y: 0}});
                             return this.removeEmptyTokens(tokens);
                         case '=':
                             lookAhead = codeLine[i + 1];
                             if (lookAhead === '=') {
                                 //comparison
                                 tokens.push(this.getTokenObject(chars, i - chars.length));
-                                tokens.push({which: LexerTokenCategory.COMPARISON, value: '==', offset: {x: i, y: 0}});
+                                tokens.push({which: LexerTokenCategory.COMPARISON, value: '==', offset: {x: i+1, y: 0}});
                                 i += 1; //skip matching next char, which is the second "="
                             } else {
                                 //assignment
                                 tokens.push(this.getTokenObject(chars, i - chars.length));
-                                tokens.push({which: LexerTokenCategory.ASSIGNMENT, value: '=', offset: {x: i, y: 0}});
+                                tokens.push({which: LexerTokenCategory.ASSIGNMENT, value: '=', offset: {x: i+1, y: 0}});
                             }
                             chars = '';
                             break;
                         case '(':
                             tokens.push(this.getTokenObject(chars, i - chars.length));
-                            tokens.push({which: LexerTokenCategory.BRACKET_OPEN, value: '(', offset: {x: i, y: 0}});
+                            tokens.push({which: LexerTokenCategory.BRACKET_OPEN, value: '(', offset: {x: i+1, y: 0}});
                             chars = '';
                             break;
                         case ')':
                             tokens.push(this.getTokenObject(chars, i - chars.length));
-                            tokens.push({which: LexerTokenCategory.BRACKET_CLOSE, value: ')', offset: {x: i, y: 0}});
+                            tokens.push({which: LexerTokenCategory.BRACKET_CLOSE, value: ')', offset: {x: i+1, y: 0}});
                             chars = '';
                             break;
                         case '.':
@@ -256,13 +274,13 @@ export class Lexer {
                             } else {
                                 //type field access
                                 tokens.push(this.getTokenObject(chars, i - chars.length));
-                                tokens.push({which: LexerTokenCategory.TYPE_FIELD_DOT, value: '.', offset: {x: i, y: 0}});
+                                tokens.push({which: LexerTokenCategory.TYPE_FIELD_DOT, value: '.', offset: {x: i+1, y: 0}});
                                 chars = '';
                             }
                             break;
                         case '\\':
                             tokens.push(this.getTokenObject(chars, i - chars.length));
-                            tokens.push({which: LexerTokenCategory.BACKSLASH, value: '\\', offset: {x: i, y: 0}});
+                            tokens.push({which: LexerTokenCategory.BACKSLASH, value: '\\', offset: {x: i+1, y: 0}});
                             chars = '';
                             break;
                         case '+':
@@ -291,7 +309,7 @@ export class Lexer {
 
                             if (isAlgebraic) {
                                 tokens.push(this.getTokenObject(chars, i - chars.length));
-                                tokens.push({which: LexerTokenCategory.ALGEBRAIC, value: codeLine[i], offset: {x: i, y: 0}});
+                                tokens.push({which: LexerTokenCategory.ALGEBRAIC, value: codeLine[i], offset: {x: i+1, y: 0}});
                                 chars = '';
                             }
                             break;
@@ -303,22 +321,22 @@ export class Lexer {
                                 tokens.push({
                                     which: LexerTokenCategory.COMPARISON,
                                     value: codeLine[i] + lookAhead,
-                                    offset: {x: i, y: 0}
+                                    offset: {x: i+1, y: 0}
                                 });
                                 i += 1;
                             } else {
-                                tokens.push({which: LexerTokenCategory.COMPARISON, value: codeLine[i], offset: {x: i, y: 0}});
+                                tokens.push({which: LexerTokenCategory.COMPARISON, value: codeLine[i], offset: {x: i+1, y: 0}});
                             }
                             chars = '';
                             break;
                         case '~':
                             tokens.push(this.getTokenObject(chars, i - chars.length));
-                            tokens.push({which: LexerTokenCategory.BITWISE_INVERT, value: '~', offset: {x: i, y: 0}});
+                            tokens.push({which: LexerTokenCategory.BITWISE_INVERT, value: '~', offset: {x: i+1, y: 0}});
                             chars = '';
                             break;
                         case ':':
                             tokens.push(this.getTokenObject(chars, i - chars.length));
-                            tokens.push({which: LexerTokenCategory.COLON, value: ':', offset: {x: i, y: 0}});
+                            tokens.push({which: LexerTokenCategory.COLON, value: ':', offset: {x: i+1, y: 0}});
                             chars = '';
                             break;
                         default:
@@ -332,8 +350,8 @@ export class Lexer {
                 case LexerContext.STRING:
                     switch (codeLine[i]) {
                         case '"':
-                            tokens.push({which: LexerTokenCategory.STRING, value: chars, offset: {x: i - chars.length, y: 0}});
-                            tokens.push({which: LexerTokenCategory.DOUBLE_QUOTE, value: '"', offset: {x: i, y: 0}});
+                            tokens.push({which: LexerTokenCategory.STRING, value: chars, offset: {x: i+1 - chars.length, y: 0}});
+                            tokens.push({which: LexerTokenCategory.DOUBLE_QUOTE, value: '"', offset: {x: i+1, y: 0}});
                             chars = '';
                             context = LexerContext.DEFAULT;
                             break;
