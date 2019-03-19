@@ -46,13 +46,13 @@ export class LanguageService {
 
                 if (responses[2].status === 'success') {
                     responses[2].data.forEach((apiCommand: ApiCommand) => {
-                        this.commands[apiCommand.name.toLowerCase()] = true;
+                        this.commands[apiCommand.name.toLowerCase()] = apiCommand;
                     });
                 }
 
                 if (responses[3].status === 'success') {
                     responses[3].data.forEach((apiCommand: ApiCommand) => {
-                        this.deprecatedCommands[apiCommand.name.toLowerCase()] = true;
+                        this.deprecatedCommands[apiCommand.name.toLowerCase()] = apiCommand;
                     });
                 }
 

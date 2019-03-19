@@ -1,6 +1,4 @@
-//TODO refactor package access structure (like BBScript.game.xyz)
 import {LexerToken} from '../../interfaces/lexer-token';
-import {ParserStackElement} from '../../enums/parser/parser-stack-element';
 import {LexerTokenCategory} from '../../enums/lexer/lexer-token-category';
 import {Injectable} from '@angular/core';
 import {CommandsBasicsDiverse} from '../commands/basics/diverse';
@@ -62,6 +60,8 @@ import {BBScriptCode} from '../../interfaces/bbscript-code';
 import {GeneralService} from '../general/general.service';
 import {GameStateService} from '../game-state/game-state.service';
 import {ParserState} from '../../enums/parser/parser-state';
+import {LanguageService} from '../language/language.service';
+import {ApiCommand} from '../../interfaces/api/api-command';
 
 @Injectable({
     providedIn: 'root'
@@ -131,13 +131,14 @@ export class Parser {
     };
 
     individuals: object;
-    stack: ParserStackElement[];
+    stack: any[];
     state;
     gameCode: BBScriptCode;
 
     constructor(
         private generalService: GeneralService,
         private gameState: GameStateService,
+        private language: LanguageService,
         private commandsBasicsDiverse: CommandsBasicsDiverse,
         private commandsBasicsMaths: CommandsBasicsMaths,
         private commandsBasicsStrings: CommandsBasicsStrings,
@@ -593,7 +594,7 @@ export class Parser {
             //perform token cleanup: remove comments
             let initialTokens: LexerToken[] = [];
             lexerTokens.forEach((token: LexerToken) => {
-                if(token.which !== LexerTokenCategory.COMMENT_MARKER && token.which !== LexerTokenCategory.COMMENT) {
+                if (token.which !== LexerTokenCategory.COMMENT_MARKER && token.which !== LexerTokenCategory.COMMENT) {
                     initialTokens.push(token);
                 }
             });
@@ -653,7 +654,8 @@ export class Parser {
                     LexerTokenCategory.INDIVIDUAL
                 ];
                 if (validTokenCategories.indexOf(currentToken.which) === -1) {
-                    console.error('Invalid token category');
+                    console.error('Invalid token category:', currentToken);
+                    return;
                 }
 
                 switch (currentToken.which) {
@@ -763,6 +765,7 @@ export class Parser {
                         }
                         break;
                     case LexerTokenCategory.COMMAND:
+                        this.stack.push(currentToken);
                         this.parseState(ParserState.COMMAND_CALL, tokens);
                         break;
                     case LexerTokenCategory.LABEL_DOT:
@@ -800,7 +803,7 @@ export class Parser {
                     this.gameCode.globals[currentToken.value] = 0;
                 } else {
                     //Valid following tokens: , =
-                    switch(tokens[0].which) {
+                    switch (tokens[0].which) {
                         case LexerTokenCategory.COMMA:
                             this.gameCode.globals[currentToken.value] = 0;
                             this.parseState(ParserState.DECLARATION, tokens);
@@ -817,6 +820,21 @@ export class Parser {
             case ParserState.ASSIGNMENT:
 
                 //Valid following tokens: ( [Number] [String] True False Pi First Last [Individual] [Command]
+                break;
+            case ParserState.COMMAND_CALL:
+                let command: ApiCommand = this.stack.pop().value;
+                console.info('Command:', command);
+
+                let service: string = `commands
+                                           ${command.category.charAt(0).toUpperCase()}
+                                           ${command.category.slice(1)}
+                                           ${command.subCategory.charAt(0).toUpperCase()}
+                                           ${command.subCategory.slice(1)}`;
+                console.info('Service:', service);
+
+                this.gameCode.statements.push(
+                    this.commandsGraphics2dDisplay.graphics(800, 600)
+                );
                 break;
         }
     }
