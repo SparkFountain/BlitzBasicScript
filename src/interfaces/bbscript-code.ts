@@ -1,9 +1,9 @@
 import {Observable} from 'rxjs';
 
-export interface BbscriptCode {
-    globals: any[];
+export interface BBScriptCode {
+    globals: object;
     statements: Observable<any>[];
     mainLoop: Observable<any>[];
     functions: Observable<any>[];
-    types: any[];
+    types: object;
 }

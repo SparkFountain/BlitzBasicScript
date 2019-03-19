@@ -1,6 +1,6 @@
 import {LexerToken} from '../../interfaces/lexer-token';
-import {LexerContext} from '../../enums/lexer/lexerContext';
-import {LexerTokenCategory} from '../../enums/lexer/lexerTokenCategory';
+import {LexerContext} from '../../enums/lexer/lexer-context';
+import {LexerTokenCategory} from '../../enums/lexer/lexer-token-category';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 import {LanguageService} from '../language/language.service';
@@ -174,7 +174,7 @@ export class Lexer {
      * @return An array of tokens which represent the code's components
      */
     lexLine(codeLine: string): LexerToken[] {
-        this.individualContext = LexerTokenCategory.LOCAL;
+        this.individualContext = LexerTokenCategory.GLOBAL;
 
         //replace tabs by 2 spaces
         codeLine = codeLine.replace(new RegExp('\\t', 'g'), '  ');

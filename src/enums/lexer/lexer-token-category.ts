@@ -29,5 +29,6 @@ export enum LexerTokenCategory {
     UNIDENTIFIED,
     GLOBAL,
     LOCAL,
-    DIM
+    DIM,
+    CONST
 }

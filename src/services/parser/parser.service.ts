@@ -1,8 +1,7 @@
 //TODO refactor package access structure (like BBScript.game.xyz)
 import {LexerToken} from '../../interfaces/lexer-token';
 import {ParserStackElement} from '../../enums/parser/parser-stack-element';
-import {LexerTokenCategory} from '../../enums/lexer/lexerTokenCategory';
-import {ParserEntryPoint} from '../../enums/parser/parser-entry-point';
+import {LexerTokenCategory} from '../../enums/lexer/lexer-token-category';
 import {Injectable} from '@angular/core';
 import {CommandsBasicsDiverse} from '../commands/basics/diverse';
 import {CommandsBasicsMaths} from '../commands/basics/maths';
@@ -59,6 +58,10 @@ import {CommandsIOMouse} from '../commands/io/mouse';
 import {CommandsSound3D} from '../commands/sound/3d';
 import {CommandsSoundChannels} from '../commands/sound/channels';
 import {CommandsSoundMusicSamples} from '../commands/sound/music-samples';
+import {BBScriptCode} from '../../interfaces/bbscript-code';
+import {GeneralService} from '../general/general.service';
+import {GameStateService} from '../game-state/game-state.service';
+import {ParserState} from '../../enums/parser/parser-state';
 
 @Injectable({
     providedIn: 'root'
@@ -130,65 +133,75 @@ export class Parser {
     individuals: object;
     stack: ParserStackElement[];
     state;
+    gameCode: BBScriptCode;
 
     constructor(
-        commandsBasicsDiverse: CommandsBasicsDiverse,
-        commandsBasicsMaths: CommandsBasicsMaths,
-        commandsBasicsStrings: CommandsBasicsStrings,
-        commandsBasicsTimeRandom: CommandsBasicsTimeRandom,
-        commandsDataBank: CommandsDataBank,
-        commandsDataFileSystem: CommandsDataFileSystem,
-        commandsGraphics2dDisplay: CommandsGraphics2dDisplay,
-        commandsGraphics2dGraphics: CommandsGraphics2dGraphics,
-        commandsGraphics2dImages: CommandsGraphics2dImages,
-        commandsGraphics2dMovies: CommandsGraphics2dMovies,
-        commandsGraphics2dPixel: CommandsGraphics2dPixel,
-        commandsGraphics2dText: CommandsGraphics2dText,
-        commandsGraphics3dAnimations: CommandsGraphics3dAnimations,
-        commandsGraphics3dBrushes: CommandsGraphics3dBrushes,
-        commandsGraphics3dCamera: CommandsGraphics3dCamera,
-        commandsGraphics3dCollisions: CommandsGraphics3dCollisions,
-        commandsGraphics3dControls: CommandsGraphics3dControls,
-        commandsGraphics3dCoordinates: CommandsGraphics3dCoordinates,
-        commandsGraphics3dDiverse: CommandsGraphics3dDiverse,
-        commandsGraphics3dLightShadow: CommandsGraphics3dLightShadow,
-        commandsGraphics3dMeshes: CommandsGraphics3dMeshes,
-        commandsGraphics3dPicking: CommandsGraphics3dPicking,
-        commandsGraphics3dScene: CommandsGraphics3dScene,
-        commandsGraphics3dScenery: CommandsGraphics3dScenery,
-        commandsGraphics3dScreen: CommandsGraphics3dScreen,
-        commandsGraphics3dSprites: CommandsGraphics3dSprites,
-        commandsGraphics3dStatus: CommandsGraphics3dStatus,
-        commandsGraphics3dSurfaces: CommandsGraphics3dSurfaces,
-        commandsGraphics3dTerrain: CommandsGraphics3dTerrain,
-        commandsGraphics3dTextures: CommandsGraphics3dTextures,
-        commandsGuiButton: CommandsGuiButton,
-        commandsGuiCanvas: CommandsGuiCanvas,
-        commandsGuiDesktop: CommandsGuiDesktop,
-        commandsGuiDiverse: CommandsGuiDiverse,
-        commandsGuiEvent: CommandsGuiEvent,
-        commandsGuiGadget: CommandsGuiGadget,
-        commandsGuiHTML: CommandsGuiHTML,
-        commandsGuiIconStrip: CommandsGuiIconStrip,
-        commandsGuiListTabber: CommandsGuiListTabber,
-        commandsGuiMenu: CommandsGuiMenu,
-        commandsGuiPanel: CommandsGuiPanel,
-        commandsGuiProgressBar: CommandsGuiProgressBar,
-        commandsGuiRequest: CommandsGuiRequest,
-        commandsGuiSlider: CommandsGuiSlider,
-        commandsGuiTextArea: CommandsGuiTextArea,
-        commandsGuiTextField: CommandsGuiTextField,
-        commandsGuiToolbar: CommandsGuiToolbar,
-        commandsGuiTreeView: CommandsGuiTreeView,
-        commandsGuiWindow: CommandsGuiWindow,
-        commandsIOGamepad: CommandsIOGamepad,
-        commandsIOKeyboard: CommandsIOKeyboard,
-        commandsIOMouse: CommandsIOMouse,
-        commandsSound3D: CommandsSound3D,
-        commandsSoundChannels: CommandsSoundChannels,
-        commandsSoundMusicSamples: CommandsSoundMusicSamples
+        private generalService: GeneralService,
+        private gameState: GameStateService,
+        private commandsBasicsDiverse: CommandsBasicsDiverse,
+        private commandsBasicsMaths: CommandsBasicsMaths,
+        private commandsBasicsStrings: CommandsBasicsStrings,
+        private commandsBasicsTimeRandom: CommandsBasicsTimeRandom,
+        private commandsDataBank: CommandsDataBank,
+        private commandsDataFileSystem: CommandsDataFileSystem,
+        private commandsGraphics2dDisplay: CommandsGraphics2dDisplay,
+        private commandsGraphics2dGraphics: CommandsGraphics2dGraphics,
+        private commandsGraphics2dImages: CommandsGraphics2dImages,
+        private commandsGraphics2dMovies: CommandsGraphics2dMovies,
+        private commandsGraphics2dPixel: CommandsGraphics2dPixel,
+        private commandsGraphics2dText: CommandsGraphics2dText,
+        private commandsGraphics3dAnimations: CommandsGraphics3dAnimations,
+        private commandsGraphics3dBrushes: CommandsGraphics3dBrushes,
+        private commandsGraphics3dCamera: CommandsGraphics3dCamera,
+        private commandsGraphics3dCollisions: CommandsGraphics3dCollisions,
+        private commandsGraphics3dControls: CommandsGraphics3dControls,
+        private commandsGraphics3dCoordinates: CommandsGraphics3dCoordinates,
+        private commandsGraphics3dDiverse: CommandsGraphics3dDiverse,
+        private commandsGraphics3dLightShadow: CommandsGraphics3dLightShadow,
+        private commandsGraphics3dMeshes: CommandsGraphics3dMeshes,
+        private commandsGraphics3dPicking: CommandsGraphics3dPicking,
+        private commandsGraphics3dScene: CommandsGraphics3dScene,
+        private commandsGraphics3dScenery: CommandsGraphics3dScenery,
+        private commandsGraphics3dScreen: CommandsGraphics3dScreen,
+        private commandsGraphics3dSprites: CommandsGraphics3dSprites,
+        private commandsGraphics3dStatus: CommandsGraphics3dStatus,
+        private commandsGraphics3dSurfaces: CommandsGraphics3dSurfaces,
+        private commandsGraphics3dTerrain: CommandsGraphics3dTerrain,
+        private commandsGraphics3dTextures: CommandsGraphics3dTextures,
+        private commandsGuiButton: CommandsGuiButton,
+        private commandsGuiCanvas: CommandsGuiCanvas,
+        private commandsGuiDesktop: CommandsGuiDesktop,
+        private commandsGuiDiverse: CommandsGuiDiverse,
+        private commandsGuiEvent: CommandsGuiEvent,
+        private commandsGuiGadget: CommandsGuiGadget,
+        private commandsGuiHTML: CommandsGuiHTML,
+        private commandsGuiIconStrip: CommandsGuiIconStrip,
+        private commandsGuiListTabber: CommandsGuiListTabber,
+        private commandsGuiMenu: CommandsGuiMenu,
+        private commandsGuiPanel: CommandsGuiPanel,
+        private commandsGuiProgressBar: CommandsGuiProgressBar,
+        private commandsGuiRequest: CommandsGuiRequest,
+        private commandsGuiSlider: CommandsGuiSlider,
+        private commandsGuiTextArea: CommandsGuiTextArea,
+        private commandsGuiTextField: CommandsGuiTextField,
+        private commandsGuiToolbar: CommandsGuiToolbar,
+        private commandsGuiTreeView: CommandsGuiTreeView,
+        private commandsGuiWindow: CommandsGuiWindow,
+        private commandsIOGamepad: CommandsIOGamepad,
+        private commandsIOKeyboard: CommandsIOKeyboard,
+        private commandsIOMouse: CommandsIOMouse,
+        private commandsSound3D: CommandsSound3D,
+        private commandsSoundChannels: CommandsSoundChannels,
+        private commandsSoundMusicSamples: CommandsSoundMusicSamples
     ) {
         this.resetParser();
+        this.gameCode = {
+            globals: [],
+            statements: [],
+            mainLoop: [],
+            functions: [],
+            types: []
+        };
     }
 
     /**
@@ -333,217 +346,257 @@ export class Parser {
     // [Sar]: [NumExpr] Shl [NumExpr]
     // [Sar]: [NumExpr] Shr [NumExpr]
     createGameCode(lexerCode: Array<LexerToken[]>): any {
-        let targetCode: any[] = [];
+        /*let targetCode: BBScriptCode = {
+            globals: [],
+            statements: [
+                //TODO wait with target code execution until all services are initialized
+                this.commandsGraphics2dDisplay.graphics(800, 600),
+                //this.commandsGraphics2dGraphics.cameraClsColor(255,0,0),  //TODO wrong implementation, fix
+                this.generalService.assign({
+                    variable: 'i',
+                    type: 'global',
+                    expression: {
+                        value: of(42)
+                    }
+                }),
 
-        let globalEntryPoint = '';
+                //CAMERA
+                this.generalService.assign({
+                    variable: 'camera',
+                    type: 'global',
+                    expression: {
+                        value: this.commandsGraphics3dCamera.createCamera(CameraType.FREE)
+                    }
+                }),
+                new Observable((observer) => {
+                    this.gameState.getGlobalAsync('camera').subscribe((camera: GameEntity) => {
+                        this.commandsGraphics3dCoordinates.positionEntity(camera, 0, 2, -5).subscribe(() => {
+                            observer.next();
+                            observer.complete();
+                        });
+                    });
+                }),
+                new Observable((observer) => {
+                    this.gameState.getGlobalAsync('camera').subscribe((camera: Camera) => {
+                        this.commandsGraphics3dCamera.cameraClsColor(camera, 50, 200, 240).subscribe(() => {
+                            observer.next();
+                            observer.complete();
+                        });
+                    });
+                }),
+
+                //LIGHT
+                this.generalService.assign({
+                    variable: 'light',
+                    type: 'global',
+                    expression: {
+                        value: this.commandsGraphics3dLightShadow.createLight(1)
+                    }
+                }),
+                new Observable((observer) => {
+                    this.gameState.getGlobalAsync('light').subscribe((light: Light) => {
+                        this.commandsGraphics3dLightShadow.lightColor(light, 255, 255, 0).subscribe(() => {
+                            observer.next();
+                            observer.complete();
+                        });
+                    });
+                }),
+
+                //PRIMITIVE MESH
+                this.generalService.assign({
+                    variable: 'cube',
+                    type: 'global',
+                    expression: {
+                        value: this.commandsGraphics3dMeshes.createCube()
+                    }
+                }),
+                new Observable((observer) => {
+                    this.gameState.getGlobalAsync('cube').subscribe((cube: GameEntity) => {
+                        this.commandsGraphics3dCoordinates.positionEntity(cube, 0, 1, 0).subscribe((done) => {
+                            observer.next();
+                            observer.complete();
+                        });
+                    });
+                }),
+                new Observable((observer) => {
+                    this.gameState.getGlobalAsync('cube').subscribe((cube: GameEntity) => {
+                        this.commandsGraphics3dControls.entityColor(cube, 0, 255, 0).subscribe((done) => {
+                            observer.next();
+                            observer.complete();
+                        });
+                    });
+                }),
+
+                this.commandsGraphics3dLightShadow.ambientLight(128, 200, 50),
+
+
+                //2D GRAPHICS
+                this.commandsGraphics2dGraphics.color(0, 128, 0),
+
+                //this.commandsBasicsTimeRandom.delay(2000),
+
+                this.commandsGraphics2dGraphics.oval(50, 200, 20, 40, false),
+                this.commandsGraphics2dGraphics.line(300, 40, 350, 120),
+
+                //this.commandsGraphics2dGraphics.color(255, 255, 0),
+                this.commandsGraphics2dPixel.plot(200, 200),
+
+                //IMAGE
+                this.commandsGraphics2dImages.autoMidHandle(true),
+                this.generalService.assign({
+                    variable: 'image',
+                    type: 'global',
+                    expression: {
+                        value: this.commandsGraphics2dImages.loadImage('/assets/gfx/face.png')
+                    }
+                }),
+                new Observable((observer) => {
+                    this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
+                        this.commandsGraphics2dImages.resizeImage(image, 128, 128).subscribe(() => {
+                            observer.next();
+                            observer.complete();
+                        });
+                    });
+                }),
+                new Observable((observer) => {
+                    this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
+                        this.commandsGraphics2dImages.rotateImage(image, 30).subscribe(() => {
+                            observer.next();
+                            observer.complete();
+                        });
+                    });
+                }),
+                new Observable((observer) => {
+                    this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
+                        this.commandsGraphics2dImages.drawBlock(image, 200, 250).subscribe(() => {
+                            observer.next();
+                            observer.complete();
+                        });
+                    });
+                }),
+                this.commandsGraphics2dGraphics.rect(195, 245, 10, 10, true),
+                this.commandsGraphics2dGraphics.rect(195 - 64, 245 - 64, 10, 10, true),
+
+                //TEXT
+                this.generalService.assign({
+                    variable: 'font',
+                    type: 'global',
+                    expression: {
+                        value: this.commandsGraphics2dText.loadFont('Arial', 32, true, true, true)
+                    }
+                }),
+                new Observable((observer) => {
+                    this.gameState.getGlobalAsync('font').subscribe((font: GameFont) => {
+                        this.commandsGraphics2dText.setFont(font).subscribe(() => {
+                            observer.next();
+                            observer.complete();
+                        });
+                    });
+                }),
+
+                this.commandsGraphics2dText.text(50, 50, 'HELLO WORLD!'),
+                this.commandsGraphics2dText.stringWidth('HELLO WORLD!'),
+                this.commandsGraphics2dText.stringHeight('HELLO WORLD!'),
+                this.generalService.assign({
+                    variable: 'rndValue',
+                    type: 'global',
+                    expression: {
+                        value: of('Hello World')
+                    }
+                }),
+                this.commandsBasicsTimeRandom.seedRnd('Hello World'),
+                /!*new Observable((observer) => {
+                            this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
+                                this.commandsGraphics2dImages.maskImage(image, 255, 0, 255).subscribe(() => {
+                                    observer.next();
+                                    observer.complete();
+                                });
+                            });
+                        }),*!/
+                /!*new Observable((observer) => {
+                    this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
+                        this.commandsGraphics2dImages.resizeImage(image, 16, 16).subscribe(() => {
+                            observer.next();
+                            observer.complete();
+                        });
+                    });
+                }),*!/
+                /!*new Observable((observer) => {
+                  this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
+                    this.commandsGraphics2dImages.tileBlock(image, 0, 0).subscribe(() => {
+                      observer.next();
+                      observer.complete();
+                    });
+                  });
+                })*!/
+
+                /!*this.generalService.forToNext({
+                  assignment: {
+                    variable: 'i',
+                    expression: 10
+                  },
+                  limit: 10,
+                  increment: 1,
+                  statements: []
+                }),
+
+        this.commandService.basics.diverse.appTitle('Carribico')*!/
+
+                //MUSIC
+                /!*this.generalService.assign({
+                  variable: 'music',
+                  type: 'global',
+                  expression: {
+                    value: this.commandsSoundMusicSamples.playMusic('/assets/sfx/music.mid', 0)
+                  }
+                }),
+                new Observable((observer) => {
+                  this.gameState.getGlobalAsync('music').subscribe((sound: GameSound) => {
+                    console.info('SOUND:', sound);
+                    this.commandsSoundMusicSamples.playSound(sound).subscribe(() => {
+                      observer.next();
+                      observer.complete();
+                    });
+                  });
+                }),*!/
+
+                //SOUND
+                this.generalService.assign({
+                    variable: 'sound',
+                    type: 'global',
+                    expression: {
+                        value: this.commandsSoundMusicSamples.loadSound('/assets/sfx/tada.mp3')
+                    }
+                }),
+                new Observable((observer) => {
+                    this.gameState.getGlobalAsync('sound').subscribe((sound: GameSound) => {
+                        concat(
+                            this.commandsSoundMusicSamples.soundVolume(sound, 0.1),
+                            this.commandsSoundMusicSamples.soundPan(sound, -1),
+                            this.commandsSoundMusicSamples.soundPitch(sound, 22050),
+                            this.commandsSoundMusicSamples.playSound(sound)
+                        ).subscribe(() => {
+                            observer.next();
+                            observer.complete();
+                        });
+                    });
+                })
+            ],
+            mainLoop: [
+                //this.commandsBasicsDiverse.debugLog('Hello World')
+            ],
+            functions: [],
+            types: []
+        };*/
 
         lexerCode.forEach((lexerTokens: LexerToken[]) => {
-            /* STEP 1: get entry point for the generation of a tree branch */
-            let entryPoint: ParserEntryPoint = null;
-
-            console.info('lexerTokens[0]:', lexerTokens[0]);
-
-            //investigate first token to get an entry point
-            switch (lexerTokens[0].which) {
-                case LexerTokenCategory.KEYWORD:
-                    switch (lexerTokens[0].value.toLowerCase()) {
-                        case 'global':
-                        case 'local':
-                        case 'const':
-                        case 'dim':
-                            entryPoint = ParserEntryPoint.DECLARATION;
-                            break;
-                        case 'for':
-                        case 'while':
-                        case 'repeat':
-                            entryPoint = ParserEntryPoint.LOOP_HEAD;
-                            break;
-                        case 'exit':
-                            entryPoint = ParserEntryPoint.LOOP_BREAK;
-                            break;
-                        case 'next':
-                        case 'wend':
-                        case 'until':
-                        case 'forever':
-                            entryPoint = ParserEntryPoint.LOOP_END;
-                            break;
-                        case 'if':
-                        case 'elseif':
-                        case 'else':
-                            entryPoint = ParserEntryPoint.CONDITION_HEAD;
-                            break;
-                        case 'endif':
-                            entryPoint = ParserEntryPoint.CONDITION_END;
-                            break;
-                        case 'select':
-                            entryPoint = ParserEntryPoint.SELECTION_HEAD;
-                            break;
-                        case 'case':
-                        case 'default':
-                            entryPoint = ParserEntryPoint.SELECTION_BODY;
-                            break;
-                        case 'function':
-                            entryPoint = ParserEntryPoint.FUNCTION_HEAD;
-                            break;
-                        case 'return':
-                            entryPoint = ParserEntryPoint.FUNCTION_RETURN;
-                            break;
-                        case 'type':
-                            entryPoint = ParserEntryPoint.TYPE_HEAD;
-                            break;
-                        case 'field':
-                            entryPoint = ParserEntryPoint.TYPE_BODY;
-                            break;
-                        case 'delete':
-                            entryPoint = ParserEntryPoint.OBJECT_DELETION;
-                            break;
-                        case 'insert':
-                            entryPoint = ParserEntryPoint.OBJECT_INSERTION;
-                            break;
-                        case 'include':
-                            entryPoint = ParserEntryPoint.INCLUDE;
-                            break;
-                        case 'stop':
-                            entryPoint = ParserEntryPoint.DEBUG_STOP;
-                            break;
-                        case 'data':
-                            entryPoint = ParserEntryPoint.DATA_DEFINITION;
-                            break;
-                        case 'restore':
-                            entryPoint = ParserEntryPoint.RESTORE_DATA;
-                            break;
-                        case 'read':
-                            entryPoint = ParserEntryPoint.READ_DATA;
-                            break;
-                        case 'mainloop':
-                            entryPoint = ParserEntryPoint.MAIN_LOOP_HEAD;
-                            break;
-                        case 'end':
-                            if (lexerTokens.length > 1) {
-                                switch (lexerTokens[1].which) {
-                                    case LexerTokenCategory.KEYWORD:
-                                        switch (lexerTokens[1].value.toLowerCase()) {
-                                            case 'function':
-                                                entryPoint = ParserEntryPoint.FUNCTION_END;
-                                                break;
-                                            case 'type':
-                                                entryPoint = ParserEntryPoint.TYPE_END;
-                                                break;
-                                            case 'if':
-                                                entryPoint = ParserEntryPoint.CONDITION_END;
-                                                break;
-                                            case 'select':
-                                                entryPoint = ParserEntryPoint.SELECTION_END;
-                                                break;
-                                            case 'mainloop':
-                                                entryPoint = ParserEntryPoint.MAIN_LOOP_END;
-                                        }
-                                        break;
-                                    default:
-                                    //TODO error: end must be followed by another keyword
-                                }
-                            } else {
-                                entryPoint = ParserEntryPoint.QUIT_PROGRAM;
-                            }
-                            break;
-                        default:
-                            console.error('Invalid key word');
-                    }
-                    break;
-                case LexerTokenCategory.COMMAND:
-                    entryPoint = ParserEntryPoint.COMMAND_CALL;
-                    break;
-                case LexerTokenCategory.LABEL_DOT:
-                    entryPoint = ParserEntryPoint.LABEL;
-                    break;
-                case LexerTokenCategory.INDIVIDUAL:
-                    let hasAssignment = false;
-                    lexerTokens.forEach((token) => {
-                        if (token.which === LexerTokenCategory.ASSIGNMENT) {
-                            hasAssignment = true;
-                        }
-                    });
-
-                    if (hasAssignment) {
-                        entryPoint = ParserEntryPoint.ASSIGNMENT;
-                    } else {
-                        entryPoint = ParserEntryPoint.FUNCTION_CALL;
-                    }
-                    break;
-                default:
-                //TODO error, invalid first token
-            }
-
-            console.info('Parser entry point:', entryPoint);
-
-            /* STEP 2: generate the actual tree branch */
-            switch (entryPoint) {
-                case ParserEntryPoint.DECLARATION:
-                    //DECL: {scope, name, value}
-                    break;
-                case ParserEntryPoint.ASSIGNMENT:
-                    break;
-                case ParserEntryPoint.COMMAND_CALL:
-                    //match parameters
-
-
-                    break;
-                case ParserEntryPoint.LABEL:
-
-                    break;
-                case ParserEntryPoint.LOOP_HEAD:
-                    break;
-                case ParserEntryPoint.LOOP_BREAK:
-                    break;
-                case ParserEntryPoint.LOOP_END:
-                    break;
-                case ParserEntryPoint.CONDITION_HEAD:
-                    break;
-                case ParserEntryPoint.CONDITION_END:
-                    break;
-                case ParserEntryPoint.SELECTION_HEAD:
-                    break;
-                case ParserEntryPoint.SELECTION_BODY:
-                    break;
-                case ParserEntryPoint.SELECTION_END:
-                    break;
-                case ParserEntryPoint.FUNCTION_HEAD:
-                    break;
-                case ParserEntryPoint.FUNCTION_RETURN:
-                    break;
-                case ParserEntryPoint.FUNCTION_END:
-                    break;
-                case ParserEntryPoint.FUNCTION_CALL:
-                    break;
-                case ParserEntryPoint.TYPE_HEAD:
-                    break;
-                case ParserEntryPoint.TYPE_BODY:
-                    break;
-                case ParserEntryPoint.TYPE_END:
-                    break;
-                case ParserEntryPoint.OBJECT_DELETION:
-                    break;
-                case ParserEntryPoint.OBJECT_INSERTION:
-                    break;
-                case ParserEntryPoint.INCLUDE:
-                    break;
-                case ParserEntryPoint.DEBUG_STOP:
-                    break;
-                case ParserEntryPoint.DATA_DEFINITION:
-                    break;
-                case ParserEntryPoint.RESTORE_DATA:
-                    break;
-                case ParserEntryPoint.READ_DATA:
-                    break;
-                case ParserEntryPoint.MAIN_LOOP_HEAD:
-                    break;
-                case ParserEntryPoint.MAIN_LOOP_END:
-                    break;
-                case ParserEntryPoint.QUIT_PROGRAM:
-                    break;
-            }
-
-            globalEntryPoint = entryPoint.toString();
+            //perform token cleanup: remove comments
+            let initialTokens: LexerToken[] = [];
+            lexerTokens.forEach((token: LexerToken) => {
+                if(token.which !== LexerTokenCategory.COMMENT_MARKER && token.which !== LexerTokenCategory.COMMENT) {
+                    initialTokens.push(token);
+                }
+            });
 
             /*
              * Entry points:
@@ -578,9 +631,194 @@ export class Parser {
              * // -main loop end: End MainLoop
              * // -quit program: end
              */
+            this.parseState(ParserState.INITIAL, initialTokens);
         });
 
-        return null; //globalEntryPoint;
+        return this.gameCode;
+    }
+
+    parseState(state: ParserState, tokens: LexerToken[]) {
+        //investigate first token, which is relevant for the current state
+        let currentToken: LexerToken = tokens.shift();
+        console.info('Parsing Token', currentToken);
+
+        let validTokenCategories: LexerTokenCategory[];
+
+        switch (state) {
+            case ParserState.INITIAL:
+                validTokenCategories = [
+                    LexerTokenCategory.KEYWORD,
+                    LexerTokenCategory.COMMAND,
+                    LexerTokenCategory.LABEL_DOT,
+                    LexerTokenCategory.INDIVIDUAL
+                ];
+                if (validTokenCategories.indexOf(currentToken.which) === -1) {
+                    console.error('Invalid token category');
+                }
+
+                switch (currentToken.which) {
+                    case LexerTokenCategory.KEYWORD:
+                        switch (currentToken.value.toLowerCase()) {
+                            case 'global':
+                            case 'local':
+                            case 'const':
+                            case 'dim':
+                                this.parseState(ParserState.DECLARATION, tokens);
+                                break;
+                            case 'for':
+                            case 'while':
+                            case 'repeat':
+                                this.parseState(ParserState.LOOP_HEAD, tokens);
+                                break;
+                            case 'exit':
+                                this.parseState(ParserState.LOOP_BREAK, tokens);
+                                break;
+                            case 'next':
+                            case 'wend':
+                            case 'until':
+                            case 'forever':
+                                this.parseState(ParserState.LOOP_END, tokens);
+                                break;
+                            case 'if':
+                            case 'elseif':
+                            case 'else':
+                                this.parseState(ParserState.CONDITION_HEAD, tokens);
+                                break;
+                            case 'endif':
+                                this.parseState(ParserState.CONDITION_END, tokens);
+                                break;
+                            case 'select':
+                                this.parseState(ParserState.SELECTION_HEAD, tokens);
+                                break;
+                            case 'case':
+                            case 'default':
+                                this.parseState(ParserState.SELECTION_BODY, tokens);
+                                break;
+                            case 'function':
+                                this.parseState(ParserState.FUNCTION_HEAD, tokens);
+                                break;
+                            case 'return':
+                                this.parseState(ParserState.FUNCTION_RETURN, tokens);
+                                break;
+                            case 'type':
+                                this.parseState(ParserState.TYPE_HEAD, tokens);
+                                break;
+                            case 'field':
+                                this.parseState(ParserState.TYPE_BODY, tokens);
+                                break;
+                            case 'delete':
+                                this.parseState(ParserState.OBJECT_DELETION, tokens);
+                                break;
+                            case 'insert':
+                                this.parseState(ParserState.OBJECT_INSERTION, tokens);
+                                break;
+                            case 'include':
+                                this.parseState(ParserState.INCLUDE, tokens);
+                                break;
+                            case 'stop':
+                                this.parseState(ParserState.DEBUG_STOP, tokens);
+                                break;
+                            case 'data':
+                                this.parseState(ParserState.DATA_DEFINITION, tokens);
+                                break;
+                            case 'restore':
+                                this.parseState(ParserState.RESTORE_DATA, tokens);
+                                break;
+                            case 'read':
+                                this.parseState(ParserState.READ_DATA, tokens);
+                                break;
+                            case 'mainloop':
+                                this.parseState(ParserState.MAIN_LOOP_HEAD, tokens);
+                                break;
+                            case 'end':
+                                if (tokens.length > 1) {
+                                    switch (tokens[1].which) {
+                                        case LexerTokenCategory.KEYWORD:
+                                            switch (tokens[1].value.toLowerCase()) {
+                                                case 'function':
+                                                    this.parseState(ParserState.FUNCTION_END, tokens);
+                                                    break;
+                                                case 'type':
+                                                    this.parseState(ParserState.TYPE_END, tokens);
+                                                    break;
+                                                case 'if':
+                                                    this.parseState(ParserState.CONDITION_END, tokens);
+                                                    break;
+                                                case 'select':
+                                                    this.parseState(ParserState.SELECTION_END, tokens);
+                                                    break;
+                                                case 'mainloop':
+                                                    this.parseState(ParserState.MAIN_LOOP_END, tokens);
+                                            }
+                                            break;
+                                        default:
+                                        //TODO error: end must be followed by another keyword
+                                    }
+                                } else {
+                                    this.parseState(ParserState.QUIT_PROGRAM, tokens);
+                                }
+                                break;
+                            default:
+                                console.error('Invalid key word:', currentToken);
+                        }
+                        break;
+                    case LexerTokenCategory.COMMAND:
+                        this.parseState(ParserState.COMMAND_CALL, tokens);
+                        break;
+                    case LexerTokenCategory.LABEL_DOT:
+                        this.parseState(ParserState.LABEL, tokens);
+                        break;
+                    case LexerTokenCategory.INDIVIDUAL:
+                        let hasAssignment = false;
+                        tokens.forEach((token) => {
+                            if (token.which === LexerTokenCategory.ASSIGNMENT) {
+                                hasAssignment = true;
+                            }
+                        });
+
+                        if (hasAssignment) {
+                            this.parseState(ParserState.ASSIGNMENT, tokens);
+                        } else {
+                            this.parseState(ParserState.FUNCTION_CALL, tokens);
+                        }
+                }
+                break;
+            case ParserState.DECLARATION:
+                // these are not the key words but the actual variables!
+                validTokenCategories = [
+                    LexerTokenCategory.GLOBAL,
+                    LexerTokenCategory.LOCAL,
+                    LexerTokenCategory.DIM,
+                    LexerTokenCategory.CONST
+                ];
+                if (validTokenCategories.indexOf(currentToken.which) === -1) {
+                    console.error('Invalid token category');
+                }
+
+                if (tokens.length === 0) {
+                    //No following tokens: Insert declaration statement
+                    this.gameCode.globals[currentToken.value] = 0;
+                } else {
+                    //Valid following tokens: , =
+                    switch(tokens[0].which) {
+                        case LexerTokenCategory.COMMA:
+                            this.gameCode.globals[currentToken.value] = 0;
+                            this.parseState(ParserState.DECLARATION, tokens);
+                            break;
+                        case LexerTokenCategory.ASSIGNMENT:
+                            this.parseState(ParserState.ASSIGNMENT, tokens);
+                            break;
+                        default:
+                            console.error('Invalid token following a declaration');
+                    }
+                }
+
+                break;
+            case ParserState.ASSIGNMENT:
+
+                //Valid following tokens: ( [Number] [String] True False Pi First Last [Individual] [Command]
+                break;
+        }
     }
 
     parseCondition(tokens: LexerToken[]) {

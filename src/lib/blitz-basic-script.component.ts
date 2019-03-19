@@ -2,9 +2,7 @@ import {AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewC
 import {LexerToken} from '../interfaces/lexer-token';
 import {Lexer} from '../services/lexer/lexer.service';
 import {Parser} from '../services/parser/parser.service';
-import {CodeGenerator} from '../services/code-generator/code-generator.service';
-import {AbstractSyntaxTree} from '../interfaces/parser/abstract-syntax-tree';
-import {BbscriptCode} from '../interfaces/bbscript-code';
+import {BBScriptCode} from '../interfaces/bbscript-code';
 import {concat} from 'rxjs';
 import {GameStateService} from '../services/game-state/game-state.service';
 import {BabylonJSService} from '../services/babylon-js/babylon-js.service';
@@ -153,7 +151,6 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     constructor(private language: LanguageService,
                 private lexer: Lexer,
                 private parser: Parser,
-                private codeGenerator: CodeGenerator,
                 private gameState: GameStateService,
                 private babylonjs: BabylonJSService,
                 private graphics2d: Graphics2dService,
@@ -190,10 +187,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
 
             //this.parser.parseCondition(lexerTokens[0]);
 
-            let abstractSyntaxTree: AbstractSyntaxTree = this.parser.createGameCode(lexerTokens);
-            //console.info('Abstract Syntax Tree:', abstractSyntaxTree);
-
-            let bbscriptCode = this.codeGenerator.getFakeTargetCode();  //createTargetCode(abstractSyntaxTree);
+            let bbscriptCode: BBScriptCode = this.parser.createGameCode(lexerTokens);
             console.info('Target Code:', bbscriptCode);
 
             // Start render loop.
@@ -204,7 +198,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
         });
     }
 
-    executeCode(code: BbscriptCode): void {
+    executeCode(code: BBScriptCode): void {
         if (this.debug) {
             //TODO different code execution with break points
         }
