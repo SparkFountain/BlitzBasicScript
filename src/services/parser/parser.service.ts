@@ -62,6 +62,13 @@ import {GameStateService} from '../game-state/game-state.service';
 import {ParserState} from '../../enums/parser/parser-state';
 import {LanguageService} from '../language/language.service';
 import {ApiCommand} from '../../interfaces/api/api-command';
+import {Observable, of} from 'rxjs';
+import {CameraType} from '../../enums/camera/camera-type';
+import {GameEntity} from '../../interfaces/game/entity';
+import {GameImage2D} from '../../interfaces/game/image-2d';
+import {GameFont} from '../../interfaces/game/font';
+import Camera = BABYLON.Camera;
+import Light = BABYLON.Light;
 
 @Injectable({
     providedIn: 'root'
@@ -347,249 +354,6 @@ export class Parser {
     // [Sar]: [NumExpr] Shl [NumExpr]
     // [Sar]: [NumExpr] Shr [NumExpr]
     createGameCode(lexerCode: Array<LexerToken[]>): any {
-        /*let targetCode: BBScriptCode = {
-            globals: [],
-            statements: [
-                //TODO wait with target code execution until all services are initialized
-                this.commandsGraphics2dDisplay.graphics(800, 600),
-                //this.commandsGraphics2dGraphics.cameraClsColor(255,0,0),  //TODO wrong implementation, fix
-                this.generalService.assign({
-                    variable: 'i',
-                    type: 'global',
-                    expression: {
-                        value: of(42)
-                    }
-                }),
-
-                //CAMERA
-                this.generalService.assign({
-                    variable: 'camera',
-                    type: 'global',
-                    expression: {
-                        value: this.commandsGraphics3dCamera.createCamera(CameraType.FREE)
-                    }
-                }),
-                new Observable((observer) => {
-                    this.gameState.getGlobalAsync('camera').subscribe((camera: GameEntity) => {
-                        this.commandsGraphics3dCoordinates.positionEntity(camera, 0, 2, -5).subscribe(() => {
-                            observer.next();
-                            observer.complete();
-                        });
-                    });
-                }),
-                new Observable((observer) => {
-                    this.gameState.getGlobalAsync('camera').subscribe((camera: Camera) => {
-                        this.commandsGraphics3dCamera.cameraClsColor(camera, 50, 200, 240).subscribe(() => {
-                            observer.next();
-                            observer.complete();
-                        });
-                    });
-                }),
-
-                //LIGHT
-                this.generalService.assign({
-                    variable: 'light',
-                    type: 'global',
-                    expression: {
-                        value: this.commandsGraphics3dLightShadow.createLight(1)
-                    }
-                }),
-                new Observable((observer) => {
-                    this.gameState.getGlobalAsync('light').subscribe((light: Light) => {
-                        this.commandsGraphics3dLightShadow.lightColor(light, 255, 255, 0).subscribe(() => {
-                            observer.next();
-                            observer.complete();
-                        });
-                    });
-                }),
-
-                //PRIMITIVE MESH
-                this.generalService.assign({
-                    variable: 'cube',
-                    type: 'global',
-                    expression: {
-                        value: this.commandsGraphics3dMeshes.createCube()
-                    }
-                }),
-                new Observable((observer) => {
-                    this.gameState.getGlobalAsync('cube').subscribe((cube: GameEntity) => {
-                        this.commandsGraphics3dCoordinates.positionEntity(cube, 0, 1, 0).subscribe((done) => {
-                            observer.next();
-                            observer.complete();
-                        });
-                    });
-                }),
-                new Observable((observer) => {
-                    this.gameState.getGlobalAsync('cube').subscribe((cube: GameEntity) => {
-                        this.commandsGraphics3dControls.entityColor(cube, 0, 255, 0).subscribe((done) => {
-                            observer.next();
-                            observer.complete();
-                        });
-                    });
-                }),
-
-                this.commandsGraphics3dLightShadow.ambientLight(128, 200, 50),
-
-
-                //2D GRAPHICS
-                this.commandsGraphics2dGraphics.color(0, 128, 0),
-
-                //this.commandsBasicsTimeRandom.delay(2000),
-
-                this.commandsGraphics2dGraphics.oval(50, 200, 20, 40, false),
-                this.commandsGraphics2dGraphics.line(300, 40, 350, 120),
-
-                //this.commandsGraphics2dGraphics.color(255, 255, 0),
-                this.commandsGraphics2dPixel.plot(200, 200),
-
-                //IMAGE
-                this.commandsGraphics2dImages.autoMidHandle(true),
-                this.generalService.assign({
-                    variable: 'image',
-                    type: 'global',
-                    expression: {
-                        value: this.commandsGraphics2dImages.loadImage('/assets/gfx/face.png')
-                    }
-                }),
-                new Observable((observer) => {
-                    this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
-                        this.commandsGraphics2dImages.resizeImage(image, 128, 128).subscribe(() => {
-                            observer.next();
-                            observer.complete();
-                        });
-                    });
-                }),
-                new Observable((observer) => {
-                    this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
-                        this.commandsGraphics2dImages.rotateImage(image, 30).subscribe(() => {
-                            observer.next();
-                            observer.complete();
-                        });
-                    });
-                }),
-                new Observable((observer) => {
-                    this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
-                        this.commandsGraphics2dImages.drawBlock(image, 200, 250).subscribe(() => {
-                            observer.next();
-                            observer.complete();
-                        });
-                    });
-                }),
-                this.commandsGraphics2dGraphics.rect(195, 245, 10, 10, true),
-                this.commandsGraphics2dGraphics.rect(195 - 64, 245 - 64, 10, 10, true),
-
-                //TEXT
-                this.generalService.assign({
-                    variable: 'font',
-                    type: 'global',
-                    expression: {
-                        value: this.commandsGraphics2dText.loadFont('Arial', 32, true, true, true)
-                    }
-                }),
-                new Observable((observer) => {
-                    this.gameState.getGlobalAsync('font').subscribe((font: GameFont) => {
-                        this.commandsGraphics2dText.setFont(font).subscribe(() => {
-                            observer.next();
-                            observer.complete();
-                        });
-                    });
-                }),
-
-                this.commandsGraphics2dText.text(50, 50, 'HELLO WORLD!'),
-                this.commandsGraphics2dText.stringWidth('HELLO WORLD!'),
-                this.commandsGraphics2dText.stringHeight('HELLO WORLD!'),
-                this.generalService.assign({
-                    variable: 'rndValue',
-                    type: 'global',
-                    expression: {
-                        value: of('Hello World')
-                    }
-                }),
-                this.commandsBasicsTimeRandom.seedRnd('Hello World'),
-                /!*new Observable((observer) => {
-                            this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
-                                this.commandsGraphics2dImages.maskImage(image, 255, 0, 255).subscribe(() => {
-                                    observer.next();
-                                    observer.complete();
-                                });
-                            });
-                        }),*!/
-                /!*new Observable((observer) => {
-                    this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
-                        this.commandsGraphics2dImages.resizeImage(image, 16, 16).subscribe(() => {
-                            observer.next();
-                            observer.complete();
-                        });
-                    });
-                }),*!/
-                /!*new Observable((observer) => {
-                  this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
-                    this.commandsGraphics2dImages.tileBlock(image, 0, 0).subscribe(() => {
-                      observer.next();
-                      observer.complete();
-                    });
-                  });
-                })*!/
-
-                /!*this.generalService.forToNext({
-                  assignment: {
-                    variable: 'i',
-                    expression: 10
-                  },
-                  limit: 10,
-                  increment: 1,
-                  statements: []
-                }),
-
-        this.commandService.basics.diverse.appTitle('Carribico')*!/
-
-                //MUSIC
-                /!*this.generalService.assign({
-                  variable: 'music',
-                  type: 'global',
-                  expression: {
-                    value: this.commandsSoundMusicSamples.playMusic('/assets/sfx/music.mid', 0)
-                  }
-                }),
-                new Observable((observer) => {
-                  this.gameState.getGlobalAsync('music').subscribe((sound: GameSound) => {
-                    console.info('SOUND:', sound);
-                    this.commandsSoundMusicSamples.playSound(sound).subscribe(() => {
-                      observer.next();
-                      observer.complete();
-                    });
-                  });
-                }),*!/
-
-                //SOUND
-                this.generalService.assign({
-                    variable: 'sound',
-                    type: 'global',
-                    expression: {
-                        value: this.commandsSoundMusicSamples.loadSound('/assets/sfx/tada.mp3')
-                    }
-                }),
-                new Observable((observer) => {
-                    this.gameState.getGlobalAsync('sound').subscribe((sound: GameSound) => {
-                        concat(
-                            this.commandsSoundMusicSamples.soundVolume(sound, 0.1),
-                            this.commandsSoundMusicSamples.soundPan(sound, -1),
-                            this.commandsSoundMusicSamples.soundPitch(sound, 22050),
-                            this.commandsSoundMusicSamples.playSound(sound)
-                        ).subscribe(() => {
-                            observer.next();
-                            observer.complete();
-                        });
-                    });
-                })
-            ],
-            mainLoop: [
-                //this.commandsBasicsDiverse.debugLog('Hello World')
-            ],
-            functions: [],
-            types: []
-        };*/
-
         lexerCode.forEach((lexerTokens: LexerToken[]) => {
             //perform token cleanup: remove comments
             let initialTokens: LexerToken[] = [];
@@ -822,20 +586,178 @@ export class Parser {
                 //Valid following tokens: ( [Number] [String] True False Pi First Last [Individual] [Command]
                 break;
             case ParserState.COMMAND_CALL:
-                let command: ApiCommand = this.stack.pop().value;
+                let command: ApiCommand = this.language.commands[this.stack.pop().value.toLowerCase()];
                 console.info('Command:', command);
 
-                let service: string = `commands
-                                           ${command.category.charAt(0).toUpperCase()}
-                                           ${command.category.slice(1)}
-                                           ${command.subCategory.charAt(0).toUpperCase()}
-                                           ${command.subCategory.slice(1)}`;
+                let service: string = `commands${command.category.charAt(0).toUpperCase()}${command.category.slice(1)}${command.subCategory.charAt(0).toUpperCase()}${command.subCategory.slice(1)}`;
                 console.info('Service:', service);
 
+                //TODO code must be executed later, for the services are not initialized yet
                 this.gameCode.statements.push(
-                    this.commandsGraphics2dDisplay.graphics(800, 600)
+                    this.commandsGraphics2dDisplay.graphics(800, 600),
+                    //this.commandsGraphics2dGraphics.cameraClsColor(255,0,0),  //TODO wrong implementation, fix
+                    this.generalService.assign({
+                        variable: 'i',
+                        type: 'global',
+                        expression: {
+                            value: of(42)
+                        }
+                    }),
+
+                    //CAMERA
+                    this.generalService.assign({
+                        variable: 'camera',
+                        type: 'global',
+                        expression: {
+                            value: this.commandsGraphics3dCamera.createCamera(CameraType.FREE)
+                        }
+                    }),
+                    new Observable((observer) => {
+                        this.gameState.getGlobalAsync('camera').subscribe((camera: GameEntity) => {
+                            this.commandsGraphics3dCoordinates.positionEntity(camera, 0, 2, -5).subscribe(() => {
+                                observer.next();
+                                observer.complete();
+                            });
+                        });
+                    }),
+                    new Observable((observer) => {
+                        this.gameState.getGlobalAsync('camera').subscribe((camera: Camera) => {
+                            this.commandsGraphics3dCamera.cameraClsColor(camera, 50, 200, 240).subscribe(() => {
+                                observer.next();
+                                observer.complete();
+                            });
+                        });
+                    }),
+
+                    //LIGHT
+                    this.generalService.assign({
+                        variable: 'light',
+                        type: 'global',
+                        expression: {
+                            value: this.commandsGraphics3dLightShadow.createLight(1)
+                        }
+                    }),
+                    new Observable((observer) => {
+                        this.gameState.getGlobalAsync('light').subscribe((light: Light) => {
+                            this.commandsGraphics3dLightShadow.lightColor(light, 255, 255, 0).subscribe(() => {
+                                observer.next();
+                                observer.complete();
+                            });
+                        });
+                    }),
+
+                    //PRIMITIVE MESH
+                    this.generalService.assign({
+                        variable: 'cube',
+                        type: 'global',
+                        expression: {
+                            value: this.commandsGraphics3dMeshes.createCube()
+                        }
+                    }),
+                    new Observable((observer) => {
+                        this.gameState.getGlobalAsync('cube').subscribe((cube: GameEntity) => {
+                            this.commandsGraphics3dCoordinates.positionEntity(cube, 0, 1, 0).subscribe((done) => {
+                                observer.next();
+                                observer.complete();
+                            });
+                        });
+                    }),
+                    new Observable((observer) => {
+                        this.gameState.getGlobalAsync('cube').subscribe((cube: GameEntity) => {
+                            this.commandsGraphics3dControls.entityColor(cube, 0, 255, 0).subscribe((done) => {
+                                observer.next();
+                                observer.complete();
+                            });
+                        });
+                    }),
+
+                    this.commandsGraphics3dLightShadow.ambientLight(128, 200, 50),
+
+
+                    //2D GRAPHICS
+                    this.commandsGraphics2dGraphics.color(0, 128, 0),
+
+                    //this.commandsBasicsTimeRandom.delay(2000),
+
+                    this.commandsGraphics2dGraphics.oval(50, 200, 20, 40, false),
+                    this.commandsGraphics2dGraphics.line(300, 40, 350, 120),
+
+                    //this.commandsGraphics2dGraphics.color(255, 255, 0),
+                    this.commandsGraphics2dPixel.plot(200, 200),
+
+                    //IMAGE
+                    this.commandsGraphics2dImages.autoMidHandle(true),
+                    this.generalService.assign({
+                        variable: 'image',
+                        type: 'global',
+                        expression: {
+                            value: this.commandsGraphics2dImages.loadImage('/assets/gfx/face.png')
+                        }
+                    }),
+                    new Observable((observer) => {
+                        this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
+                            this.commandsGraphics2dImages.resizeImage(image, 128, 128).subscribe(() => {
+                                observer.next();
+                                observer.complete();
+                            });
+                        });
+                    }),
+                    new Observable((observer) => {
+                        this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
+                            this.commandsGraphics2dImages.rotateImage(image, 30).subscribe(() => {
+                                observer.next();
+                                observer.complete();
+                            });
+                        });
+                    }),
+                    new Observable((observer) => {
+                        this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
+                            this.commandsGraphics2dImages.drawBlock(image, 200, 250).subscribe(() => {
+                                observer.next();
+                                observer.complete();
+                            });
+                        });
+                    }),
+                    this.commandsGraphics2dGraphics.rect(195, 245, 10, 10, true),
+                    this.commandsGraphics2dGraphics.rect(195 - 64, 245 - 64, 10, 10, true),
+
+                    //TEXT
+                    this.generalService.assign({
+                        variable: 'font',
+                        type: 'global',
+                        expression: {
+                            value: this.commandsGraphics2dText.loadFont('Arial', 32, true, true, true)
+                        }
+                    }),
+                    new Observable((observer) => {
+                        this.gameState.getGlobalAsync('font').subscribe((font: GameFont) => {
+                            this.commandsGraphics2dText.setFont(font).subscribe(() => {
+                                observer.next();
+                                observer.complete();
+                            });
+                        });
+                    }),
+
+                    this.commandsGraphics2dText.text(50, 50, 'HELLO WORLD!'),
+                    this.commandsGraphics2dText.stringWidth('HELLO WORLD!'),
+                    this.commandsGraphics2dText.stringHeight('HELLO WORLD!'),
+                    this.generalService.assign({
+                        variable: 'rndValue',
+                        type: 'global',
+                        expression: {
+                            value: of('Hello World')
+                        }
+                    }),
+                    this.commandsBasicsTimeRandom.seedRnd('Hello World'),
+                    new Observable((observer) => {
+                        this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
+                            this.commandsGraphics2dImages.maskImage(image, 255, 0, 255).subscribe(() => {
+                                observer.next();
+                                observer.complete();
+                            });
+                        });
+                    })
                 );
-                break;
         }
     }
 
@@ -939,458 +861,5 @@ export class Parser {
                 console.error('Invalid token:', token);
             }
         });
-    }
-
-
-    /**
-     * @description
-     * Gets an array of lexer code lines and parses them line by line.
-     * Each code line consists of an array of lexer tokens which will be investigated sequentially.
-     * @param lexerCode An array of arrays, containing lexed code lines
-     * @return An object consisting of generated JavaScript code,
-     * as well as parser messages
-     */
-    _deprecated_parse(lexerCode: Array<LexerToken[]>): any {
-        /*//console.info('parsing lexer code:',lexerCode);
-
-        this.resetParser();
-        let parserContext: ParserContext = ParserContext.DEFAULT;
-        let scope = {
-            function: '',
-            param: '',
-            type: '',
-            global: '',
-            local: ''
-        };
-        let codeContext: ParserCodeTarget = ParserCodeTarget.JAVASCRIPT;
-
-        lexerCode.forEach(function(tokens)
-        {
-            if(tokens.length > 0)
-            {
-                //change special states from one line to the next
-                switch(parserContext)
-                {
-                    case ParserContext.FUNCTION_PARAMS:
-                        parserContext = ParserContext.FUNCTION_BODY;
-                        break;
-                    default:
-                    //TODO this always resets special states, which should not be the case!
-                    //TODO should this code be changed to match some special states? make decision.
-                    //specialState = '';
-                }
-
-                for(let i = 0; i < tokens.length; i++)
-                {
-                    let currentToken = tokens[i];
-                    let currentValue = currentToken.value.toLowerCase();
-                    let previousToken: LexerToken = (i > 0) ? tokens[i - 1] : {
-                        which: LexerTokenCategory.UNIDENTIFIED,
-                        value: '',
-                        offset: -1
-                    };
-                    let previousValue = previousToken.value.toLowerCase();
-                    let nextToken: LexerToken = (i < tokens.length - 1) ? tokens[i + 1] : {
-                        which: LexerTokenCategory.UNIDENTIFIED,
-                        value: '',
-                        offset: -1
-                    };
-                    let nextValue = nextToken.value.toLowerCase();
-
-                    switch(currentToken.which)
-                    {
-                        case LexerTokenCategory.DEPRECATED_KEYWORD:
-                            this.result.errors.push({offset: currentToken.offset, msg: Parser.MESSAGE.ERROR.DEPRECATED_KEYWORD});
-                            return;
-                        case LexerTokenCategory.DEPRECATED_COMMAND:
-                            this.result.errors.push({offset: currentToken.offset, msg: Parser.MESSAGE.ERROR.DEPRECATED_COMMAND});
-                            return;
-                        case LexerTokenCategory.KEYWORD:
-                            //switch valid start key words
-                            switch(currentValue)
-                            {
-                                case 'global':
-                                    if(i === 0 || previousToken.which === LexerTokenCategory.COLON)
-                                    {
-                                        this.result[codeContext] += 'BBScript.game.global.';
-                                    } else
-                                    {
-                                        this.result.errors.push({offset: currentToken.offset, msg: Parser.MESSAGE.ERROR.INVALID_TOKEN});
-                                    }
-                                    break;
-                                case 'local':
-                                    //TODO handle
-                                    break;
-                                case 'const':
-                                    break;
-                                case 'dim':
-                                    this.result[codeContext] += 'BBScript.game.dim.';
-                                    break;
-                                case 'for':
-                                    parserContext = ParserContext.FOR;
-                                    this.result[codeContext] += 'for(';
-                                    break;
-                                case 'step':
-                                    //TODO refactor variable structure on stack!!!
-                                    /!*if(stack[stack.length-1].indexOf(ParserStackElement.LOOP_VARIABLE) > -1) {
-                                        //let loopVariable = stack[stack.length-1].indexOf('.')+1;
-                                        //this.result[codeContext] += '; '+stack[stack.length-1].substr(loopVariable)+'+=';
-                                    } else {
-                                        //TODO error message, missing loop variable
-                                    }*!/
-                                    break;
-                                case 'to':
-                                    if(parserContext === ParserContext.FOR)
-                                    {
-                                        this.result[codeContext] += '; ' + scope.local + ' <= ';
-                                    } else
-                                    {
-                                        //TODO error message, missing loop variable
-                                    }
-                                    break;
-                                case 'next':
-                                    this.result[codeContext] += '}';
-                                    break;
-                                case 'while':
-                                    this.stack.push(ParserStackElement.WHILE_LOOP);
-                                    this.result[codeContext] += 'while(';
-                                    break;
-                                case 'wend':
-                                    this.result[codeContext] += '}';
-                                    break;
-                                case 'repeat':
-                                    this.result[codeContext] += 'do {';
-                                    break;
-                                case 'until':
-                                    parserContext = ParserContext.UNTIL;
-                                    this.result[codeContext] += '} while(';
-                                    break;
-                                case 'forever':
-                                    this.result[codeContext] += '} while(true);';
-                                    break;
-                                case 'mainloop':
-                                    if(previousToken.which === LexerTokenCategory.KEYWORD && previousToken.value.toLowerCase() === 'end')
-                                    {
-                                        codeContext = ParserCodeTarget.JAVASCRIPT;
-                                    } else
-                                    {
-                                        codeContext = ParserCodeTarget.MAIN_LOOP;
-                                    }
-                                    break;
-                                case 'if':
-                                    if(i === 0 || nextToken.which === LexerTokenCategory.COLON)
-                                    {
-                                        this.result[codeContext] += 'if(';
-                                    } else
-                                    {
-                                        this.result.errors.push({offset: currentToken.offset, msg: Parser.MESSAGE.ERROR.INVALID_TOKEN});
-                                    }
-                                    break;
-                                case 'then':
-                                    if(i > 0)
-                                    {
-                                        this.result[codeContext] += ') {';
-                                    } else
-                                    {
-                                        this.result.errors.push({offset: currentToken.offset, msg: Parser.MESSAGE.ERROR.INVALID_START_TOKEN});
-                                    }
-                                    break;
-                                case 'elseif':
-                                    this.result[codeContext] += '} else if(';
-                                    break;
-                                case 'else':
-                                    this.result[codeContext] += '} else {';
-                                    break;
-                                case 'endif':
-                                    this.result[codeContext] += '}';
-                                    break;
-                                case 'select':
-                                    this.result[codeContext] += 'switch(';
-                                    break;
-                                case 'case':
-                                    this.result[codeContext] += 'case ';
-                                    break;
-                                case 'function':
-                                    parserContext = ParserContext.FUNCTION_DECLARATION;
-                                    break;
-                                case 'type':
-                                    parserContext = ParserContext.TYPE;
-                                    break;
-                                case 'field':
-                                    console.info('matched field keyword in state', parserContext);
-                                    if(parserContext === ParserContext.TYPE)
-                                    {
-                                        console.info('going to special state field');
-                                        parserContext = ParserContext.FIELD;
-                                    } else
-                                    {
-                                        //TODO error message, field outside of type is invalid
-                                    }
-                                    break;
-                                case 'not':
-                                    this.result[codeContext] += '!';
-                                    break;
-                                case 'and':
-                                    this.result[codeContext] += ' && ';
-                                    break;
-                                case 'or':
-                                    this.result[codeContext] += ' || ';
-                                    break;
-                                case 'xor':
-                                    stack.push(ParserStackElement.XOR);
-                                    this.result[codeContext] += ' ? ';
-                                    break;
-                                case 'true':
-                                case 'false':
-                                    this.result[codeContext] += currentValue;
-                                    break;
-                                case 'end':
-                                    switch(nextToken.value.toLowerCase())
-                                    {
-                                        case 'if':
-                                        case 'select':
-                                            this.result[codeContext] += '}';
-                                            break;
-                                        case 'mainloop':
-                                            codeContext = ParserCodeTarget.JAVASCRIPT;
-                                            break;
-                                        case 'function':
-                                        case 'type':
-                                            parserContext = ParserContext.DEFAULT;
-                                            scope.function = '';
-                                            if(currentValue === 'function')
-                                            {
-                                                //TODO close function's code
-                                            }
-                                            i++;  //skip next token execution
-                                            break;
-                                        default:
-                                            this.result[codeContext] += 'BBScriptFunctions.end();';
-                                    }
-                                    break;
-                            }
-                            break;
-                        case LexerTokenCategory.COMMAND:
-                            //match command call with or without brackets
-                            this.result[codeContext] += 'BBScriptFunctions.' + currentValue;
-                            if(nextToken.which !== LexerTokenCategory.BRACKET_OPEN)
-                            {
-                                stack.push(ParserStackElement.BRACKET_OPEN);
-                                this.result[codeContext] += '(';
-                            }
-                            break;
-                        case LexerTokenCategory.INDIVIDUAL:
-                            switch(parserContext)
-                            {
-                                case ParserContext.GLOBAL:
-                                case ParserContext.CONST:
-                                    if(!individuals[currentValue])
-                                    {
-                                        individuals[currentValue] = previousToken.value.toLowerCase();
-                                        this.result[codeContext] += currentValue;
-                                    }
-                                    break;
-                                case ParserContext.FOR:
-                                    scope.local = currentValue;
-                                    this.result[codeContext] += 'let ' + scope.local;
-                                    break;
-                                case ParserContext.COMMAND:
-                                    //TODO check where the variable is defined (does not need to be global)
-                                    this.result[codeContext] += 'BBScript.game.global.' + currentValue;
-                                    break;
-                                case ParserContext.FUNCTION_DECLARATION:
-                                    scope.function = currentValue;
-                                    this.result.functions[scope.function] = {
-                                        params: {},
-                                        locals: [],
-                                        code: ''
-                                    };
-                                    parserContext = ParserContext.FUNCTION_PARAMS;
-                                    break;
-                                case ParserContext.FUNCTION_PARAMS:
-                                    scope.param = currentValue;
-                                    this.result.functions[scope.function].params[scope.param] = '';
-                                    break;
-                                case ParserContext.FUNCTION_BODY:
-                                    if(previousToken.which === LexerTokenCategory.KEYWORD && previousToken.value.toLowerCase() === 'local')
-                                    {
-                                        scope.local = currentValue;
-                                        this.result.functions[scope.function].locals.push({
-                                            name: currentValue,
-                                            value: ''
-                                        });
-                                    }
-                                    break;
-                                case ParserContext.TYPE:
-                                    scope.type = currentValue;
-                                    this.result.types[scope.type] = [];
-                                    break;
-                                case ParserContext.FIELD:
-                                    console.info('current field value:', currentValue);
-                                    this.result.types[scope.type].push(currentValue);
-                                    break;
-                                default:
-                                    //TODO refactor, this is only valid for specialState "global"
-                                    if(!(previousToken.which === LexerTokenCategory.KEYWORD && previousToken.value.toLowerCase() === 'global'))
-                                    {
-                                        this.result[codeContext] += 'BBScript.game.global.' + currentValue;
-                                    } else
-                                    {
-                                        this.result[codeContext] += currentValue;
-                                    }
-                            }
-
-                            break;
-                        case LexerTokenCategory.BRACKET_OPEN:
-                            if(parserContext !== ParserContext.FUNCTION)
-                            {
-                                this.result[codeContext] += '(';
-                            }
-                            stack.push(ParserStackElement.BRACKET_OPEN);
-                            break;
-                        case LexerTokenCategory.BRACKET_CLOSE:
-                            if(stack[stack.length - 1] === ParserStackElement.BRACKET_OPEN)
-                            {
-                                if(parserContext !== ParserContext.FUNCTION)
-                                {
-                                    this.result[codeContext] += ')';
-                                    stack.pop();
-                                }
-                            } else
-                            {
-                                //TODO error message, missing opening bracket
-                            }
-                            break;
-                        case LexerTokenCategory.INTEGER:
-                        case LexerTokenCategory.FLOAT:
-                        case LexerTokenCategory.DOUBLE_QUOTE:
-                            switch(parserContext)
-                            {
-                                case ParserContext.FUNCTION_PARAMS:
-                                    this.result.functions[scope.function].params[scope.param] += currentValue;
-                                    break;
-                                case ParserContext.FUNCTION_BODY:
-                                    if(previousToken.which === LexerTokenCategory.ASSIGNMENT)
-                                    {
-                                        //TODO refactor, this is the wrong idea
-                                    }
-                                    break;
-                                default:
-                                    this.result[codeContext] += currentToken.value;
-                            }
-                            break;
-                        case LexerTokenCategory.STRING:
-                            if(previousToken.which === LexerTokenCategory.DOUBLE_QUOTE)
-                            {
-                                switch(parserContext)
-                                {
-                                    case ParserContext.FUNCTION_PARAMS:
-                                        this.result.functions[scope.function].params[scope.param] += currentValue;
-                                        break;
-                                    default:
-                                        this.result[codeContext] += currentToken.value;
-                                }
-                            } else
-                            {
-                                //TODO error message, string without opening double quote
-                            }
-                            break;
-                        case LexerTokenCategory.COMMA:
-                            let omitSymbolInJSCode = [ParserContext.FIELD];
-                            if(omitSymbolInJSCode.indexOf(parserContext) === -1)
-                            {
-                                //TODO too liberal; also regard stack
-                                switch(previousToken.which)
-                                {
-                                    case LexerTokenCategory.INTEGER:
-                                    case LexerTokenCategory.FLOAT:
-                                    case LexerTokenCategory.BRACKET_CLOSE:
-                                    case LexerTokenCategory.INDIVIDUAL:
-                                        this.result[codeContext] += ',';
-                                        break;
-                                    default:
-                                        this.result.errors.push({offset: currentToken.offset, msg: Parser.MESSAGE.ERROR.INVALID_TOKEN});
-                                }
-                            }
-                            break;
-                        case LexerTokenCategory.ALGEBRAIC:
-                        case LexerTokenCategory.COMPARISON:
-                            this.result[codeContext] += currentToken.value;
-                            break;
-                        case LexerTokenCategory.ASSIGNMENT:
-                            switch(parserContext)
-                            {
-                                case ParserContext.FUNCTION_PARAMS:
-                                    if(previousToken.which === LexerTokenCategory.INDIVIDUAL)
-                                    {
-                                        //TODO is this block necessary?
-                                    } else
-                                    {
-                                        //TODO error message, invalid assignment
-                                    }
-                                    break;
-                                default:
-                                    this.result[codeContext] += '=';
-                            }
-                            break;
-                        default:
-                            if(i === 0)
-                            {
-                                this.result.errors.push({offset: currentToken.offset, msg: Parser.MESSAGE.ERROR.INVALID_START_TOKEN});
-                            } else
-                            {
-                                //console.info('this.result:',this.result);
-                                this.result.errors.push({offset: currentToken.offset, msg: Parser.MESSAGE.ERROR.INVALID_TOKEN});
-                            }
-                    }
-                }
-
-                //console.info('STACK:',stack);
-
-                for(let stackIndex = 0; stackIndex < stack.length; stackIndex++)
-                {
-                    switch(stack[stackIndex])
-                    {
-                        case ParserStackElement.BRACKET_OPEN:
-                            this.result[codeContext] += ');';
-                            break;
-                        case ParserStackElement.FOR:
-                        case ParserStackElement.WHILE_LOOP:
-                            this.result[codeContext] += ') {';
-                            break;
-                        default:
-                            //TODO error message, invalid unclosed code
-                            this.result.errors.push({});
-                    }
-                }
-                stack = [];
-
-                if(this.result[codeContext][this.result[codeContext].length - 1] === ')')
-                {
-                    this.result[codeContext] += ';';
-                }
-
-                if(parserContext === ParserContext.FOR && this.result[codeContext].substr(-1) !== '{')
-                {
-                    //for loop did not contain "step", so close it manually
-                    this.result[codeContext] += '; ' + scope.local + '++) {';
-                }
-
-                this.result[codeContext] += '\n';
-            }
-        });
-
-        //apply main loop code (if exists) to end of js code
-        if(this.result.mainloop.trim() !== '')
-        {
-            this.result.js += 'BBScript.game.engine.runRenderLoop(function () {';
-            this.result.js += this.result.mainloop;
-            this.result.js += '});';
-            delete this.result.mainloop;
-        }
-
-        return this.result;*/
-
-        return null;
     }
 }

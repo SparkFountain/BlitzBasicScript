@@ -1,20 +1,20 @@
 {
   "name": "bbscript",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "A simple yet powerful programming language for browser games",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "peerDependencies": {
-    "babylonjs": "~3.3.0",
-    "seedrandom": "~3.0.1"
+    "babylonjs": "4.0.3",
+    "seedrandom": "3.0.1"
   },
   "devDependencies": {
-    "@types/chai": "~4.1.7",
-    "@types/mocha": "~5.2.6",
-    "chai": "~4.2.0",
-    "mocha": "~6.0.2",
-    "ts-node": "~8.0.3",
-    "typescript": "3.2.4"
+    "@types/chai": "4.1.7",
+    "@types/mocha": "5.2.7",
+    "chai": "4.2.0",
+    "mocha": "6.1.4",
+    "ts-node": "8.3.0",
+    "typescript": "3.4.5"
   },
   "scripts": {
     "test": "mocha --reporter spec --compilers ts:ts-node/register \"src/**/*.test.ts\""

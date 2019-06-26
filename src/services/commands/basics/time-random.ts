@@ -1,8 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, of, Subscriber, timer} from 'rxjs';
 
-import {seedrandom} from 'seedrandom';
-
 @Injectable()
 export class CommandsBasicsTimeRandom {
     constructor() {

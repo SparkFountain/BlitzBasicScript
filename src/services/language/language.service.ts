@@ -16,7 +16,7 @@ export class LanguageService {
     }
 
     public initialize(): Observable<void> {
-        console.info('Initializing Lexer...');
+        console.info('Initializing Language Service...');
 
         return new Observable((observer: Subscriber<void>) => {
             this.keywords = {};
@@ -55,6 +55,8 @@ export class LanguageService {
                         this.deprecatedCommands[apiCommand.name.toLowerCase()] = apiCommand;
                     });
                 }
+
+                console.info('Done');
 
                 observer.next();
                 observer.complete();

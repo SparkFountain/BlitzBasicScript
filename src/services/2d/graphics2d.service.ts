@@ -295,6 +295,7 @@ export class Graphics2dService {
     }
 
     stringWidth(text: string): Observable<number> {
+        console.info('_context2d:', this._context2d);
         return of(this._context2d.measureText(text).width);
     }
 
