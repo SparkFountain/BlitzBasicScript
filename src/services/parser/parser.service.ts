@@ -67,8 +67,7 @@ import {CameraType} from '../../enums/camera/camera-type';
 import {GameEntity} from '../../interfaces/game/entity';
 import {GameImage2D} from '../../interfaces/game/image-2d';
 import {GameFont} from '../../interfaces/game/font';
-import Camera = BABYLON.Camera;
-import Light = BABYLON.Light;
+import { Camera, Light } from 'babylonjs';
 
 @Injectable({
     providedIn: 'root'

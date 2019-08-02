@@ -1,6 +1,6 @@
 {
   "name": "bbscript",
-  "version": "0.0.3",
+  "version": "0.0.8",
   "description": "A simple yet powerful programming language for browser games",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

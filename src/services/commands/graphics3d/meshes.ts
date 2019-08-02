@@ -2,7 +2,7 @@ import {Observable, Subscriber} from 'rxjs';
 import {Injectable} from '@angular/core';
 import {BabylonJSService} from '../../babylon-js/babylon-js.service';
 import {GameEntity} from '../../../interfaces/game/entity';
-import Mesh = BABYLON.Mesh;
+import { Mesh } from 'babylonjs';
 
 @Injectable()
 export class CommandsGraphics3dMeshes {
@@ -27,7 +27,7 @@ export class CommandsGraphics3dMeshes {
     createCone(segments?: number, hasFloor?: boolean, parent?: GameEntity): Observable<GameEntity> {
         return new Observable<GameEntity>((observer: Subscriber<GameEntity>) => {
             this.babylonjs.createCone(segments, hasFloor).subscribe((coneMesh: Mesh) => {
-                let coneEntity: GameEntity = {
+                const coneEntity: GameEntity = {
                     name: 'TODO',
                     class: 'Mesh',
                     parent: parent ? parent : null,
@@ -43,7 +43,7 @@ export class CommandsGraphics3dMeshes {
     createSphere(segments?: number, parent?: GameEntity): Observable<GameEntity> {
         return new Observable<GameEntity>((observer: Subscriber<GameEntity>) => {
             this.babylonjs.createSphere(segments).subscribe((sphereMesh: Mesh) => {
-                let sphereEntity: GameEntity = {
+                const sphereEntity: GameEntity = {
                     name: 'TODO',
                     class: 'Mesh',
                     parent: parent ? parent : null,
@@ -59,7 +59,7 @@ export class CommandsGraphics3dMeshes {
     createCube(parent?: GameEntity): Observable<GameEntity> {
         return new Observable<GameEntity>((observer: Subscriber<GameEntity>) => {
             this.babylonjs.createCube().subscribe((cubeMesh: Mesh) => {
-                let cubeEntity: GameEntity = {
+                const cubeEntity: GameEntity = {
                     name: 'TODO',
                     class: 'Mesh',
                     parent: parent ? parent : null,
@@ -75,7 +75,7 @@ export class CommandsGraphics3dMeshes {
     createCylinder(segments?: number, hasFloor?: boolean, parent?: GameEntity): Observable<GameEntity> {
         return new Observable<GameEntity>((observer: Subscriber<GameEntity>) => {
             this.babylonjs.createCylinder(segments, hasFloor).subscribe((cylinderMesh: Mesh) => {
-                let cylinderEntity: GameEntity = {
+                const cylinderEntity: GameEntity = {
                     name: 'TODO',
                     class: 'Mesh',
                     parent: parent ? parent : null,
@@ -91,7 +91,7 @@ export class CommandsGraphics3dMeshes {
     createPyramid(baseVertexNumber?: number, parent?: any): Observable<GameEntity> {
         return new Observable<GameEntity>((observer: Subscriber<GameEntity>) => {
             this.babylonjs.createPyramid(baseVertexNumber).subscribe((pyramidMesh: Mesh) => {
-                let pyramidEntity: GameEntity = {
+                const pyramidEntity: GameEntity = {
                     name: 'TODO',
                     class: 'Mesh',
                     parent: parent ? parent : null,
@@ -107,7 +107,7 @@ export class CommandsGraphics3dMeshes {
     createTorus(parent?: GameEntity): Observable<GameEntity> {
         return new Observable<GameEntity>((observer: Subscriber<GameEntity>) => {
             this.babylonjs.createTorus().subscribe((torusMesh: Mesh) => {
-                let torusEntity: GameEntity = {
+                const torusEntity: GameEntity = {
                     name: 'TODO',
                     class: 'Mesh',
                     parent: parent ? parent : null,
@@ -123,7 +123,7 @@ export class CommandsGraphics3dMeshes {
     createTorusKnot(parent?: GameEntity): Observable<GameEntity> {
         return new Observable<GameEntity>((observer: Subscriber<GameEntity>) => {
             this.babylonjs.createTorusKnot().subscribe((torusKnotMesh: Mesh) => {
-                let torusKnotEntity: GameEntity = {
+                const torusKnotEntity: GameEntity = {
                     name: 'TODO',
                     class: 'Mesh',
                     parent: parent ? parent : null,

@@ -15,12 +15,12 @@ import { LanguageService } from '../services/language/language.service';
   styleUrls: ['blitz-basic-script.scss']
 })
 export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
-  @Input('code') code: string[][];
-  @Input('debug') debug?: boolean;
+  @Input() code: string[][];
+  @Input() debug?: boolean;
 
   @ViewChild('canvas2d', { static: false }) canvas2d: ElementRef;
   @ViewChild('canvas3d', { static: false }) canvas3d: ElementRef;
-  private canvasFocused: boolean;
+  public canvasFocused: boolean;
 
   /** Key code conversion schema **/
   private readonly keyCodes = {
@@ -97,7 +97,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     NumPad7: 71,
     NumPad8: 72,
     NumPad9: 73,
-    //Minus: 74,
+    // Minus: 74,
     NumPad4: 75,
     NumPad5: 76,
     NumPad6: 77,
@@ -106,7 +106,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     NumPad2: 80,
     NumPad3: 81,
     NumPad0: 82,
-    //Comma: 83,
+    // Comma: 83,
     IntlBackslash: 86,
     F11: 87,
     F12: 88,
@@ -127,7 +127,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:keydown', ['$event'])
   keyDownEvent(event: KeyboardEvent) {
-    //console.log(event);
+    // console.log(event);
     this.gameState.setKeyDown(this.keyCodes[event.code], true);
     this.gameState.setKeyAsciiCode(event.key.charCodeAt(0));
   }
@@ -180,12 +180,12 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     console.info('initCanvas executed');
 
     // Initialize GUI Service
-    //TODO only if this would be necessary
-    //this.gui.initCanvas(this.canvas3d.nativeElement);
+    // TODO only if this would be necessary
+    // this.gui.initCanvas(this.canvas3d.nativeElement);
 
-    //console.info('Source code:', this.code);
+    // console.info('Source code:', this.code);
 
-    //initialize language service
+    // initialize language service
     this.language.initialize().subscribe(() => {
       /*console.info(this.code[0].join(''));
       let lexerTokens: LexerToken[][] = this.lexer.lexCodeReactive(this.code);
@@ -204,12 +204,12 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     });
 
     if (this.debug) {
-      //TODO different code execution with break points
+      // TODO different code execution with break points
     }
 
     console.info('Executing Code');
 
-    //TODO handle main loop
+    // TODO handle main loop
 
     concat(...code.statements).subscribe(
       () => {
