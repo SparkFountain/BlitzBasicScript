@@ -1,5 +1,5 @@
 import { Injectable } from "@angular/core";
-import { CommandsBasicsDiverse } from './basics/diverse.service';
+import { CommandsBasicsDiverseService } from './basics/diverse.service';
 import { Observable, of } from 'rxjs';
 import { CommandsBasicsMathsService } from './basics/maths.service';
 

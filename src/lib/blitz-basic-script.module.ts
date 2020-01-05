@@ -1,27 +1,27 @@
 import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {BlitzBasicScriptComponent} from './blitz-basic-script.component';
-import {CommandsBasicsDiverse} from '../services/commands/basics/diverse.service';
+import {CommandsBasicsDiverseService} from '../services/commands/basics/diverse.service';
 import {CommandsBasicsMathsService} from '../services/commands/basics/maths.service';
-import {CommandsBasicsStrings} from '../services/commands/basics/strings.service';
-import {CommandsBasicsTimeRandom} from '../services/commands/basics/time-random.service';
+import {CommandsBasicsStringsService} from '../services/commands/basics/strings.service';
+import {CommandsBasicsTimeRandomService} from '../services/commands/basics/time-random.service';
 import {GeneralService} from '../services/general/general.service';
 import {GameStateService} from '../services/game-state/game-state.service';
 import {BabylonJSService} from '../services/babylon-js/babylon-js.service';
-import {CommandsGraphics2dDisplay} from '../services/commands/graphics2d/display.service';
-import {CommandsGraphics2dGraphics} from '../services/commands/graphics2d/graphics.service';
-import {CommandsGraphics3dCamera} from '../services/commands/graphics3d/camera.service';
-import {CommandsGraphics3dMeshes} from '../services/commands/graphics3d/meshes.service';
-import {CommandsGraphics3dCoordinates} from '../services/commands/graphics3d/coordinates.service';
+import {CommandsGraphics2dDisplayService} from '../services/commands/graphics2d/display.service';
+import {CommandsGraphics2dGraphicsService} from '../services/commands/graphics2d/graphics.service';
+import {CommandsGraphics3dCameraService} from '../services/commands/graphics3d/camera.service';
+import {CommandsGraphics3dMeshesService} from '../services/commands/graphics3d/meshes.service';
+import {CommandsGraphics3dCoordinatesService} from '../services/commands/graphics3d/coordinates.service';
 import {Graphics2dService} from '../services/2d/graphics2d.service';
 import {GuiService} from '../services/gui/gui.service';
 import {CommonModule} from '@angular/common';
-import {CommandsGraphics2dPixel} from '../services/commands/graphics2d/pixel.service';
-import {CommandsGraphics2dImages} from '../services/commands/graphics2d/images.service';
+import {CommandsGraphics2dPixelService} from '../services/commands/graphics2d/pixel.service';
+import {CommandsGraphics2dImagesService} from '../services/commands/graphics2d/images.service';
 import {DebugEnvironment} from '../services/environment/debug.environment';
-import {CommandsGraphics3dLightShadow} from '../services/commands/graphics3d/light-shadow.service';
-import {CommandsSoundMusicSamples} from '../services/commands/sound/music-samples.service';
-import {CommandsGraphics2dText} from '../services/commands/graphics2d/text.service';
+import {CommandsGraphics3dLightShadowService} from '../services/commands/graphics3d/light-shadow.service';
+import {CommandsSoundMusicSamplesService} from '../services/commands/sound/music-samples.service';
+import {CommandsGraphics2dTextService} from '../services/commands/graphics2d/text.service';
 import {BlitzBasicScriptButtonModule} from '../components/button/button.module';
 import {BlitzBasicScriptCanvasModule} from '../components/canvas/canvas.module';
 import {BlitzBasicScriptComboBoxModule} from '../components/combo-box/canvas.module';
@@ -31,49 +31,49 @@ import {BlitzBasicScriptMenuModule} from '../components/menu/menu.module';
 import {BlitzBasicScriptPanelModule} from '../components/panel/panel.module';
 import {BlitzBasicScriptProgressBarModule} from '../components/progress-bar/progress-bar.module';
 import {LanguageService} from '../services/language/language.service';
-import {Lexer} from '../services/lexer/lexer.service';
+import {LexerService} from '../services/lexer/lexer.service';
 import {Parser} from '../services/parser/parser.service';
-import {CommandsGraphics3dControls} from '../services/commands/graphics3d/controls.service';
+import {CommandsGraphics3dControlsService} from '../services/commands/graphics3d/controls.service';
 import {CommandsDataBankService} from '../services/commands/data/bank.service';
-import {CommandsGraphics2dMovies} from '../services/commands/graphics2d/movies.service';
-import {CommandsGraphics3dAnimations} from '../services/commands/graphics3d/animations.service';
-import {CommandsGraphics3dBrushes} from '../services/commands/graphics3d/brushes.service';
-import {CommandsGraphics3dCollisions} from '../services/commands/graphics3d/collisions.service';
-import {CommandsGraphics3dDiverse} from '../services/commands/graphics3d/diverse.service';
-import {CommandsGraphics3dPicking} from '../services/commands/graphics3d/picking.service';
-import {CommandsGraphics3dScene} from '../services/commands/graphics3d/scene.service';
-import {CommandsGraphics3dScenery} from '../services/commands/graphics3d/scenery.service';
-import {CommandsGraphics3dScreen} from '../services/commands/graphics3d/screen.service';
-import {CommandsGraphics3dSprites} from '../services/commands/graphics3d/sprites.service';
-import {CommandsGraphics3dStatus} from '../services/commands/graphics3d/status.service';
-import {CommandsGuiProgressBar} from '../services/commands/gui/progress-bar.service';
-import {CommandsGuiRequest} from '../services/commands/gui/request.service';
-import {CommandsGuiSlider} from '../services/commands/gui/slider.service';
-import {CommandsGuiTextArea} from '../services/commands/gui/text-area.service';
-import {CommandsGuiTextField} from '../services/commands/gui/text-field.service';
-import {CommandsGuiToolbar} from '../services/commands/gui/toolbar.service';
-import {CommandsGuiTreeView} from '../services/commands/gui/tree-view.service';
-import {CommandsGuiWindow} from '../services/commands/gui/window.service';
-import {CommandsIOGamepad} from '../services/commands/io/gamepad.service';
-import {CommandsIOKeyboard} from '../services/commands/io/keyboard.service';
-import {CommandsIOMouse} from '../services/commands/io/mouse.service';
-import {CommandsSound3D} from '../services/commands/sound/3d.service';
-import {CommandsSoundChannels} from '../services/commands/sound/channels.service';
+import {CommandsGraphics2dMoviesService} from '../services/commands/graphics2d/movies.service';
+import {CommandsGraphics3dAnimationsService} from '../services/commands/graphics3d/animations.service';
+import {CommandsGraphics3dBrushesService} from '../services/commands/graphics3d/brushes.service';
+import {CommandsGraphics3dCollisionsService} from '../services/commands/graphics3d/collisions.service';
+import {CommandsGraphics3dDiverseService} from '../services/commands/graphics3d/diverse.service';
+import {CommandsGraphics3dPickingService} from '../services/commands/graphics3d/picking.service';
+import {CommandsGraphics3dSceneService} from '../services/commands/graphics3d/scene.service';
+import {CommandsGraphics3dSceneryService} from '../services/commands/graphics3d/scenery.service';
+import {CommandsGraphics3dScreenService} from '../services/commands/graphics3d/screen.service';
+import {CommandsGraphics3dSpritesService} from '../services/commands/graphics3d/sprites.service';
+import {CommandsGraphics3dStatusService} from '../services/commands/graphics3d/status.service';
+import {CommandsGuiProgressBarService} from '../services/commands/gui/progress-bar.service';
+import {CommandsGuiRequestService} from '../services/commands/gui/request.service';
+import {CommandsGuiSliderService} from '../services/commands/gui/slider.service';
+import {CommandsGuiTextAreaService} from '../services/commands/gui/text-area.service';
+import {CommandsGuiTextFieldService} from '../services/commands/gui/text-field.service';
+import {CommandsGuiToolbarService} from '../services/commands/gui/toolbar.service';
+import {CommandsGuiTreeViewService} from '../services/commands/gui/tree-view.service';
+import {CommandsGuiWindowService} from '../services/commands/gui/window.service';
+import {CommandsIOGamepadService} from '../services/commands/io/gamepad.service';
+import {CommandsIOKeyboardService} from '../services/commands/io/keyboard.service';
+import {CommandsIOMouseService} from '../services/commands/io/mouse.service';
+import {CommandsSound3DService} from '../services/commands/sound/3d.service';
+import {CommandsSoundChannelsService} from '../services/commands/sound/channels.service';
 import { CommandsDataFileSystemService } from '../services/commands/data/file-system.service';
-import { CommandsGraphics3dSurfaces } from '../services/commands/graphics3d/surfaces.service';
-import { CommandsGraphics3dTerrain } from '../services/commands/graphics3d/terrain.service';
-import { CommandsGraphics3dTextures } from '../services/commands/graphics3d/textures.service';
-import { CommandsGuiButton } from '../services/commands/gui/button.service';
-import { CommandsGuiCanvas } from '../services/commands/gui/canvas.service';
-import { CommandsGuiDesktop } from '../services/commands/gui/desktop.service';
-import { CommandsGuiDiverse } from '../services/commands/gui/diverse.service';
-import { CommandsGuiEvent } from '../services/commands/gui/event.service';
-import { CommandsGuiGadget } from '../services/commands/gui/gadget.service';
-import { CommandsGuiHTML } from '../services/commands/gui/html.service';
-import { CommandsGuiIconStrip } from '../services/commands/gui/icon-strip.service';
-import { CommandsGuiListTabber } from '../services/commands/gui/list-tabber.service';
-import { CommandsGuiMenu } from '../services/commands/gui/menu.service';
-import { CommandsGuiPanel } from '../services/commands/gui/panel.service';
+import { CommandsGraphics3dSurfacesService } from '../services/commands/graphics3d/surfaces.service';
+import { CommandsGraphics3dTerrainService } from '../services/commands/graphics3d/terrain.service';
+import { CommandsGraphics3dTexturesService } from '../services/commands/graphics3d/textures.service';
+import { CommandsGuiButtonService } from '../services/commands/gui/button.service';
+import { CommandsGuiCanvasService } from '../services/commands/gui/canvas.service';
+import { CommandsGuiDesktopService } from '../services/commands/gui/desktop.service';
+import { CommandsGuiDiverseService } from '../services/commands/gui/diverse.service';
+import { CommandsGuiEventService } from '../services/commands/gui/event.service';
+import { CommandsGuiGadgetService } from '../services/commands/gui/gadget.service';
+import { CommandsGuiHtmlService } from '../services/commands/gui/html.service';
+import { CommandsGuiIconStripService } from '../services/commands/gui/icon-strip.service';
+import { CommandsGuiListTabberService } from '../services/commands/gui/list-tabber.service';
+import { CommandsGuiMenuService } from '../services/commands/gui/menu.service';
+import { CommandsGuiPanelService } from '../services/commands/gui/panel.service';
 
 @NgModule({
     declarations: [
@@ -101,7 +101,7 @@ import { CommandsGuiPanel } from '../services/commands/gui/panel.service';
 
         GeneralService,
         LanguageService,
-        Lexer,
+        LexerService,
         Parser,
 
         GameStateService,
@@ -110,73 +110,73 @@ import { CommandsGuiPanel } from '../services/commands/gui/panel.service';
         GuiService,
 
         // BASICS
-        CommandsBasicsDiverse,
+        CommandsBasicsDiverseService,
         CommandsBasicsMathsService,
-        CommandsBasicsStrings,
-        CommandsBasicsTimeRandom,
+        CommandsBasicsStringsService,
+        CommandsBasicsTimeRandomService,
 
         // DATA
         CommandsDataBankService,
         CommandsDataFileSystemService,
 
         // GRAPHICS 2D
-        CommandsGraphics2dDisplay,
-        CommandsGraphics2dGraphics,
-        CommandsGraphics2dImages,
-        CommandsGraphics2dMovies,
-        CommandsGraphics2dPixel,
-        CommandsGraphics2dText,
+        CommandsGraphics2dDisplayService,
+        CommandsGraphics2dGraphicsService,
+        CommandsGraphics2dImagesService,
+        CommandsGraphics2dMoviesService,
+        CommandsGraphics2dPixelService,
+        CommandsGraphics2dTextService,
 
         // GRAPHICS 3D
-        CommandsGraphics3dAnimations,
-        CommandsGraphics3dBrushes,
-        CommandsGraphics3dCamera,
-        CommandsGraphics3dCollisions,
-        CommandsGraphics3dControls,
-        CommandsGraphics3dCoordinates,
-        CommandsGraphics3dDiverse,
-        CommandsGraphics3dLightShadow,
-        CommandsGraphics3dMeshes,
-        CommandsGraphics3dPicking,
-        CommandsGraphics3dScene,
-        CommandsGraphics3dScenery,
-        CommandsGraphics3dScreen,
-        CommandsGraphics3dSprites,
-        CommandsGraphics3dStatus,
-        CommandsGraphics3dSurfaces,
-        CommandsGraphics3dTerrain,
-        CommandsGraphics3dTextures,
+        CommandsGraphics3dAnimationsService,
+        CommandsGraphics3dBrushesService,
+        CommandsGraphics3dCameraService,
+        CommandsGraphics3dCollisionsService,
+        CommandsGraphics3dControlsService,
+        CommandsGraphics3dCoordinatesService,
+        CommandsGraphics3dDiverseService,
+        CommandsGraphics3dLightShadowService,
+        CommandsGraphics3dMeshesService,
+        CommandsGraphics3dPickingService,
+        CommandsGraphics3dSceneService,
+        CommandsGraphics3dSceneryService,
+        CommandsGraphics3dScreenService,
+        CommandsGraphics3dSpritesService,
+        CommandsGraphics3dStatusService,
+        CommandsGraphics3dSurfacesService,
+        CommandsGraphics3dTerrainService,
+        CommandsGraphics3dTexturesService,
 
         // GUI
-        CommandsGuiButton,
-        CommandsGuiCanvas,
-        CommandsGuiDesktop,
-        CommandsGuiDiverse,
-        CommandsGuiEvent,
-        CommandsGuiGadget,
-        CommandsGuiHTML,
-        CommandsGuiIconStrip,
-        CommandsGuiListTabber,
-        CommandsGuiMenu,
-        CommandsGuiPanel,
-        CommandsGuiProgressBar,
-        CommandsGuiRequest,
-        CommandsGuiSlider,
-        CommandsGuiTextArea,
-        CommandsGuiTextField,
-        CommandsGuiToolbar,
-        CommandsGuiTreeView,
-        CommandsGuiWindow,
+        CommandsGuiButtonService,
+        CommandsGuiCanvasService,
+        CommandsGuiDesktopService,
+        CommandsGuiDiverseService,
+        CommandsGuiEventService,
+        CommandsGuiGadgetService,
+        CommandsGuiHtmlService,
+        CommandsGuiIconStripService,
+        CommandsGuiListTabberService,
+        CommandsGuiMenuService,
+        CommandsGuiPanelService,
+        CommandsGuiProgressBarService,
+        CommandsGuiRequestService,
+        CommandsGuiSliderService,
+        CommandsGuiTextAreaService,
+        CommandsGuiTextFieldService,
+        CommandsGuiToolbarService,
+        CommandsGuiTreeViewService,
+        CommandsGuiWindowService,
 
         // IO
-        CommandsIOGamepad,
-        CommandsIOKeyboard,
-        CommandsIOMouse,
+        CommandsIOGamepadService,
+        CommandsIOKeyboardService,
+        CommandsIOMouseService,
 
         // SOUND
-        CommandsSound3D,
-        CommandsSoundChannels,
-        CommandsSoundMusicSamples
+        CommandsSound3DService,
+        CommandsSoundChannelsService,
+        CommandsSoundMusicSamplesService
     ]
 })
 

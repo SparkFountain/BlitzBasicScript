@@ -4,7 +4,7 @@ import {Graphics2dService} from '../../2d/graphics2d.service';
 import {GameStateService} from '../../game-state/game-state.service';
 
 @Injectable()
-export class CommandsGraphics2dPixel {
+export class CommandsGraphics2dPixelService {
     constructor(private graphics2d: Graphics2dService,
                 private gameState: GameStateService) {
 

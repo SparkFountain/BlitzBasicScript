@@ -6,7 +6,7 @@ import {CubeMapMode} from '../../../enums/texture/cube-map-mode';
 import {TextureBlendMode} from '../../../enums/texture/texture-blend-mode';
 
 @Injectable()
-export class CommandsGraphics3dTextures {
+export class CommandsGraphics3dTexturesService {
     constructor() {
 
     }

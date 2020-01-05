@@ -5,7 +5,7 @@ import {Graphics2dService} from '../../2d/graphics2d.service';
 import {GameStateService} from '../../game-state/game-state.service';
 
 @Injectable()
-export class CommandsGraphics2dGraphics {
+export class CommandsGraphics2dGraphicsService {
     constructor(private babylonjs: BabylonJSService,
                 private graphics2dService: Graphics2dService,
                 private gameState: GameStateService

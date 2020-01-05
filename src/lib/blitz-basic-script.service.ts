@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Lexer } from '../services/lexer/lexer.service';
+import { LexerService } from '../services/lexer/lexer.service';
 import { Parser } from '../services/parser/parser.service';
 import { LexerToken } from '../interfaces/lexer-token';
 
@@ -8,7 +8,7 @@ import { LexerToken } from '../interfaces/lexer-token';
 })
 export class BlitzBasicScriptService {
 
-  constructor(private lexer: Lexer, private parser: Parser) {
+  constructor(private lexer: LexerService, private parser: Parser) {
   }
 
   lexLine(codeLine: string): LexerToken[] {

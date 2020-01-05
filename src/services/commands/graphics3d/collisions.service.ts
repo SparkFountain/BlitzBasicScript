@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable, Subscriber} from 'rxjs';
 
 @Injectable()
-export class CommandsGraphics3dCollisions {
+export class CommandsGraphics3dCollisionsService {
     constructor() {
 
     }

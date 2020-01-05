@@ -3,7 +3,7 @@ import {Observable, of} from 'rxjs';
 import {GameStateService} from '../../game-state/game-state.service';
 
 @Injectable()
-export class CommandsIOKeyboard {
+export class CommandsIOKeyboardService {
     constructor(private gameState: GameStateService) {
 
     }

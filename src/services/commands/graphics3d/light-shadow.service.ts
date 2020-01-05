@@ -5,7 +5,7 @@ import {LightType} from '../../../enums/light/light-type';
 import { Light } from 'babylonjs';
 
 @Injectable()
-export class CommandsGraphics3dLightShadow {
+export class CommandsGraphics3dLightShadowService {
     constructor(private babylonjs: BabylonJSService) {
 
     }

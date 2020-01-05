@@ -5,7 +5,7 @@ import {SpriteViewMode} from '../../../enums/sprite/sprite-view-mode';
 import {GameEntity} from '../../../interfaces/game/entity';
 
 @Injectable()
-export class CommandsGraphics3dSprites {
+export class CommandsGraphics3dSpritesService {
     constructor() {
 
     }

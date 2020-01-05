@@ -3,7 +3,7 @@ import {GameMovie} from '../../../interfaces/game/movie';
 import {Observable, of, Subscriber} from 'rxjs';
 
 @Injectable()
-export class CommandsGraphics2dMovies {
+export class CommandsGraphics2dMoviesService {
     constructor() {
 
     }

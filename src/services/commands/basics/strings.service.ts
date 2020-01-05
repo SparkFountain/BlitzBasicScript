@@ -2,7 +2,7 @@ import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
 
 @Injectable()
-export class CommandsBasicsStrings {
+export class CommandsBasicsStringsService {
     constructor() {
 
     }

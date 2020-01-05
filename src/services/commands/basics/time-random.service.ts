@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Observable, of, Subscriber, timer } from 'rxjs';
 
 @Injectable()
-export class CommandsBasicsTimeRandom {
+export class CommandsBasicsTimeRandomService {
   constructor() {
 
   }

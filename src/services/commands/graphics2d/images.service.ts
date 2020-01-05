@@ -7,7 +7,7 @@ import {Graphics2dService} from '../../2d/graphics2d.service';
 import {GameImage2D} from '../../../interfaces/game/image-2d';
 
 @Injectable()
-export class CommandsGraphics2dImages {
+export class CommandsGraphics2dImagesService {
     constructor(private gameState: GameStateService,
                 private graphics2d: Graphics2dService,
                 private environment: DebugEnvironment,

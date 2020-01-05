@@ -3,7 +3,7 @@ import {GameEntity} from '../../../interfaces/game/entity';
 import {Observable, of, Subscriber} from 'rxjs';
 
 @Injectable()
-export class CommandsGraphics3dStatus {
+export class CommandsGraphics3dStatusService {
     constructor() {
 
     }

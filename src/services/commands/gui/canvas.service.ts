@@ -3,7 +3,7 @@ import {Observable, of} from 'rxjs';
 import {CanvasComponent} from '../../../components/canvas/canvas.component';
 
 @Injectable()
-export class CommandsGuiCanvas {
+export class CommandsGuiCanvasService {
     constructor() {
 
     }

@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 
 @Injectable()
-export class CommandsSound3D {
+export class CommandsSound3DService {
     constructor() {
 
     }

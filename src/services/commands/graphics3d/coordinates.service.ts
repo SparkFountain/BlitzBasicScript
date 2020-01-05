@@ -6,7 +6,7 @@ import { GameEntity } from '../../../interfaces/game/entity';
 import { Mesh, Camera } from 'babylonjs';
 
 @Injectable()
-export class CommandsGraphics3dCoordinates {
+export class CommandsGraphics3dCoordinatesService {
   constructor(private babylonjs: BabylonJSService) {
 
   }

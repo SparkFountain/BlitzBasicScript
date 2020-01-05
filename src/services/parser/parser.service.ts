@@ -1,48 +1,48 @@
 import {LexerToken} from '../../interfaces/lexer-token';
 import {LexerTokenCategory} from '../../enums/lexer/lexer-token-category';
 import {Injectable} from '@angular/core';
-import {CommandsBasicsDiverse} from '../commands/basics/diverse.service';
+import {CommandsBasicsDiverseService} from '../commands/basics/diverse.service';
 import {CommandsBasicsMathsService} from '../commands/basics/maths.service';
-import {CommandsBasicsStrings} from '../commands/basics/strings.service';
-import {CommandsBasicsTimeRandom} from '../commands/basics/time-random.service';
+import {CommandsBasicsStringsService} from '../commands/basics/strings.service';
+import {CommandsBasicsTimeRandomService} from '../commands/basics/time-random.service';
 import {CommandsDataBankService} from '../commands/data/bank.service';
 import {CommandsDataFileSystemService} from '../commands/data/file-system.service';
-import {CommandsGraphics2dDisplay} from '../commands/graphics2d/display.service';
-import {CommandsGraphics2dGraphics} from '../commands/graphics2d/graphics.service';
-import {CommandsGraphics2dImages} from '../commands/graphics2d/images.service';
-import {CommandsGraphics2dMovies} from '../commands/graphics2d/movies.service';
-import {CommandsGraphics2dPixel} from '../commands/graphics2d/pixel.service';
-import {CommandsGraphics2dText} from '../commands/graphics2d/text.service';
-import {CommandsGraphics3dAnimations} from '../commands/graphics3d/animations.service';
-import {CommandsGraphics3dBrushes} from '../commands/graphics3d/brushes.service';
-import {CommandsGraphics3dCamera} from '../commands/graphics3d/camera.service';
-import {CommandsGraphics3dCollisions} from '../commands/graphics3d/collisions.service';
-import {CommandsGraphics3dControls} from '../commands/graphics3d/controls.service';
-import {CommandsGraphics3dCoordinates} from '../commands/graphics3d/coordinates.service';
-import {CommandsGraphics3dDiverse} from '../commands/graphics3d/diverse.service';
-import {CommandsGraphics3dLightShadow} from '../commands/graphics3d/light-shadow.service';
-import {CommandsGraphics3dMeshes} from '../commands/graphics3d/meshes.service';
-import {CommandsGraphics3dPicking} from '../commands/graphics3d/picking.service';
-import {CommandsGraphics3dScene} from '../commands/graphics3d/scene.service';
-import {CommandsGraphics3dScenery} from '../commands/graphics3d/scenery.service';
-import {CommandsGraphics3dScreen} from '../commands/graphics3d/screen.service';
-import {CommandsGraphics3dSprites} from '../commands/graphics3d/sprites.service';
-import {CommandsGraphics3dStatus} from '../commands/graphics3d/status.service';
-import {CommandsGuiEvent} from '../commands/gui/event.service';
-import {CommandsGuiGadget} from '../commands/gui/gadget.service';
-import {CommandsGuiHTML} from '../commands/gui/html.service';
-import {CommandsGuiIconStrip} from '../commands/gui/icon-strip.service';
-import {CommandsGuiListTabber} from '../commands/gui/list-tabber.service';
-import {CommandsGuiMenu} from '../commands/gui/menu.service';
-import {CommandsGuiPanel} from '../commands/gui/panel.service';
-import {CommandsGuiProgressBar} from '../commands/gui/progress-bar.service';
-import {CommandsGuiRequest} from '../commands/gui/request.service';
-import {CommandsGuiSlider} from '../commands/gui/slider.service';
-import {CommandsGuiTextArea} from '../commands/gui/text-area.service';
-import {CommandsGuiTextField} from '../commands/gui/text-field.service';
-import {CommandsGuiToolbar} from '../commands/gui/toolbar.service';
-import {CommandsGuiTreeView} from '../commands/gui/tree-view.service';
-import {CommandsGuiWindow} from '../commands/gui/window.service';
+import {CommandsGraphics2dDisplayService} from '../commands/graphics2d/display.service';
+import {CommandsGraphics2dGraphicsService} from '../commands/graphics2d/graphics.service';
+import {CommandsGraphics2dImagesService} from '../commands/graphics2d/images.service';
+import {CommandsGraphics2dMoviesService} from '../commands/graphics2d/movies.service';
+import {CommandsGraphics2dPixelService} from '../commands/graphics2d/pixel.service';
+import {CommandsGraphics2dTextService} from '../commands/graphics2d/text.service';
+import {CommandsGraphics3dAnimationsService} from '../commands/graphics3d/animations.service';
+import {CommandsGraphics3dBrushesService} from '../commands/graphics3d/brushes.service';
+import {CommandsGraphics3dCameraService} from '../commands/graphics3d/camera.service';
+import {CommandsGraphics3dCollisionsService} from '../commands/graphics3d/collisions.service';
+import {CommandsGraphics3dControlsService} from '../commands/graphics3d/controls.service';
+import {CommandsGraphics3dCoordinatesService} from '../commands/graphics3d/coordinates.service';
+import {CommandsGraphics3dDiverseService} from '../commands/graphics3d/diverse.service';
+import {CommandsGraphics3dLightShadowService} from '../commands/graphics3d/light-shadow.service';
+import {CommandsGraphics3dMeshesService} from '../commands/graphics3d/meshes.service';
+import {CommandsGraphics3dPickingService} from '../commands/graphics3d/picking.service';
+import {CommandsGraphics3dSceneService} from '../commands/graphics3d/scene.service';
+import {CommandsGraphics3dSceneryService} from '../commands/graphics3d/scenery.service';
+import {CommandsGraphics3dScreenService} from '../commands/graphics3d/screen.service';
+import {CommandsGraphics3dSpritesService} from '../commands/graphics3d/sprites.service';
+import {CommandsGraphics3dStatusService} from '../commands/graphics3d/status.service';
+import {CommandsGuiEventService} from '../commands/gui/event.service';
+import {CommandsGuiGadgetService} from '../commands/gui/gadget.service';
+import {CommandsGuiHtmlService} from '../commands/gui/html.service';
+import {CommandsGuiIconStripService} from '../commands/gui/icon-strip.service';
+import {CommandsGuiListTabberService} from '../commands/gui/list-tabber.service';
+import {CommandsGuiMenuService} from '../commands/gui/menu.service';
+import {CommandsGuiPanelService} from '../commands/gui/panel.service';
+import {CommandsGuiProgressBarService} from '../commands/gui/progress-bar.service';
+import {CommandsGuiRequestService} from '../commands/gui/request.service';
+import {CommandsGuiSliderService} from '../commands/gui/slider.service';
+import {CommandsGuiTextAreaService} from '../commands/gui/text-area.service';
+import {CommandsGuiTextFieldService} from '../commands/gui/text-field.service';
+import {CommandsGuiToolbarService} from '../commands/gui/toolbar.service';
+import {CommandsGuiTreeViewService} from '../commands/gui/tree-view.service';
+import {CommandsGuiWindowService} from '../commands/gui/window.service';
 import {BBScriptCode} from '../../interfaces/bbscript-code';
 import {GeneralService} from '../general/general.service';
 import {GameStateService} from '../game-state/game-state.service';
@@ -54,19 +54,19 @@ import {CameraType} from '../../enums/camera/camera-type';
 import {GameEntity} from '../../interfaces/game/entity';
 import {GameImage2D} from '../../interfaces/game/image-2d';
 import {GameFont} from '../../interfaces/game/font';
-import { CommandsGraphics3dSurfaces } from '../commands/graphics3d/surfaces.service';
-import { CommandsGraphics3dTerrain } from '../commands/graphics3d/terrain.service';
-import { CommandsGraphics3dTextures } from '../commands/graphics3d/textures.service';
-import { CommandsGuiButton } from '../commands/gui/button.service';
-import { CommandsGuiCanvas } from '../commands/gui/canvas.service';
-import { CommandsGuiDesktop } from '../commands/gui/desktop.service';
-import { CommandsGuiDiverse } from '../commands/gui/diverse.service';
-import { CommandsIOGamepad } from '../commands/io/gamepad.service';
-import { CommandsIOKeyboard } from '../commands/io/keyboard.service';
-import { CommandsIOMouse } from '../commands/io/mouse.service';
-import { CommandsSound3D } from '../commands/sound/3d.service';
-import { CommandsSoundChannels } from '../commands/sound/channels.service';
-import { CommandsSoundMusicSamples } from '../commands/sound/music-samples.service';
+import { CommandsGraphics3dSurfacesService } from '../commands/graphics3d/surfaces.service';
+import { CommandsGraphics3dTerrainService } from '../commands/graphics3d/terrain.service';
+import { CommandsGraphics3dTexturesService } from '../commands/graphics3d/textures.service';
+import { CommandsGuiButtonService } from '../commands/gui/button.service';
+import { CommandsGuiCanvasService } from '../commands/gui/canvas.service';
+import { CommandsGuiDesktopService } from '../commands/gui/desktop.service';
+import { CommandsGuiDiverseService } from '../commands/gui/diverse.service';
+import { CommandsIOGamepadService } from '../commands/io/gamepad.service';
+import { CommandsIOKeyboardService } from '../commands/io/keyboard.service';
+import { CommandsIOMouseService } from '../commands/io/mouse.service';
+import { CommandsSound3DService } from '../commands/sound/3d.service';
+import { CommandsSoundChannelsService } from '../commands/sound/channels.service';
+import { CommandsSoundMusicSamplesService } from '../commands/sound/music-samples.service';
 import { Camera, Light } from 'babylonjs';
 
 @Injectable({
@@ -145,61 +145,61 @@ export class Parser {
         private generalService: GeneralService,
         private gameState: GameStateService,
         private language: LanguageService,
-        private commandsBasicsDiverse: CommandsBasicsDiverse,
+        private commandsBasicsDiverse: CommandsBasicsDiverseService,
         private commandsBasicsMaths: CommandsBasicsMathsService,
-        private commandsBasicsStrings: CommandsBasicsStrings,
-        private commandsBasicsTimeRandom: CommandsBasicsTimeRandom,
+        private commandsBasicsStrings: CommandsBasicsStringsService,
+        private commandsBasicsTimeRandom: CommandsBasicsTimeRandomService,
         private commandsDataBank: CommandsDataBankService,
         private commandsDataFileSystem: CommandsDataFileSystemService,
-        private commandsGraphics2dDisplay: CommandsGraphics2dDisplay,
-        private commandsGraphics2dGraphics: CommandsGraphics2dGraphics,
-        private commandsGraphics2dImages: CommandsGraphics2dImages,
-        private commandsGraphics2dMovies: CommandsGraphics2dMovies,
-        private commandsGraphics2dPixel: CommandsGraphics2dPixel,
-        private commandsGraphics2dText: CommandsGraphics2dText,
-        private commandsGraphics3dAnimations: CommandsGraphics3dAnimations,
-        private commandsGraphics3dBrushes: CommandsGraphics3dBrushes,
-        private commandsGraphics3dCamera: CommandsGraphics3dCamera,
-        private commandsGraphics3dCollisions: CommandsGraphics3dCollisions,
-        private commandsGraphics3dControls: CommandsGraphics3dControls,
-        private commandsGraphics3dCoordinates: CommandsGraphics3dCoordinates,
-        private commandsGraphics3dDiverse: CommandsGraphics3dDiverse,
-        private commandsGraphics3dLightShadow: CommandsGraphics3dLightShadow,
-        private commandsGraphics3dMeshes: CommandsGraphics3dMeshes,
-        private commandsGraphics3dPicking: CommandsGraphics3dPicking,
-        private commandsGraphics3dScene: CommandsGraphics3dScene,
-        private commandsGraphics3dScenery: CommandsGraphics3dScenery,
-        private commandsGraphics3dScreen: CommandsGraphics3dScreen,
-        private commandsGraphics3dSprites: CommandsGraphics3dSprites,
-        private commandsGraphics3dStatus: CommandsGraphics3dStatus,
-        private commandsGraphics3dSurfaces: CommandsGraphics3dSurfaces,
-        private commandsGraphics3dTerrain: CommandsGraphics3dTerrain,
-        private commandsGraphics3dTextures: CommandsGraphics3dTextures,
-        private commandsGuiButton: CommandsGuiButton,
-        private commandsGuiCanvas: CommandsGuiCanvas,
-        private commandsGuiDesktop: CommandsGuiDesktop,
-        private commandsGuiDiverse: CommandsGuiDiverse,
-        private commandsGuiEvent: CommandsGuiEvent,
-        private commandsGuiGadget: CommandsGuiGadget,
-        private commandsGuiHTML: CommandsGuiHTML,
-        private commandsGuiIconStrip: CommandsGuiIconStrip,
-        private commandsGuiListTabber: CommandsGuiListTabber,
-        private commandsGuiMenu: CommandsGuiMenu,
-        private commandsGuiPanel: CommandsGuiPanel,
-        private commandsGuiProgressBar: CommandsGuiProgressBar,
-        private commandsGuiRequest: CommandsGuiRequest,
-        private commandsGuiSlider: CommandsGuiSlider,
-        private commandsGuiTextArea: CommandsGuiTextArea,
-        private commandsGuiTextField: CommandsGuiTextField,
-        private commandsGuiToolbar: CommandsGuiToolbar,
-        private commandsGuiTreeView: CommandsGuiTreeView,
-        private commandsGuiWindow: CommandsGuiWindow,
-        private commandsIOGamepad: CommandsIOGamepad,
-        private commandsIOKeyboard: CommandsIOKeyboard,
-        private commandsIOMouse: CommandsIOMouse,
-        private commandsSound3D: CommandsSound3D,
-        private commandsSoundChannels: CommandsSoundChannels,
-        private commandsSoundMusicSamples: CommandsSoundMusicSamples
+        private commandsGraphics2dDisplay: CommandsGraphics2dDisplayService,
+        private commandsGraphics2dGraphics: CommandsGraphics2dGraphicsService,
+        private commandsGraphics2dImages: CommandsGraphics2dImagesService,
+        private commandsGraphics2dMovies: CommandsGraphics2dMoviesService,
+        private commandsGraphics2dPixel: CommandsGraphics2dPixelService,
+        private commandsGraphics2dText: CommandsGraphics2dTextService,
+        private commandsGraphics3dAnimations: CommandsGraphics3dAnimationsService,
+        private commandsGraphics3dBrushes: CommandsGraphics3dBrushesService,
+        private commandsGraphics3dCamera: CommandsGraphics3dCameraService,
+        private commandsGraphics3dCollisions: CommandsGraphics3dCollisionsService,
+        private commandsGraphics3dControls: CommandsGraphics3dControlsService,
+        private commandsGraphics3dCoordinates: CommandsGraphics3dCoordinatesService,
+        private commandsGraphics3dDiverse: CommandsGraphics3dDiverseService,
+        private commandsGraphics3dLightShadow: CommandsGraphics3dLightShadowService,
+        private commandsGraphics3dMeshes: CommandsGraphics3dMeshesService,
+        private commandsGraphics3dPicking: CommandsGraphics3dPickingService,
+        private commandsGraphics3dScene: CommandsGraphics3dSceneService,
+        private commandsGraphics3dScenery: CommandsGraphics3dSceneryService,
+        private commandsGraphics3dScreen: CommandsGraphics3dScreenService,
+        private commandsGraphics3dSprites: CommandsGraphics3dSpritesService,
+        private commandsGraphics3dStatus: CommandsGraphics3dStatusService,
+        private commandsGraphics3dSurfaces: CommandsGraphics3dSurfacesService,
+        private commandsGraphics3dTerrain: CommandsGraphics3dTerrainService,
+        private commandsGraphics3dTextures: CommandsGraphics3dTexturesService,
+        private commandsGuiButton: CommandsGuiButtonService,
+        private commandsGuiCanvas: CommandsGuiCanvasService,
+        private commandsGuiDesktop: CommandsGuiDesktopService,
+        private commandsGuiDiverse: CommandsGuiDiverseService,
+        private commandsGuiEvent: CommandsGuiEventService,
+        private commandsGuiGadget: CommandsGuiGadgetService,
+        private commandsGuiHTML: CommandsGuiHtmlService,
+        private commandsGuiIconStrip: CommandsGuiIconStripService,
+        private commandsGuiListTabber: CommandsGuiListTabberService,
+        private commandsGuiMenu: CommandsGuiMenuService,
+        private commandsGuiPanel: CommandsGuiPanelService,
+        private commandsGuiProgressBar: CommandsGuiProgressBarService,
+        private commandsGuiRequest: CommandsGuiRequestService,
+        private commandsGuiSlider: CommandsGuiSliderService,
+        private commandsGuiTextArea: CommandsGuiTextAreaService,
+        private commandsGuiTextField: CommandsGuiTextFieldService,
+        private commandsGuiToolbar: CommandsGuiToolbarService,
+        private commandsGuiTreeView: CommandsGuiTreeViewService,
+        private commandsGuiWindow: CommandsGuiWindowService,
+        private commandsIOGamepad: CommandsIOGamepadService,
+        private commandsIOKeyboard: CommandsIOKeyboardService,
+        private commandsIOMouse: CommandsIOMouseService,
+        private commandsSound3D: CommandsSound3DService,
+        private commandsSoundChannels: CommandsSoundChannelsService,
+        private commandsSoundMusicSamples: CommandsSoundMusicSamplesService
     ) {
         this.resetParser();
         this.gameCode = {

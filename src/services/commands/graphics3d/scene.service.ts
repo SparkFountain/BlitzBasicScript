@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 
 @Injectable()
-export class CommandsGraphics3dScene {
+export class CommandsGraphics3dSceneService {
     constructor() {
 
     }

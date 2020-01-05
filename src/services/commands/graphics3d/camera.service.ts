@@ -6,7 +6,7 @@ import { CameraType } from '../../../enums/camera/camera-type';
 import { Camera } from 'babylonjs';
 
 @Injectable()
-export class CommandsGraphics3dCamera {
+export class CommandsGraphics3dCameraService {
   constructor(private babylonjs: BabylonJSService) { }
 
   /** PRIVATE **/

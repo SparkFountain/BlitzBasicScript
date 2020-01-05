@@ -33,5 +33,8 @@
   "bugs": {
     "url": "https://github.com/SparkFountain/BlitzBasicScript/issues"
   },
-  "homepage": "https://github.com/SparkFountain/BlitzBasicScript#readme"
+  "homepage": "https://github.com/SparkFountain/BlitzBasicScript#readme",
+  "dependencies": {
+    "ngx-ace-wrapper": "^8.0.0"
+  }
 }

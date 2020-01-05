@@ -4,7 +4,7 @@ import {Observable, of, Subscriber} from 'rxjs';
 import {GuiButtonStyle} from '../../../enums/gui/button-style';
 
 @Injectable()
-export class CommandsGuiButton {
+export class CommandsGuiButtonService {
     constructor() {
 
     }

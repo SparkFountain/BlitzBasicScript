@@ -1,5 +1,5 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
-import { Lexer } from '../services/lexer/lexer.service';
+import { LexerService } from '../services/lexer/lexer.service';
 import { Parser } from '../services/parser/parser.service';
 import { BBScriptCode } from '../interfaces/bbscript-code';
 import { concat } from 'rxjs';
@@ -148,7 +148,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
   }
 
   constructor(private language: LanguageService,
-    private lexer: Lexer,
+    private lexer: LexerService,
     private parser: Parser,
     private gameState: GameStateService,
     private babylonjs: BabylonJSService,

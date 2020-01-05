@@ -4,7 +4,7 @@ import {Observable, of} from 'rxjs';
 import {PickGeometry} from '../../../enums/pick/geometry';
 
 @Injectable()
-export class CommandsGraphics3dPicking {
+export class CommandsGraphics3dPickingService {
     constructor() {
 
     }

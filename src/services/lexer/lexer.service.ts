@@ -7,7 +7,7 @@ import {LanguageService} from '../language/language.service';
 import {fromArray} from 'rxjs/internal/observable/fromArray';
 
 @Injectable()
-export class Lexer {
+export class LexerService {
     private individuals: any;
     private individualContext: LexerTokenCategory;
 
@@ -139,7 +139,7 @@ export class Lexer {
      */
     lexCode(code: string[]): Array<LexerToken[]> {
         //console.info('Key Words:', this.language.keywords);
-        let lexer: Lexer = this;
+        let lexer: LexerService = this;
 
         let result: Array<LexerToken[]> = [];
         code.forEach((line: string, index: number) => {

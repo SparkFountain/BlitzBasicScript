@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 
 @Injectable()
-export class CommandsGuiRequest {
+export class CommandsGuiRequestService {
     constructor() {
 
     }

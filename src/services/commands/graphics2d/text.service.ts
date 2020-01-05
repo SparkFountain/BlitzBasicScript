@@ -5,7 +5,7 @@ import {GameStateService} from '../../game-state/game-state.service';
 import {GameFont} from '../../../interfaces/game/font';
 
 @Injectable()
-export class CommandsGraphics2dText {
+export class CommandsGraphics2dTextService {
     constructor(private graphics2d: Graphics2dService,
                 private gameState: GameStateService) {
 

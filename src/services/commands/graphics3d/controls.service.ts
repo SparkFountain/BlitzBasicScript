@@ -5,7 +5,7 @@ import {BlendMode} from '../../../enums/entity/blend-mode';
 import {BabylonJSService} from '../../babylon-js/babylon-js.service';
 
 @Injectable()
-export class CommandsGraphics3dControls {
+export class CommandsGraphics3dControlsService {
     constructor(private babylonjs: BabylonJSService) {
 
     }

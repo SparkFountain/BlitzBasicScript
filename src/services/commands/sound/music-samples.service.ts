@@ -6,7 +6,7 @@ import {HttpClient} from '@angular/common/http';
 
 
 @Injectable()
-export class CommandsSoundMusicSamples {
+export class CommandsSoundMusicSamplesService {
     constructor(private http: HttpClient,
                 private environment: DebugEnvironment) {
 

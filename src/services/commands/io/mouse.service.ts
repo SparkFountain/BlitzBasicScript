@@ -3,7 +3,7 @@ import {Observable, of, Subscriber} from 'rxjs';
 import {GameStateService} from '../../game-state/game-state.service';
 
 @Injectable()
-export class CommandsIOMouse {
+export class CommandsIOMouseService {
     constructor(private gameState: GameStateService) {
 
     }
