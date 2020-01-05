@@ -1,61 +1,48 @@
 import {LexerToken} from '../../interfaces/lexer-token';
 import {LexerTokenCategory} from '../../enums/lexer/lexer-token-category';
 import {Injectable} from '@angular/core';
-import {CommandsBasicsDiverse} from '../commands/basics/diverse';
-import {CommandsBasicsMaths} from '../commands/basics/maths';
-import {CommandsBasicsStrings} from '../commands/basics/strings';
-import {CommandsBasicsTimeRandom} from '../commands/basics/time-random';
-import {CommandsDataBank} from '../commands/data/bank';
-import {CommandsDataFileSystem} from '../commands/data/file-system';
-import {CommandsGraphics2dDisplay} from '../commands/graphics2d/display';
-import {CommandsGraphics2dGraphics} from '../commands/graphics2d/graphics';
-import {CommandsGraphics2dImages} from '../commands/graphics2d/images';
-import {CommandsGraphics2dMovies} from '../commands/graphics2d/movies';
-import {CommandsGraphics2dPixel} from '../commands/graphics2d/pixel';
-import {CommandsGraphics2dText} from '../commands/graphics2d/text';
-import {CommandsGraphics3dAnimations} from '../commands/graphics3d/animations';
-import {CommandsGraphics3dBrushes} from '../commands/graphics3d/brushes';
-import {CommandsGraphics3dCamera} from '../commands/graphics3d/camera';
-import {CommandsGraphics3dCollisions} from '../commands/graphics3d/collisions';
-import {CommandsGraphics3dControls} from '../commands/graphics3d/controls';
-import {CommandsGraphics3dCoordinates} from '../commands/graphics3d/coordinates';
-import {CommandsGraphics3dDiverse} from '../commands/graphics3d/diverse';
-import {CommandsGraphics3dLightShadow} from '../commands/graphics3d/light-shadow';
-import {CommandsGraphics3dMeshes} from '../commands/graphics3d/meshes';
-import {CommandsGraphics3dPicking} from '../commands/graphics3d/picking';
-import {CommandsGraphics3dScene} from '../commands/graphics3d/scene';
-import {CommandsGraphics3dScenery} from '../commands/graphics3d/scenery';
-import {CommandsGraphics3dScreen} from '../commands/graphics3d/screen';
-import {CommandsGraphics3dSprites} from '../commands/graphics3d/sprites';
-import {CommandsGraphics3dStatus} from '../commands/graphics3d/status';
-import {CommandsGraphics3dSurfaces} from '../commands/graphics3d/surfaces';
-import {CommandsGraphics3dTerrain} from '../commands/graphics3d/terrain';
-import {CommandsGraphics3dTextures} from '../commands/graphics3d/textures';
-import {CommandsGuiButton} from '../commands/gui/button';
-import {CommandsGuiCanvas} from '../commands/gui/canvas';
-import {CommandsGuiDesktop} from '../commands/gui/desktop';
-import {CommandsGuiDiverse} from '../commands/gui/diverse';
-import {CommandsGuiEvent} from '../commands/gui/event';
-import {CommandsGuiGadget} from '../commands/gui/gadget';
-import {CommandsGuiHTML} from '../commands/gui/html';
-import {CommandsGuiIconStrip} from '../commands/gui/icon-strip';
-import {CommandsGuiListTabber} from '../commands/gui/list-tabber';
-import {CommandsGuiMenu} from '../commands/gui/menu';
-import {CommandsGuiPanel} from '../commands/gui/panel';
-import {CommandsGuiProgressBar} from '../commands/gui/progress-bar';
-import {CommandsGuiRequest} from '../commands/gui/request';
-import {CommandsGuiSlider} from '../commands/gui/slider';
-import {CommandsGuiTextArea} from '../commands/gui/text-area';
-import {CommandsGuiTextField} from '../commands/gui/text-field';
-import {CommandsGuiToolbar} from '../commands/gui/toolbar';
-import {CommandsGuiTreeView} from '../commands/gui/tree-view';
-import {CommandsGuiWindow} from '../commands/gui/window';
-import {CommandsIOGamepad} from '../commands/io/gamepad';
-import {CommandsIOKeyboard} from '../commands/io/keyboard';
-import {CommandsIOMouse} from '../commands/io/mouse';
-import {CommandsSound3D} from '../commands/sound/3d';
-import {CommandsSoundChannels} from '../commands/sound/channels';
-import {CommandsSoundMusicSamples} from '../commands/sound/music-samples';
+import {CommandsBasicsDiverse} from '../commands/basics/diverse.service';
+import {CommandsBasicsMathsService} from '../commands/basics/maths.service';
+import {CommandsBasicsStrings} from '../commands/basics/strings.service';
+import {CommandsBasicsTimeRandom} from '../commands/basics/time-random.service';
+import {CommandsDataBankService} from '../commands/data/bank.service';
+import {CommandsDataFileSystemService} from '../commands/data/file-system.service';
+import {CommandsGraphics2dDisplay} from '../commands/graphics2d/display.service';
+import {CommandsGraphics2dGraphics} from '../commands/graphics2d/graphics.service';
+import {CommandsGraphics2dImages} from '../commands/graphics2d/images.service';
+import {CommandsGraphics2dMovies} from '../commands/graphics2d/movies.service';
+import {CommandsGraphics2dPixel} from '../commands/graphics2d/pixel.service';
+import {CommandsGraphics2dText} from '../commands/graphics2d/text.service';
+import {CommandsGraphics3dAnimations} from '../commands/graphics3d/animations.service';
+import {CommandsGraphics3dBrushes} from '../commands/graphics3d/brushes.service';
+import {CommandsGraphics3dCamera} from '../commands/graphics3d/camera.service';
+import {CommandsGraphics3dCollisions} from '../commands/graphics3d/collisions.service';
+import {CommandsGraphics3dControls} from '../commands/graphics3d/controls.service';
+import {CommandsGraphics3dCoordinates} from '../commands/graphics3d/coordinates.service';
+import {CommandsGraphics3dDiverse} from '../commands/graphics3d/diverse.service';
+import {CommandsGraphics3dLightShadow} from '../commands/graphics3d/light-shadow.service';
+import {CommandsGraphics3dMeshes} from '../commands/graphics3d/meshes.service';
+import {CommandsGraphics3dPicking} from '../commands/graphics3d/picking.service';
+import {CommandsGraphics3dScene} from '../commands/graphics3d/scene.service';
+import {CommandsGraphics3dScenery} from '../commands/graphics3d/scenery.service';
+import {CommandsGraphics3dScreen} from '../commands/graphics3d/screen.service';
+import {CommandsGraphics3dSprites} from '../commands/graphics3d/sprites.service';
+import {CommandsGraphics3dStatus} from '../commands/graphics3d/status.service';
+import {CommandsGuiEvent} from '../commands/gui/event.service';
+import {CommandsGuiGadget} from '../commands/gui/gadget.service';
+import {CommandsGuiHTML} from '../commands/gui/html.service';
+import {CommandsGuiIconStrip} from '../commands/gui/icon-strip.service';
+import {CommandsGuiListTabber} from '../commands/gui/list-tabber.service';
+import {CommandsGuiMenu} from '../commands/gui/menu.service';
+import {CommandsGuiPanel} from '../commands/gui/panel.service';
+import {CommandsGuiProgressBar} from '../commands/gui/progress-bar.service';
+import {CommandsGuiRequest} from '../commands/gui/request.service';
+import {CommandsGuiSlider} from '../commands/gui/slider.service';
+import {CommandsGuiTextArea} from '../commands/gui/text-area.service';
+import {CommandsGuiTextField} from '../commands/gui/text-field.service';
+import {CommandsGuiToolbar} from '../commands/gui/toolbar.service';
+import {CommandsGuiTreeView} from '../commands/gui/tree-view.service';
+import {CommandsGuiWindow} from '../commands/gui/window.service';
 import {BBScriptCode} from '../../interfaces/bbscript-code';
 import {GeneralService} from '../general/general.service';
 import {GameStateService} from '../game-state/game-state.service';
@@ -67,6 +54,19 @@ import {CameraType} from '../../enums/camera/camera-type';
 import {GameEntity} from '../../interfaces/game/entity';
 import {GameImage2D} from '../../interfaces/game/image-2d';
 import {GameFont} from '../../interfaces/game/font';
+import { CommandsGraphics3dSurfaces } from '../commands/graphics3d/surfaces.service';
+import { CommandsGraphics3dTerrain } from '../commands/graphics3d/terrain.service';
+import { CommandsGraphics3dTextures } from '../commands/graphics3d/textures.service';
+import { CommandsGuiButton } from '../commands/gui/button.service';
+import { CommandsGuiCanvas } from '../commands/gui/canvas.service';
+import { CommandsGuiDesktop } from '../commands/gui/desktop.service';
+import { CommandsGuiDiverse } from '../commands/gui/diverse.service';
+import { CommandsIOGamepad } from '../commands/io/gamepad.service';
+import { CommandsIOKeyboard } from '../commands/io/keyboard.service';
+import { CommandsIOMouse } from '../commands/io/mouse.service';
+import { CommandsSound3D } from '../commands/sound/3d.service';
+import { CommandsSoundChannels } from '../commands/sound/channels.service';
+import { CommandsSoundMusicSamples } from '../commands/sound/music-samples.service';
 import { Camera, Light } from 'babylonjs';
 
 @Injectable({
@@ -146,11 +146,11 @@ export class Parser {
         private gameState: GameStateService,
         private language: LanguageService,
         private commandsBasicsDiverse: CommandsBasicsDiverse,
-        private commandsBasicsMaths: CommandsBasicsMaths,
+        private commandsBasicsMaths: CommandsBasicsMathsService,
         private commandsBasicsStrings: CommandsBasicsStrings,
         private commandsBasicsTimeRandom: CommandsBasicsTimeRandom,
-        private commandsDataBank: CommandsDataBank,
-        private commandsDataFileSystem: CommandsDataFileSystem,
+        private commandsDataBank: CommandsDataBankService,
+        private commandsDataFileSystem: CommandsDataFileSystemService,
         private commandsGraphics2dDisplay: CommandsGraphics2dDisplay,
         private commandsGraphics2dGraphics: CommandsGraphics2dGraphics,
         private commandsGraphics2dImages: CommandsGraphics2dImages,

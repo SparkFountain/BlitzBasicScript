@@ -1,5 +1,7 @@
 import {Observable, of, Subscriber} from 'rxjs';
+import { Injectable } from '@angular/core';
 
+@Injectable()
 export class CommandsBasicsDiverse {
     constructor(/*private gameState: GameStateService*/) {
 

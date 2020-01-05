@@ -1,6 +1,6 @@
 import {Observable, of} from 'rxjs';
 
-export class CommandsBasicsMaths {
+export class CommandsBasicsMathsService {
     constructor() {
 
     }
