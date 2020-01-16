@@ -1,16 +1,16 @@
 import {NgModule} from '@angular/core';
-import {CanvasComponent} from './canvas.component';
+import {BlitzBasicScriptCanvasComponent} from './canvas.component';
 import {CommonModule} from '@angular/common';
 
 @NgModule({
     declarations: [
-        CanvasComponent
+        BlitzBasicScriptCanvasComponent
     ],
     imports: [
         CommonModule
     ],
     exports: [
-        CanvasComponent
+        BlitzBasicScriptCanvasComponent
     ],
     providers: []
 })
