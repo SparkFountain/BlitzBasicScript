@@ -1,4 +1,8 @@
 import { Component, Input, ViewChild, AfterViewInit, ElementRef, OnInit } from '@angular/core';
+import { LexerService } from 'bbscript/src/services/lexer/lexer.service';
+import { ParserService } from 'bbscript/src/services/parser/parser.service';
+import { LexerToken } from 'bbscript/src/interfaces/lexer-token';
+import { BBScriptCode } from 'bbscript/src/interfaces/bbscript-code';
 
 @Component({
   selector: 'blitz-basic-script-canvas',
@@ -12,7 +16,18 @@ export class BlitzBasicScriptCanvasComponent implements OnInit, AfterViewInit {
   sceneCtx: any;
   guiCtx: any;
 
-  @Input('code') code: string[];
+  tokens: LexerToken[][];
+  gameCode: BBScriptCode;
+
+  private _code: string[];
+  @Input()
+  set code(code: string[]) {
+    this._code = code;
+    this.tokens = this.lexer.lexCode(code);
+    this.gameCode = this.parser.createGameCode(this.tokens);
+
+    console.info('Game code:', this.gameCode);
+  }
 
   private _canvas: HTMLCanvasElement;
   private _engine: BABYLON.Engine;
@@ -20,7 +35,9 @@ export class BlitzBasicScriptCanvasComponent implements OnInit, AfterViewInit {
   private _camera: BABYLON.FreeCamera;
   private _light: BABYLON.Light;
 
-  constructor() {
+  constructor(private lexer: LexerService,
+              private parser: ParserService
+    ) {
 
   }
 

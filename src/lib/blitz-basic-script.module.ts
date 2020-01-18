@@ -32,7 +32,7 @@ import {BlitzBasicScriptPanelModule} from '../components/panel/panel.module';
 import {BlitzBasicScriptProgressBarModule} from '../components/progress-bar/progress-bar.module';
 import {LanguageService} from '../services/language/language.service';
 import {LexerService} from '../services/lexer/lexer.service';
-import {Parser} from '../services/parser/parser.service';
+import {ParserService} from '../services/parser/parser.service';
 import {CommandsGraphics3dControlsService} from '../services/commands/graphics3d/controls.service';
 import {CommandsDataBankService} from '../services/commands/data/bank.service';
 import {CommandsGraphics2dMoviesService} from '../services/commands/graphics2d/movies.service';
@@ -102,7 +102,7 @@ import { CommandsGuiPanelService } from '../services/commands/gui/panel.service'
         GeneralService,
         LanguageService,
         LexerService,
-        Parser,
+        ParserService,
 
         GameStateService,
         BabylonJSService,
