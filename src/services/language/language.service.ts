@@ -32,13 +32,8 @@ export class LanguageService {
       ];
 
       forkJoin(backendRequests).subscribe((files: any[]) => {
-        files[0].forEach((apiKeyword: ApiKeyword) => {
-          this.keywords[apiKeyword.name.toLowerCase()] = true;
-        });
-
-        files[1].forEach((apiCommand: ApiCommand) => {
-          this.commands[apiCommand.name.toLowerCase()] = apiCommand;
-        });
+        this.keywords = files[0];
+        this.commands = files[1];
 
         // if (responses[1].status === 'success') {
         //     responses[1].data.forEach((apiKeyword: ApiKeyword) => {
