@@ -1,48 +1,6 @@
 import { LexerToken } from '../../interfaces/lexer-token';
 import { LexerTokenCategory } from '../../enums/lexer/lexer-token-category';
 import { Injectable } from '@angular/core';
-import { CommandsBasicsDiverseService } from '../commands/basics/diverse.service';
-import { CommandsBasicsMathsService } from '../commands/basics/maths.service';
-import { CommandsBasicsStringsService } from '../commands/basics/strings.service';
-import { CommandsBasicsTimeRandomService } from '../commands/basics/time-random.service';
-import { CommandsDataBankService } from '../commands/data/bank.service';
-import { CommandsDataFileSystemService } from '../commands/data/file-system.service';
-import { CommandsGraphics2dDisplayService } from '../commands/graphics2d/display.service';
-import { CommandsGraphics2dGraphicsService } from '../commands/graphics2d/graphics.service';
-import { CommandsGraphics2dImagesService } from '../commands/graphics2d/images.service';
-import { CommandsGraphics2dMoviesService } from '../commands/graphics2d/movies.service';
-import { CommandsGraphics2dPixelService } from '../commands/graphics2d/pixel.service';
-import { CommandsGraphics2dTextService } from '../commands/graphics2d/text.service';
-import { CommandsGraphics3dAnimationsService } from '../commands/graphics3d/animations.service';
-import { CommandsGraphics3dBrushesService } from '../commands/graphics3d/brushes.service';
-import { CommandsGraphics3dCameraService } from '../commands/graphics3d/camera.service';
-import { CommandsGraphics3dCollisionsService } from '../commands/graphics3d/collisions.service';
-import { CommandsGraphics3dControlsService } from '../commands/graphics3d/controls.service';
-import { CommandsGraphics3dCoordinatesService } from '../commands/graphics3d/coordinates.service';
-import { CommandsGraphics3dDiverseService } from '../commands/graphics3d/diverse.service';
-import { CommandsGraphics3dLightShadowService } from '../commands/graphics3d/light-shadow.service';
-import { CommandsGraphics3dMeshesService } from '../commands/graphics3d/meshes.service';
-import { CommandsGraphics3dPickingService } from '../commands/graphics3d/picking.service';
-import { CommandsGraphics3dSceneService } from '../commands/graphics3d/scene.service';
-import { CommandsGraphics3dSceneryService } from '../commands/graphics3d/scenery.service';
-import { CommandsGraphics3dScreenService } from '../commands/graphics3d/screen.service';
-import { CommandsGraphics3dSpritesService } from '../commands/graphics3d/sprites.service';
-import { CommandsGraphics3dStatusService } from '../commands/graphics3d/status.service';
-import { CommandsGuiEventService } from '../commands/gui/event.service';
-import { CommandsGuiGadgetService } from '../commands/gui/gadget.service';
-import { CommandsGuiHtmlService } from '../commands/gui/html.service';
-import { CommandsGuiIconStripService } from '../commands/gui/icon-strip.service';
-import { CommandsGuiListTabberService } from '../commands/gui/list-tabber.service';
-import { CommandsGuiMenuService } from '../commands/gui/menu.service';
-import { CommandsGuiPanelService } from '../commands/gui/panel.service';
-import { CommandsGuiProgressBarService } from '../commands/gui/progress-bar.service';
-import { CommandsGuiRequestService } from '../commands/gui/request.service';
-import { CommandsGuiSliderService } from '../commands/gui/slider.service';
-import { CommandsGuiTextAreaService } from '../commands/gui/text-area.service';
-import { CommandsGuiTextFieldService } from '../commands/gui/text-field.service';
-import { CommandsGuiToolbarService } from '../commands/gui/toolbar.service';
-import { CommandsGuiTreeViewService } from '../commands/gui/tree-view.service';
-import { CommandsGuiWindowService } from '../commands/gui/window.service';
 import { BBScriptCode } from '../../interfaces/bbscript-code';
 import { GeneralService } from '../general/general.service';
 import { GameStateService } from '../game-state/game-state.service';
@@ -54,20 +12,14 @@ import { CameraType } from '../../enums/camera/camera-type';
 import { GameEntity } from '../../interfaces/game/entity';
 import { GameImage2D } from '../../interfaces/game/image-2d';
 import { GameFont } from '../../interfaces/game/font';
-import { CommandsGraphics3dSurfacesService } from '../commands/graphics3d/surfaces.service';
-import { CommandsGraphics3dTerrainService } from '../commands/graphics3d/terrain.service';
-import { CommandsGraphics3dTexturesService } from '../commands/graphics3d/textures.service';
-import { CommandsGuiButtonService } from '../commands/gui/button.service';
-import { CommandsGuiCanvasService } from '../commands/gui/canvas.service';
-import { CommandsGuiDesktopService } from '../commands/gui/desktop.service';
-import { CommandsGuiDiverseService } from '../commands/gui/diverse.service';
-import { CommandsIOGamepadService } from '../commands/io/gamepad.service';
-import { CommandsIOKeyboardService } from '../commands/io/keyboard.service';
-import { CommandsIOMouseService } from '../commands/io/mouse.service';
-import { CommandsSound3DService } from '../commands/sound/3d.service';
-import { CommandsSoundChannelsService } from '../commands/sound/channels.service';
-import { CommandsSoundMusicSamplesService } from '../commands/sound/music-samples.service';
 import { Camera, Light } from 'babylonjs';
+import { CommandsBasicsService } from '../commands/basics.service';
+import { CommandsDataService } from '../commands/data.service';
+import { CommandsGraphics2DService } from '../commands/graphics2d.service';
+import { CommandsGraphics3DService } from '../commands/graphics3d.service';
+import { CommandsGUIService } from '../commands/gui.service';
+import { CommandsIOService } from '../commands/io.service';
+import { CommandsSoundService } from '../commands/sound.service';
 
 @Injectable({
   providedIn: 'root'
@@ -145,61 +97,13 @@ export class ParserService {
     private generalService: GeneralService,
     private gameState: GameStateService,
     private language: LanguageService,
-    private commandsBasicsDiverse: CommandsBasicsDiverseService,
-    private commandsBasicsMaths: CommandsBasicsMathsService,
-    private commandsBasicsStrings: CommandsBasicsStringsService,
-    private commandsBasicsTimeRandom: CommandsBasicsTimeRandomService,
-    private commandsDataBank: CommandsDataBankService,
-    private commandsDataFileSystem: CommandsDataFileSystemService,
-    private commandsGraphics2dDisplay: CommandsGraphics2dDisplayService,
-    private commandsGraphics2dGraphics: CommandsGraphics2dGraphicsService,
-    private commandsGraphics2dImages: CommandsGraphics2dImagesService,
-    private commandsGraphics2dMovies: CommandsGraphics2dMoviesService,
-    private commandsGraphics2dPixel: CommandsGraphics2dPixelService,
-    private commandsGraphics2dText: CommandsGraphics2dTextService,
-    private commandsGraphics3dAnimations: CommandsGraphics3dAnimationsService,
-    private commandsGraphics3dBrushes: CommandsGraphics3dBrushesService,
-    private commandsGraphics3dCamera: CommandsGraphics3dCameraService,
-    private commandsGraphics3dCollisions: CommandsGraphics3dCollisionsService,
-    private commandsGraphics3dControls: CommandsGraphics3dControlsService,
-    private commandsGraphics3dCoordinates: CommandsGraphics3dCoordinatesService,
-    private commandsGraphics3dDiverse: CommandsGraphics3dDiverseService,
-    private commandsGraphics3dLightShadow: CommandsGraphics3dLightShadowService,
-    private commandsGraphics3dMeshes: CommandsGraphics3dMeshesService,
-    private commandsGraphics3dPicking: CommandsGraphics3dPickingService,
-    private commandsGraphics3dScene: CommandsGraphics3dSceneService,
-    private commandsGraphics3dScenery: CommandsGraphics3dSceneryService,
-    private commandsGraphics3dScreen: CommandsGraphics3dScreenService,
-    private commandsGraphics3dSprites: CommandsGraphics3dSpritesService,
-    private commandsGraphics3dStatus: CommandsGraphics3dStatusService,
-    private commandsGraphics3dSurfaces: CommandsGraphics3dSurfacesService,
-    private commandsGraphics3dTerrain: CommandsGraphics3dTerrainService,
-    private commandsGraphics3dTextures: CommandsGraphics3dTexturesService,
-    private commandsGuiButton: CommandsGuiButtonService,
-    private commandsGuiCanvas: CommandsGuiCanvasService,
-    private commandsGuiDesktop: CommandsGuiDesktopService,
-    private commandsGuiDiverse: CommandsGuiDiverseService,
-    private commandsGuiEvent: CommandsGuiEventService,
-    private commandsGuiGadget: CommandsGuiGadgetService,
-    private commandsGuiHTML: CommandsGuiHtmlService,
-    private commandsGuiIconStrip: CommandsGuiIconStripService,
-    private commandsGuiListTabber: CommandsGuiListTabberService,
-    private commandsGuiMenu: CommandsGuiMenuService,
-    private commandsGuiPanel: CommandsGuiPanelService,
-    private commandsGuiProgressBar: CommandsGuiProgressBarService,
-    private commandsGuiRequest: CommandsGuiRequestService,
-    private commandsGuiSlider: CommandsGuiSliderService,
-    private commandsGuiTextArea: CommandsGuiTextAreaService,
-    private commandsGuiTextField: CommandsGuiTextFieldService,
-    private commandsGuiToolbar: CommandsGuiToolbarService,
-    private commandsGuiTreeView: CommandsGuiTreeViewService,
-    private commandsGuiWindow: CommandsGuiWindowService,
-    private commandsIOGamepad: CommandsIOGamepadService,
-    private commandsIOKeyboard: CommandsIOKeyboardService,
-    private commandsIOMouse: CommandsIOMouseService,
-    private commandsSound3D: CommandsSound3DService,
-    private commandsSoundChannels: CommandsSoundChannelsService,
-    private commandsSoundMusicSamples: CommandsSoundMusicSamplesService
+    private basics: CommandsBasicsService,
+    private data: CommandsDataService,
+    private graphics2d: CommandsGraphics2DService,
+    private graphics3d: CommandsGraphics3DService,
+    private gui: CommandsGUIService,
+    private io: CommandsIOService,
+    private sound: CommandsSoundService
   ) {
     this.resetParser();
     this.gameCode = {
@@ -401,12 +305,36 @@ export class ParserService {
       // this.parseState(ParserState.INITIAL, initialTokens);
 
       //TODO: this is only a very basic parsing function
+      // remove double quote and comma tokens
+      initialTokens.forEach((token: LexerToken, index: number) => {
+        if (token.which === LexerTokenCategory.DOUBLE_QUOTE || token.which === LexerTokenCategory.COMMA) {
+          initialTokens.splice(index, 1);
+        }
+      });
+
       if (initialTokens[0].which !== LexerTokenCategory.COMMAND) {
         console.error('First token MUST BE a command!');
       } else {
         // get all params
-        let params = this.language.commands[initialTokens[0].value.toLowerCase()].params;
-        console.info('PARAMS:', params);
+        let params: {name: string, optional: boolean}[] = this.language.commands[initialTokens[0].value.toLowerCase()].params;
+        let minParams: number = 0;
+        const maxParams: number = params.length;
+        params.forEach((param) => {
+          if(!param.optional) {
+            minParams++;
+          }
+        });
+
+        // check if amount of params fits
+        let commandParams: number = initialTokens.length - 1;
+        if (commandParams >= minParams && commandParams <= maxParams) {
+          this.gameCode.statements.push(
+            // TODO: continue implementation
+            // this[`${}`]
+          );
+        } else {
+          console.error(`Invalid number of command parameters (must be in range ${minParams} - ${maxParams}, but given ${commandParams}`);
+        }
       }
     });
 
@@ -605,8 +533,8 @@ export class ParserService {
 
         //TODO code must be executed later, for the services are not initialized yet
         this.gameCode.statements.push(
-          this.commandsGraphics2dDisplay.graphics(800, 600),
-          //this.commandsGraphics2dGraphics.cameraClsColor(255,0,0),  //TODO wrong implementation, fix
+          this.graphics2d.graphics(800, 600),
+          //this.graphics2d.cameraClsColor(255,0,0),  //TODO wrong implementation, fix
           this.generalService.assign({
             variable: 'i',
             type: 'global',
@@ -620,12 +548,12 @@ export class ParserService {
             variable: 'camera',
             type: 'global',
             expression: {
-              value: this.commandsGraphics3dCamera.createCamera(CameraType.FREE)
+              value: this.graphics3d.createCamera(CameraType.FREE)
             }
           }),
           new Observable((observer) => {
             this.gameState.getGlobalAsync('camera').subscribe((camera: GameEntity) => {
-              this.commandsGraphics3dCoordinates.positionEntity(camera, 0, 2, -5).subscribe(() => {
+              this.graphics3d.positionEntity(camera, 0, 2, -5).subscribe(() => {
                 observer.next();
                 observer.complete();
               });
@@ -633,7 +561,7 @@ export class ParserService {
           }),
           new Observable((observer) => {
             this.gameState.getGlobalAsync('camera').subscribe((camera: Camera) => {
-              this.commandsGraphics3dCamera.cameraClsColor(camera, 50, 200, 240).subscribe(() => {
+              this.graphics3d.cameraClsColor(camera, 50, 200, 240).subscribe(() => {
                 observer.next();
                 observer.complete();
               });
@@ -645,12 +573,12 @@ export class ParserService {
             variable: 'light',
             type: 'global',
             expression: {
-              value: this.commandsGraphics3dLightShadow.createLight(1)
+              value: this.graphics3d.createLight(1)
             }
           }),
           new Observable((observer) => {
             this.gameState.getGlobalAsync('light').subscribe((light: Light) => {
-              this.commandsGraphics3dLightShadow.lightColor(light, 255, 255, 0).subscribe(() => {
+              this.graphics3d.lightColor(light, 255, 255, 0).subscribe(() => {
                 observer.next();
                 observer.complete();
               });
@@ -662,12 +590,12 @@ export class ParserService {
             variable: 'cube',
             type: 'global',
             expression: {
-              value: this.commandsGraphics3dMeshes.createCube()
+              value: this.graphics3d.createCube()
             }
           }),
           new Observable((observer) => {
             this.gameState.getGlobalAsync('cube').subscribe((cube: GameEntity) => {
-              this.commandsGraphics3dCoordinates.positionEntity(cube, 0, 1, 0).subscribe((done) => {
+              this.graphics3d.positionEntity(cube, 0, 1, 0).subscribe((done) => {
                 observer.next();
                 observer.complete();
               });
@@ -675,39 +603,39 @@ export class ParserService {
           }),
           new Observable((observer) => {
             this.gameState.getGlobalAsync('cube').subscribe((cube: GameEntity) => {
-              this.commandsGraphics3dControls.entityColor(cube, 0, 255, 0).subscribe((done) => {
+              this.graphics3d.entityColor(cube, 0, 255, 0).subscribe((done) => {
                 observer.next();
                 observer.complete();
               });
             });
           }),
 
-          this.commandsGraphics3dLightShadow.ambientLight(128, 200, 50),
+          this.graphics3d.ambientLight(128, 200, 50),
 
 
           //2D GRAPHICS
-          this.commandsGraphics2dGraphics.color(0, 128, 0),
+          this.graphics2d.color(0, 128, 0),
 
           //this.commandsBasicsTimeRandom.delay(2000),
 
-          this.commandsGraphics2dGraphics.oval(50, 200, 20, 40, false),
-          this.commandsGraphics2dGraphics.line(300, 40, 350, 120),
+          this.graphics2d.oval(50, 200, 20, 40, false),
+          this.graphics2d.line(300, 40, 350, 120),
 
-          //this.commandsGraphics2dGraphics.color(255, 255, 0),
-          this.commandsGraphics2dPixel.plot(200, 200),
+          //this.graphics2d.color(255, 255, 0),
+          this.graphics2d.plot(200, 200),
 
           //IMAGE
-          this.commandsGraphics2dImages.autoMidHandle(true),
+          this.graphics2d.autoMidHandle(true),
           this.generalService.assign({
             variable: 'image',
             type: 'global',
             expression: {
-              value: this.commandsGraphics2dImages.loadImage('/assets/gfx/face.png')
+              value: this.graphics2d.loadImage('/assets/gfx/face.png')
             }
           }),
           new Observable((observer) => {
             this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
-              this.commandsGraphics2dImages.resizeImage(image, 128, 128).subscribe(() => {
+              this.graphics2d.resizeImage(image, 128, 128).subscribe(() => {
                 observer.next();
                 observer.complete();
               });
@@ -715,7 +643,7 @@ export class ParserService {
           }),
           new Observable((observer) => {
             this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
-              this.commandsGraphics2dImages.rotateImage(image, 30).subscribe(() => {
+              this.graphics2d.rotateImage(image, 30).subscribe(() => {
                 observer.next();
                 observer.complete();
               });
@@ -723,35 +651,35 @@ export class ParserService {
           }),
           new Observable((observer) => {
             this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
-              this.commandsGraphics2dImages.drawBlock(image, 200, 250).subscribe(() => {
+              this.graphics2d.drawBlock(image, 200, 250).subscribe(() => {
                 observer.next();
                 observer.complete();
               });
             });
           }),
-          this.commandsGraphics2dGraphics.rect(195, 245, 10, 10, true),
-          this.commandsGraphics2dGraphics.rect(195 - 64, 245 - 64, 10, 10, true),
+          this.graphics2d.rect(195, 245, 10, 10, true),
+          this.graphics2d.rect(195 - 64, 245 - 64, 10, 10, true),
 
           //TEXT
           this.generalService.assign({
             variable: 'font',
             type: 'global',
             expression: {
-              value: this.commandsGraphics2dText.loadFont('Arial', 32, true, true, true)
+              value: this.graphics2d.loadFont('Arial', 32, true, true, true)
             }
           }),
           new Observable((observer) => {
             this.gameState.getGlobalAsync('font').subscribe((font: GameFont) => {
-              this.commandsGraphics2dText.setFont(font).subscribe(() => {
+              this.graphics2d.setFont(font).subscribe(() => {
                 observer.next();
                 observer.complete();
               });
             });
           }),
 
-          this.commandsGraphics2dText.text(50, 50, 'HELLO WORLD!'),
-          this.commandsGraphics2dText.stringWidth('HELLO WORLD!'),
-          this.commandsGraphics2dText.stringHeight('HELLO WORLD!'),
+          this.graphics2d.text(50, 50, 'HELLO WORLD!'),
+          this.graphics2d.stringWidth('HELLO WORLD!'),
+          this.graphics2d.stringHeight('HELLO WORLD!'),
           this.generalService.assign({
             variable: 'rndValue',
             type: 'global',
@@ -759,10 +687,10 @@ export class ParserService {
               value: of('Hello World')
             }
           }),
-          this.commandsBasicsTimeRandom.seedRnd('Hello World'),
+          this.basics.seedRnd('Hello World'),
           new Observable((observer) => {
             this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
-              this.commandsGraphics2dImages.maskImage(image, 255, 0, 255).subscribe(() => {
+              this.graphics2d.maskImage(image, 255, 0, 255).subscribe(() => {
                 observer.next();
                 observer.complete();
               });

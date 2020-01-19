@@ -22,12 +22,12 @@ export class CommandsGraphics3dTerrainService {
         return of(null);
     }
 
-    terrainDetail(terrrain: BABYLON.Mesh, detailLevel: number, enableMorphing: boolean): Observable<void> {
+    terrainDetail(terrain: BABYLON.Mesh, detailLevel: number, enableMorphing: boolean): Observable<void> {
         //TODO implementation
         return of(null);
     }
 
-    terrainHeight(terrrain: BABYLON.Mesh, x: number, z: number): Observable<number> {
+    terrainHeight(terrain: BABYLON.Mesh, x: number, z: number): Observable<number> {
         //TODO implementation
         return of(0);
     }
