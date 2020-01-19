@@ -312,11 +312,14 @@ export class ParserService {
         }
       });
 
-      if (initialTokens[0].which !== LexerTokenCategory.COMMAND) {
+      const cmdFromLexer = initialTokens[0];
+
+      if (cmdFromLexer.which !== LexerTokenCategory.COMMAND) {
         console.error('First token MUST BE a command!');
       } else {
         // get all params
-        let params: {name: string, optional: boolean}[] = this.language.commands[initialTokens[0].value.toLowerCase()].params;
+        const cmdFromJson = this.language.commands[cmdFromLexer.value.toLowerCase()];
+        let params: { name: string, optional: boolean }[] = cmdFromJson.params;
         let minParams: number = 0;
         const maxParams: number = params.length;
         params.forEach((param) => {
@@ -328,9 +331,20 @@ export class ParserService {
         // check if amount of params fits
         let commandParams: number = initialTokens.length - 1;
         if (commandParams >= minParams && commandParams <= maxParams) {
+          initialTokens.shift();
+          const finalParams = [];
+          initialTokens.forEach(t => {
+            if([LexerTokenCategory.INTEGER, LexerTokenCategory.FLOAT].indexOf(t.which) > -1) {
+              // convert numbers to correct numbers
+              finalParams.push(Number(t.value));
+            } else {
+              finalParams.push(t.value);
+            }
+          })
+
+          // push new statement to game code
           this.gameCode.statements.push(
-            // TODO: continue implementation
-            // this[`${}`]
+            this[cmdFromJson.category][cmdFromLexer.value.toLowerCase()](...finalParams)
           );
         } else {
           console.error(`Invalid number of command parameters (must be in range ${minParams} - ${maxParams}, but given ${commandParams}`);

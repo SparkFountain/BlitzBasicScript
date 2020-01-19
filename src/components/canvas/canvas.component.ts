@@ -3,6 +3,9 @@ import { LexerService } from 'bbscript/src/services/lexer/lexer.service';
 import { ParserService } from 'bbscript/src/services/parser/parser.service';
 import { LexerToken } from 'bbscript/src/interfaces/lexer-token';
 import { BBScriptCode } from 'bbscript/src/interfaces/bbscript-code';
+import { GameStateService } from 'bbscript/src/services/game-state/game-state.service';
+import { Graphics2dService } from 'bbscript/src/services/2d/graphics2d.service';
+import { concat } from 'rxjs';
 
 @Component({
   selector: 'blitz-basic-script-canvas',
@@ -13,8 +16,8 @@ export class BlitzBasicScriptCanvasComponent implements OnInit, AfterViewInit {
   @ViewChild('scene', { static: true }) scene: ElementRef<HTMLCanvasElement>;
   @ViewChild('gui', { static: true }) gui: ElementRef<HTMLCanvasElement>;
 
-  sceneCtx: any;
-  guiCtx: any;
+  sceneCtx: WebGLRenderingContext;
+  guiCtx: CanvasRenderingContext2D;
 
   tokens: LexerToken[][];
   gameCode: BBScriptCode;
@@ -23,27 +26,29 @@ export class BlitzBasicScriptCanvasComponent implements OnInit, AfterViewInit {
   @Input()
   set code(code: string[]) {
     this._code = code;
-    this.tokens = this.lexer.lexCode(code);
-    this.gameCode = this.parser.createGameCode(this.tokens);
-
-    console.info('Game code:', this.gameCode);
   }
 
-  private _canvas: HTMLCanvasElement;
+  private _canvas2D: HTMLCanvasElement;
+  private _canvas3D: HTMLCanvasElement;
   private _engine: BABYLON.Engine;
   private _scene: BABYLON.Scene;
   private _camera: BABYLON.FreeCamera;
   private _light: BABYLON.Light;
 
   constructor(private lexer: LexerService,
-              private parser: ParserService
+              private parser: ParserService,
+              private gameState: GameStateService,
+              private graphics2dService: Graphics2dService
     ) {
 
   }
 
   ngOnInit(): void {
-    this._canvas = document.getElementById('scene') as HTMLCanvasElement;
-    this._engine = new BABYLON.Engine(this._canvas, true);
+    this._canvas2D = document.getElementById('gui') as HTMLCanvasElement;
+    this._canvas3D = document.getElementById('scene') as HTMLCanvasElement;
+    this._engine = new BABYLON.Engine(this._canvas3D, true);
+
+    console.info('Initialized Canvas Component');
   }
 
   ngAfterViewInit(): void {
@@ -51,10 +56,12 @@ export class BlitzBasicScriptCanvasComponent implements OnInit, AfterViewInit {
     this.guiCtx = this.gui.nativeElement.getContext('2d');
 
     // TODO: debug only, remove later
-    this.guiCtx.fillRect(20, 20, 100, 70);
+    // this.guiCtx.fillRect(20, 20, 100, 70);
 
     // Create the scene.
     this.createScene();
+
+    this.runGame();
 
     // Start render loop.
     this.doRender();
@@ -71,7 +78,7 @@ export class BlitzBasicScriptCanvasComponent implements OnInit, AfterViewInit {
     this._camera.setTarget(BABYLON.Vector3.Zero());
 
     // Attach the camera to the canvas.
-    this._camera.attachControl(this._canvas, false);
+    this._camera.attachControl(this._canvas3D, false);
 
     // Create a basic light, aiming 0,1,0 - meaning, to the sky.
     this._light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), this._scene);
@@ -86,6 +93,17 @@ export class BlitzBasicScriptCanvasComponent implements OnInit, AfterViewInit {
     // Create a built-in "ground" shape.
     const ground = BABYLON.MeshBuilder.CreateGround('ground',
       { width: 6, height: 6, subdivisions: 2 }, this._scene);
+  }
+
+  runGame() {
+    this.graphics2dService.initCanvas(this._canvas2D);
+    this.tokens = this.lexer.lexCode(this._code);
+    this.gameCode = this.parser.createGameCode(this.tokens);
+    // console.info('Game code:', this.gameCode);
+
+    concat(...this.gameCode.statements).subscribe(() => {
+      // TODO: some log info etc. on each executed statement
+    });
   }
 
   doRender(): void {

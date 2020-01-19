@@ -74,7 +74,7 @@ export class CommandsGraphics2DService {
     return this.graphicsService.oval(x, y, width, height, filled);
   }
 
-  rect(x: number, y: number, width: number, height: number, filled: boolean): Observable<void> {
+  rect(x: number, y: number, width: number, height: number, filled?: boolean): Observable<void> {
     return this.graphicsService.rect(x, y, width, height, filled);
   }
 
