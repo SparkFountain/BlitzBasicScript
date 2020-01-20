@@ -347,7 +347,7 @@ export class ParserService {
             this[cmdFromJson.category][cmdFromLexer.value.toLowerCase()](...finalParams)
           );
         } else {
-          console.error(`Invalid number of command parameters (must be in range ${minParams} - ${maxParams}, but given ${commandParams}`);
+          console.error(`Invalid number of command parameters (must be in range ${minParams} - ${maxParams}, but given ${commandParams})`);
         }
       }
     });
