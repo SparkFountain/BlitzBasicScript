@@ -55,9 +55,6 @@ export class BlitzBasicScriptCanvasComponent implements OnInit, AfterViewInit {
     this.sceneCtx = this.scene.nativeElement.getContext('webgl');
     this.guiCtx = this.gui.nativeElement.getContext('2d');
 
-    // TODO: debug only, remove later
-    // this.guiCtx.fillRect(20, 20, 100, 70);
-
     // Create the scene.
     this.createScene();
 
@@ -84,15 +81,15 @@ export class BlitzBasicScriptCanvasComponent implements OnInit, AfterViewInit {
     this._light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), this._scene);
 
     // Create a built-in "sphere" shape; with 16 segments and diameter of 2.
-    const sphere = BABYLON.MeshBuilder.CreateSphere('sphere',
-      { segments: 16, diameter: 2 }, this._scene);
+    // const sphere = BABYLON.MeshBuilder.CreateSphere('sphere',
+    //   { segments: 16, diameter: 2 }, this._scene);
 
     // Move the sphere upward 1/2 of its height.
-    sphere.position.y = 1;
+    // sphere.position.y = 1;
 
     // Create a built-in "ground" shape.
-    const ground = BABYLON.MeshBuilder.CreateGround('ground',
-      { width: 6, height: 6, subdivisions: 2 }, this._scene);
+    // const ground = BABYLON.MeshBuilder.CreateGround('ground',
+    //   { width: 6, height: 6, subdivisions: 2 }, this._scene);
   }
 
   runGame() {

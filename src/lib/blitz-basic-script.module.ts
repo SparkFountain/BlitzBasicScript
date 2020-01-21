@@ -24,7 +24,7 @@ import {CommandsSoundMusicSamplesService} from '../services/commands/sound/music
 import {CommandsGraphics2dTextService} from '../services/commands/graphics2d/text.service';
 import {BlitzBasicScriptButtonModule} from '../components/button/button.module';
 import {BlitzBasicScriptCanvasModule} from '../components/canvas/canvas.module';
-import {BlitzBasicScriptComboBoxModule} from '../components/combo-box/canvas.module';
+import {BlitzBasicScriptComboBoxModule} from '../components/combo-box/combo-box.module';
 import {BlitzBasicScriptHtmlModule} from '../components/html/html.module';
 import {BlitzBasicScriptListBoxModule} from '../components/list-box/list-box.module';
 import {BlitzBasicScriptMenuModule} from '../components/menu/menu.module';
