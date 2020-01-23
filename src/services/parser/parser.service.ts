@@ -312,47 +312,86 @@ export class ParserService {
         }
       });
 
-      const cmdFromLexer = initialTokens[0];
+      const firstToken = initialTokens[0];
 
-      if (cmdFromLexer.which !== LexerTokenCategory.COMMAND) {
-        console.error('First token MUST BE a command!');
-      } else {
-        // get all params
-        const cmdFromJson = this.language.commands[cmdFromLexer.value.toLowerCase()];
-        let params: { name: string, optional: boolean }[] = cmdFromJson.params;
-        let minParams: number = 0;
-        const maxParams: number = params.length;
-        params.forEach((param) => {
-          if(!param.optional) {
-            minParams++;
-          }
-        });
-
-        // check if amount of params fits
-        let commandParams: number = initialTokens.length - 1;
-        if (commandParams >= minParams && commandParams <= maxParams) {
-          initialTokens.shift();
-          const finalParams = [];
-          initialTokens.forEach(t => {
-            if([LexerTokenCategory.INTEGER, LexerTokenCategory.FLOAT].indexOf(t.which) > -1) {
-              // convert numbers to correct numbers
-              finalParams.push(Number(t.value));
+      if (firstToken.which === LexerTokenCategory.COMMAND) {
+        this.simpleCommandParser(initialTokens, false);
+      } else if (firstToken.which === LexerTokenCategory.KEYWORD && firstToken.value.toLowerCase() === 'global') {
+        const varName = initialTokens[1].value;
+        switch (initialTokens[3].which) {
+          case LexerTokenCategory.COMMAND:
+            this.simpleCommandParser(initialTokens.splice(4), true);
+            break;
+          case LexerTokenCategory.INTEGER:
+          case LexerTokenCategory.FLOAT:
+            this.gameState.setGlobal(varName, Number(initialTokens[3].value));
+            break;
+          case LexerTokenCategory.STRING:
+            this.gameState.setGlobal(varName, initialTokens[3].value);
+            break;
+          case LexerTokenCategory.KEYWORD:
+            if (['true', 'false'].indexOf(initialTokens[3].value.toLowerCase()) > -1) {
+              this.gameState.setGlobal(varName, initialTokens[3].value);
             } else {
-              finalParams.push(t.value);
+              console.error('Invalid key word (only True and False are allowed)');
             }
-          })
-
-          // push new statement to game code
-          this.gameCode.statements.push(
-            this[cmdFromJson.category][cmdFromLexer.value.toLowerCase()](...finalParams)
-          );
-        } else {
-          console.error(`Invalid number of command parameters (must be in range ${minParams} - ${maxParams}, but given ${commandParams})`);
+            break;
+          default:
+            console.error('Found invalid token:', initialTokens[3]);
         }
+      } else {
+        console.error('First token MUST BE a command or the "Global" keyword!');
       }
     });
 
+    console.info('Game State:', this.gameState);
     return this.gameCode;
+  }
+
+  simpleCommandParser(initialTokens: LexerToken[], withReturn: boolean) {
+    console.info('simpleCommandParser:', initialTokens);
+
+    let firstToken = initialTokens[0];
+
+    // get all params
+    const cmdFromJson = this.language.commands[firstToken.value.toLowerCase()];
+    let params: { name: string, optional: boolean }[] = cmdFromJson.params;
+    let minParams: number = 0;
+    const maxParams: number = params.length;
+    params.forEach((param) => {
+      if (!param.optional) {
+        minParams++;
+      }
+    });
+
+    // check if amount of params fits
+    let commandParams: number = initialTokens.length - 1;
+    if (commandParams >= minParams && commandParams <= maxParams) {
+      initialTokens.shift();
+      const finalParams = [];
+      initialTokens.forEach(t => {
+        if (t.which === LexerTokenCategory.GLOBAL) {
+          finalParams.push(this.gameState.getGlobal(t.value));
+        } else if ([LexerTokenCategory.INTEGER, LexerTokenCategory.FLOAT].indexOf(t.which) > -1) {
+          // convert numbers to correct numbers
+          finalParams.push(Number(t.value));
+        } else {
+          finalParams.push(t.value);
+        }
+      })
+
+      // push new statement to game code
+      console.info(`${cmdFromJson.category} ${firstToken.value.toLowerCase()}`);
+      if (withReturn) {
+        console.info('With return:', initialTokens);
+      } else {
+        this.gameCode.statements.push(
+          this[cmdFromJson.category][firstToken.value.toLowerCase()](...finalParams)
+        );
+      }
+    } else {
+      console.error(`Invalid number of command parameters (must be in range ${minParams} - ${maxParams}, but given ${commandParams})`);
+    }
   }
 
   parseState(state: ParserState, tokens: LexerToken[]) {
