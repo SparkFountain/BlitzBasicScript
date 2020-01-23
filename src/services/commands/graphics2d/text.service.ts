@@ -1,12 +1,12 @@
 import {Injectable} from '@angular/core';
 import {forkJoin, Observable, of, Subscriber} from 'rxjs';
-import {Graphics2dService} from '../../2d/graphics2d.service';
+import {Render2dService} from '../../2d/render2d.service';
 import {GameStateService} from '../../game-state/game-state.service';
 import {GameFont} from '../../../interfaces/game/font';
 
 @Injectable()
 export class CommandsGraphics2dTextService {
-    constructor(private graphics2d: Graphics2dService,
+    constructor(private graphics2d: Render2dService,
                 private gameState: GameStateService) {
 
     }

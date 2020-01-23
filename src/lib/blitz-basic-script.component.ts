@@ -5,7 +5,7 @@ import { BBScriptCode } from '../interfaces/bbscript-code';
 import { concat } from 'rxjs';
 import { GameStateService } from '../services/game-state/game-state.service';
 import { BabylonJSService } from '../services/babylon-js/babylon-js.service';
-import { Graphics2dService } from '../services/2d/graphics2d.service';
+import { Render2dService } from '../services/2d/render2d.service';
 import { GuiService } from '../services/gui/gui.service';
 import { LanguageService } from '../services/language/language.service';
 
@@ -152,7 +152,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     private parser: ParserService,
     private gameState: GameStateService,
     private babylonjs: BabylonJSService,
-    private graphics2d: Graphics2dService,
+    private graphics2d: Render2dService,
     private gui: GuiService
   ) {
     this.canvasFocused = false;

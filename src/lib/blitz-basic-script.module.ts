@@ -13,7 +13,7 @@ import {CommandsGraphics2dGraphicsService} from '../services/commands/graphics2d
 import {CommandsGraphics3dCameraService} from '../services/commands/graphics3d/camera.service';
 import {CommandsGraphics3dMeshesService} from '../services/commands/graphics3d/meshes.service';
 import {CommandsGraphics3dCoordinatesService} from '../services/commands/graphics3d/coordinates.service';
-import {Graphics2dService} from '../services/2d/graphics2d.service';
+import {Render2dService} from '../services/2d/render2d.service';
 import {GuiService} from '../services/gui/gui.service';
 import {CommonModule} from '@angular/common';
 import {CommandsGraphics2dPixelService} from '../services/commands/graphics2d/pixel.service';
@@ -106,7 +106,7 @@ import { CommandsGuiPanelService } from '../services/commands/gui/panel.service'
 
         GameStateService,
         BabylonJSService,
-        Graphics2dService,
+        Render2dService,
         GuiService,
 
         // BASICS

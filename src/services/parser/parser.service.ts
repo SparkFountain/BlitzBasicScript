@@ -26,56 +26,56 @@ import { CommandsSoundService } from '../commands/sound.service';
 })
 export class ParserService {
   static MESSAGE = {
-    'ERROR': {
-      'DEPRECATED_KEYWORD': {
+    ERROR: {
+      DEPRECATED_KEYWORD: {
         EN: 'Deprecated key word',
         DE: 'Veraltetes Schlüsselwort'
       },
-      'DEPRECATED_COMMAND': {
+      DEPRECATED_COMMAND: {
         EN: 'Deprecated command',
         DE: 'Veralteter Befehl'
       },
-      'INVALID_TOKEN': {
+      INVALID_TOKEN: {
         EN: 'Invalid token',
         DE: 'Ungültiges Token'
       },
-      'INVALID_START_TOKEN': {
+      INVALID_START_TOKEN: {
         EN: 'Invalid start token',
         DE: 'Ungültiges Anfangstoken'
       },
-      'ILLEGAL_CONTEXT': {
+      ILLEGAL_CONTEXT: {
         EN: 'Illegal token context',
         DE: 'Ungültiger Kontext für dieses Token'
       },
-      'VAR_NAME_EXPECTED': {
+      VAR_NAME_EXPECTED: {
         EN: 'Expecting a variable name',
         DE: 'Variablenname erwartet'
       },
-      'TOO_MANY_PARAMETERS': {
+      TOO_MANY_PARAMETERS: {
         EN: 'Too many parameters',
         DE: 'Zu viele Parameter angegeben'
       },
-      'NOT_ENOUGH_PARAMETERS': {
+      NOT_ENOUGH_PARAMETERS: {
         EN: 'Not enough parameters',
         DE: 'Zu wenige Parameter angegeben'
       },
-      'COMMA_MUST_BE_FOLLOWED_BY_EXPRESSION': {
+      COMMA_MUST_BE_FOLLOWED_BY_EXPRESSION: {
         EN: 'Comma must be followed by another expression',
         DE: 'Nach dem Komma muss eine weitere Anweisung folgen'
       },
-      'MISSING_OPENING_BRACKET': {
+      MISSING_OPENING_BRACKET: {
         EN: 'Missing opening bracket',
         DE: 'Öffnende Klammer fehlt'
       },
-      'NO_MORE_TOKENS_ALLOWED': {
+      NO_MORE_TOKENS_ALLOWED: {
         EN: 'No more tokens allowed after last key word',
         DE: 'Keine weiteren Tokens nach dem letzten Schlüsselwort erlaubt'
       },
-      'NO_CONDITION_BLOCK_OPENED': {
+      NO_CONDITION_BLOCK_OPENED: {
         EN: 'No condition block opened',
         DE: 'Kein Bedingungsblock definiert'
       },
-      'DUPLICATE_DECLARATION': {
+      DUPLICATE_DECLARATION: {
         EN: 'Duplicate Declaration (prohibited)',
         DE: 'Mehrfache Deklaration (verboten)'
       },
@@ -84,8 +84,8 @@ export class ParserService {
         DE: 'Diese Fehlermeldung wurde noch nicht implementiert.'
       }
     },
-    'INFO': {},
-    'WARNING': {}
+    INFO: {},
+    WARNING: {}
   };
 
   individuals: object;
@@ -190,7 +190,6 @@ export class ParserService {
    */
   getLocals(lexerCode: Array<LexerToken[]>, fn?: string): any {
     if (fn) {
-
     }
   }
 
@@ -315,8 +314,10 @@ export class ParserService {
       const firstToken = initialTokens[0];
 
       if (firstToken.which === LexerTokenCategory.COMMAND) {
+        console.info('COMMAND FOUND');
         this.simpleCommandParser(initialTokens, false);
       } else if (firstToken.which === LexerTokenCategory.KEYWORD && firstToken.value.toLowerCase() === 'global') {
+        console.info('GLOBAL FOUND');
         const varName = initialTokens[1].value;
         switch (initialTokens[3].which) {
           case LexerTokenCategory.COMMAND:
@@ -355,10 +356,10 @@ export class ParserService {
 
     // get all params
     const cmdFromJson = this.language.commands[firstToken.value.toLowerCase()];
-    let params: { name: string, optional: boolean }[] = cmdFromJson.params;
+    let params: { name: string; optional: boolean }[] = cmdFromJson.params;
     let minParams: number = 0;
     const maxParams: number = params.length;
-    params.forEach((param) => {
+    params.forEach(param => {
       if (!param.optional) {
         minParams++;
       }
@@ -378,19 +379,20 @@ export class ParserService {
         } else {
           finalParams.push(t.value);
         }
-      })
+      });
 
       // push new statement to game code
-      console.info(`${cmdFromJson.category} ${firstToken.value.toLowerCase()}`);
+      const cmdCall = firstToken.value.replace(/^\w/, c => c.toLowerCase());
+      console.info(`${cmdFromJson.category} ${cmdCall}`);
       if (withReturn) {
         console.info('With return:', initialTokens);
       } else {
-        this.gameCode.statements.push(
-          this[cmdFromJson.category][firstToken.value.toLowerCase()](...finalParams)
-        );
+        this.gameCode.statements.push(this[cmdFromJson.category][cmdCall](...finalParams));
       }
     } else {
-      console.error(`Invalid number of command parameters (must be in range ${minParams} - ${maxParams}, but given ${commandParams})`);
+      console.error(
+        `Invalid number of command parameters (must be in range ${minParams} - ${maxParams}, but given ${commandParams})`
+      );
     }
   }
 
@@ -529,7 +531,7 @@ export class ParserService {
             break;
           case LexerTokenCategory.INDIVIDUAL:
             let hasAssignment = false;
-            tokens.forEach((token) => {
+            tokens.forEach(token => {
               if (token.which === LexerTokenCategory.ASSIGNMENT) {
                 hasAssignment = true;
               }
@@ -574,14 +576,15 @@ export class ParserService {
 
         break;
       case ParserState.ASSIGNMENT:
-
         //Valid following tokens: ( [Number] [String] True False Pi First Last [Individual] [Command]
         break;
       case ParserState.COMMAND_CALL:
         let command: ApiCommand = this.language.commands[this.stack.pop().value.toLowerCase()];
         console.info('Command:', command);
 
-        let service: string = `commands${command.category.charAt(0).toUpperCase()}${command.category.slice(1)}${command.subCategory.charAt(0).toUpperCase()}${command.subCategory.slice(1)}`;
+        let service: string = `commands${command.category.charAt(0).toUpperCase()}${command.category.slice(
+          1
+        )}${command.subCategory.charAt(0).toUpperCase()}${command.subCategory.slice(1)}`;
         console.info('Service:', service);
 
         //TODO code must be executed later, for the services are not initialized yet
@@ -604,7 +607,7 @@ export class ParserService {
               value: this.graphics3d.createCamera(CameraType.FREE)
             }
           }),
-          new Observable((observer) => {
+          new Observable(observer => {
             this.gameState.getGlobalAsync('camera').subscribe((camera: GameEntity) => {
               this.graphics3d.positionEntity(camera, 0, 2, -5).subscribe(() => {
                 observer.next();
@@ -612,7 +615,7 @@ export class ParserService {
               });
             });
           }),
-          new Observable((observer) => {
+          new Observable(observer => {
             this.gameState.getGlobalAsync('camera').subscribe((camera: Camera) => {
               this.graphics3d.cameraClsColor(camera, 50, 200, 240).subscribe(() => {
                 observer.next();
@@ -629,7 +632,7 @@ export class ParserService {
               value: this.graphics3d.createLight(1)
             }
           }),
-          new Observable((observer) => {
+          new Observable(observer => {
             this.gameState.getGlobalAsync('light').subscribe((light: Light) => {
               this.graphics3d.lightColor(light, 255, 255, 0).subscribe(() => {
                 observer.next();
@@ -646,17 +649,17 @@ export class ParserService {
               value: this.graphics3d.createCube()
             }
           }),
-          new Observable((observer) => {
+          new Observable(observer => {
             this.gameState.getGlobalAsync('cube').subscribe((cube: GameEntity) => {
-              this.graphics3d.positionEntity(cube, 0, 1, 0).subscribe((done) => {
+              this.graphics3d.positionEntity(cube, 0, 1, 0).subscribe(done => {
                 observer.next();
                 observer.complete();
               });
             });
           }),
-          new Observable((observer) => {
+          new Observable(observer => {
             this.gameState.getGlobalAsync('cube').subscribe((cube: GameEntity) => {
-              this.graphics3d.entityColor(cube, 0, 255, 0).subscribe((done) => {
+              this.graphics3d.entityColor(cube, 0, 255, 0).subscribe(done => {
                 observer.next();
                 observer.complete();
               });
@@ -664,7 +667,6 @@ export class ParserService {
           }),
 
           this.graphics3d.ambientLight(128, 200, 50),
-
 
           //2D GRAPHICS
           this.graphics2d.color(0, 128, 0),
@@ -686,7 +688,7 @@ export class ParserService {
               value: this.graphics2d.loadImage('/assets/gfx/face.png')
             }
           }),
-          new Observable((observer) => {
+          new Observable(observer => {
             this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
               this.graphics2d.resizeImage(image, 128, 128).subscribe(() => {
                 observer.next();
@@ -694,7 +696,7 @@ export class ParserService {
               });
             });
           }),
-          new Observable((observer) => {
+          new Observable(observer => {
             this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
               this.graphics2d.rotateImage(image, 30).subscribe(() => {
                 observer.next();
@@ -702,7 +704,7 @@ export class ParserService {
               });
             });
           }),
-          new Observable((observer) => {
+          new Observable(observer => {
             this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
               this.graphics2d.drawBlock(image, 200, 250).subscribe(() => {
                 observer.next();
@@ -721,7 +723,7 @@ export class ParserService {
               value: this.graphics2d.loadFont('Arial', 32, true, true, true)
             }
           }),
-          new Observable((observer) => {
+          new Observable(observer => {
             this.gameState.getGlobalAsync('font').subscribe((font: GameFont) => {
               this.graphics2d.setFont(font).subscribe(() => {
                 observer.next();
@@ -741,7 +743,7 @@ export class ParserService {
             }
           }),
           this.basics.seedRnd('Hello World'),
-          new Observable((observer) => {
+          new Observable(observer => {
             this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
               this.graphics2d.maskImage(image, 255, 0, 255).subscribe(() => {
                 observer.next();
@@ -791,7 +793,6 @@ export class ParserService {
    */
   parseComparison(tokens: LexerToken[], compIndex: number) {
     //[Expr] = [Expr] | [Expr] < [Expr] | [Expr] > [Expr] | [Expr] <= [Expr] | [Expr] >= [Expr] | [Expr] <> [Expr]
-
     //TODO
   }
 
@@ -800,18 +801,13 @@ export class ParserService {
     // [Or]: [BoolExpr] Or [BoolExpr]
     // [Xor]: [BoolExpr] Xor [BoolExpr]
 
-    let expectedTokens = [
-      LexerTokenCategory.INTEGER,
-      LexerTokenCategory.FLOAT,
-      LexerTokenCategory.STRING
-    ];
+    let expectedTokens = [LexerTokenCategory.INTEGER, LexerTokenCategory.FLOAT, LexerTokenCategory.STRING];
     let validLeftExpression;
 
     //parse left hand boolean expression
     for (let leftIndex = linkIndex - 1; leftIndex >= 0; leftIndex--) {
       let currentToken = tokens[leftIndex];
       if (expectedTokens.indexOf(currentToken.which) > -1) {
-
       }
     }
   }
@@ -825,10 +821,7 @@ export class ParserService {
         LexerTokenCategory.FLOAT,
         LexerTokenCategory.INDIVIDUAL
       ],
-      algebraicComparison: [
-        LexerTokenCategory.ALGEBRAIC,
-        LexerTokenCategory.COMPARISON
-      ]
+      algebraicComparison: [LexerTokenCategory.ALGEBRAIC, LexerTokenCategory.COMPARISON]
     };
     let validKeywords: any = {
       value: ['Not', 'Pi']

@@ -5,7 +5,7 @@ import { GameImage2D } from '../../interfaces/game/image-2d';
 import { GameFont } from '../../interfaces/game/font';
 
 @Injectable()
-export class Graphics2dService {
+export class Render2dService {
   private _canvas: HTMLCanvasElement;
   private _context2d: CanvasRenderingContext2D;
 

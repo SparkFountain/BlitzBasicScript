@@ -4,7 +4,7 @@ import { ParserService } from 'bbscript/src/services/parser/parser.service';
 import { LexerToken } from 'bbscript/src/interfaces/lexer-token';
 import { BBScriptCode } from 'bbscript/src/interfaces/bbscript-code';
 import { GameStateService } from 'bbscript/src/services/game-state/game-state.service';
-import { Graphics2dService } from 'bbscript/src/services/2d/graphics2d.service';
+import { Render2dService } from 'bbscript/src/services/2d/render2d.service';
 import { concat } from 'rxjs';
 
 @Component({
@@ -38,7 +38,7 @@ export class BlitzBasicScriptCanvasComponent implements OnInit, AfterViewInit {
   constructor(private lexer: LexerService,
               private parser: ParserService,
               private gameState: GameStateService,
-              private graphics2dService: Graphics2dService
+              private graphics2dService: Render2dService
     ) {
 
   }

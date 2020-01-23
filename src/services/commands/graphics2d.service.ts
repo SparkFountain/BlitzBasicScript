@@ -55,6 +55,7 @@ export class CommandsGraphics2DService {
   }
 
   clsColor(red: number, green: number, blue: number): Observable<void> {
+    console.info('ClsColor command called');
     return this.graphicsService.clsColor(red, green, blue);
   }
 
