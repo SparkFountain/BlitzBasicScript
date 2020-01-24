@@ -1,11 +1,11 @@
 import { Component, Input, ViewChild, AfterViewInit, ElementRef, OnInit } from '@angular/core';
-import { LexerService } from 'bbscript/src/services/lexer/lexer.service';
-import { ParserService } from 'bbscript/src/services/parser/parser.service';
+import { LexerService } from 'bbscript/src/services/lexer.service';
+import { ParserService } from 'bbscript/src/services/parser.service';
 import { LexerToken } from 'bbscript/src/interfaces/lexer-token';
 import { BBScriptCode } from 'bbscript/src/interfaces/bbscript-code';
-import { GameStateService } from 'bbscript/src/services/game-state/game-state.service';
-import { Render2dService } from 'bbscript/src/services/2d/render2d.service';
+import { GameStateService } from 'bbscript/src/services/game-state.service';
 import { concat } from 'rxjs';
+import { Render2dService } from 'bbscript/src/services/render2d.service';
 
 @Component({
   selector: 'blitz-basic-script-canvas',

@@ -1,6 +1,6 @@
 import {GameSound} from '../../../interfaces/game/sound';
 import {Observable, Subscriber} from 'rxjs';
-import {DebugEnvironment} from '../../environment/debug.environment';
+import {DebugEnvironment} from '../../../environment/debug.environment';
 import {Injectable} from '@angular/core';
 import {HttpClient} from '@angular/common/http';
 

@@ -1,9 +1,9 @@
-import { LexerToken } from '../../interfaces/lexer-token';
-import { LexerContext } from '../../enums/lexer/lexer-context';
-import { LexerTokenCategory } from '../../enums/lexer/lexer-token-category';
+import { LexerToken } from '../interfaces/lexer-token';
+import { LexerContext } from '../enums/lexer/lexer-context';
+import { LexerTokenCategory } from '../enums/lexer/lexer-token-category';
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { LanguageService } from '../language/language.service';
+import { LanguageService } from './language.service';
 import { fromArray } from 'rxjs/internal/observable/fromArray';
 
 @Injectable()

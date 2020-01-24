@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {Observable, of} from 'rxjs';
-import {Render2dService} from '../../2d/render2d.service';
-import {GameStateService} from '../../game-state/game-state.service';
+import {GameStateService} from '../../game-state.service';
+import { Render2dService } from '../../render2d.service';
 
 @Injectable()
 export class CommandsGraphics2dPixelService {

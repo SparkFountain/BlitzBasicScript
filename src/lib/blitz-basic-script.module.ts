@@ -5,20 +5,19 @@ import {CommandsBasicsDiverseService} from '../services/commands/basics/diverse.
 import {CommandsBasicsMathsService} from '../services/commands/basics/maths.service';
 import {CommandsBasicsStringsService} from '../services/commands/basics/strings.service';
 import {CommandsBasicsTimeRandomService} from '../services/commands/basics/time-random.service';
-import {GeneralService} from '../services/general/general.service';
-import {GameStateService} from '../services/game-state/game-state.service';
+import {GeneralService} from '../services/general.service';
+import {GameStateService} from '../services/game-state.service';
 import {BabylonJSService} from '../services/babylon-js.service';
 import {CommandsGraphics2dDisplayService} from '../services/commands/graphics2d/display.service';
 import {CommandsGraphics2dGraphicsService} from '../services/commands/graphics2d/graphics.service';
 import {CommandsGraphics3dCameraService} from '../services/commands/graphics3d/camera.service';
 import {CommandsGraphics3dMeshesService} from '../services/commands/graphics3d/meshes.service';
 import {CommandsGraphics3dCoordinatesService} from '../services/commands/graphics3d/coordinates.service';
-import {Render2dService} from '../services/2d/render2d.service';
-import {GuiService} from '../services/gui/gui.service';
+import {GuiService} from '../services/gui.service';
 import {CommonModule} from '@angular/common';
 import {CommandsGraphics2dPixelService} from '../services/commands/graphics2d/pixel.service';
 import {CommandsGraphics2dImagesService} from '../services/commands/graphics2d/images.service';
-import {DebugEnvironment} from '../services/environment/debug.environment';
+import {DebugEnvironment} from '../environment/debug.environment';
 import {CommandsGraphics3dLightShadowService} from '../services/commands/graphics3d/light-shadow.service';
 import {CommandsSoundMusicSamplesService} from '../services/commands/sound/music-samples.service';
 import {CommandsGraphics2dTextService} from '../services/commands/graphics2d/text.service';
@@ -30,9 +29,9 @@ import {BlitzBasicScriptListBoxModule} from '../components/list-box/list-box.mod
 import {BlitzBasicScriptMenuModule} from '../components/menu/menu.module';
 import {BlitzBasicScriptPanelModule} from '../components/panel/panel.module';
 import {BlitzBasicScriptProgressBarModule} from '../components/progress-bar/progress-bar.module';
-import {LanguageService} from '../services/language/language.service';
-import {LexerService} from '../services/lexer/lexer.service';
-import {ParserService} from '../services/parser/parser.service';
+import {LanguageService} from '../services/language.service';
+import {LexerService} from '../services/lexer.service';
+import {ParserService} from '../services/parser.service';
 import {CommandsGraphics3dControlsService} from '../services/commands/graphics3d/controls.service';
 import {CommandsDataBankService} from '../services/commands/data/bank.service';
 import {CommandsGraphics2dMoviesService} from '../services/commands/graphics2d/movies.service';
@@ -74,6 +73,7 @@ import { CommandsGuiIconStripService } from '../services/commands/gui/icon-strip
 import { CommandsGuiListTabberService } from '../services/commands/gui/list-tabber.service';
 import { CommandsGuiMenuService } from '../services/commands/gui/menu.service';
 import { CommandsGuiPanelService } from '../services/commands/gui/panel.service';
+import { Render2dService } from '../services/render2d.service';
 
 @NgModule({
     declarations: [

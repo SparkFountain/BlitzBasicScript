@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, of, Subscriber} from 'rxjs';
-import {GameStateService} from '../../game-state/game-state.service';
+import {GameStateService} from '../../game-state.service';
 
 @Injectable()
 export class CommandsIOMouseService {

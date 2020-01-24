@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { forkJoin, Observable, Subscriber } from 'rxjs';
-import { ApiKeyword } from '../../interfaces/api/api-keyword';
-import { ApiCommand } from '../../interfaces/api/api-command';
+import { ApiKeyword } from '../interfaces/api/api-keyword';
+import { ApiCommand } from '../interfaces/api/api-command';
 import { HttpClient } from '@angular/common/http';
 
 @Injectable()

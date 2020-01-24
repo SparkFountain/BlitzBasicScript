@@ -1,10 +1,10 @@
 import {Injectable} from '@angular/core';
 import {Observable, of, Subscriber} from 'rxjs';
-import {GameStateService} from '../../game-state/game-state.service';
+import {GameStateService} from '../../game-state.service';
 import {HttpClient} from '@angular/common/http';
-import {DebugEnvironment} from '../../environment/debug.environment';
-import {Render2dService} from '../../2d/render2d.service';
+import {DebugEnvironment} from '../../../environment/debug.environment';
 import {GameImage2D} from '../../../interfaces/game/image-2d';
+import { Render2dService } from '../../render2d.service';
 
 @Injectable()
 export class CommandsGraphics2dImagesService {

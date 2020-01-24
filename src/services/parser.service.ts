@@ -1,25 +1,25 @@
-import { LexerToken } from '../../interfaces/lexer-token';
-import { LexerTokenCategory } from '../../enums/lexer/lexer-token-category';
+import { LexerToken } from '../interfaces/lexer-token';
+import { LexerTokenCategory } from '../enums/lexer/lexer-token-category';
 import { Injectable } from '@angular/core';
-import { BBScriptCode } from '../../interfaces/bbscript-code';
-import { GeneralService } from '../general/general.service';
-import { GameStateService } from '../game-state/game-state.service';
-import { ParserState } from '../../enums/parser/parser-state';
-import { LanguageService } from '../language/language.service';
-import { ApiCommand } from '../../interfaces/api/api-command';
+import { BBScriptCode } from '../interfaces/bbscript-code';
+import { GeneralService } from './general.service';
+import { GameStateService } from './game-state.service';
+import { ParserState } from '../enums/parser/parser-state';
+import { LanguageService } from './language.service';
+import { ApiCommand } from '../interfaces/api/api-command';
 import { Observable, of } from 'rxjs';
-import { CameraType } from '../../enums/camera/camera-type';
-import { GameEntity } from '../../interfaces/game/entity';
-import { GameImage2D } from '../../interfaces/game/image-2d';
-import { GameFont } from '../../interfaces/game/font';
+import { CameraType } from '../enums/camera/camera-type';
+import { GameEntity } from '../interfaces/game/entity';
+import { GameImage2D } from '../interfaces/game/image-2d';
+import { GameFont } from '../interfaces/game/font';
 import { Camera, Light } from 'babylonjs';
-import { CommandsBasicsService } from '../commands/basics.service';
-import { CommandsDataService } from '../commands/data.service';
-import { CommandsGraphics2DService } from '../commands/graphics2d.service';
-import { CommandsGraphics3DService } from '../commands/graphics3d.service';
-import { CommandsGUIService } from '../commands/gui.service';
-import { CommandsIOService } from '../commands/io.service';
-import { CommandsSoundService } from '../commands/sound.service';
+import { CommandsBasicsService } from './commands/basics.service';
+import { CommandsDataService } from './commands/data.service';
+import { CommandsGraphics2DService } from './commands/graphics2d.service';
+import { CommandsGraphics3DService } from './commands/graphics3d.service';
+import { CommandsGUIService } from './commands/gui.service';
+import { CommandsIOService } from './commands/io.service';
+import { CommandsSoundService } from './commands/sound.service';
 
 @Injectable({
   providedIn: 'root'

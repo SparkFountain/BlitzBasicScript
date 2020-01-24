@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
-import { LexerService } from '../services/lexer/lexer.service';
-import { ParserService } from '../services/parser/parser.service';
+import { LexerService } from '../services/lexer.service';
+import { ParserService } from '../services/parser.service';
 import { LexerToken } from '../interfaces/lexer-token';
 
 @Injectable({

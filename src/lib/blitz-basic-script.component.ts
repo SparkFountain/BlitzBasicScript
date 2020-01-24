@@ -1,12 +1,12 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
-import { LexerService } from '../services/lexer/lexer.service';
-import { ParserService } from '../services/parser/parser.service';
+import { LexerService } from '../services/lexer.service';
+import { ParserService } from '../services/parser.service';
 import { BBScriptCode } from '../interfaces/bbscript-code';
 import { concat } from 'rxjs';
-import { GameStateService } from '../services/game-state/game-state.service';
+import { GameStateService } from '../services/game-state.service';
 import { BabylonJSService } from '../services/babylon-js.service';
-import { GuiService } from '../services/gui/gui.service';
-import { LanguageService } from '../services/language/language.service';
+import { GuiService } from '../services/gui.service';
+import { LanguageService } from '../services/language.service';
 import { Render2dService } from '../services/render2d.service';
 
 @Component({

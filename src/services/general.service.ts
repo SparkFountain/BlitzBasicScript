@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {forkJoin, Observable, Subscriber} from 'rxjs';
-import {ForToNext} from '../../interfaces/code/loops/for-to-next';
-import {WhileWend} from '../../interfaces/code/loops/while-wend';
-import {RepeatUntil} from '../../interfaces/code/loops/repeat-until';
-import {SelectCase} from '../../interfaces/code/conditions/select-case';
-import {GameStateService} from '../game-state/game-state.service';
-import {Assignment} from '../../interfaces/code/assignment';
-import {IfThenElse} from '../../interfaces/code/conditions/if-then-else';
-import {Expression} from '../../interfaces/code/expressions/expression';
+import {ForToNext} from '../interfaces/code/loops/for-to-next';
+import {WhileWend} from '../interfaces/code/loops/while-wend';
+import {RepeatUntil} from '../interfaces/code/loops/repeat-until';
+import {SelectCase} from '../interfaces/code/conditions/select-case';
+import {Assignment} from '../interfaces/code/assignment';
+import {IfThenElse} from '../interfaces/code/conditions/if-then-else';
+import {Expression} from '../interfaces/code/expressions/expression';
+import { GameStateService } from './game-state.service';
 
 @Injectable()
 export class GeneralService {
