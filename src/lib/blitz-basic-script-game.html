@@ -1,0 +1,35 @@
+<div id="bbscript-top-bar">
+  <p class="bbscript-game-title">{{ title }}</p>
+  <div class="bbscript-right-buttons">
+    <button *ngIf="!playing" (click)="play()">
+      <i class="fa fa-fw fa-play-circle" aria-hidden="true"></i>
+    </button>
+    <button *ngIf="debug" (click)="debug()">
+      <i class="fa fa-fw fa-bug" aria-hidden="true"></i>
+    </button>
+    <button *ngIf="playing" (click)="stop()">
+      <i class="fa fa-fw fa-stop-circle" aria-hidden="true"></i>
+    </button>
+  </div>
+</div>
+
+<div id="bbscript-canvas-container">
+  <!-- [ngStyle]="{'width': gameState.get('screen.width') + 'px', 'height': gameState.get('screen.height') + 'px'}" -->
+  <canvas #canvas3d (focus)="canvasFocused = true" (blur)="canvasFocused = false">
+  </canvas>
+
+  <canvas #canvas2d></canvas>
+
+  <!-- <div id="bbscript-gui-container"
+       [ngStyle]="{'width': '1000px', 'height': '1000px'}"
+  >
+    <blitz-basic-script-button
+            [text]="'Ein toller Button'"
+            [x]="100"
+            [y]="50"
+            [width]="300"
+            [height]="100"
+            [style]="2"
+    ></blitz-basic-script-button>
+  </div> -->
+</div>

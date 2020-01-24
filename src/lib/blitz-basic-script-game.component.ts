@@ -8,19 +8,23 @@ import { BabylonJSService } from '../services/babylon-js.service';
 import { GuiService } from '../services/gui.service';
 import { LanguageService } from '../services/language.service';
 import { Render2dService } from '../services/render2d.service';
+import { LexerToken } from '../interfaces/lexer-token';
 
 @Component({
   selector: 'blitz-basic-script-game',
-  templateUrl: 'blitz-basic-script.html',
-  styleUrls: ['blitz-basic-script.scss']
+  templateUrl: 'blitz-basic-script-game.html',
+  styleUrls: ['blitz-basic-script-game.scss']
 })
 export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
-  @Input() code: string[][];
-  @Input() debug?: boolean;
+  @Input() code: string[];
+  @Input() debugMode?: boolean;
+  @Input() title?: string;
 
   @ViewChild('canvas2d', { static: false }) canvas2d: ElementRef;
   @ViewChild('canvas3d', { static: false }) canvas3d: ElementRef;
   public canvasFocused: boolean;
+
+  public playing: boolean;
 
   /** Key code conversion schema **/
   private readonly keyCodes = {
@@ -156,19 +160,36 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     private gui: GuiService
   ) {
     this.canvasFocused = false;
+    this.playing = false;
   }
 
   ngOnInit(): void {
-
+    if (this.title === undefined) {
+      this.title = 'BlitzBasicScript Game';
+    }
   }
 
   ngAfterViewInit(): void {
 
   }
 
-  executeCode(code: BBScriptCode): void {
-    console.info('CHECK!!!!!!!');
+  play(): void {
+    this.playing = true;
 
+    const tokens: LexerToken[][] = this.lexer.lexCode(this.code);
+    const gameCode: BBScriptCode = this.parser.createGameCode(tokens);
+    this.executeCode(gameCode);
+  }
+
+  debug(): void {
+    console.warn('Debug mode has not been implemented yet.');
+  }
+
+  stop(): void {
+    this.playing = false;
+  }
+
+  executeCode(code: BBScriptCode): void {
     // Initialize BabylonJS Engine
     this.babylonjs.initEngine(this.canvas3d.nativeElement);
 
@@ -203,7 +224,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
       this.executeCode(bbscriptCode);*/
     });
 
-    if (this.debug) {
+    if (this.debugMode) {
       // TODO different code execution with break points
     }
 

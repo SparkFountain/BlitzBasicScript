@@ -6,7 +6,7 @@ import { LexerToken } from '../interfaces/lexer-token';
 @Injectable({
   providedIn: 'root'
 })
-export class BlitzBasicScriptService {
+export class BlitzBasicScriptGameService {
 
   constructor(private lexer: LexerService, private parser: ParserService) {
   }
