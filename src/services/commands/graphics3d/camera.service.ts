@@ -1,4 +1,4 @@
-import { BabylonJSService } from '../../babylon-js/babylon-js.service';
+import { BabylonJSService } from '../../babylon-js.service';
 import { Observable, Subscriber, of } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { GameEntity } from '../../../interfaces/game/entity';

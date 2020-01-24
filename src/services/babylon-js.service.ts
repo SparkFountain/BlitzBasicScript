@@ -2,9 +2,9 @@ import {Injectable} from '@angular/core';
 
 import * as BABYLON from 'babylonjs';
 import {concat, Observable, Subscriber} from 'rxjs';
-import {CameraType} from '../../enums/camera/camera-type';
-import {Axis} from '../../enums/axis';
-import {LightType} from '../../enums/light/light-type';
+import {CameraType} from '../enums/camera/camera-type';
+import {Axis} from '../enums/axis';
+import {LightType} from '../enums/light/light-type';
 import Mesh = BABYLON.Mesh;
 import Camera = BABYLON.Camera;
 import Light = BABYLON.Light;

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subscriber } from 'rxjs';
-import { BabylonJSService } from '../../babylon-js/babylon-js.service';
+import { BabylonJSService } from '../../babylon-js.service';
 import { Graphics2dService } from '../../2d/graphics2d.service';
 import { GameStateService } from '../../game-state/game-state.service';
 

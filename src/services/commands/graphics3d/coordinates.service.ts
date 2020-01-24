@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BabylonJSService } from '../../babylon-js/babylon-js.service';
+import { BabylonJSService } from '../../babylon-js.service';
 import { Axis } from '../../../enums/axis';
 import { Observable, of } from 'rxjs';
 import { GameEntity } from '../../../interfaces/game/entity';

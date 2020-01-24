@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {Observable, Subscriber} from 'rxjs';
-import {BabylonJSService} from '../../babylon-js/babylon-js.service';
+import {BabylonJSService} from '../../babylon-js.service';
 import {LightType} from '../../../enums/light/light-type';
 import { Light } from 'babylonjs';
 

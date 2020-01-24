@@ -4,13 +4,12 @@ import { ParserService } from '../services/parser/parser.service';
 import { BBScriptCode } from '../interfaces/bbscript-code';
 import { concat } from 'rxjs';
 import { GameStateService } from '../services/game-state/game-state.service';
-import { BabylonJSService } from '../services/babylon-js/babylon-js.service';
-import { Graphics2dService } from '../services/2d/graphics2d.service';
+import { BabylonJSService } from '../services/babylon-js.service';
 import { GuiService } from '../services/gui/gui.service';
 import { LanguageService } from '../services/language/language.service';
 
 @Component({
-  selector: 'blitz-basic-script-canvas',
+  selector: 'blitz-basic-script-game',
   templateUrl: 'blitz-basic-script.html',
   styleUrls: ['blitz-basic-script.scss']
 })
@@ -152,7 +151,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     private parser: ParserService,
     private gameState: GameStateService,
     private babylonjs: BabylonJSService,
-    private graphics2d: Graphics2dService,
+    private render2d: Render2dService,
     private gui: GuiService
   ) {
     this.canvasFocused = false;
@@ -176,7 +175,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     this.babylonjs.createScene();
 
     // Initialize 2D Service
-    this.graphics2d.initCanvas(this.canvas2d.nativeElement);
+    this.render2d.initCanvas(this.canvas2d.nativeElement);
     console.info('initCanvas executed');
 
     // Initialize GUI Service
