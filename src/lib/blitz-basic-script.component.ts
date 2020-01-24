@@ -7,6 +7,7 @@ import { GameStateService } from '../services/game-state/game-state.service';
 import { BabylonJSService } from '../services/babylon-js.service';
 import { GuiService } from '../services/gui/gui.service';
 import { LanguageService } from '../services/language/language.service';
+import { Render2dService } from '../services/render2d.service';
 
 @Component({
   selector: 'blitz-basic-script-game',

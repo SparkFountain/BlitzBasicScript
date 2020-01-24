@@ -1,13 +1,13 @@
 import {Injectable} from '@angular/core';
 import {BabylonJSService} from '../../babylon-js.service';
 import {concat, Observable, of} from 'rxjs';
-import {Graphics2dService} from '../../2d/graphics2d.service';
+import {Render2dService} from '../../2d/render2d.service';
 import {GameStateService} from '../../game-state/game-state.service';
 
 @Injectable()
 export class CommandsGraphics2dDisplayService {
     constructor(private babylonjs: BabylonJSService,
-                private graphics2d: Graphics2dService,
+                private graphics2d: Render2dService,
                 private gameState: GameStateService
     ) {
 
