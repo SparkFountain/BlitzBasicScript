@@ -15,6 +15,8 @@ export class Render2dService {
 
   initCanvas(canvas: HTMLCanvasElement) {
     this._canvas = canvas;
+    this._canvas.width = 800;
+    this._canvas.height = 600;
     this._context2d = this._canvas.getContext('2d');
   }
 

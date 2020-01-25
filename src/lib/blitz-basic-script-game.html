@@ -4,7 +4,7 @@
     <button *ngIf="!playing" (click)="play()">
       <i class="fa fa-fw fa-play-circle" aria-hidden="true"></i>
     </button>
-    <button *ngIf="debug" (click)="debug()">
+    <button *ngIf="debugMode && !playing" (click)="debug()">
       <i class="fa fa-fw fa-bug" aria-hidden="true"></i>
     </button>
     <button *ngIf="playing" (click)="stop()">

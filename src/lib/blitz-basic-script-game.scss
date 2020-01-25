@@ -1,12 +1,12 @@
 #bbscript-canvas-container {
   position: relative;
-  width: 100%;
-  height: 100%;
+  width: 800px;
+  height: 600px;
   // background: purple;
 
   canvas {
-    width: 100%;
-    height: 100%;
+    width: 800px;
+    height: 600px;
     position: absolute;
     border: 1px #eee solid;
   }

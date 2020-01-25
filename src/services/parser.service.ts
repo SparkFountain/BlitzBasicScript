@@ -256,6 +256,15 @@ export class ParserService {
   // [Sar]: [NumExpr] Shl [NumExpr]
   // [Sar]: [NumExpr] Shr [NumExpr]
   createGameCode(lexerCode: Array<LexerToken[]>): BBScriptCode {
+    // reset game code
+    this.gameCode = {
+      globals: [],
+      statements: [],
+      mainLoop: [],
+      functions: [],
+      types: []
+    };
+
     // parse code line by line
     lexerCode.forEach((lexerTokens: LexerToken[]) => {
       // perform token cleanup: remove comments
