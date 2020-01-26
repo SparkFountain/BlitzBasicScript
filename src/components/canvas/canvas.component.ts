@@ -98,7 +98,7 @@ export class BlitzBasicScriptCanvasComponent implements OnInit, AfterViewInit {
     this.gameCode = this.parser.createGameCode(this.tokens);
     // console.info('Game code:', this.gameCode);
 
-    concat(...this.gameCode.statements$).subscribe(() => {
+    concat(...this.gameCode.statements).subscribe(() => {
       // TODO: some log info etc. on each executed statement
     });
   }

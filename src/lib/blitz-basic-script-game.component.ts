@@ -2,13 +2,20 @@ import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, View
 import { LexerService } from '../services/lexer.service';
 import { ParserService } from '../services/parser.service';
 import { BBScriptCode } from '../interfaces/bbscript-code';
-import { concat } from 'rxjs';
+import { concat, Observable, Subscriber } from 'rxjs';
 import { GameStateService } from '../services/game-state.service';
 import { BabylonJSService } from '../services/babylon-js.service';
 import { GuiService } from '../services/gui.service';
 import { LanguageService } from '../services/language.service';
 import { Render2dService } from '../services/render2d.service';
 import { LexerToken } from '../interfaces/lexer-token';
+import { CommandsBasicsService } from '../services/commands/basics.service';
+import { CommandsDataService } from '../services/commands/data.service';
+import { CommandsGraphics2DService } from '../services/commands/graphics2d.service';
+import { CommandsGraphics3DService } from '../services/commands/graphics3d.service';
+import { CommandsGUIService } from '../services/commands/gui.service';
+import { CommandsIOService } from '../services/commands/io.service';
+import { CommandsSoundService } from '../services/commands/sound.service';
 
 @Component({
   selector: 'blitz-basic-script-game',
@@ -157,7 +164,15 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     private gameState: GameStateService,
     private babylonjs: BabylonJSService,
     private render2d: Render2dService,
-    private gui: GuiService
+    // private gui: GuiService,
+
+    private basics: CommandsBasicsService,
+    private data: CommandsDataService,
+    private graphics2d: CommandsGraphics2DService,
+    private graphics3d: CommandsGraphics3DService,
+    private gui: CommandsGUIService,
+    private io: CommandsIOService,
+    private sound: CommandsSoundService
   ) {
     this.canvasFocused = false;
     this.playing = false;
@@ -232,16 +247,24 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     console.info('Executing Code');
 
     // TODO handle main loop
+    let stm = code.statements[0];
+    this[stm.category][stm.command](...stm.params).subscribe((res) => {
+      this.gameState.setGlobal(stm.global, res);
 
-    concat(...code.statements$).subscribe(
-      () => {
-        console.info('Next statement has been executed.');
-      },
-      () => {
-      },
-      () => {
-        console.info('### ALL CODE STATEMENTS EXECUTED ###');
-      }
-    );
+      let stm2 = code.statements[1];
+      console.info('Statement 2:', stm2);
+      this[stm2.category][stm2.command](...stm2.params).subscribe();
+    });
+
+    // concat(...code.statements.fn()).subscribe(
+    //   () => {
+    //     console.info('Next statement has been executed.');
+    //   },
+    //   () => {
+    //   },
+    //   () => {
+    //     console.info('### ALL CODE STATEMENTS EXECUTED ###');
+    //   }
+    // );
   }
 }

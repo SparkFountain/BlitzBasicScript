@@ -175,6 +175,7 @@ export class GameStateService {
   }
 
   setGlobal(variableName: string, value: any): any {
+    console.info('Set Global:', variableName, value);
     this.global[variableName] = value;
   }
 

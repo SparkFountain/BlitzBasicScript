@@ -161,6 +161,7 @@ export class CommandsGraphics2DService {
   }
 
   loadImage(filePath: string): Observable<GameImage2D> {
+    console.info('Load Image:', filePath);
     return this.imagesService.loadImage(filePath);
   }
 

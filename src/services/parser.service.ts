@@ -20,9 +20,9 @@ import { CommandsGraphics3DService } from './commands/graphics3d.service';
 import { CommandsGUIService } from './commands/gui.service';
 import { CommandsIOService } from './commands/io.service';
 import { CommandsSoundService } from './commands/sound.service';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { map, switchMap, tap, withLatestFrom } from 'rxjs/operators';
 
-type CommandResponse = { category: string, command: string, params$: Observable<any>[] };
+type CommandResponse = { category: string, command: string, params: any[] };
 
 @Injectable({
   providedIn: 'root'
@@ -111,7 +111,7 @@ export class ParserService {
     this.resetParser();
     this.gameCode = {
       globals: [],
-      statements$: [],
+      statements: [],
       mainLoop$: [],
       functions$: [],
       types: []
@@ -262,7 +262,7 @@ export class ParserService {
     // reset game code
     this.gameCode = {
       globals: [],
-      statements$: [],
+      statements: [],
       mainLoop$: [],
       functions$: [],
       types: []
@@ -411,17 +411,12 @@ export class ParserService {
           case 'expression':
             if (token.which === LexerTokenCategory.COMMAND) {
               const cmdResponse: CommandResponse = this.simpleCommandParser(global.slice(2), true) as CommandResponse;
-              this.gameCode.statements$.push(
-                forkJoin(cmdResponse.params$).pipe(
-                  tap((paramValues: any[]) => console.info('PARAM VALUES:', paramValues)),
-                  switchMap((paramValues: any[]) => {
-                    return this[cmdResponse.category][cmdResponse.command](...paramValues)
-                  }),
-                  tap((result: any) => {
-                    this.gameState.setGlobal(variable, result)
-                  })
-                )
-              );
+              this.gameCode.statements.push({
+                global: variable,
+                category: cmdResponse.category,
+                command: cmdResponse.command,
+                params: cmdResponse.params
+              });
               return;
             }
         }
@@ -457,15 +452,15 @@ export class ParserService {
     let commandParams: number = reducedTokens.length - 1;
     if (commandParams >= minParams && commandParams <= maxParams) {
       reducedTokens.shift();  // remove command itself
-      const finalParams$: Observable<any>[] = [];
+      const finalParams: any[] = [];
       reducedTokens.forEach(t => {
         if (t.which === LexerTokenCategory.VARIABLE) {
-          finalParams$.push(this.gameState.getGlobal$(t.value));
+          finalParams.push(this.gameState.getGlobal(t.value)) // this function must NOT be called here!
         } else if ([LexerTokenCategory.INTEGER, LexerTokenCategory.FLOAT].indexOf(t.which) > -1) {
           // convert numbers to correct numbers
-          finalParams$.push(of(Number(t.value)));
+          finalParams.push(Number(t.value));
         } else {
-          finalParams$.push(of(t.value));
+          finalParams.push(t.value);
         }
       });
 
@@ -476,17 +471,14 @@ export class ParserService {
         return {
           category: cmdFromJson.category,
           command: cmdCall,
-          params$: finalParams$
+          params: finalParams
         };
       } else {
-        this.gameCode.statements$.push(
-          forkJoin(finalParams$).pipe(
-            tap((paramValues: any[]) => console.info('PARAM VALUES:', paramValues)),
-            switchMap((paramValues: any[]) => {
-              return this[cmdFromJson.category][cmdCall](...paramValues);
-            })
-          )
-        );
+        this.gameCode.statements.push({
+          category: cmdFromJson.category,
+          command: cmdCall,
+          params: finalParams
+        });
       }
     } else {
       console.error(
@@ -684,169 +676,169 @@ export class ParserService {
         console.info('Service:', service);
 
         //TODO code must be executed later, for the services are not initialized yet
-        this.gameCode.statements$.push(
-          this.graphics2d.graphics(800, 600),
-          //this.graphics2d.cameraClsColor(255,0,0),  //TODO wrong implementation, fix
-          this.generalService.assign({
-            variable: 'i',
-            type: 'global',
-            expression: {
-              value: of(42)
-            }
-          }),
+        this.gameCode.statements.push(
+          // this.graphics2d.graphics(800, 600),
+          // //this.graphics2d.cameraClsColor(255,0,0),  //TODO wrong implementation, fix
+          // this.generalService.assign({
+          //   variable: 'i',
+          //   type: 'global',
+          //   expression: {
+          //     value: of(42)
+          //   }
+          // }),
 
-          //CAMERA
-          this.generalService.assign({
-            variable: 'camera',
-            type: 'global',
-            expression: {
-              value: this.graphics3d.createCamera(CameraType.FREE)
-            }
-          }),
-          new Observable(observer => {
-            this.gameState.getGlobal$('camera').subscribe((camera: GameEntity) => {
-              this.graphics3d.positionEntity(camera, 0, 2, -5).subscribe(() => {
-                observer.next();
-                observer.complete();
-              });
-            });
-          }),
-          new Observable(observer => {
-            this.gameState.getGlobal$('camera').subscribe((camera: Camera) => {
-              this.graphics3d.cameraClsColor(camera, 50, 200, 240).subscribe(() => {
-                observer.next();
-                observer.complete();
-              });
-            });
-          }),
+          // //CAMERA
+          // this.generalService.assign({
+          //   variable: 'camera',
+          //   type: 'global',
+          //   expression: {
+          //     value: this.graphics3d.createCamera(CameraType.FREE)
+          //   }
+          // }),
+          // new Observable(observer => {
+          //   this.gameState.getGlobal$('camera').subscribe((camera: GameEntity) => {
+          //     this.graphics3d.positionEntity(camera, 0, 2, -5).subscribe(() => {
+          //       observer.next();
+          //       observer.complete();
+          //     });
+          //   });
+          // }),
+          // new Observable(observer => {
+          //   this.gameState.getGlobal$('camera').subscribe((camera: Camera) => {
+          //     this.graphics3d.cameraClsColor(camera, 50, 200, 240).subscribe(() => {
+          //       observer.next();
+          //       observer.complete();
+          //     });
+          //   });
+          // }),
 
-          //LIGHT
-          this.generalService.assign({
-            variable: 'light',
-            type: 'global',
-            expression: {
-              value: this.graphics3d.createLight(1)
-            }
-          }),
-          new Observable(observer => {
-            this.gameState.getGlobal$('light').subscribe((light: Light) => {
-              this.graphics3d.lightColor(light, 255, 255, 0).subscribe(() => {
-                observer.next();
-                observer.complete();
-              });
-            });
-          }),
+          // //LIGHT
+          // this.generalService.assign({
+          //   variable: 'light',
+          //   type: 'global',
+          //   expression: {
+          //     value: this.graphics3d.createLight(1)
+          //   }
+          // }),
+          // new Observable(observer => {
+          //   this.gameState.getGlobal$('light').subscribe((light: Light) => {
+          //     this.graphics3d.lightColor(light, 255, 255, 0).subscribe(() => {
+          //       observer.next();
+          //       observer.complete();
+          //     });
+          //   });
+          // }),
 
-          //PRIMITIVE MESH
-          this.generalService.assign({
-            variable: 'cube',
-            type: 'global',
-            expression: {
-              value: this.graphics3d.createCube()
-            }
-          }),
-          new Observable(observer => {
-            this.gameState.getGlobal$('cube').subscribe((cube: GameEntity) => {
-              this.graphics3d.positionEntity(cube, 0, 1, 0).subscribe(done => {
-                observer.next();
-                observer.complete();
-              });
-            });
-          }),
-          new Observable(observer => {
-            this.gameState.getGlobal$('cube').subscribe((cube: GameEntity) => {
-              this.graphics3d.entityColor(cube, 0, 255, 0).subscribe(done => {
-                observer.next();
-                observer.complete();
-              });
-            });
-          }),
+          // //PRIMITIVE MESH
+          // this.generalService.assign({
+          //   variable: 'cube',
+          //   type: 'global',
+          //   expression: {
+          //     value: this.graphics3d.createCube()
+          //   }
+          // }),
+          // new Observable(observer => {
+          //   this.gameState.getGlobal$('cube').subscribe((cube: GameEntity) => {
+          //     this.graphics3d.positionEntity(cube, 0, 1, 0).subscribe(done => {
+          //       observer.next();
+          //       observer.complete();
+          //     });
+          //   });
+          // }),
+          // new Observable(observer => {
+          //   this.gameState.getGlobal$('cube').subscribe((cube: GameEntity) => {
+          //     this.graphics3d.entityColor(cube, 0, 255, 0).subscribe(done => {
+          //       observer.next();
+          //       observer.complete();
+          //     });
+          //   });
+          // }),
 
-          this.graphics3d.ambientLight(128, 200, 50),
+          // this.graphics3d.ambientLight(128, 200, 50),
 
-          //2D GRAPHICS
-          this.graphics2d.color(0, 128, 0),
+          // //2D GRAPHICS
+          // this.graphics2d.color(0, 128, 0),
 
-          //this.commandsBasicsTimeRandom.delay(2000),
+          // //this.commandsBasicsTimeRandom.delay(2000),
 
-          this.graphics2d.oval(50, 200, 20, 40, false),
-          this.graphics2d.line(300, 40, 350, 120),
+          // this.graphics2d.oval(50, 200, 20, 40, false),
+          // this.graphics2d.line(300, 40, 350, 120),
 
-          //this.graphics2d.color(255, 255, 0),
-          this.graphics2d.plot(200, 200),
+          // //this.graphics2d.color(255, 255, 0),
+          // this.graphics2d.plot(200, 200),
 
-          //IMAGE
-          this.graphics2d.autoMidHandle(true),
-          this.generalService.assign({
-            variable: 'image',
-            type: 'global',
-            expression: {
-              value: this.graphics2d.loadImage('/assets/gfx/face.png')
-            }
-          }),
-          new Observable(observer => {
-            this.gameState.getGlobal$('image').subscribe((image: GameImage2D) => {
-              this.graphics2d.resizeImage(image, 128, 128).subscribe(() => {
-                observer.next();
-                observer.complete();
-              });
-            });
-          }),
-          new Observable(observer => {
-            this.gameState.getGlobal$('image').subscribe((image: GameImage2D) => {
-              this.graphics2d.rotateImage(image, 30).subscribe(() => {
-                observer.next();
-                observer.complete();
-              });
-            });
-          }),
-          new Observable(observer => {
-            this.gameState.getGlobal$('image').subscribe((image: GameImage2D) => {
-              this.graphics2d.drawBlock(image, 200, 250).subscribe(() => {
-                observer.next();
-                observer.complete();
-              });
-            });
-          }),
-          this.graphics2d.rect(195, 245, 10, 10, true),
-          this.graphics2d.rect(195 - 64, 245 - 64, 10, 10, true),
+          // //IMAGE
+          // this.graphics2d.autoMidHandle(true),
+          // this.generalService.assign({
+          //   variable: 'image',
+          //   type: 'global',
+          //   expression: {
+          //     value: this.graphics2d.loadImage('/assets/gfx/face.png')
+          //   }
+          // }),
+          // new Observable(observer => {
+          //   this.gameState.getGlobal$('image').subscribe((image: GameImage2D) => {
+          //     this.graphics2d.resizeImage(image, 128, 128).subscribe(() => {
+          //       observer.next();
+          //       observer.complete();
+          //     });
+          //   });
+          // }),
+          // new Observable(observer => {
+          //   this.gameState.getGlobal$('image').subscribe((image: GameImage2D) => {
+          //     this.graphics2d.rotateImage(image, 30).subscribe(() => {
+          //       observer.next();
+          //       observer.complete();
+          //     });
+          //   });
+          // }),
+          // new Observable(observer => {
+          //   this.gameState.getGlobal$('image').subscribe((image: GameImage2D) => {
+          //     this.graphics2d.drawBlock(image, 200, 250).subscribe(() => {
+          //       observer.next();
+          //       observer.complete();
+          //     });
+          //   });
+          // }),
+          // this.graphics2d.rect(195, 245, 10, 10, true),
+          // this.graphics2d.rect(195 - 64, 245 - 64, 10, 10, true),
 
-          //TEXT
-          this.generalService.assign({
-            variable: 'font',
-            type: 'global',
-            expression: {
-              value: this.graphics2d.loadFont('Arial', 32, true, true, true)
-            }
-          }),
-          new Observable(observer => {
-            this.gameState.getGlobal$('font').subscribe((font: GameFont) => {
-              this.graphics2d.setFont(font).subscribe(() => {
-                observer.next();
-                observer.complete();
-              });
-            });
-          }),
+          // //TEXT
+          // this.generalService.assign({
+          //   variable: 'font',
+          //   type: 'global',
+          //   expression: {
+          //     value: this.graphics2d.loadFont('Arial', 32, true, true, true)
+          //   }
+          // }),
+          // new Observable(observer => {
+          //   this.gameState.getGlobal$('font').subscribe((font: GameFont) => {
+          //     this.graphics2d.setFont(font).subscribe(() => {
+          //       observer.next();
+          //       observer.complete();
+          //     });
+          //   });
+          // }),
 
-          this.graphics2d.text(50, 50, 'HELLO WORLD!'),
-          this.graphics2d.stringWidth('HELLO WORLD!'),
-          this.graphics2d.stringHeight('HELLO WORLD!'),
-          this.generalService.assign({
-            variable: 'rndValue',
-            type: 'global',
-            expression: {
-              value: of('Hello World')
-            }
-          }),
-          this.basics.seedRnd('Hello World'),
-          new Observable(observer => {
-            this.gameState.getGlobal$('image').subscribe((image: GameImage2D) => {
-              this.graphics2d.maskImage(image, 255, 0, 255).subscribe(() => {
-                observer.next();
-                observer.complete();
-              });
-            });
-          })
+          // this.graphics2d.text(50, 50, 'HELLO WORLD!'),
+          // this.graphics2d.stringWidth('HELLO WORLD!'),
+          // this.graphics2d.stringHeight('HELLO WORLD!'),
+          // this.generalService.assign({
+          //   variable: 'rndValue',
+          //   type: 'global',
+          //   expression: {
+          //     value: of('Hello World')
+          //   }
+          // }),
+          // this.basics.seedRnd('Hello World'),
+          // new Observable(observer => {
+          //   this.gameState.getGlobal$('image').subscribe((image: GameImage2D) => {
+          //     this.graphics2d.maskImage(image, 255, 0, 255).subscribe(() => {
+          //       observer.next();
+          //       observer.complete();
+          //     });
+          //   });
+          // })
         );
     }
   }

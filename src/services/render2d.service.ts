@@ -249,23 +249,23 @@ export class Render2dService {
   }
 
   drawImage(image: GameImage2D, x: number, y: number, frame?: number): Observable<void> {
-    console.info('DRAW IMAGE', image);
-    return of(null);
-    // if (image.maskColor) {
-    //   return new Observable<void>((observer: Subscriber<void>) => {
-    //     if (!image.maskedElement) {
-    //       console.error('Image has no mask color');
-    //     } else {
-    //       let origin = this.getOrigin();
-    //       this._context2d.drawImage(image.maskedElement, x + origin.x, y + origin.y);
+    console.info('Draw image:', image);
+    // image = this.gameState.getGlobal('image');
+    if (image.maskColor) {
+      return new Observable<void>((observer: Subscriber<void>) => {
+        if (!image.maskedElement) {
+          console.error('Image has no mask color');
+        } else {
+          let origin = this.getOrigin();
+          this._context2d.drawImage(image.maskedElement, x + origin.x, y + origin.y);
 
-    //       observer.next();
-    //       observer.complete();
-    //     }
-    //   });
-    // } else {
-    //   return this.drawBlock(image, x, y);
-    // }
+          observer.next();
+          observer.complete();
+        }
+      });
+    } else {
+      return this.drawBlock(image, x, y);
+    }
   }
 
   text(x: number, y: number, text: string, centerX?: boolean, centerY?: boolean): Observable<void> {

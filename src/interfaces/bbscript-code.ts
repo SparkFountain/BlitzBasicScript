@@ -1,9 +1,14 @@
-import {Observable} from 'rxjs';
+import { Observable } from 'rxjs';
 
 export interface BBScriptCode {
-    globals: object;
-    statements$: Observable<any>[];
-    mainLoop$: Observable<any>[];
-    functions$: Observable<any>[];
-    types: object;
+  globals: object;
+  statements: {
+    category: string,
+    command: string,
+    params: any[],
+    global?: string
+  }[];
+  mainLoop$: Observable<any>[];
+  functions$: Observable<any>[];
+  types: object;
 }

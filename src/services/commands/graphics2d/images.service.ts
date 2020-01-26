@@ -139,7 +139,7 @@ export class CommandsGraphics2dImagesService {
   }
 
   loadImage(filePath: string): Observable<GameImage2D> {
-    // console.info('LOAD IMAGE', `${this.environment.getServer()}`, filePath);
+    console.info('LOAD IMAGE', `${this.environment.getServer()}`, filePath);
     return new Observable<GameImage2D>((observer: Subscriber<GameImage2D>) => {
       //info: the responseType conversion to JSON is a workaround, see https://github.com/angular/angular/issues/18586
       this.http.get<Blob>(`${this.environment.getServer()}${filePath}`, { responseType: 'blob' as 'json' })
