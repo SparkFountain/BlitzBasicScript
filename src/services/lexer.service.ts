@@ -60,13 +60,13 @@ export class LexerService {
           //TODO distinguish between "global local" and "function local"
           break;
         case 'global':
-          this.individualContext = LexerTokenCategory.GLOBAL;
+          this.individualContext = LexerTokenCategory.VARIABLE;
           break;
         case 'function':
           this.individualContext = LexerTokenCategory.FUNCTION;
           break;
         case 'dim':
-          this.individualContext = LexerTokenCategory.DIM;
+          this.individualContext = LexerTokenCategory.VARIABLE;
           break;
         case 'type':
           this.individualContext = LexerTokenCategory.TYPE;
@@ -90,13 +90,12 @@ export class LexerService {
     } else if (this.individuals.types.indexOf(chars) > -1) {
       return { which: LexerTokenCategory.TYPE, value: chars, offset: { x: i + 1, y: 0 } }
     } else if (this.individuals.globals.indexOf(chars) > -1) {
-      return { which: LexerTokenCategory.GLOBAL, value: chars, offset: { x: i + 1, y: 0 } }
+      return { which: LexerTokenCategory.VARIABLE, value: chars, offset: { x: i + 1, y: 0 } }
     } else if (this.individuals.globals.indexOf(chars) > -1) {
-      return { which: LexerTokenCategory.DIM, value: chars, offset: { x: i + 1, y: 0 } }
+      return { which: LexerTokenCategory.VARIABLE, value: chars, offset: { x: i + 1, y: 0 } }
     } else {
       if (chars.length > 0) {
         //individuals can be user functions or variable names
-        console.info('this.isInteger(chars)', this.isInteger(chars));
         return { which: this.individualContext, value: chars, offset: { x: i + 1, y: 0 } };
       } else {
         return { which: LexerTokenCategory.EMPTY, value: '', offset: { x: i + 1, y: 0 } };
@@ -263,16 +262,23 @@ export class LexerService {
               chars = '';
               break;
             case '.':
-              if (this.isInteger(codeLine[i - 1])) {
-                //float number
+              if (i === endIndex) {
+                // invalid (another char must follow)
+                tokens.push({
+                  which: LexerTokenCategory.INVALID,
+                  value: chars,
+                  offset: { x: codeLine.length - chars.length, y: 0 }
+                });
+              } else if (this.isInteger(codeLine[i + 1])) {
+                // float number
                 chars += codeLine[i];
               } else if (tokens.length === 0) {
-                //label
+                // label
                 tokens.push({ which: LexerTokenCategory.LABEL_DOT, value: '.', offset: { x: 0, y: 0 } });
                 tokens.push({ which: LexerTokenCategory.LABEL, value: codeLine.substr(1), offset: { x: 1, y: 0 } });
                 return this.removeEmptyTokens(tokens);
               } else {
-                //type field access
+                // type field access
                 tokens.push(this.getTokenObject(chars, i - chars.length));
                 tokens.push({ which: LexerTokenCategory.TYPE_FIELD_DOT, value: '.', offset: { x: i + 1, y: 0 } });
                 chars = '';

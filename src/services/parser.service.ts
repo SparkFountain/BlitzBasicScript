@@ -7,7 +7,7 @@ import { GameStateService } from './game-state.service';
 import { ParserState } from '../enums/parser/parser-state';
 import { LanguageService } from './language.service';
 import { ApiCommand } from '../interfaces/api/api-command';
-import { Observable, of } from 'rxjs';
+import { Observable, of, forkJoin } from 'rxjs';
 import { CameraType } from '../enums/camera/camera-type';
 import { GameEntity } from '../interfaces/game/entity';
 import { GameImage2D } from '../interfaces/game/image-2d';
@@ -20,6 +20,9 @@ import { CommandsGraphics3DService } from './commands/graphics3d.service';
 import { CommandsGUIService } from './commands/gui.service';
 import { CommandsIOService } from './commands/io.service';
 import { CommandsSoundService } from './commands/sound.service';
+import { map, switchMap, tap } from 'rxjs/operators';
+
+type CommandResponse = { category: string, command: string, params$: Observable<any>[] };
 
 @Injectable({
   providedIn: 'root'
@@ -108,9 +111,9 @@ export class ParserService {
     this.resetParser();
     this.gameCode = {
       globals: [],
-      statements: [],
-      mainLoop: [],
-      functions: [],
+      statements$: [],
+      mainLoop$: [],
+      functions$: [],
       types: []
     };
   }
@@ -259,9 +262,9 @@ export class ParserService {
     // reset game code
     this.gameCode = {
       globals: [],
-      statements: [],
-      mainLoop: [],
-      functions: [],
+      statements$: [],
+      mainLoop$: [],
+      functions$: [],
       types: []
     };
 
@@ -315,7 +318,7 @@ export class ParserService {
       //TODO: this is only a very basic parsing function
       // remove double quote and comma tokens
       initialTokens.forEach((token: LexerToken, index: number) => {
-        if (token.which === LexerTokenCategory.DOUBLE_QUOTE || token.which === LexerTokenCategory.COMMA) {
+        if (token.which === LexerTokenCategory.DOUBLE_QUOTE) {
           initialTokens.splice(index, 1);
         }
       });
@@ -331,28 +334,30 @@ export class ParserService {
         this.simpleCommandParser(initialTokens, false);
       } else if (firstToken.which === LexerTokenCategory.KEYWORD && firstToken.value.toLowerCase() === 'global') {
         console.info('GLOBAL FOUND');
-        const varName = initialTokens[1].value;
-        switch (initialTokens[3].which) {
-          case LexerTokenCategory.COMMAND:
-            this.simpleCommandParser(initialTokens.splice(4), true);
-            break;
-          case LexerTokenCategory.INTEGER:
-          case LexerTokenCategory.FLOAT:
-            this.gameState.setGlobal(varName, Number(initialTokens[3].value));
-            break;
-          case LexerTokenCategory.STRING:
-            this.gameState.setGlobal(varName, initialTokens[3].value);
-            break;
-          case LexerTokenCategory.KEYWORD:
-            if (['true', 'false'].indexOf(initialTokens[3].value.toLowerCase()) > -1) {
-              this.gameState.setGlobal(varName, initialTokens[3].value);
-            } else {
-              console.error('Invalid key word (only True and False are allowed)');
-            }
-            break;
-          default:
-            console.error('Found invalid token:', initialTokens[3]);
-        }
+        initialTokens.shift();
+        this.parseGlobals(initialTokens);
+        // const varName = initialTokens[1].value;
+        // switch (initialTokens[3].which) {
+        //   case LexerTokenCategory.COMMAND:
+        //     this.simpleCommandParser(initialTokens.splice(4), true);
+        //     break;
+        //   case LexerTokenCategory.INTEGER:
+        //   case LexerTokenCategory.FLOAT:
+        //     this.gameState.setGlobal(varName, Number(initialTokens[3].value));
+        //     break;
+        //   case LexerTokenCategory.STRING:
+        //     this.gameState.setGlobal(varName, initialTokens[3].value);
+        //     break;
+        //   case LexerTokenCategory.KEYWORD:
+        //     if (['true', 'false'].indexOf(initialTokens[3].value.toLowerCase()) > -1) {
+        //       this.gameState.setGlobal(varName, initialTokens[3].value);
+        //     } else {
+        //       console.error('Invalid key word (only True and False are allowed)');
+        //     }
+        //     break;
+        //   default:
+        //     console.error('Found invalid token:', initialTokens[3]);
+        // }
       } else {
         console.error('First token MUST BE a command or the "Global" keyword!', initialTokens[0]);
       }
@@ -362,10 +367,80 @@ export class ParserService {
     return this.gameCode;
   }
 
-  simpleCommandParser(initialTokens: LexerToken[], withReturn: boolean) {
-    console.info('simpleCommandParser:', initialTokens);
+  parseGlobals(tokens: LexerToken[]) {
+    let globals: LexerToken[][] = [];
+    let currentGlobal: LexerToken[] = [];
+    tokens.forEach((token: LexerToken) => {
+      if (token.which === LexerTokenCategory.COMMA) {
+        globals.push(currentGlobal);
+        currentGlobal = [];
+      } else {
+        currentGlobal.push(token);
+      }
+    });
+    // add last global
+    if (currentGlobal.length > 0) {
+      globals.push(currentGlobal);
+    }
 
-    let firstToken = initialTokens[0];
+    console.info('Globals:', globals);
+
+    globals.forEach((global: LexerToken[]) => {
+      let variable: string;
+      let state: 'variable' | 'commaOrAssignment' | 'expression' = 'variable';
+      global.forEach((token: LexerToken) => {
+        switch (state) {
+          case 'variable':
+            if (token.which === LexerTokenCategory.VARIABLE) {
+              variable = token.value.toLowerCase();
+              state = 'commaOrAssignment';
+            } else {
+              console.error('Invalid global assignment (missing variable name)', token);
+            }
+            break;
+          case 'commaOrAssignment':
+            if (token.which === LexerTokenCategory.COMMA) {
+              this.gameState.setGlobal(variable, null);
+              state = 'variable';
+            } else if (token.which === LexerTokenCategory.ASSIGNMENT) {
+              state = 'expression';
+            } else {
+              console.error('Invalid token following global variable name (must be comma or assignment)');
+            }
+            break;
+          case 'expression':
+            if (token.which === LexerTokenCategory.COMMAND) {
+              const cmdResponse: CommandResponse = this.simpleCommandParser(global.slice(2), true) as CommandResponse;
+              this.gameCode.statements$.push(
+                forkJoin(cmdResponse.params$).pipe(
+                  tap((paramValues: any[]) => console.info('PARAM VALUES:', paramValues)),
+                  switchMap((paramValues: any[]) => {
+                    return this[cmdResponse.category][cmdResponse.command](...paramValues)
+                  }),
+                  tap((result: any) => {
+                    this.gameState.setGlobal(variable, result)
+                  })
+                )
+              );
+              return;
+            }
+        }
+      });
+    });
+  }
+
+  simpleCommandParser(initialTokens: LexerToken[], withReturn: boolean): void | CommandResponse {
+    // console.info('simpleCommandParser:', initialTokens);
+
+    // for the moment, remove all commas
+    let reducedTokens: LexerToken[] = [];
+    initialTokens.forEach((token: LexerToken) => {
+      if (token.which !== LexerTokenCategory.COMMA) {
+        reducedTokens.push(token);
+      }
+    });
+
+    let firstToken = reducedTokens[0];
 
     // get all params
     const cmdFromJson = this.language.commands[firstToken.value.toLowerCase()];
@@ -379,28 +454,39 @@ export class ParserService {
     });
 
     // check if amount of params fits
-    let commandParams: number = initialTokens.length - 1;
+    let commandParams: number = reducedTokens.length - 1;
     if (commandParams >= minParams && commandParams <= maxParams) {
-      initialTokens.shift();
-      const finalParams = [];
-      initialTokens.forEach(t => {
-        if (t.which === LexerTokenCategory.GLOBAL) {
-          finalParams.push(this.gameState.getGlobal(t.value));
+      reducedTokens.shift();  // remove command itself
+      const finalParams$: Observable<any>[] = [];
+      reducedTokens.forEach(t => {
+        if (t.which === LexerTokenCategory.VARIABLE) {
+          finalParams$.push(this.gameState.getGlobal$(t.value));
         } else if ([LexerTokenCategory.INTEGER, LexerTokenCategory.FLOAT].indexOf(t.which) > -1) {
           // convert numbers to correct numbers
-          finalParams.push(Number(t.value));
+          finalParams$.push(of(Number(t.value)));
         } else {
-          finalParams.push(t.value);
+          finalParams$.push(of(t.value));
         }
       });
 
       // push new statement to game code
       const cmdCall = firstToken.value.replace(/^\w/, c => c.toLowerCase());
-      console.info(`${cmdFromJson.category} ${cmdCall}`);
+      // console.info(`${cmdFromJson.category} ${cmdCall}`);
       if (withReturn) {
-        console.info('With return:', initialTokens);
+        return {
+          category: cmdFromJson.category,
+          command: cmdCall,
+          params$: finalParams$
+        };
       } else {
-        this.gameCode.statements.push(this[cmdFromJson.category][cmdCall](...finalParams));
+        this.gameCode.statements$.push(
+          forkJoin(finalParams$).pipe(
+            tap((paramValues: any[]) => console.info('PARAM VALUES:', paramValues)),
+            switchMap((paramValues: any[]) => {
+              return this[cmdFromJson.category][cmdCall](...paramValues);
+            })
+          )
+        );
       }
     } else {
       console.error(
@@ -560,10 +646,7 @@ export class ParserService {
       case ParserState.DECLARATION:
         // these are not the key words but the actual variables!
         validTokenCategories = [
-          LexerTokenCategory.GLOBAL,
-          LexerTokenCategory.LOCAL,
-          LexerTokenCategory.DIM,
-          LexerTokenCategory.CONST
+          LexerTokenCategory.VARIABLE
         ];
         if (validTokenCategories.indexOf(currentToken.which) === -1) {
           console.error('Invalid token category');
@@ -601,7 +684,7 @@ export class ParserService {
         console.info('Service:', service);
 
         //TODO code must be executed later, for the services are not initialized yet
-        this.gameCode.statements.push(
+        this.gameCode.statements$.push(
           this.graphics2d.graphics(800, 600),
           //this.graphics2d.cameraClsColor(255,0,0),  //TODO wrong implementation, fix
           this.generalService.assign({
@@ -621,7 +704,7 @@ export class ParserService {
             }
           }),
           new Observable(observer => {
-            this.gameState.getGlobalAsync('camera').subscribe((camera: GameEntity) => {
+            this.gameState.getGlobal$('camera').subscribe((camera: GameEntity) => {
               this.graphics3d.positionEntity(camera, 0, 2, -5).subscribe(() => {
                 observer.next();
                 observer.complete();
@@ -629,7 +712,7 @@ export class ParserService {
             });
           }),
           new Observable(observer => {
-            this.gameState.getGlobalAsync('camera').subscribe((camera: Camera) => {
+            this.gameState.getGlobal$('camera').subscribe((camera: Camera) => {
               this.graphics3d.cameraClsColor(camera, 50, 200, 240).subscribe(() => {
                 observer.next();
                 observer.complete();
@@ -646,7 +729,7 @@ export class ParserService {
             }
           }),
           new Observable(observer => {
-            this.gameState.getGlobalAsync('light').subscribe((light: Light) => {
+            this.gameState.getGlobal$('light').subscribe((light: Light) => {
               this.graphics3d.lightColor(light, 255, 255, 0).subscribe(() => {
                 observer.next();
                 observer.complete();
@@ -663,7 +746,7 @@ export class ParserService {
             }
           }),
           new Observable(observer => {
-            this.gameState.getGlobalAsync('cube').subscribe((cube: GameEntity) => {
+            this.gameState.getGlobal$('cube').subscribe((cube: GameEntity) => {
               this.graphics3d.positionEntity(cube, 0, 1, 0).subscribe(done => {
                 observer.next();
                 observer.complete();
@@ -671,7 +754,7 @@ export class ParserService {
             });
           }),
           new Observable(observer => {
-            this.gameState.getGlobalAsync('cube').subscribe((cube: GameEntity) => {
+            this.gameState.getGlobal$('cube').subscribe((cube: GameEntity) => {
               this.graphics3d.entityColor(cube, 0, 255, 0).subscribe(done => {
                 observer.next();
                 observer.complete();
@@ -702,7 +785,7 @@ export class ParserService {
             }
           }),
           new Observable(observer => {
-            this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
+            this.gameState.getGlobal$('image').subscribe((image: GameImage2D) => {
               this.graphics2d.resizeImage(image, 128, 128).subscribe(() => {
                 observer.next();
                 observer.complete();
@@ -710,7 +793,7 @@ export class ParserService {
             });
           }),
           new Observable(observer => {
-            this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
+            this.gameState.getGlobal$('image').subscribe((image: GameImage2D) => {
               this.graphics2d.rotateImage(image, 30).subscribe(() => {
                 observer.next();
                 observer.complete();
@@ -718,7 +801,7 @@ export class ParserService {
             });
           }),
           new Observable(observer => {
-            this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
+            this.gameState.getGlobal$('image').subscribe((image: GameImage2D) => {
               this.graphics2d.drawBlock(image, 200, 250).subscribe(() => {
                 observer.next();
                 observer.complete();
@@ -737,7 +820,7 @@ export class ParserService {
             }
           }),
           new Observable(observer => {
-            this.gameState.getGlobalAsync('font').subscribe((font: GameFont) => {
+            this.gameState.getGlobal$('font').subscribe((font: GameFont) => {
               this.graphics2d.setFont(font).subscribe(() => {
                 observer.next();
                 observer.complete();
@@ -757,7 +840,7 @@ export class ParserService {
           }),
           this.basics.seedRnd('Hello World'),
           new Observable(observer => {
-            this.gameState.getGlobalAsync('image').subscribe((image: GameImage2D) => {
+            this.gameState.getGlobal$('image').subscribe((image: GameImage2D) => {
               this.graphics2d.maskImage(image, 255, 0, 255).subscribe(() => {
                 observer.next();
                 observer.complete();

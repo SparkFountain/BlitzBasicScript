@@ -27,8 +27,5 @@ export enum LexerTokenCategory {
   FLOAT = 'FLOAT',
   STRING = 'STRING',
   UNIDENTIFIED = 'UNIDENTIFIED',
-  GLOBAL = 'GLOBAL',
-  LOCAL = 'LOCAL',
-  DIM = 'DIM',
-  CONST = 'CONST'
+  INVALID = 'INVALID'
 }

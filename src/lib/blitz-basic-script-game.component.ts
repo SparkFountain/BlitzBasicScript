@@ -178,6 +178,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
 
     const tokens: LexerToken[][] = this.lexer.lexCode(this.code);
     const gameCode: BBScriptCode = this.parser.createGameCode(tokens);
+    console.info('GAME CODE', gameCode);
     this.executeCode(gameCode);
   }
 
@@ -232,7 +233,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
 
     // TODO handle main loop
 
-    concat(...code.statements).subscribe(
+    concat(...code.statements$).subscribe(
       () => {
         console.info('Next statement has been executed.');
       },

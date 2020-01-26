@@ -179,11 +179,11 @@ export class GameStateService {
   }
 
   getGlobal(variableName: string): any {
-    //console.info('Get Global ' + variableName + ':', this.global[variableName]);
     return this.global[variableName];
   }
 
-  getGlobalAsync(variableName: string): Observable<any> {
+  getGlobal$(variableName: string): Observable<any> {
+    console.info(`Get Global ${variableName}:`, this.global[variableName]);
     return of(this.global[variableName]);
   }
 
