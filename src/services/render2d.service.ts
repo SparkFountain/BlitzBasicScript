@@ -41,6 +41,8 @@ export class Render2dService {
     let green = this.gameState.getScreenProperties().color.green;
     let blue = this.gameState.getScreenProperties().color.blue;
 
+    console.info('Active color:', red, green, blue);
+
     this._context2d.strokeStyle = 'rgba(' + red + ',' + green + ',' + blue + ', 1)';
     this._context2d.fillStyle = 'rgba(' + red + ',' + green + ',' + blue + ', 1)';
   }
@@ -116,9 +118,13 @@ export class Render2dService {
     });
   }
 
-  oval(x: number, y: number, width: number, height: number, filled: boolean): Observable<void> {
+  oval(x: number, y: number, width: number, height: number, filled?: boolean): Observable<void> {
     //TODO refactor with respect to origin
     return new Observable<void>((observer: Subscriber<void>) => {
+      if (filled === undefined) {
+        filled = true;
+      }
+
       this.loadActiveColor();
       let origin = this.getOrigin();
 

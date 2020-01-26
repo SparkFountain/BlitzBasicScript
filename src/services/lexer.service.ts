@@ -96,6 +96,7 @@ export class LexerService {
     } else {
       if (chars.length > 0) {
         //individuals can be user functions or variable names
+        console.info('this.isInteger(chars)', this.isInteger(chars));
         return { which: this.individualContext, value: chars, offset: { x: i + 1, y: 0 } };
       } else {
         return { which: LexerTokenCategory.EMPTY, value: '', offset: { x: i + 1, y: 0 } };
@@ -143,6 +144,7 @@ export class LexerService {
 
     let result: Array<LexerToken[]> = [];
     code.forEach((line: string, index: number) => {
+      line = line.replace(/\r|\n/, '');
       let tokens: LexerToken[] = lexer.lexLine(line);
       for (let i = 0; i < tokens.length; i++) {
         tokens[i].offset.y = index + 1;
@@ -174,8 +176,6 @@ export class LexerService {
    * @return An array of tokens which represent the code's components
    */
   lexLine(codeLine: string): LexerToken[] {
-    this.individualContext = LexerTokenCategory.GLOBAL;
-
     //replace tabs by 2 spaces
     codeLine = codeLine.replace(new RegExp('\\t', 'g'), '  ');
 

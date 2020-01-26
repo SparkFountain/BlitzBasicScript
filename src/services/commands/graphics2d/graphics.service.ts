@@ -7,14 +7,14 @@ import { Render2dService } from '../../render2d.service';
 @Injectable()
 export class CommandsGraphics2dGraphicsService {
   constructor(private babylonjs: BabylonJSService,
-    private graphics2dService: Render2dService,
+    private render2dService: Render2dService,
     private gameState: GameStateService
   ) {
 
   }
 
   cls(): Observable<void> {
-    return this.graphics2dService.cls();
+    return this.render2dService.cls();
   }
 
   clsColor(red: number, green: number, blue: number): Observable<void> {
@@ -44,7 +44,7 @@ export class CommandsGraphics2dGraphicsService {
   }
 
   line(beginX: number, beginY: number, endX: number, endY: number) {
-    return this.graphics2dService.line(beginX, beginY, endX, endY);
+    return this.render2dService.line(beginX, beginY, endX, endY);
   }
 
   origin(x: number, y: number): Observable<void> {
@@ -59,12 +59,12 @@ export class CommandsGraphics2dGraphicsService {
     });
   }
 
-  oval(x: number, y: number, width: number, height: number, filled: boolean): Observable<void> {
-    return this.graphics2dService.oval(x, y, width, height, filled);
+  oval(x: number, y: number, width: number, height: number, filled?: boolean): Observable<void> {
+    return this.render2dService.oval(x, y, width, height, filled);
   }
 
   rect(x: number, y: number, width: number, height: number, filled?: boolean): Observable<void> {
-    return this.graphics2dService.rect(x, y, width, height, filled);
+    return this.render2dService.rect(x, y, width, height, filled);
   }
 
   viewport(beginX: number, beginY: number, width: number, height: number): Observable<void> {

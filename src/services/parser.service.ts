@@ -320,6 +320,10 @@ export class ParserService {
         }
       });
 
+      if (initialTokens.length === 0) {
+        return;
+      }
+
       const firstToken = initialTokens[0];
 
       if (firstToken.which === LexerTokenCategory.COMMAND) {
@@ -350,7 +354,7 @@ export class ParserService {
             console.error('Found invalid token:', initialTokens[3]);
         }
       } else {
-        console.error('First token MUST BE a command or the "Global" keyword!');
+        console.error('First token MUST BE a command or the "Global" keyword!', initialTokens[0]);
       }
     });
 
