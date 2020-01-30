@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { LexerService } from '../services/lexer.service';
 import { ParserService } from '../services/parser.service';
-import { BBScriptCode } from '../interfaces/bbscript-code';
+import { AbstractSyntax } from '../interfaces/bbscript-code';
 import { concat, Observable, Subscriber } from 'rxjs';
 import { GameStateService } from '../services/game-state.service';
 import { BabylonJSService } from '../services/babylon-js.service';
@@ -192,7 +192,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     this.playing = true;
 
     const tokens: LexerToken[][] = this.lexer.lexCode(this.code);
-    const gameCode: BBScriptCode = this.parser.createGameCode(tokens);
+    const gameCode: AbstractSyntax = this.parser.createAbstractSyntax(tokens);
     console.info('GAME CODE', gameCode);
     this.executeCode(gameCode);
   }
@@ -205,7 +205,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     this.playing = false;
   }
 
-  executeCode(code: BBScriptCode): void {
+  executeCode(code: AbstractSyntax): void {
     // Initialize BabylonJS Engine
     this.babylonjs.initEngine(this.canvas3d.nativeElement);
 

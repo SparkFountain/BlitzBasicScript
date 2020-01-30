@@ -1,6 +1,6 @@
 import { Observable } from 'rxjs';
 
-export interface BBScriptCode {
+export interface AbstractSyntax {
   globals: object;
   statements: {
     category: string,

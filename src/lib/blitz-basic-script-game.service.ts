@@ -20,6 +20,6 @@ export class BlitzBasicScriptGameService {
   }
 
   parse(lexerCode: LexerToken[][]): any {
-    return this.parser.createGameCode(lexerCode);
+    return this.parser.createAbstractSyntax(lexerCode);
   }
 }

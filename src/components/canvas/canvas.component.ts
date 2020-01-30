@@ -2,7 +2,7 @@ import { Component, Input, ViewChild, AfterViewInit, ElementRef, OnInit } from '
 import { LexerService } from 'bbscript/src/services/lexer.service';
 import { ParserService } from 'bbscript/src/services/parser.service';
 import { LexerToken } from 'bbscript/src/interfaces/lexer-token';
-import { BBScriptCode } from 'bbscript/src/interfaces/bbscript-code';
+import { AbstractSyntax } from 'bbscript/src/interfaces/bbscript-code';
 import { GameStateService } from 'bbscript/src/services/game-state.service';
 import { concat } from 'rxjs';
 import { Render2dService } from 'bbscript/src/services/render2d.service';
@@ -20,7 +20,7 @@ export class BlitzBasicScriptCanvasComponent implements OnInit, AfterViewInit {
   guiCtx: CanvasRenderingContext2D;
 
   tokens: LexerToken[][];
-  gameCode: BBScriptCode;
+  gameCode: AbstractSyntax;
 
   private _code: string[];
   @Input()
@@ -95,12 +95,12 @@ export class BlitzBasicScriptCanvasComponent implements OnInit, AfterViewInit {
   runGame() {
     this.graphics2dService.initCanvas(this._canvas2D);
     this.tokens = this.lexer.lexCode(this._code);
-    this.gameCode = this.parser.createGameCode(this.tokens);
+    this.gameCode = this.parser.createAbstractSyntax(this.tokens);
     // console.info('Game code:', this.gameCode);
 
-    concat(...this.gameCode.statements).subscribe(() => {
-      // TODO: some log info etc. on each executed statement
-    });
+    // concat(...this.gameCode.statements).subscribe(() => {
+    //   // TODO: some log info etc. on each executed statement
+    // });
   }
 
   doRender(): void {
