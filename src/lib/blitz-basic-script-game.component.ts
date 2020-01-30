@@ -1,7 +1,7 @@
 import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { LexerService } from '../services/lexer.service';
 import { ParserService } from '../services/parser.service';
-import { AbstractSyntax } from '../interfaces/bbscript-code';
+import { AbstractSyntax } from '../interfaces/abstract-syntax';
 import { concat, Observable, Subscriber } from 'rxjs';
 import { GameStateService } from '../services/game-state.service';
 import { BabylonJSService } from '../services/babylon-js.service';

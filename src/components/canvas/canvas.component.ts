@@ -2,7 +2,7 @@ import { Component, Input, ViewChild, AfterViewInit, ElementRef, OnInit } from '
 import { LexerService } from 'bbscript/src/services/lexer.service';
 import { ParserService } from 'bbscript/src/services/parser.service';
 import { LexerToken } from 'bbscript/src/interfaces/lexer-token';
-import { AbstractSyntax } from 'bbscript/src/interfaces/bbscript-code';
+import { AbstractSyntax } from 'bbscript/src/interfaces/abstract-syntax';
 import { GameStateService } from 'bbscript/src/services/game-state.service';
 import { concat } from 'rxjs';
 import { Render2dService } from 'bbscript/src/services/render2d.service';

@@ -1,7 +1,7 @@
 import { LexerToken } from '../interfaces/lexer-token';
 import { LexerTokenCategory } from '../enums/lexer/lexer-token-category';
 import { Injectable } from '@angular/core';
-import { AbstractSyntax } from '../interfaces/bbscript-code';
+import { AbstractSyntax } from '../interfaces/abstract-syntax';
 import { GeneralService } from './general.service';
 import { GameStateService } from './game-state.service';
 import { ParserState } from '../enums/parser/parser-state';
@@ -14,6 +14,7 @@ import { CommandsGraphics3DService } from './commands/graphics3d.service';
 import { CommandsGUIService } from './commands/gui.service';
 import { CommandsIOService } from './commands/io.service';
 import { CommandsSoundService } from './commands/sound.service';
+import { ConstStatement } from '../interfaces/statements/const';
 
 type CommandResponse = { category: string; command: string; params: any[] };
 
@@ -89,7 +90,7 @@ export class ParserService {
   individuals: object;
   stack: any[];
   state;
-  gameCode: AbstractSyntax;
+  abstractSyntax: AbstractSyntax;
 
   constructor(
     private generalService: GeneralService,
@@ -104,7 +105,7 @@ export class ParserService {
     private sound: CommandsSoundService
   ) {
     this.resetParser();
-    this.gameCode = {
+    this.abstractSyntax = {
       globals: [],
       statements: [],
       mainLoop$: [],
@@ -255,7 +256,7 @@ export class ParserService {
   // [Sar]: [NumExpr] Shr [NumExpr]
   createAbstractSyntax(lexerCode: Array<LexerToken[]>): AbstractSyntax {
     // reset game code
-    this.gameCode = {
+    this.abstractSyntax = {
       globals: [],
       statements: [],
       mainLoop$: [],
@@ -357,8 +358,8 @@ export class ParserService {
       // }
     });
 
-    console.info('Abstract Syntax:', this.gameState);
-    return this.gameCode;
+    console.info('Game State:', this.gameState);
+    return this.abstractSyntax;
   }
 
   parseGlobals(tokens: LexerToken[]) {
@@ -405,7 +406,7 @@ export class ParserService {
           case 'expression':
             if (token.which === LexerTokenCategory.COMMAND) {
               const cmdResponse: CommandResponse = this.simpleCommandParser(global.slice(2), true) as CommandResponse;
-              this.gameCode.statements.push({
+              this.abstractSyntax.statements.push({
                 global: variable,
                 category: cmdResponse.category,
                 command: cmdResponse.command,
@@ -468,7 +469,7 @@ export class ParserService {
           params: finalParams
         };
       } else {
-        this.gameCode.statements.push({
+        this.abstractSyntax.statements.push({
           category: cmdFromJson.category,
           command: cmdCall,
           params: finalParams
@@ -506,13 +507,52 @@ export class ParserService {
             switch (currentToken.value.toLowerCase()) {
               case 'const':
                 let context: ConstContext = 'name' as ConstContext;
-                for (let i = 1; i < tokens.length; i++) {
+                let newConst: ConstStatement = {
+                  type: 'const',
+                  name: '',
+                  value: null
+                };
+                for (let i = 0; i < tokens.length; i++) {
+                  const currentInnerToken = tokens[i];
                   switch (context) {
                     case 'name':
+                      if (currentInnerToken.which === LexerTokenCategory.VARIABLE) {
+                        newConst.name = currentInnerToken.value;
+                        context = 'assignmentOrComma';
+                      } else {
+                        console.error('Constant must have a name', currentInnerToken);
+                      }
                       break;
                     case 'assignmentOrComma':
+                      if (currentInnerToken.which === LexerTokenCategory.ASSIGNMENT) {
+                        context = 'value';
+                      } else if (currentInnerToken.which === LexerTokenCategory.COMMA) {
+                        // push newConst to abstract syntax and reset its values
+                        this.abstractSyntax.statements.push({ ...newConst });
+                        newConst.name = '';
+                        newConst.value = '';
+                        context = 'name';
+                      } else {
+                        console.error('Constant name must be followed by either a comma or assignment');
+                      }
                       break;
                     case 'value':
+                      const validCategories: LexerTokenCategory[] = [
+                        LexerTokenCategory.INTEGER,
+                        LexerTokenCategory.FLOAT,
+                        LexerTokenCategory.STRING,
+                        LexerTokenCategory.BOOLEAN
+                      ];
+                      if (validCategories.includes(currentInnerToken.which)) {
+                        newConst.value = currentInnerToken.value;
+                        // push newConst to abstract syntax and reset its values
+                        this.abstractSyntax.statements.push({ ...newConst });
+                        newConst.name = '';
+                        newConst.value = '';
+                        context = 'name';
+                      } else {
+                        console.error('Invalid data type (must be Integer, Float, String or Boolean)')
+                      }
                       break;
                   }
                 }
@@ -650,12 +690,12 @@ export class ParserService {
 
         if (tokens.length === 0) {
           //No following tokens: Insert declaration statement
-          this.gameCode.globals[currentToken.value] = 0;
+          this.abstractSyntax.globals[currentToken.value] = 0;
         } else {
           //Valid following tokens: , =
           switch (tokens[0].which) {
             case LexerTokenCategory.COMMA:
-              this.gameCode.globals[currentToken.value] = 0;
+              this.abstractSyntax.globals[currentToken.value] = 0;
               this.parseState(ParserState.DECLARATION, tokens);
               break;
             case LexerTokenCategory.ASSIGNMENT:
@@ -680,7 +720,7 @@ export class ParserService {
         console.info('Service:', service);
 
         //TODO code must be executed later, for the services are not initialized yet
-        this.gameCode.statements
+        this.abstractSyntax.statements
           .push
           // this.graphics2d.graphics(800, 600),
           // //this.graphics2d.cameraClsColor(255,0,0),  //TODO wrong implementation, fix
@@ -846,6 +886,8 @@ export class ParserService {
           // })
           ();
     }
+
+    console.info('Abstract Syntax:', this.abstractSyntax);
   }
 
   parseCondition(tokens: LexerToken[]) {

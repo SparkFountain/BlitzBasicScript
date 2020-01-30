@@ -26,6 +26,7 @@ export enum LexerTokenCategory {
   INTEGER = 'INTEGER',
   FLOAT = 'FLOAT',
   STRING = 'STRING',
+  BOOLEAN = 'BOOLEAN',
   UNIDENTIFIED = 'UNIDENTIFIED',
   INVALID = 'INVALID'
 }

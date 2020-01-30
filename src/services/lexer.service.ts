@@ -9,7 +9,7 @@ import { fromArray } from 'rxjs/internal/observable/fromArray';
 @Injectable()
 export class LexerService {
   private individuals: any;
-  private individualContext: LexerTokenCategory;
+  private individualCategory: LexerTokenCategory;
 
   constructor(private http: HttpClient,
     private language: LanguageService) {
@@ -53,6 +53,8 @@ export class LexerService {
    * @return
    */
   getTokenObject(chars: string, i: number): LexerToken {
+    // console.info('Get token object:', chars);
+
     let charsLowerCase = chars.toLowerCase();
     if (this.language.keywords.hasOwnProperty(charsLowerCase)) {
       switch (charsLowerCase) {
@@ -60,19 +62,26 @@ export class LexerService {
           //TODO distinguish between "global local" and "function local"
           break;
         case 'global':
-          this.individualContext = LexerTokenCategory.VARIABLE;
+          this.individualCategory = LexerTokenCategory.VARIABLE;
           break;
         case 'function':
-          this.individualContext = LexerTokenCategory.FUNCTION;
+          this.individualCategory = LexerTokenCategory.FUNCTION;
           break;
         case 'dim':
-          this.individualContext = LexerTokenCategory.VARIABLE;
+          this.individualCategory = LexerTokenCategory.VARIABLE;
           break;
         case 'type':
-          this.individualContext = LexerTokenCategory.TYPE;
+          this.individualCategory = LexerTokenCategory.TYPE;
+          break;
+        case 'true':
+        case 'false':
+          this.individualCategory = LexerTokenCategory.BOOLEAN;
+          break;
+        default:
+          this.individualCategory = LexerTokenCategory.KEYWORD;
           break;
       }
-      return { which: LexerTokenCategory.KEYWORD, value: chars, offset: { x: i + 1, y: 0 } };
+      return { which: this.individualCategory, value: chars, offset: { x: i + 1, y: 0 } };
     } else if (this.language.deprecatedKeywords.hasOwnProperty(charsLowerCase)) {
       return { which: LexerTokenCategory.DEPRECATED_KEYWORD, value: chars, offset: { x: i + 1, y: 0 } };
     } else if (this.language.commands.hasOwnProperty(charsLowerCase)) {
@@ -91,12 +100,10 @@ export class LexerService {
       return { which: LexerTokenCategory.TYPE, value: chars, offset: { x: i + 1, y: 0 } }
     } else if (this.individuals.globals.indexOf(chars) > -1) {
       return { which: LexerTokenCategory.VARIABLE, value: chars, offset: { x: i + 1, y: 0 } }
-    } else if (this.individuals.globals.indexOf(chars) > -1) {
-      return { which: LexerTokenCategory.VARIABLE, value: chars, offset: { x: i + 1, y: 0 } }
     } else {
       if (chars.length > 0) {
         //individuals can be user functions or variable names
-        return { which: this.individualContext, value: chars, offset: { x: i + 1, y: 0 } };
+        return { which: LexerTokenCategory.VARIABLE, value: chars, offset: { x: i + 1, y: 0 } };
       } else {
         return { which: LexerTokenCategory.EMPTY, value: '', offset: { x: i + 1, y: 0 } };
       }
@@ -389,6 +396,7 @@ export class LexerService {
     return this.removeEmptyTokens(tokens);
   }
 
+  // TODO: implement or remove
   lexLineNew(codeLine: string): LexerToken[] {
     const specialChars: string[] = [
       '.', ',', ':', ';', '%', '$', '#', '"', '+', '-', '*', '/',
@@ -404,89 +412,5 @@ export class LexerService {
     // Step 4: Analyze which kinds of tokens
 
     return [];
-  }
-
-  /**
-   * Performs a syntax highlighting by taking into account all tokens and generating a span for each token,
-   * giving them adequate CSS classes which are defined in an editor theme CSS file.
-   * @param codeLine A line of BBScript code
-   * @return
-   */
-  syntaxHighlighting(codeLine: string): string {
-    let functions = {};
-    let types = {};
-    let variables = {};
-
-    let result: string = '';
-    let tokens: LexerToken[] = this.lexLine(codeLine);
-    //console.info('tokens:', tokens);
-    for (let i = 0; i < tokens.length; i++) {
-      let whitespace: number;
-      if (i > 0) {
-        whitespace = tokens[i].offset.x - (tokens[i - 1].offset.x + tokens[i - 1].value.length);
-      } else {
-        whitespace = tokens[i].offset.x;
-      }
-
-      if (whitespace > 0) {
-        result += '<span class="bbscript-code bbscript-whitespace">';
-        for (let i = 0; i < whitespace; i++) {
-          result += '&nbsp;';
-        }
-        result += '</span>';
-      }
-
-      //TODO this will not work, since only one line is matched at a time
-      //TODO and variables will not be stored!
-      if (tokens[i].which === LexerTokenCategory.INDIVIDUAL) {
-        if (i > 0) {
-          if (tokens[i - 1].which === LexerTokenCategory.KEYWORD && tokens[i - 1].value.toLowerCase() === 'function') {
-            functions[tokens[i].value.toLowerCase()] = true;
-            tokens[i].which = LexerTokenCategory.FUNCTION;
-          } else if (tokens[i - 1].which === LexerTokenCategory.KEYWORD && tokens[i - 1].value.toLowerCase() === 'type') {
-            types[tokens[i].value.toLowerCase()] = true;
-            tokens[i].which = LexerTokenCategory.TYPE;
-          } else if (tokens[i - 1].which === LexerTokenCategory.KEYWORD && tokens[i - 1].value.toLowerCase() === 'global') {
-            variables[tokens[i].value.toLowerCase()] = true;
-            tokens[i].which = LexerTokenCategory.VARIABLE;
-          }
-        }
-
-        //check again on tokens[i].which because it could have changed
-        if (tokens[i].which === LexerTokenCategory.INDIVIDUAL) {
-          let value = tokens[i].value.toLowerCase();
-          //console.info('value:',value);
-          if (functions[value]) {
-            tokens[i].which = LexerTokenCategory.FUNCTION;
-          } else if (types[value]) {
-            tokens[i].which = LexerTokenCategory.TYPE;
-          } else if (variables[value]) {
-            tokens[i].which = LexerTokenCategory.VARIABLE;
-          }
-        }
-      }
-
-      let lowerCaseValue = tokens[i].value.toLowerCase();
-      let uniformValue;
-      switch (tokens[i].which) {
-        case LexerTokenCategory.KEYWORD:
-          uniformValue = this.language.keywords[lowerCaseValue].bbscript;
-          break;
-        case LexerTokenCategory.DEPRECATED_KEYWORD:
-          uniformValue = this.language.deprecatedKeywords[lowerCaseValue].bbscript;
-          break;
-        case LexerTokenCategory.COMMAND:
-          uniformValue = this.language.commands[lowerCaseValue].bbscript;
-          break;
-        case LexerTokenCategory.DEPRECATED_COMMAND:
-          uniformValue = this.language.deprecatedCommands[lowerCaseValue].bbscript;
-          break;
-        default:
-          uniformValue = tokens[i].value;
-      }
-      result += '<span class="bbscript-code bbscript-' + this.getCssClass(tokens[i].which) + '">' + uniformValue + '</span>';
-    }
-    result += '<br />';
-    return result;
   }
 }
