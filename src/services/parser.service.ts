@@ -144,7 +144,7 @@ export class ParserService {
         if (lexerTokens[i].which === LexerTokenCategory.INDIVIDUAL) {
           if (i > 0 && lexerTokens[i - 1].which === LexerTokenCategory.KEYWORD) {
             //console.info('Previous token is a key word:', lexerTokens[i-1]);
-            let keywordValue = lexerTokens[i - 1].value.toLowerCase();
+            let keywordValue = (lexerTokens[i - 1].value as string).toLowerCase();
             switch (keywordValue) {
               case 'global':
                 if (result.global.indexOf(keywordValue) === -1) {
@@ -359,6 +359,7 @@ export class ParserService {
     });
 
     console.info('Game State:', this.gameState);
+    console.info('Abstract Syntax:', this.abstractSyntax);
     return this.abstractSyntax;
   }
 
@@ -387,7 +388,7 @@ export class ParserService {
         switch (state) {
           case 'variable':
             if (token.which === LexerTokenCategory.VARIABLE) {
-              variable = token.value.toLowerCase();
+              variable = (token.value as string).toLowerCase();
               state = 'commaOrAssignment';
             } else {
               console.error('Invalid global assignment (missing variable name)', token);
@@ -433,7 +434,7 @@ export class ParserService {
     let firstToken = reducedTokens[0];
 
     // get all params
-    const cmdFromJson = this.language.commands[firstToken.value.toLowerCase()];
+    const cmdFromJson = this.language.commands[(firstToken.value as string).toLowerCase()];
     let params: { name: string; optional: boolean }[] = cmdFromJson.params;
     let minParams: number = 0;
     const maxParams: number = params.length;
@@ -450,7 +451,7 @@ export class ParserService {
       const finalParams: any[] = [];
       reducedTokens.forEach(t => {
         if (t.which === LexerTokenCategory.VARIABLE) {
-          finalParams.push(this.gameState.getGlobal(t.value)); // this function must NOT be called here!
+          finalParams.push(this.gameState.getGlobal(t.value as string)); // this function must NOT be called here!
         } else if ([LexerTokenCategory.INTEGER, LexerTokenCategory.FLOAT].indexOf(t.which) > -1) {
           // convert numbers to correct numbers
           finalParams.push(Number(t.value));
@@ -460,7 +461,7 @@ export class ParserService {
       });
 
       // push new statement to game code
-      const cmdCall = firstToken.value.replace(/^\w/, c => c.toLowerCase());
+      const cmdCall = (firstToken.value as string).replace(/^\w/, c => c.toLowerCase());
       // console.info(`${cmdFromJson.category} ${cmdCall}`);
       if (withReturn) {
         return {
@@ -503,160 +504,155 @@ export class ParserService {
         }
 
         switch (currentToken.which) {
-          case LexerTokenCategory.KEYWORD:
-            switch (currentToken.value.toLowerCase()) {
-              case 'const':
-                let context: ConstContext = 'name' as ConstContext;
-                let newConst: ConstStatement = {
-                  type: 'const',
-                  name: '',
-                  value: null
-                };
-                for (let i = 0; i < tokens.length; i++) {
-                  const currentInnerToken = tokens[i];
-                  switch (context) {
-                    case 'name':
-                      if (currentInnerToken.which === LexerTokenCategory.VARIABLE) {
-                        newConst.name = currentInnerToken.value;
-                        context = 'assignmentOrComma';
-                      } else {
-                        console.error('Constant must have a name', currentInnerToken);
-                      }
-                      break;
-                    case 'assignmentOrComma':
-                      if (currentInnerToken.which === LexerTokenCategory.ASSIGNMENT) {
-                        context = 'value';
-                      } else if (currentInnerToken.which === LexerTokenCategory.COMMA) {
-                        // push newConst to abstract syntax and reset its values
-                        this.abstractSyntax.statements.push({ ...newConst });
-                        newConst.name = '';
-                        newConst.value = '';
-                        context = 'name';
-                      } else {
-                        console.error('Constant name must be followed by either a comma or assignment');
-                      }
-                      break;
-                    case 'value':
-                      const validCategories: LexerTokenCategory[] = [
-                        LexerTokenCategory.INTEGER,
-                        LexerTokenCategory.FLOAT,
-                        LexerTokenCategory.STRING,
-                        LexerTokenCategory.BOOLEAN
-                      ];
-                      if (validCategories.includes(currentInnerToken.which)) {
-                        newConst.value = currentInnerToken.value;
-                        // push newConst to abstract syntax and reset its values
-                        this.abstractSyntax.statements.push({ ...newConst });
-                        newConst.name = '';
-                        newConst.value = '';
-                        context = 'name';
-                      } else {
-                        console.error('Invalid data type (must be Integer, Float, String or Boolean)')
-                      }
-                      break;
+          case LexerTokenCategory.CONST:
+            let context: ConstContext = 'name' as ConstContext;
+            let newConst: ConstStatement = {
+              type: 'const',
+              name: '',
+              value: null
+            };
+            for (let i = 0; i < tokens.length; i++) {
+              const currentInnerToken = tokens[i];
+              switch (context) {
+                case 'name':
+                  if (currentInnerToken.which === LexerTokenCategory.VARIABLE) {
+                    newConst.name = currentInnerToken.value as string;
+                    context = 'assignmentOrComma';
+                  } else {
+                    console.error('Constant must have a name', currentInnerToken);
                   }
-                }
-                break;
-              case 'global':
-              case 'local':
-              case 'dim':
-                this.parseState(ParserState.DECLARATION, tokens);
-                break;
-              case 'for':
-              case 'while':
-              case 'repeat':
-                this.parseState(ParserState.LOOP_HEAD, tokens);
-                break;
-              case 'exit':
-                this.parseState(ParserState.LOOP_BREAK, tokens);
-                break;
-              case 'next':
-              case 'wend':
-              case 'until':
-              case 'forever':
-                this.parseState(ParserState.LOOP_END, tokens);
-                break;
-              case 'if':
-              case 'elseif':
-              case 'else':
-                this.parseState(ParserState.CONDITION_HEAD, tokens);
-                break;
-              case 'endif':
-                this.parseState(ParserState.CONDITION_END, tokens);
-                break;
-              case 'select':
-                this.parseState(ParserState.SELECTION_HEAD, tokens);
-                break;
-              case 'case':
-              case 'default':
-                this.parseState(ParserState.SELECTION_BODY, tokens);
-                break;
-              case 'function':
-                this.parseState(ParserState.FUNCTION_HEAD, tokens);
-                break;
-              case 'return':
-                this.parseState(ParserState.FUNCTION_RETURN, tokens);
-                break;
-              case 'type':
-                this.parseState(ParserState.TYPE_HEAD, tokens);
-                break;
-              case 'field':
-                this.parseState(ParserState.TYPE_BODY, tokens);
-                break;
-              case 'delete':
-                this.parseState(ParserState.OBJECT_DELETION, tokens);
-                break;
-              case 'insert':
-                this.parseState(ParserState.OBJECT_INSERTION, tokens);
-                break;
-              case 'include':
-                this.parseState(ParserState.INCLUDE, tokens);
-                break;
-              case 'stop':
-                this.parseState(ParserState.DEBUG_STOP, tokens);
-                break;
-              case 'data':
-                this.parseState(ParserState.DATA_DEFINITION, tokens);
-                break;
-              case 'restore':
-                this.parseState(ParserState.RESTORE_DATA, tokens);
-                break;
-              case 'read':
-                this.parseState(ParserState.READ_DATA, tokens);
-                break;
-              case 'mainloop':
-                this.parseState(ParserState.MAIN_LOOP_HEAD, tokens);
-                break;
-              case 'end':
-                if (tokens.length > 1) {
-                  switch (tokens[1].which) {
-                    case LexerTokenCategory.KEYWORD:
-                      switch (tokens[1].value.toLowerCase()) {
-                        case 'function':
-                          this.parseState(ParserState.FUNCTION_END, tokens);
-                          break;
-                        case 'type':
-                          this.parseState(ParserState.TYPE_END, tokens);
-                          break;
-                        case 'if':
-                          this.parseState(ParserState.CONDITION_END, tokens);
-                          break;
-                        case 'select':
-                          this.parseState(ParserState.SELECTION_END, tokens);
-                          break;
-                        case 'mainloop':
-                          this.parseState(ParserState.MAIN_LOOP_END, tokens);
-                      }
-                      break;
-                    default:
-                    //TODO error: end must be followed by another keyword
+                  break;
+                case 'assignmentOrComma':
+                  if (currentInnerToken.which === LexerTokenCategory.ASSIGNMENT) {
+                    context = 'value';
+                  } else if (currentInnerToken.which === LexerTokenCategory.COMMA) {
+                    // push newConst to abstract syntax and reset its values
+                    this.abstractSyntax.statements.push({ ...newConst });
+                    newConst.name = '';
+                    newConst.value = '';
+                    context = 'name';
+                  } else {
+                    console.error('Constant name must be followed by either a comma or assignment');
                   }
-                } else {
-                  this.parseState(ParserState.QUIT_PROGRAM, tokens);
-                }
-                break;
-              default:
-                console.error('Invalid key word:', currentToken);
+                  break;
+                case 'value':
+                  const validCategories: LexerTokenCategory[] = [
+                    LexerTokenCategory.INTEGER,
+                    LexerTokenCategory.FLOAT,
+                    LexerTokenCategory.STRING,
+                    LexerTokenCategory.BOOLEAN
+                  ];
+                  if (validCategories.includes(currentInnerToken.which)) {
+                    newConst.value = currentInnerToken.value;
+                    // push newConst to abstract syntax and reset its values
+                    this.abstractSyntax.statements.push({ ...newConst });
+                    newConst.name = '';
+                    newConst.value = '';
+                    context = 'name';
+                  } else {
+                    console.error('Invalid data type (must be Integer, Float, String or Boolean)');
+                  }
+                  break;
+              }
+            }
+            break;
+
+          case LexerTokenCategory.GLOBAL:
+          case LexerTokenCategory.LOCAL:
+          case LexerTokenCategory.DIM:
+            this.parseState(ParserState.DECLARATION, tokens);
+            break;
+          case LexerTokenCategory.FOR:
+          case LexerTokenCategory.WHILE:
+          case LexerTokenCategory.REPEAT:
+            this.parseState(ParserState.LOOP_HEAD, tokens);
+            break;
+          case LexerTokenCategory.EXIT:
+            this.parseState(ParserState.LOOP_BREAK, tokens);
+            break;
+          case LexerTokenCategory.NEXT:
+          case LexerTokenCategory.WEND:
+          case LexerTokenCategory.UNTIL:
+          case LexerTokenCategory.FOREVER:
+            this.parseState(ParserState.LOOP_END, tokens);
+            break;
+          case LexerTokenCategory.IF:
+          case LexerTokenCategory.ELSEIF:
+          case LexerTokenCategory.ELSE:
+            this.parseState(ParserState.CONDITION_HEAD, tokens);
+            break;
+          case LexerTokenCategory.ENDIF:
+            this.parseState(ParserState.CONDITION_END, tokens);
+            break;
+          case LexerTokenCategory.SELECT:
+            this.parseState(ParserState.SELECTION_HEAD, tokens);
+            break;
+          case LexerTokenCategory.CASE:
+          case LexerTokenCategory.DEFAULT:
+            this.parseState(ParserState.SELECTION_BODY, tokens);
+            break;
+          case LexerTokenCategory.FUNCTION:
+            this.parseState(ParserState.FUNCTION_HEAD, tokens);
+            break;
+          case LexerTokenCategory.RETURN:
+            this.parseState(ParserState.FUNCTION_RETURN, tokens);
+            break;
+          case LexerTokenCategory.TYPE:
+            this.parseState(ParserState.TYPE_HEAD, tokens);
+            break;
+          case LexerTokenCategory.FIELD:
+            this.parseState(ParserState.TYPE_BODY, tokens);
+            break;
+          case LexerTokenCategory.DELETE:
+            this.parseState(ParserState.OBJECT_DELETION, tokens);
+            break;
+          case LexerTokenCategory.INSERT:
+            this.parseState(ParserState.OBJECT_INSERTION, tokens);
+            break;
+          case LexerTokenCategory.INCLUDE:
+            this.parseState(ParserState.INCLUDE, tokens);
+            break;
+          case LexerTokenCategory.STOP:
+            this.parseState(ParserState.DEBUG_STOP, tokens);
+            break;
+          case LexerTokenCategory.DATA:
+            this.parseState(ParserState.DATA_DEFINITION, tokens);
+            break;
+          case LexerTokenCategory.RESTORE:
+            this.parseState(ParserState.RESTORE_DATA, tokens);
+            break;
+          case LexerTokenCategory.READ:
+            this.parseState(ParserState.READ_DATA, tokens);
+            break;
+          case LexerTokenCategory.MAINLOOP:
+            this.parseState(ParserState.MAIN_LOOP_HEAD, tokens);
+            break;
+          case LexerTokenCategory.END:
+            if (tokens.length > 1) {
+              switch (tokens[1].which) {
+                case LexerTokenCategory.KEYWORD:
+                  switch ((tokens[1].value as string).toLowerCase()) {
+                    case 'function':
+                      this.parseState(ParserState.FUNCTION_END, tokens);
+                      break;
+                    case 'type':
+                      this.parseState(ParserState.TYPE_END, tokens);
+                      break;
+                    case 'if':
+                      this.parseState(ParserState.CONDITION_END, tokens);
+                      break;
+                    case 'select':
+                      this.parseState(ParserState.SELECTION_END, tokens);
+                      break;
+                    case 'mainloop':
+                      this.parseState(ParserState.MAIN_LOOP_END, tokens);
+                  }
+                  break;
+                default:
+                //TODO error: end must be followed by another keyword
+              }
+            } else {
+              this.parseState(ParserState.QUIT_PROGRAM, tokens);
             }
             break;
           case LexerTokenCategory.COMMAND:
@@ -679,8 +675,10 @@ export class ParserService {
             } else {
               this.parseState(ParserState.FUNCTION_CALL, tokens);
             }
+          default:
+            console.error('Invalid key word:', currentToken);
         }
-        break;
+
       case ParserState.DECLARATION:
         // these are not the key words but the actual variables!
         validTokenCategories = [LexerTokenCategory.VARIABLE];
@@ -690,12 +688,12 @@ export class ParserService {
 
         if (tokens.length === 0) {
           //No following tokens: Insert declaration statement
-          this.abstractSyntax.globals[currentToken.value] = 0;
+          this.abstractSyntax.globals[currentToken.value as string] = 0;
         } else {
           //Valid following tokens: , =
           switch (tokens[0].which) {
             case LexerTokenCategory.COMMA:
-              this.abstractSyntax.globals[currentToken.value] = 0;
+              this.abstractSyntax.globals[currentToken.value as string] = 0;
               this.parseState(ParserState.DECLARATION, tokens);
               break;
             case LexerTokenCategory.ASSIGNMENT:
@@ -886,8 +884,6 @@ export class ParserService {
           // })
           ();
     }
-
-    console.info('Abstract Syntax:', this.abstractSyntax);
   }
 
   parseCondition(tokens: LexerToken[]) {
@@ -898,7 +894,7 @@ export class ParserService {
     let currentExpression: LexerToken[] = [];
     let links: LexerToken[] = [];
     tokens.forEach((token: LexerToken) => {
-      if (token.which === LexerTokenCategory.KEYWORD && linkValues.indexOf(token.value) > -1) {
+      if (token.which === LexerTokenCategory.KEYWORD && linkValues.indexOf(token.value as string) > -1) {
         links.push(token);
 
         if (currentExpression.length > 0) {
