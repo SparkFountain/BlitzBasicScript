@@ -182,6 +182,8 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     if (this.title === undefined) {
       this.title = 'BlitzBasicScript Game';
     }
+
+    this.parser.parse('12 * 5 - (5 * (32 + 4)) + 3'); // 12 * 5 - (5 * (32 + 4)) + 3
   }
 
   ngAfterViewInit(): void {

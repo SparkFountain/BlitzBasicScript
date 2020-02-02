@@ -59,7 +59,7 @@ export class LexerService {
       switch (charsLowerCase) {
         case 'true':
         case 'false':
-          return { which: LexerTokenCategory.BOOLEAN, value: chars, offset: { x: i + 1, y: 0 } };
+          return { which: LexerTokenCategory.BOOLEAN, value: chars === 'true' ? true : false, offset: { x: i + 1, y: 0 } };
         case 'pi':
           return { which: LexerTokenCategory.FLOAT, value: Math.PI, offset: { x: i + 1, y: 0 } };
         default:
@@ -68,9 +68,9 @@ export class LexerService {
     } else if (this.language.commands.hasOwnProperty(charsLowerCase)) {
       return { which: LexerTokenCategory.COMMAND, value: chars, offset: { x: i + 1, y: 0 } };
     } else if (this.isInteger(chars)) {
-      return { which: LexerTokenCategory.INTEGER, value: chars, offset: { x: i + 1, y: 0 } };
+      return { which: LexerTokenCategory.INTEGER, value: Number(chars), offset: { x: i + 1, y: 0 } };
     } else if (this.isFloat(chars)) {
-      return { which: LexerTokenCategory.FLOAT, value: chars, offset: { x: i + 1, y: 0 } };
+      return { which: LexerTokenCategory.FLOAT, value: Number(chars), offset: { x: i + 1, y: 0 } };
     } else if (this.individuals.functions.indexOf(chars) > -1) {
       return { which: LexerTokenCategory.FUNCTION, value: chars, offset: { x: i + 1, y: 0 } };
     } else if (this.individuals.types.indexOf(chars) > -1) {

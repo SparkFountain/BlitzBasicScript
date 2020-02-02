@@ -73,6 +73,13 @@
           ]
         }
       ]
+    },
+    {
+      "type": "global",
+      "name": "mapx",
+      "value": {
+
+      }
     }
   ]
 }
