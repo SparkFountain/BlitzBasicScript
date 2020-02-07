@@ -27,8 +27,8 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
   @Input() debugMode?: boolean;
   @Input() title?: string;
 
-  @ViewChild('canvas2d', { static: false }) canvas2d: ElementRef;
-  @ViewChild('canvas3d', { static: false }) canvas3d: ElementRef;
+  @ViewChild('canvas2d') canvas2d: ElementRef;
+  @ViewChild('canvas3d') canvas3d: ElementRef;
   public canvasFocused: boolean;
 
   public playing: boolean;

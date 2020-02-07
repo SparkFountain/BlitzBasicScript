@@ -897,20 +897,20 @@ export class ParserService {
     return result;
   };
 
-  parseMultiplicationSeparatedTokens(tokens: LexerToken[]): any {
-    const numbersString: string[] = this.splitTokens(tokens, '*');
-    const numbers: number[] = numbersString.map(noStr => {
-      if (noStr[0] == '(') {
-        const expr = noStr.substr(1, noStr.length - 2);
-        // recursive call to the main function
-        return this.parsePlusSeparatedExpression(expr);
-      }
-      return +noStr;  // convert string to number
-    });
-    const initialValue = 1.0;
-    const result = numbers.reduce((acc: number, no: number) => acc * no, initialValue);
-    return result;
-  }
+  // parseMultiplicationSeparatedTokens(tokens: LexerToken[]): any {
+  //   const numbersString: string[] = this.splitTokens(tokens, '*');
+  //   const numbers: number[] = numbersString.map(noStr => {
+  //     if (noStr[0] == '(') {
+  //       const expr = noStr.substr(1, noStr.length - 2);
+  //       // recursive call to the main function
+  //       return this.parsePlusSeparatedExpression(expr);
+  //     }
+  //     return +noStr;  // convert string to number
+  //   });
+  //   const initialValue = 1.0;
+  //   const result = numbers.reduce((acc: number, no: number) => acc * no, initialValue);
+  //   return result;
+  // }
 
   // both * -
   parseMinusSeparatedExpression(expression: string): number {
@@ -923,15 +923,15 @@ export class ParserService {
     return result;
   };
 
-  parseMinusSeparatedTokens(tokens: LexerToken[]): any {
-    const numbersString: string[] = this.splitTokens(tokens, '-');
-    console.info('Numbers String (minus):', numbersString);
-    const numbers: number[] = numbersString.map(noStr => this.parseMultiplicationSeparatedExpression(noStr));
-    console.info('Numbers (minus):', numbers);
-    const initialValue: number = numbers[0];
-    const result: number = numbers.slice(1).reduce((acc, no) => acc - no, initialValue);
-    return result;
-  }
+  // parseMinusSeparatedTokens(tokens: LexerToken[]): any {
+  //   const numbersString: string[] = this.splitTokens(tokens, '-');
+  //   console.info('Numbers String (minus):', numbersString);
+  //   const numbers: number[] = numbersString.map(noStr => this.parseMultiplicationSeparatedExpression(noStr));
+  //   console.info('Numbers (minus):', numbers);
+  //   const initialValue: number = numbers[0];
+  //   const result: number = numbers.slice(1).reduce((acc, no) => acc - no, initialValue);
+  //   return result;
+  // }
 
   // * - +
   parsePlusSeparatedExpression(expression: string): number {
@@ -944,15 +944,15 @@ export class ParserService {
     return result;
   };
 
-  parsePlusSeparatedTokens(tokens: LexerToken[]): any {
-    const numbersString: string[] = this.split(tokens, '+');
-    console.info('Numbers string:', numbersString);
-    const numbers: number[] = numbersString.map(noStr => this.parseMinusSeparatedExpression(noStr));
-    console.info('Numbers:', numbers);
-    const initialValue: number = 0.0;
-    const result: number = numbers.reduce((acc, no) => acc + no, initialValue);
-    return result;
-  }
+  // parsePlusSeparatedTokens(tokens: LexerToken[]): any {
+  //   const numbersString: string[] = this.split(tokens, '+');
+  //   console.info('Numbers string:', numbersString);
+  //   const numbers: number[] = numbersString.map(noStr => this.parseMinusSeparatedExpression(noStr));
+  //   console.info('Numbers:', numbers);
+  //   const initialValue: number = 0.0;
+  //   const result: number = numbers.reduce((acc, no) => acc + no, initialValue);
+  //   return result;
+  // }
 
   // parses a string consisting of mathematical terms
   parse(expression: string): number {
@@ -963,7 +963,7 @@ export class ParserService {
   };
 
   parseTokens(tokens: LexerToken[]): any {
-    const result: number = this.parsePlusSeparatedTokens(tokens);
+    const result: number = 0; // this.parsePlusSeparatedTokens(tokens);
     console.info('RESULT:', result);
     return result;
   }
