@@ -898,7 +898,7 @@ export class ParserService {
   };
 
   parseMultiplicationSeparatedTokens(tokens: LexerToken[]): any {
-    const numbersString: string[] = this.split(expression, '*');
+    const numbersString: string[] = this.splitTokens(tokens, '*');
     const numbers: number[] = numbersString.map(noStr => {
       if (noStr[0] == '(') {
         const expr = noStr.substr(1, noStr.length - 2);
@@ -924,7 +924,7 @@ export class ParserService {
   };
 
   parseMinusSeparatedTokens(tokens: LexerToken[]): any {
-    const numbersString: string[] = this.split(expression, '-');
+    const numbersString: string[] = this.splitTokens(tokens, '-');
     console.info('Numbers String (minus):', numbersString);
     const numbers: number[] = numbersString.map(noStr => this.parseMultiplicationSeparatedExpression(noStr));
     console.info('Numbers (minus):', numbers);
