@@ -1,7 +1,7 @@
-import {Expression} from './expression';
+import { Expression } from '../../../types/expression';
 
 export interface NumericalExpression extends Expression {
-    operations: NumExpOp[];
+  operations: NumExpOp[];
 }
 
 export type NumExpOp = '+' | '-' | '*' | '/' | '~' | 'Mod' | 'Xor';

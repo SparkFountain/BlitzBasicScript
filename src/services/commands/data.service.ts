@@ -1,7 +1,6 @@
 import { Injectable } from "@angular/core";
 import { CommandsDataBankService } from './data/bank.service';
 import { CommandsDataFileSystemService } from './data/file-system.service';
-import { Observable } from 'rxjs';
 
 @Injectable()
 export class CommandsDataService {
@@ -10,192 +9,192 @@ export class CommandsDataService {
   ) { }
 
   // BANK
-  bankSize(bank: any): Observable<number> {
+  bankSize(bank: any): Promise<number> {
     return this.bank.bankSize(bank);
   }
 
-  copyBank(sourceBank: any, sourcePos: number, targetBank: any, targetPos: number, length?: number) {
+  copyBank(sourceBank: any, sourcePos: number, targetBank: any, targetPos: number, length?: number): Promise<any> {
     return this.bank.copyBank(sourceBank, sourcePos, targetBank, targetPos, length);
   }
 
-  createBank(bytes?: number) {
+  createBank(bytes?: number): Promise<any> {
     return this.bank.createBank(bytes);
   }
 
-  freeBank(bank: any) {
+  freeBank(bank: any): Promise<any> {
     return this.bank.freeBank(bank);
   }
 
-  peekByte(bank: any, pos: number) {
+  peekByte(bank: any, pos: number): Promise<any> {
     return this.bank.peekByte(bank, pos);
   }
 
-  peekFloat(bank: any, pos: number) {
+  peekFloat(bank: any, pos: number): Promise<any> {
     return this.bank.peekFloat(bank, pos);
   }
 
-  peekInt(bank: any, pos: number) {
+  peekInt(bank: any, pos: number): Promise<any> {
     return this.bank.peekInt(bank, pos);
   }
 
-  peekShort(bank: any, pos: number) {
+  peekShort(bank: any, pos: number): Promise<any> {
     return this.bank.peekShort(bank, pos);
   }
 
-  pokeByte(bank: any, pos: number, value: number) {
+  pokeByte(bank: any, pos: number, value: number): Promise<any> {
     return this.bank.pokeByte(bank, pos, value);
   }
 
-  pokeFloat(bank: any, pos: number, value: number) {
+  pokeFloat(bank: any, pos: number, value: number): Promise<any> {
     return this.bank.pokeFloat(bank, pos, value);
   }
 
-  pokeInt(bank: any, pos: number, value: number) {
+  pokeInt(bank: any, pos: number, value: number): Promise<any> {
     return this.bank.pokeInt(bank, pos, value);
   }
 
-  pokeShort(bank: any, pos: number, value: number) {
+  pokeShort(bank: any, pos: number, value: number): Promise<any> {
     return this.bank.pokeShort(bank, pos, value);
   }
 
-  readBytes(bank: any, stream: any, startPos: number, length: number) {
+  readBytes(bank: any, stream: any, startPos: number, length: number): Promise<any> {
     return this.bank.readBytes(bank, stream, startPos, length);
   }
 
-  resizeBank(bank: any, bytes?: number) {
+  resizeBank(bank: any, bytes?: number): Promise<any> {
     return this.bank.resizeBank(bank, bytes);
   }
 
-  writeBytes(bank: any, stream: any, startPos: number, length: number) {
+  writeBytes(bank: any, stream: any, startPos: number, length: number): Promise<any> {
     return this.bank.writeBytes(bank, stream, startPos, length);
   }
 
   // FILE SYSTEM
-  changeDir() {
+  changeDir(): Promise<any> {
     return this.fileSystem.changeDir();
   }
 
-  closeDir() {
+  closeDir(): Promise<any> {
     return this.fileSystem.closeDir();
   }
 
-  closeFile() {
+  closeFile(): Promise<any> {
     return this.fileSystem.closeFile();
   }
 
-  copyFile() {
+  copyFile(): Promise<any> {
     return this.fileSystem.copyFile();
   }
 
-  createDir() {
+  createDir(): Promise<any> {
     return this.fileSystem.createDir();
   }
 
-  currentDir() {
+  currentDir(): Promise<any> {
     return this.fileSystem.currentDir();
   }
 
-  deleteDir() {
+  deleteDir(): Promise<any> {
     return this.fileSystem.deleteDir();
   }
 
-  deleteFile() {
+  deleteFile(): Promise<any> {
     return this.fileSystem.deleteFile();
   }
 
-  eof() {
+  eof(): Promise<any> {
     return this.fileSystem.eof();
   }
 
-  filePos() {
+  filePos(): Promise<any> {
     return this.fileSystem.filePos();
   }
 
-  fileSize() {
+  fileSize(): Promise<any> {
     return this.fileSystem.fileSize();
   }
 
-  fileType() {
+  fileType(): Promise<any> {
     return this.fileSystem.fileType();
   }
 
-  moreFiles() {
+  moreFiles(): Promise<any> {
     return this.fileSystem.moreFiles();
   }
 
-  nextFile() {
+  nextFile(): Promise<any> {
     return this.fileSystem.nextFile();
   }
 
-  openFile() {
+  openFile(): Promise<any> {
     return this.fileSystem.openFile();
   }
 
-  readAvail() {
+  readAvail(): Promise<any> {
     return this.fileSystem.readAvail();
   }
 
-  readByte() {
+  readByte(): Promise<any> {
     return this.fileSystem.readByte();
   }
 
-  readDir() {
+  readDir(): Promise<any> {
     return this.fileSystem.readDir();
   }
 
-  readFile() {
+  readFile(): Promise<any> {
     return this.fileSystem.readFile();
   }
 
-  readFloat() {
+  readFloat(): Promise<any> {
     return this.fileSystem.readFloat();
   }
 
-  readInt() {
+  readInt(): Promise<any> {
     return this.fileSystem.readInt();
   }
 
-  readLine() {
+  readLine(): Promise<any> {
     return this.fileSystem.readLine();
   }
 
-  readShort() {
+  readShort(): Promise<any> {
     return this.fileSystem.readShort();
   }
 
-  readString() {
+  readString(): Promise<any> {
     return this.fileSystem.readString();
   }
 
-  seekFile() {
+  seekFile(): Promise<any> {
     return this.fileSystem.seekFile();
   }
 
-  writeByte() {
+  writeByte(): Promise<any> {
     return this.fileSystem.writeByte();
   }
 
-  writeFile() {
+  writeFile(): Promise<any> {
     return this.fileSystem.writeFile();
   }
 
-  writeFloat() {
+  writeFloat(): Promise<any> {
     return this.fileSystem.writeFloat();
   }
 
-  writeInt() {
+  writeInt(): Promise<any> {
     return this.fileSystem.writeInt();
   }
 
-  writeLine() {
+  writeLine(): Promise<any> {
     return this.fileSystem.writeLine();
   }
 
-  writeShort() {
+  writeShort(): Promise<any> {
     return this.fileSystem.writeShort();
   }
 
-  writeString() {
+  writeString(): Promise<any> {
     return this.fileSystem.writeString();
   }
 }

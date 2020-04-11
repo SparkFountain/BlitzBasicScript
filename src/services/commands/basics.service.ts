@@ -231,11 +231,11 @@ export class CommandsBasicsService {
     return this.timeRandom.freeTimer();
   }
 
-  milliSecs() {
+  milliSecs(): Promise<number> {
     return this.timeRandom.milliSecs();
   }
 
-  pauseTimer() {
+  pauseTimer(): Promise<void> {
     return this.timeRandom.pauseTimer();
   }
 
@@ -243,11 +243,11 @@ export class CommandsBasicsService {
     return this.timeRandom.rand(minOrMax, max);
   }
 
-  resetTimer() {
+  resetTimer(): Promise<void> {
     return this.timeRandom.resetTimer();
   }
 
-  resumeTimer() {
+  resumeTimer(): Promise<void> {
     return this.timeRandom.resumeTimer();
   }
 
@@ -255,7 +255,7 @@ export class CommandsBasicsService {
     return this.timeRandom.rnd(minOrMax, max);
   }
 
-  rndSeed() {
+  rndSeed(): Promise<number> {
     return this.timeRandom.rndSeed();
   }
 
@@ -263,11 +263,11 @@ export class CommandsBasicsService {
     return this.timeRandom.seedRnd(value);
   }
 
-  timerTicks() {
+  timerTicks(): Promise<number> {
     return this.timeRandom.timerTicks();
   }
 
-  waitTimer() {
+  waitTimer(): Promise<void> {
     return this.timeRandom.waitTimer();
   }
 }

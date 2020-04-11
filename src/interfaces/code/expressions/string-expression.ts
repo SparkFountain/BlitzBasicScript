@@ -1,7 +1,7 @@
-import {Expression} from './expression';
+import { Expression } from '../../../types/expression';
 
 export interface StringExpression extends Expression {
-    operations: StringExpOp[];
+  operations: StringExpOp[];
 }
 
 export type StringExpOp = '+'; //TODO more?

@@ -6,7 +6,7 @@ import {RepeatUntil} from '../interfaces/code/loops/repeat-until';
 import {SelectCase} from '../interfaces/code/conditions/select-case';
 import {Assignment} from '../interfaces/code/assignment';
 import {IfThenElse} from '../interfaces/code/conditions/if-then-else';
-import {Expression} from '../interfaces/code/expressions/expression';
+import {Expression} from '../types/expression';
 import { GameStateService } from './game-state.service';
 
 @Injectable()

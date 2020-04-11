@@ -17,14 +17,16 @@ import { CommandsGUIService } from '../services/commands/gui.service';
 import { CommandsIOService } from '../services/commands/io.service';
 import { CommandsSoundService } from '../services/commands/sound.service';
 import { Statement } from '../types/statement';
-import { CommandStatement } from '../interfaces/code/statements/command';
+import { CommandStatement } from '../classes/command';
 import { CodeBlock } from '../interfaces/code/block';
 import { InterpreterService } from '../services/interpreter.service';
+import { StringExpression } from '../classes/string-expression';
+import { Command } from 'protractor';
 
 @Component({
   selector: 'blitz-basic-script-game',
   templateUrl: 'blitz-basic-script-game.html',
-  styleUrls: ['blitz-basic-script-game.scss'],
+  styleUrls: ['blitz-basic-script-game.scss']
 })
 export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
   @Input() code: string[];
@@ -135,13 +137,13 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     ArrowUp: 200,
     ArrowLeft: 203,
     ArrowRight: 205,
-    ArrowDown: 208,
+    ArrowDown: 208
   };
 
   private readonly mouseCodes = {
     0: 1,
     1: 3,
-    2: 2,
+    2: 2
   };
 
   @HostListener('window:keydown', ['$event'])
@@ -195,29 +197,29 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
 
   testInterpreter(): void {
     this.codeBlocks = [
-      {} as CommandStatement,
-      {} as CommandStatement,
-      {} as CommandStatement,
-      {} as CommandStatement,
-      {} as CommandStatement,
-      {} as CommandStatement,
-      {} as CommandStatement,
-      {} as CommandStatement,
-      {} as CommandStatement,
-      {} as CommandStatement
+      new CommandStatement('DebugLog', [new StringExpression('This is a test.')]),
+      new CommandStatement('DebugLog', [new StringExpression('And a second one.')]),
+      new CommandStatement('DebugLog', [new StringExpression("That'ts the final debug log.")])
     ];
     this.interpreteNextCodeBlock(); // initial code block
   }
 
   interpreteNextCodeBlock() {
-    console.info(`Interpreting Code Block #${this.codeBlockIndex}`);
+    const codeBlock: CodeBlock = this.codeBlocks[this.codeBlockIndex];
+    console.info('Interpreting Code Block', codeBlock, codeBlock.constructor.name);
 
-    this.interpreter.executeCommand('debuglog', ['Hello World!']).then(() => {
-      this.codeBlockIndex++;
-      if (this.codeBlockIndex < this.codeBlocks.length) {
-        this.interpreteNextCodeBlock();
-      }
-    });
+    switch (codeBlock.constructor.name) {
+      case 'CommandStatement':
+        const commandStatement: CommandStatement = codeBlock as CommandStatement;
+        this.interpreter.executeCommand(commandStatement.name, commandStatement.params).then(() => this.incrementCodeBlock());
+    }
+  }
+
+  incrementCodeBlock() {
+    this.codeBlockIndex++;
+    if (this.codeBlockIndex < this.codeBlocks.length) {
+      this.interpreteNextCodeBlock();
+    }
   }
 
   play(): void {

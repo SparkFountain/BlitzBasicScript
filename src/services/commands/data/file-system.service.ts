@@ -1,104 +1,136 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsDataFileSystemService {
-    constructor() {
+  constructor() {
+    return null;
+  }
 
-    }
+  changeDir(): Promise<any> {
+    return null;
+  }
 
-    changeDir() {
-    }
+  closeDir(): Promise<any> {
+    return null;
+  }
 
-    closeDir() {
-    }
+  closeFile(): Promise<any> {
+    return null;
+  }
 
-    closeFile() {
-    }
+  copyFile(): Promise<any> {
+    return null;
+  }
 
-    copyFile() {
-    }
+  createDir(): Promise<any> {
+    return null;
+  }
 
-    createDir() {
-    }
+  currentDir(): Promise<any> {
+    return null;
+  }
 
-    currentDir() {
-    }
+  deleteDir(): Promise<any> {
+    return null;
+  }
 
-    deleteDir() {
-    }
+  deleteFile(): Promise<any> {
+    return null;
+  }
 
-    deleteFile() {
-    }
+  eof(): Promise<any> {
+    return null;
+  }
 
-    eof() {
-    }
+  filePos(): Promise<any> {
+    return null;
+  }
 
-    filePos() {
-    }
+  fileSize(): Promise<any> {
+    return null;
+  }
 
-    fileSize() {
-    }
+  fileType(): Promise<any> {
+    return null;
+  }
 
-    fileType() {
-    }
+  moreFiles(): Promise<any> {
+    return null;
+  }
 
-    moreFiles() {
-    }
+  nextFile(): Promise<any> {
+    return null;
+  }
 
-    nextFile() {
-    }
+  openFile(): Promise<any> {
+    return null;
+  }
 
-    openFile() {
-    }
+  readAvail(): Promise<any> {
+    return null;
+  }
 
-    readAvail() {
-    }
+  readByte(): Promise<any> {
+    return null;
+  }
 
-    readByte() {
-    }
+  readDir(): Promise<any> {
+    return null;
+  }
 
-    readDir() {
-    }
+  readFile(): Promise<any> {
+    return null;
+  }
 
-    readFile() {
-    }
+  readFloat(): Promise<any> {
+    return null;
+  }
 
-    readFloat() {
-    }
+  readInt(): Promise<any> {
+    return null;
+  }
 
-    readInt() {
-    }
+  readLine(): Promise<any> {
+    return null;
+  }
 
-    readLine() {
-    }
+  readShort(): Promise<any> {
+    return null;
+  }
 
-    readShort() {
-    }
+  readString(): Promise<any> {
+    return null;
+  }
 
-    readString() {
-    }
+  seekFile(): Promise<any> {
+    return null;
+  }
 
-    seekFile() {
-    }
+  writeByte(): Promise<any> {
+    return null;
+  }
 
-    writeByte() {
-    }
+  writeFile(): Promise<any> {
+    return null;
+  }
 
-    writeFile() {
-    }
+  writeFloat(): Promise<any> {
+    return null;
+  }
 
-    writeFloat() {
-    }
+  writeInt(): Promise<any> {
+    return null;
+  }
 
-    writeInt() {
-    }
+  writeLine(): Promise<any> {
+    return null;
+  }
 
-    writeLine() {
-    }
+  writeShort(): Promise<any> {
+    return null;
+  }
 
-    writeShort() {
-    }
-
-    writeString() {
-    }
+  writeString(): Promise<any> {
+    return null;
+  }
 }

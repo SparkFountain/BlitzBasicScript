@@ -1,4 +1,4 @@
-import { CommandStatement } from '../interfaces/code/statements/command';
+import { CommandStatement } from '../classes/command';
 import { ConstStatement } from '../interfaces/code/statements/const';
 import { ExpressionStatement } from '../interfaces/code/statements/expression';
 
