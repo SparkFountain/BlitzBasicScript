@@ -1,45 +1,41 @@
 import { Injectable } from '@angular/core';
-import { Observable, Subscriber } from 'rxjs';
 import { GameStateService } from '../../game-state.service';
 import { BabylonJSService } from '../../babylon-js.service';
 import { Render2dService } from '../../render2d.service';
 
 @Injectable()
 export class CommandsGraphics2dGraphicsService {
-  constructor(private babylonjs: BabylonJSService,
+  constructor(
+    private babylonjs: BabylonJSService,
     private render2dService: Render2dService,
     private gameState: GameStateService
-  ) {
+  ) {}
 
-  }
-
-  cls(): Observable<void> {
+  cls(): Promise<void> {
     return this.render2dService.cls();
   }
 
-  clsColor(red: number, green: number, blue: number): Observable<void> {
-    return new Observable<void>((observer: Subscriber<void>) => {
+  clsColor(red: number, green: number, blue: number): Promise<void> {
+    return new Promise<void>((resolve: Function, reject: Function) => {
       this.gameState.setScreenClsColor({
         red: red,
         green: green,
-        blue: blue
+        blue: blue,
       });
 
-      observer.next();
-      observer.complete();
+      resolve();
     });
   }
 
-  color(red: number, green: number, blue: number): Observable<void> {
-    return new Observable<void>((observer: Subscriber<void>) => {
+  color(red: number, green: number, blue: number): Promise<void> {
+    return new Promise<void>((resolve: Function, reject: Function) => {
       this.gameState.setScreenColor({
         red: red,
         green: green,
-        blue: blue
+        blue: blue,
       });
 
-      observer.next();
-      observer.complete();
+      resolve();
     });
   }
 
@@ -47,37 +43,35 @@ export class CommandsGraphics2dGraphicsService {
     return this.render2dService.line(beginX, beginY, endX, endY);
   }
 
-  origin(x: number, y: number): Observable<void> {
-    return new Observable<void>((observer: Subscriber<void>) => {
+  origin(x: number, y: number): Promise<void> {
+    return new Promise<void>((resolve: Function, reject: Function) => {
       this.gameState.setScreenOrigin({
         x: x,
-        y: y
+        y: y,
       });
 
-      observer.next();
-      observer.complete();
+      resolve();
     });
   }
 
-  oval(x: number, y: number, width: number, height: number, filled?: boolean): Observable<void> {
+  oval(x: number, y: number, width: number, height: number, filled?: boolean): Promise<void> {
     return this.render2dService.oval(x, y, width, height, filled);
   }
 
-  rect(x: number, y: number, width: number, height: number, filled?: boolean): Observable<void> {
+  rect(x: number, y: number, width: number, height: number, filled?: boolean): Promise<void> {
     return this.render2dService.rect(x, y, width, height, filled);
   }
 
-  viewport(beginX: number, beginY: number, width: number, height: number): Observable<void> {
-    return new Observable<void>((observer: Subscriber<void>) => {
+  viewport(beginX: number, beginY: number, width: number, height: number): Promise<void> {
+    return new Promise<void>((resolve: Function, reject: Function) => {
       this.gameState.setScreenViewport({
         beginX: beginX,
         beginY: beginY,
         width: width,
-        height: height
+        height: height,
       });
 
-      observer.next();
-      observer.complete();
+      resolve();
     });
   }
 }

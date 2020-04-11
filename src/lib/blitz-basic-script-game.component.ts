@@ -16,11 +16,15 @@ import { CommandsGraphics3DService } from '../services/commands/graphics3d.servi
 import { CommandsGUIService } from '../services/commands/gui.service';
 import { CommandsIOService } from '../services/commands/io.service';
 import { CommandsSoundService } from '../services/commands/sound.service';
+import { Statement } from '../types/statement';
+import { CommandStatement } from '../interfaces/code/statements/command';
+import { CodeBlock } from '../interfaces/code/block';
+import { InterpreterService } from '../services/interpreter.service';
 
 @Component({
   selector: 'blitz-basic-script-game',
   templateUrl: 'blitz-basic-script-game.html',
-  styleUrls: ['blitz-basic-script-game.scss']
+  styleUrls: ['blitz-basic-script-game.scss'],
 })
 export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
   @Input() code: string[];
@@ -32,6 +36,10 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
   public canvasFocused: boolean;
 
   public playing: boolean;
+
+  // TODO: interpreter test, remove or refactor these variables later
+  private codeBlocks: any[];
+  private codeBlockIndex: number;
 
   /** Key code conversion schema **/
   private readonly keyCodes = {
@@ -127,13 +135,13 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     ArrowUp: 200,
     ArrowLeft: 203,
     ArrowRight: 205,
-    ArrowDown: 208
+    ArrowDown: 208,
   };
 
   private readonly mouseCodes = {
     0: 1,
     1: 3,
-    2: 2
+    2: 2,
   };
 
   @HostListener('window:keydown', ['$event'])
@@ -158,7 +166,8 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     this.gameState.incrementMouseHit(this.mouseCodes[event.button]);
   }
 
-  constructor(private language: LanguageService,
+  constructor(
+    private language: LanguageService,
     private lexer: LexerService,
     private parser: ParserService,
     private gameState: GameStateService,
@@ -166,16 +175,12 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     private render2d: Render2dService,
     // private gui: GuiService,
 
-    private basics: CommandsBasicsService,
-    private data: CommandsDataService,
-    private graphics2d: CommandsGraphics2DService,
-    private graphics3d: CommandsGraphics3DService,
-    private gui: CommandsGUIService,
-    private io: CommandsIOService,
-    private sound: CommandsSoundService
+    private interpreter: InterpreterService
   ) {
     this.canvasFocused = false;
     this.playing = false;
+
+    this.codeBlockIndex = 0;
   }
 
   ngOnInit(): void {
@@ -183,11 +188,36 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
       this.title = 'BlitzBasicScript Game';
     }
 
-    this.parser.parse('12 * 5 - (5 * (32 + 4)) + 3'); // 12 * 5 - (5 * (32 + 4)) + 3
+    // this.parser.parse('12 * 5 - (5 * (32 + 4)) + 3'); // 12 * 5 - (5 * (32 + 4)) + 3
   }
 
-  ngAfterViewInit(): void {
+  ngAfterViewInit(): void {}
 
+  testInterpreter(): void {
+    this.codeBlocks = [
+      {} as CommandStatement,
+      {} as CommandStatement,
+      {} as CommandStatement,
+      {} as CommandStatement,
+      {} as CommandStatement,
+      {} as CommandStatement,
+      {} as CommandStatement,
+      {} as CommandStatement,
+      {} as CommandStatement,
+      {} as CommandStatement
+    ];
+    this.interpreteNextCodeBlock(); // initial code block
+  }
+
+  interpreteNextCodeBlock() {
+    console.info(`Interpreting Code Block #${this.codeBlockIndex}`);
+
+    this.interpreter.executeCommand('debuglog', ['Hello World!']).then(() => {
+      this.codeBlockIndex++;
+      if (this.codeBlockIndex < this.codeBlocks.length) {
+        this.interpreteNextCodeBlock();
+      }
+    });
   }
 
   play(): void {

@@ -1,53 +1,49 @@
-import {Injectable} from '@angular/core';
-import {GameMovie} from '../../../interfaces/game/movie';
-import {Observable, of, Subscriber} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { GameMovie } from '../../../interfaces/game/movie';
+import { of, Subscriber } from 'rxjs';
 
 @Injectable()
 export class CommandsGraphics2dMoviesService {
-    constructor() {
+  constructor() {}
 
-    }
+  closeMovie(movie: GameMovie): Promise<void> {
+    return new Promise<void>((resolve: Function, reject: Function) => {
+      movie.name = null;
+      movie.video = null;
+      movie = null;
 
-    closeMovie(movie: GameMovie): Observable<void> {
-        return new Observable<void>((observer: Subscriber<void>) => {
-            movie.name = null;
-            movie.video = null;
-            movie = null;
+      resolve();
+    });
+  }
 
-            observer.next();
-            observer.complete();
-        });
-    }
+  drawMovie(movie: GameMovie, x: number, y: number, width: number, height: number): Promise<boolean> {
+    return new Promise<boolean>((resolve: Function, reject: Function) => {
+      //TODO play video
 
-    drawMovie(movie: GameMovie, x: number, y: number, width: number, height: number): Observable<boolean> {
-        return new Observable<boolean>((observer: Subscriber<boolean>) => {
-            //TODO play video
+      if (movie.video.ended) {
+        resolve(false);
+      } else {
+        resolve(true);
+      }
+    });
+  }
 
-            if(movie.video.ended) {
-                observer.next(false);
-            } else {
-                observer.next(true);
-            }
-            observer.complete();
-        });
-    }
+  movieHeight(movie: GameMovie): Promise<number> {
+    return Promise.resolve(movie.video.height);
+  }
 
-    movieHeight(movie: GameMovie): Observable<number> {
-        return of(movie.video.height);
-    }
+  moviePlaying(movie: GameMovie): Promise<boolean> {
+    return movie.video.ended ? Promise.resolve(false) : Promise.resolve(true);
+  }
 
-    moviePlaying(movie: GameMovie): Observable<boolean> {
-        return movie.video.ended ? of(false) : of(true);
-    }
+  movieWidth(movie: GameMovie): Promise<number> {
+    return Promise.resolve(movie.video.width);
+  }
 
-    movieWidth(movie: GameMovie): Observable<number> {
-        return of(movie.video.width);
-    }
-
-    openMovie(filePath: string): Observable<GameMovie> {
-        return of({
-            name: '',
-            video: null
-        });
-    }
+  openMovie(filePath: string): Promise<GameMovie> {
+    return Promise.resolve({
+      name: '',
+      video: null,
+    });
+  }
 }

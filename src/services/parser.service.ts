@@ -14,7 +14,7 @@ import { CommandsGraphics3DService } from './commands/graphics3d.service';
 import { CommandsGUIService } from './commands/gui.service';
 import { CommandsIOService } from './commands/io.service';
 import { CommandsSoundService } from './commands/sound.service';
-import { ConstStatement } from '../interfaces/statements/const';
+import { ConstStatement } from '../interfaces/code/statements/const';
 import { ParserStatementType } from '../enums/parser/parser-statement-type';
 
 type CommandResponse = { category: string; command: string; params: any[] };
@@ -110,8 +110,8 @@ export class ParserService {
     this.abstractSyntax = {
       globals: [],
       statements: [],
-      mainLoop$: [],
-      functions$: [],
+      mainLoop: [],
+      functions: [],
       types: []
     };
   }
@@ -261,8 +261,8 @@ export class ParserService {
     this.abstractSyntax = {
       globals: [],
       statements: [],
-      mainLoop$: [],
-      functions$: [],
+      mainLoop: [],
+      functions: [],
       types: []
     };
 
@@ -496,7 +496,6 @@ export class ParserService {
           case LexerTokenCategory.CONST:
             let context: ConstContext = 'name' as ConstContext;
             let newConst: ConstStatement = {
-              type: ParserStatementType.CONST,
               name: '',
               value: null
             };

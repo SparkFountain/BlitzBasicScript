@@ -1,101 +1,98 @@
-import {Observable, of} from 'rxjs';
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsBasicsMathsService {
-    constructor() {
+  constructor() {}
 
-    }
+  abs(number: number): Promise<number> {
+    return Promise.resolve(Math.abs(number));
+  }
 
-    abs(number: number): Observable<number> {
-        return of(Math.abs(number));
-    }
+  acos(number: number): Promise<number> {
+    return Promise.resolve(Math.acos(number));
+  }
 
-    acos(number): Observable<number> {
-        return of(Math.acos(number));
-    }
+  asin(value: number): Promise<number> {
+    return Promise.resolve(Math.asin(value));
+  }
 
-    asin(value): Observable<number> {
-        return of(Math.asin(value));
-    }
+  atan(value: number): Promise<number> {
+    return Promise.resolve(Math.atan(value));
+  }
 
-    atan(value): Observable<number> {
-        return of(Math.atan(value));
-    }
+  atan2(y: number, x: number): Promise<number> {
+    return Promise.resolve(Math.atan2(y, x));
+  }
 
-    atan2(y, x): Observable<number> {
-        return of(Math.atan2(y, x));
-    }
+  bin(value: number): Promise<string> {
+    return Promise.resolve(value.toString(2));
+  }
 
-    bin(value): Observable<string> {
-        return of(parseInt(value).toString(2));
-    }
+  ceil(value: number): Promise<number> {
+    return Promise.resolve(Math.ceil(value));
+  }
 
-    ceil(value): Observable<number> {
-        return of(Math.ceil(value));
-    }
+  cos(value: number): Promise<number> {
+    return Promise.resolve(Math.cos(value));
+  }
 
-    cos(value): Observable<number> {
-        return of(Math.cos(value));
-    }
+  exp(value: number): Promise<number> {
+    return Promise.resolve(Math.exp(value));
+  }
 
-    exp(value): Observable<number> {
-        return of(Math.exp(value));
-    }
+  float(value: string): Promise<number> {
+    return Promise.resolve(parseFloat(value));
+  }
 
-    float(value): Observable<number> {
-        return of(parseFloat(value));
-    }
+  floor(value: number): Promise<number> {
+    return Promise.resolve(Math.floor(value));
+  }
 
-    floor(value): Observable<number> {
-        return of(Math.floor(value));
-    }
+  hex(value: string): Promise<string> {
+    return Promise.resolve(parseInt(value).toString(16));
+  }
 
-    hex(value): Observable<string> {
-        return of(parseInt(value).toString(16));
-    }
+  int(value: string): Promise<number> {
+    return Promise.resolve(parseInt(value));
+  }
 
-    int(value): Observable<number> {
-        return of(parseInt(value));
-    }
+  log(value: number): Promise<number> {
+    return Promise.resolve(Math.log(value));
+  }
 
-    log(value): Observable<number> {
-        return of(Math.log(value));
-    }
+  log10(value: number): Promise<number> {
+    return Promise.resolve(Math.log(value) / Math.LN10);
+  }
 
-    log10(value): Observable<number> {
-        return of(Math.log(value) / Math.LN10);
-    }
+  pi(): Promise<number> {
+    return Promise.resolve(Math.PI);
+  }
 
-    pi(): Observable<number> {
-        return of(Math.PI);
-    }
+  sar(number: number, bits: number): Promise<number> {
+    return Promise.resolve(number >> bits);
+  }
 
-    sar(number, bits): Observable<number> {
-        return of(number >> bits);
-    }
+  sgn(value: number): Promise<number> {
+    return Promise.resolve(Math.sign(value));
+  }
 
-    sgn(value): Observable<number> {
-        return of(Math.sign(value));
-    }
+  shl(number: number, bits: number): Promise<number> {
+    return Promise.resolve(number << bits);
+  }
 
-    shl(number, bits): Observable<number> {
-        return of(number << bits);
-    }
+  shr(number: number, bits: number): Promise<number> {
+    return Promise.resolve(number >>> bits);
+  }
 
-    shr(number, bits): Observable<number> {
-        return of(number >>> bits);
-    }
+  sin(value: number): Promise<number> {
+    return Promise.resolve(Math.sin(value));
+  }
 
-    sin(value): Observable<number> {
-        return of(Math.sin(value));
-    }
+  sqr(value: number): Promise<number> {
+    return Promise.resolve(Math.sqrt(value));
+  }
 
-    sqr(value): Observable<number> {
-        return of(Math.sqrt(value));
-    }
-
-    tan(value): Observable<number> {
-        return of(Math.tan(value));
-    }
+  tan(value: number): Promise<number> {
+    return Promise.resolve(Math.tan(value));
+  }
 }

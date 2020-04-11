@@ -1,5 +1,4 @@
 import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
 import {GameStateService} from '../../game-state.service';
 import { Render2dService } from '../../render2d.service';
 
@@ -10,19 +9,19 @@ export class CommandsGraphics2dPixelService {
 
     }
 
-    colorBlue(): Observable<number> {
-        return of(this.gameState.getScreenProperties().color.blue);
+    colorBlue(): Promise<number> {
+        return Promise.resolve(this.gameState.getScreenProperties().color.blue);
     }
 
-    colorGreen(): Observable<number> {
-        return of(this.gameState.getScreenProperties().color.green);
+    colorGreen(): Promise<number> {
+        return Promise.resolve(this.gameState.getScreenProperties().color.green);
     }
 
-    colorRed(): Observable<number> {
-        return of(this.gameState.getScreenProperties().color.red);
+    colorRed(): Promise<number> {
+        return Promise.resolve(this.gameState.getScreenProperties().color.red);
     }
 
-    plot(x: number, y: number): Observable<void> {
+    plot(x: number, y: number): Promise<void> {
         return this.graphics2d.plot(x, y);
     }
 }

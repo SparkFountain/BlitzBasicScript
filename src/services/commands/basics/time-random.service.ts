@@ -1,97 +1,90 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, Subscriber, timer } from 'rxjs';
 
 @Injectable()
 export class CommandsBasicsTimeRandomService {
-  constructor() {
+  constructor() {}
 
+  createTimer(): Promise<any> {
+    return null;
   }
 
-  createTimer() {
-  }
-
-  currentDate(): Observable<string> {
-    const monthNames = [
-      'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
-      'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'
-    ];
+  currentDate(): Promise<string> {
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     let date = new Date();
-    let day = (
-      date.getDate() < 10
-    ) ? '0' + date.getDate() : date.getDate();
-    return of(day + ' ' + monthNames[date.getMonth()] + ' ' + date.getFullYear());
+    let day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+    return Promise.resolve(day + ' ' + monthNames[date.getMonth()] + ' ' + date.getFullYear());
   }
 
-  currentTime(): Observable<string> {
+  currentTime(): Promise<string> {
     let date = new Date();
-    let hours = (
-      date.getHours() < 10
-    ) ? '0' + date.getHours() : date.getHours();
-    let minutes = (
-      date.getMinutes() < 10
-    ) ? '0' + date.getMinutes() : date.getMinutes();
-    let seconds = (
-      date.getSeconds() < 10
-    ) ? '0' + date.getSeconds() : date.getSeconds();
-    return of(hours + ':' + minutes + ':' + seconds);
+    let hours = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
+    let minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+    let seconds = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
+    return Promise.resolve(hours + ':' + minutes + ':' + seconds);
   }
 
-  delay(milliSeconds: number): Observable<void> {
-    return new Observable<void>((observer: Subscriber<void>) => {
-      timer(milliSeconds).subscribe(() => {
-        observer.next();
-        observer.complete();
-      });
+  delay(milliSeconds: number): Promise<void> {
+    return new Promise<void>((resolve: Function, reject: Function) => {
+      setTimeout(() => {
+        resolve();
+      }, milliSeconds);
     });
   }
 
-  freeTimer() {
+  freeTimer(): Promise<void> {
+    return null;
   }
 
-  milliSecs() {
+  milliSecs(): Promise<number> {
+    return null;
   }
 
-  pauseTimer() {
+  pauseTimer(): Promise<void> {
+    return null;
   }
 
-  rand(minOrMax: number, max?: number): Observable<number> {
+  rand(minOrMax: number, max?: number): Promise<number> {
     if (max) {
-      return of(Math.trunc(Math.random() * (max - minOrMax) + minOrMax));
+      return Promise.resolve(Math.trunc(Math.random() * (max - minOrMax) + minOrMax));
     } else {
-      return of(Math.trunc(Math.random() * minOrMax));
+      return Promise.resolve(Math.trunc(Math.random() * minOrMax));
     }
   }
 
-  resetTimer() {
+  resetTimer(): Promise<void> {
+    return null;
   }
 
-  resumeTimer() {
+  resumeTimer(): Promise<void> {
+    return null;
   }
 
-  rnd(minOrMax: number, max: number): Observable<number> {
+  rnd(minOrMax: number, max: number): Promise<number> {
     if (max) {
-      return of(Math.random() * (max - minOrMax) + minOrMax);
+      return Promise.resolve(Math.random() * (max - minOrMax) + minOrMax);
     } else {
-      return of(Math.random() * minOrMax);
+      return Promise.resolve(Math.random() * minOrMax);
     }
   }
 
-  rndSeed() {
+  rndSeed(): Promise<number> {
+    return null;
   }
 
-  seedRnd(value: string): Observable<void> {
-    return new Observable<void>((observer: Subscriber<void>) => {
+  seedRnd(value: string): Promise<void> {
+    return new Promise<void>((resolve: Function, reject: Function) => {
       // TODO: implementation, see https://stackoverflow.com/a/19303725
       // const x = Math.sin(seed++) * 10000;
       // return x - Math.floor(x);
-      observer.next();
-      observer.complete();
+      resolve();
     });
   }
 
-  timerTicks() {
+  timerTicks(): Promise<number> {
+    return null;
   }
 
-  waitTimer() {
+  waitTimer(): Promise<void> {
+    return null;
   }
 }

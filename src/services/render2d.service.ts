@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Observable, of, Subscriber } from 'rxjs';
+import { of, Subscriber } from 'rxjs';
 import { GameStateService } from './game-state.service';
 import { GameImage2D } from '../interfaces/game/image-2d';
 import { GameFont } from '../interfaces/game/font';
@@ -9,9 +9,7 @@ export class Render2dService {
   private _canvas: HTMLCanvasElement;
   private _context2d: CanvasRenderingContext2D;
 
-  constructor(private gameState: GameStateService) {
-
-  }
+  constructor(private gameState: GameStateService) {}
 
   initCanvas(canvas: HTMLCanvasElement) {
     this._canvas = canvas;
@@ -20,8 +18,8 @@ export class Render2dService {
     this._context2d = this._canvas.getContext('2d');
   }
 
-  initGraphics(width: number, height: number): Observable<void> {
-    return new Observable<void>((observer: Subscriber<void>) => {
+  initGraphics(width: number, height: number): Promise<void> {
+    return new Promise<void>((resolve: Function, reject: Function) => {
       this._canvas.width = width;
       this._canvas.height = height;
 
@@ -31,8 +29,7 @@ export class Render2dService {
       //this._canvas.style.width = '100%';
       //this._canvas.style.height = '100%';
 
-      observer.next();
-      observer.complete();
+      resolve();
     });
   }
 
@@ -55,34 +52,33 @@ export class Render2dService {
     this._context2d.fillStyle = 'rgba(' + red + ',' + green + ',' + blue + ', 1)';
   }
 
-  private getOrigin(): { x: number, y: number } {
+  private getOrigin(): { x: number; y: number } {
     return {
       x: this.gameState.getScreenProperties().origin.x,
-      y: this.gameState.getScreenProperties().origin.y
+      y: this.gameState.getScreenProperties().origin.y,
     };
   }
 
-  private getActiveViewport(): { beginX: number, beginY: number, width: number, height: number } {
+  private getActiveViewport(): { beginX: number; beginY: number; width: number; height: number } {
     return this.gameState.getScreenProperties().viewport;
   }
 
-  cls(): Observable<void> {
-    return new Observable<void>((observer: Subscriber<void>) => {
+  cls(): Promise<void> {
+    return new Promise<void>((resolve: Function, reject: Function) => {
       this.loadActiveClsColor();
 
       let screen = {
         width: this.gameState.getScreenProperties().width,
-        height: this.gameState.getScreenProperties().height
+        height: this.gameState.getScreenProperties().height,
       };
       this._context2d.fillRect(0, 0, screen.width, screen.height);
 
-      observer.next();
-      observer.complete();
+      resolve();
     });
   }
 
-  line(beginX: number, beginY: number, endX: number, endY: number): Observable<void> {
-    return new Observable<void>((observer: Subscriber<void>) => {
+  line(beginX: number, beginY: number, endX: number, endY: number): Promise<void> {
+    return new Promise<void>((resolve: Function, reject: Function) => {
       this.loadActiveColor();
       let origin = this.getOrigin();
 
@@ -91,13 +87,12 @@ export class Render2dService {
       this._context2d.lineTo(endX + origin.x, endY + origin.y);
       this._context2d.stroke();
 
-      observer.next();
-      observer.complete();
+      resolve();
     });
   }
 
-  rect(x: number, y: number, width: number, height: number, filled: boolean): Observable<void> {
-    return new Observable<void>((observer: Subscriber<void>) => {
+  rect(x: number, y: number, width: number, height: number, filled: boolean): Promise<void> {
+    return new Promise<void>((resolve: Function, reject: Function) => {
       if (filled === undefined) {
         filled = true;
       }
@@ -113,14 +108,13 @@ export class Render2dService {
         this._context2d.stroke();
       }
 
-      observer.next();
-      observer.complete();
+      resolve();
     });
   }
 
-  oval(x: number, y: number, width: number, height: number, filled?: boolean): Observable<void> {
+  oval(x: number, y: number, width: number, height: number, filled?: boolean): Promise<void> {
     //TODO refactor with respect to origin
-    return new Observable<void>((observer: Subscriber<void>) => {
+    return new Promise<void>((resolve: Function, reject: Function) => {
       if (filled === undefined) {
         filled = true;
       }
@@ -144,36 +138,33 @@ export class Render2dService {
         this._context2d.stroke();
       }
 
-      observer.next();
-      observer.complete();
+      resolve();
     });
   }
 
-  plot(x: number, y: number): Observable<void> {
-    return new Observable<void>((observer: Subscriber<void>) => {
+  plot(x: number, y: number): Promise<void> {
+    return new Promise<void>((resolve: Function, reject: Function) => {
       this.loadActiveColor();
       let origin = this.getOrigin();
 
       this._context2d.fillRect(x + origin.x, y + origin.y, 1, 1);
 
-      observer.next();
-      observer.complete();
+      resolve();
     });
   }
 
-  maskImage(image: GameImage2D, red: number, green: number, blue: number): Observable<void> {
-    return new Observable((observer: Subscriber<void>) => {
+  maskImage(image: GameImage2D, red: number, green: number, blue: number): Promise<void> {
+    return new Promise((resolve: Function, reject: Function) => {
       image.maskColor = {
         red: red,
         green: green,
-        blue: blue
+        blue: blue,
       };
 
       //create masked element
       image.maskedElement = document.createElement('img') as HTMLImageElement;
       image.maskedElement.onload = () => {
-        observer.next();
-        observer.complete();
+        resolve();
       };
 
       let maskCanvas = document.createElement('canvas');
@@ -198,15 +189,15 @@ export class Render2dService {
     });
   }
 
-  drawBlock(image: GameImage2D, x: number, y: number, frame?: number): Observable<void> {
-    return new Observable<void>((observer: Subscriber<void>) => {
+  drawBlock(image: GameImage2D, x: number, y: number, frame?: number): Promise<void> {
+    return new Promise<void>((resolve: Function, reject: Function) => {
       let origin = this.getOrigin();
 
       let rotationRadians = image.rotation / (180 / Math.PI);
       let handleVector = {
         length: Math.sqrt(Math.pow(image.handle.x, 2) + Math.pow(image.handle.y, 2)),
         dx: 0,
-        dy: 0
+        dy: 0,
       };
       handleVector.dx = -Math.sin(handleVector.length);
       handleVector.dy = Math.cos(handleVector.length);
@@ -229,38 +220,39 @@ export class Render2dService {
       this._context2d.drawImage(image.element, 0, 0);
       this._context2d.setTransform(1, 0, 0, 1, 0, 0);
 
-      observer.next();
-      observer.complete();
+      resolve();
     });
   }
 
-  tileBlock(image: GameImage2D, x: number, y: number, frame?: number): Observable<void> {
-    return new Observable<void>((observer: Subscriber<void>) => {
+  tileBlock(image: GameImage2D, x: number, y: number, frame?: number): Promise<void> {
+    return new Promise<void>((resolve: Function, reject: Function) => {
       let origin = this.getOrigin();
       let activeViewport = this.getActiveViewport();
 
-      for (let currentX: number = x, currentY: number = y; (currentX < activeViewport.width && currentY < activeViewport.height); currentX += image.width, currentY += image.height) {
+      for (
+        let currentX: number = x, currentY: number = y;
+        currentX < activeViewport.width && currentY < activeViewport.height;
+        currentX += image.width, currentY += image.height
+      ) {
         this._context2d.drawImage(image.element, x + origin.x, y + origin.y);
       }
 
-      observer.next();
-      observer.complete();
+      resolve();
     });
   }
 
-  drawImage(image: GameImage2D, x: number, y: number, frame?: number): Observable<void> {
+  drawImage(image: GameImage2D, x: number, y: number, frame?: number): Promise<void> {
     console.info('Draw image:', image);
     // image = this.gameState.getGlobal('image');
     if (image.maskColor) {
-      return new Observable<void>((observer: Subscriber<void>) => {
+      return new Promise<void>((resolve: Function, reject: Function) => {
         if (!image.maskedElement) {
           console.error('Image has no mask color');
         } else {
           let origin = this.getOrigin();
           this._context2d.drawImage(image.maskedElement, x + origin.x, y + origin.y);
 
-          observer.next();
-          observer.complete();
+          resolve();
         }
       });
     } else {
@@ -268,17 +260,16 @@ export class Render2dService {
     }
   }
 
-  text(x: number, y: number, text: string, centerX?: boolean, centerY?: boolean): Observable<void> {
-    return new Observable<void>((observer: Subscriber<void>) => {
+  text(x: number, y: number, text: string, centerX?: boolean, centerY?: boolean): Promise<void> {
+    return new Promise<void>((resolve: Function, reject: Function) => {
       this._context2d.fillText(text, x, y);
 
-      observer.next();
-      observer.complete();
+      resolve();
     });
   }
 
-  setFont(font: GameFont): Observable<void> {
-    return new Observable<void>((observer: Subscriber<void>) => {
+  setFont(font: GameFont): Promise<void> {
+    return new Promise<void>((resolve: Function, reject: Function) => {
       let fontString: string = '';
       if (font.italic) {
         fontString += 'italic ';
@@ -291,32 +282,30 @@ export class Render2dService {
 
       this._context2d.font = fontString;
 
-      observer.next();
-      observer.complete();
+      resolve();
     });
   }
 
-  fontAscent(font: GameFont): Observable<number> {
-    return of(0);
+  fontAscent(font: GameFont): Promise<number> {
+    return Promise.resolve(0);
   }
 
-  fontDescent(font: GameFont): Observable<number> {
-    return of(0);
+  fontDescent(font: GameFont): Promise<number> {
+    return Promise.resolve(0);
   }
 
-  fontWidth(): Observable<number> {
-    return of(this._context2d.measureText('M').width);
+  fontWidth(): Promise<number> {
+    return Promise.resolve(this._context2d.measureText('M').width);
   }
 
-  stringWidth(text: string): Observable<number> {
+  stringWidth(text: string): Promise<number> {
     console.info('_context2d:', this._context2d);
-    return of(this._context2d.measureText(text).width);
+    return Promise.resolve(this._context2d.measureText(text).width);
   }
 
-  stringHeight(): Observable<number> {
-    return new Observable<number>((observer: Subscriber<number>) => {
-      observer.next(Number(this._context2d.font.match(/([0-9]+)px/)[1]));
-      observer.complete();
+  stringHeight(): Promise<number> {
+    return new Promise<number>((resolve: Function, reject: Function) => {
+      resolve(Number(this._context2d.font.match(/([0-9]+)px/)[1]));
     });
   }
 }

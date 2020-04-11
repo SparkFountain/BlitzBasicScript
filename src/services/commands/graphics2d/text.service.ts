@@ -1,130 +1,121 @@
-import {Injectable} from '@angular/core';
-import {forkJoin, Observable, of, Subscriber} from 'rxjs';
-import {GameStateService} from '../../game-state.service';
-import {GameFont} from '../../../interfaces/game/font';
+import { Injectable } from '@angular/core';
+import { forkJoin, of, Subscriber } from 'rxjs';
+import { GameStateService } from '../../game-state.service';
+import { GameFont } from '../../../interfaces/game/font';
 import { Render2dService } from '../../render2d.service';
 
 @Injectable()
 export class CommandsGraphics2dTextService {
-    constructor(private graphics2d: Render2dService,
-                private gameState: GameStateService) {
+  constructor(private graphics2d: Render2dService, private gameState: GameStateService) {}
 
-    }
+  fontAscent(font: GameFont): Promise<number> {
+    return this.graphics2d.fontAscent(font);
+  }
 
-    fontAscent(font: GameFont): Observable<number> {
-        return this.graphics2d.fontAscent(font);
-    }
+  fontDescent(font: GameFont): Promise<number> {
+    return this.graphics2d.fontDescent(font);
+  }
 
-    fontDescent(font: GameFont): Observable<number> {
-        return this.graphics2d.fontDescent(font);
-    }
+  //TODO according to BlitzForum Online Help, the font parameter should not be set: https://www.blitzforum.de/help/fontHeight
+  fontHeight(font: GameFont): Promise<number> {
+    return new Promise<number>((resolve: Function, reject: Function) => {
+      forkJoin([this.fontAscent(font), this.fontDescent(font)]).subscribe((values: number[]) => {
+        resolve(values[0] + values[1]);
+      });
+    });
+  }
 
-    //TODO according to BlitzForum Online Help, the font parameter should not be set: https://www.blitzforum.de/help/fontHeight
-    fontHeight(font: GameFont): Observable<number> {
-        return new Observable<number>((observer: Subscriber<number>) => {
-            forkJoin([this.fontAscent(font), this.fontDescent(font)]).subscribe((values: number[]) => {
-                observer.next(values[0] + values[1]);
-                observer.complete();
-            });
-        });
-    }
+  fontName(font: GameFont): Promise<string> {
+    return Promise.resolve(font.name);
+  }
 
-    fontName(font: GameFont): Observable<string> {
-        return of(font.name);
-    }
+  fontSize(font: GameFont): Promise<number> {
+    return Promise.resolve(font.size);
+  }
 
-    fontSize(font: GameFont): Observable<number> {
-        return of(font.size);
-    }
+  fontStyle(font: GameFont): Promise<number> {
+    return new Promise<number>((resolve: Function, reject: Function) => {
+      let result = 0;
+      if (font.bold) {
+        result += 1;
+      }
+      if (font.italic) {
+        result += 2;
+      }
+      if (font.underline) {
+        result += 4;
+      }
 
-    fontStyle(font: GameFont): Observable<number> {
-        return new Observable<number>((observer: Subscriber<number>) => {
-            let result = 0;
-            if (font.bold) {
-                result += 1;
-            }
-            if (font.italic) {
-                result += 2;
-            }
-            if (font.underline) {
-                result += 4;
-            }
+      resolve(result);
+    });
+  }
 
-            observer.next(result);
-            observer.complete();
-        });
-    }
+  fontWidth() {
+    return this.graphics2d.fontWidth();
+  }
 
-    fontWidth() {
-        return this.graphics2d.fontWidth();
-    }
+  freeFont(font: GameFont): Promise<void> {
+    return new Promise<void>((resolve: Function, reject: Function) => {
+      font = null;
 
-    freeFont(font: GameFont): Observable<void> {
-        return new Observable<void>((observer: Subscriber<void>) => {
-            font = null;
+      resolve();
+    });
+  }
 
-            observer.next();
-            observer.complete();
-        });
+  loadFont(fontName: string, size: number, bold?: boolean, italic?: boolean, underline?: boolean): Promise<GameFont> {
+    return new Promise<GameFont>((resolve: Function, reject: Function) => {
+      resolve({
+        name: fontName,
+        size: size,
+        bold: bold,
+        italic: italic,
+        underline: underline,
+      });
+    });
+  }
 
-    }
+  locate(x: number, y: number): Promise<void> {
+    return new Promise<void>((resolve: Function, reject: Function) => {
+      this.gameState.setTextModeOffset({ x: x, y: y });
 
-    loadFont(fontName: string, size: number, bold?: boolean, italic?: boolean, underline?: boolean): Observable<GameFont> {
-        return new Observable<GameFont>((observer: Subscriber<GameFont>) => {
-            observer.next({
-                name: fontName,
-                size: size,
-                bold: bold,
-                italic: italic,
-                underline: underline
-            });
-            observer.complete();
-        });
-    }
+      resolve();
+    });
+  }
 
-    locate(x: number, y: number): Observable<void> {
-        return new Observable<void>((observer: Subscriber<void>) => {
-            this.gameState.setTextModeOffset({x: x, y: y});
+  // TODO: make this command deprecated?
+  print(text: string): Promise<void> {
+    return new Promise<void>((resolve: Function, reject: Function) => {
+      let textModeOffset: { x: number; y: number } = this.gameState.getTextModeProperties().offset;
+      // this.text(textModeOffset.x, textModeOffset.y, text).subscribe(() => {
+      //   //TODO calculate new text mode offset
 
-            observer.next();
-            observer.complete();
-        });
-    }
+      //   resolve();
+      // });
+    });
+  }
 
-    print(text: string): Observable<void> {
-        return new Observable<void>((observer: Subscriber<void>) => {
-            let textModeOffset: { x: number, y: number } = this.gameState.getTextModeProperties().offset;
-            this.text(textModeOffset.x, textModeOffset.y, text).subscribe(() => {
-                //TODO calculate new text mode offset
+  setFont(font: GameFont): Promise<void> {
+    return this.graphics2d.setFont(font);
+  }
 
-                observer.next();
-                observer.complete();
-            });
-        });
-    }
+  stringHeight(text: string): Promise<number> {
+    return this.graphics2d.stringHeight();
+  }
 
-    setFont(font: GameFont): Observable<void> {
-        return this.graphics2d.setFont(font);
-    }
+  stringWidth(text: string): Promise<number> {
+    return this.graphics2d.stringWidth(text);
+  }
 
-    stringHeight(text: string): Observable<number> {
-        return this.graphics2d.stringHeight();
-    }
+  text(x: number, y: number, text: string, centerX?: boolean, centerY?: boolean): Promise<void> {
+    return this.graphics2d.text(x, y, text, centerX, centerY);
+  }
 
-    stringWidth(text: string): Observable<number> {
-        return this.graphics2d.stringWidth(text);
-    }
+  // TODO: make this command deprecated?
+  write(text: string): Promise<void> {
+    return new Promise<void>((resolve: Function, reject: Function) => {
+      //TODO
 
-    text(x: number, y: number, text: string, centerX?: boolean, centerY?: boolean): Observable<void> {
-        return this.graphics2d.text(x, y, text, centerX, centerY);
-    }
-
-    write(text: string): Observable<void> {
-        return new Observable<void>((observer: Subscriber<void>) => {
-            //TODO
-
-            observer.next();
-            observer.complete();
-        });
-    }
+      resolve();
+    });
+  }
 }

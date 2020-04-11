@@ -1,225 +1,233 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { CommandsBasicsDiverseService } from './basics/diverse.service';
-import { Observable, of } from 'rxjs';
 import { CommandsBasicsMathsService } from './basics/maths.service';
 import { CommandsBasicsStringsService } from './basics/strings.service';
 import { CommandsBasicsTimeRandomService } from './basics/time-random.service';
 
 @Injectable()
 export class CommandsBasicsService {
-  constructor(private diverse: CommandsBasicsDiverseService,
+  constructor(
+    private diverse: CommandsBasicsDiverseService,
     private maths: CommandsBasicsMathsService,
     private strings: CommandsBasicsStringsService,
     private timeRandom: CommandsBasicsTimeRandomService
-  ) {
+  ) {}
 
+  // TODO: remove later, only for testing purposes
+  test(): Promise<void> {
+    return new Promise((resolve: Function, reject: Function) => {
+      // the function is executed automatically when the promise is constructed
+
+      // after 1 second signal that the job is done with the result "done"
+      setTimeout(() => resolve(), 1000);
+    });
   }
 
   // DIVERSE
-  appTitle(title: string): Observable<void> {
+  appTitle(title: string): Promise<void> {
     return this.diverse.appTitle(title);
   }
 
-  commandLine() {
+  commandLine(): Promise<void> {
     return this.diverse.commandLine();
   }
 
-  debugLog(message: string): Observable<void> {
+  debugLog(message: string): Promise<void> {
     return this.diverse.debugLog(message);
   }
 
-  getEnv() {
+  getEnv(): Promise<any> {
     return this.diverse.getEnv();
   }
 
-  runtimeError() {
+  runtimeError(): Promise<void> {
     return this.diverse.runtimeError();
   }
 
-  runtimeStats() {
+  runtimeStats(): Promise<void> {
     return this.diverse.runtimeStats();
   }
 
-  setEnv() {
+  setEnv(): Promise<void> {
     return this.diverse.setEnv();
   }
 
-  systemProperty() {
+  systemProperty(): Promise<void> {
     return this.diverse.systemProperty();
   }
 
   // MATHS
-  abs(number: number): Observable<number> {
+  abs(number: number): Promise<number> {
     return this.maths.abs(number);
   }
 
-  acos(number): Observable<number> {
+  acos(number): Promise<number> {
     return this.maths.acos(number);
   }
 
-  asin(value): Observable<number> {
+  asin(value): Promise<number> {
     return this.maths.asin(value);
   }
 
-  atan(value): Observable<number> {
+  atan(value): Promise<number> {
     return this.maths.atan(value);
   }
 
-  atan2(y, x): Observable<number> {
+  atan2(y, x): Promise<number> {
     return this.maths.atan2(y, x);
   }
 
-  bin(value): Observable<string> {
+  bin(value): Promise<string> {
     return this.maths.bin(value);
   }
 
-  ceil(value): Observable<number> {
+  ceil(value): Promise<number> {
     return this.maths.ceil(value);
   }
 
-  cos(value): Observable<number> {
+  cos(value): Promise<number> {
     return this.maths.cos(value);
   }
 
-  exp(value): Observable<number> {
+  exp(value): Promise<number> {
     return this.maths.exp(value);
   }
 
-  float(value): Observable<number> {
+  float(value): Promise<number> {
     return this.maths.float(value);
   }
 
-  floor(value): Observable<number> {
+  floor(value): Promise<number> {
     return this.maths.floor(value);
   }
 
-  hex(value): Observable<string> {
+  hex(value): Promise<string> {
     return this.maths.hex(value);
   }
 
-  int(value): Observable<number> {
+  int(value): Promise<number> {
     return this.maths.int(value);
   }
 
-  log(value): Observable<number> {
+  log(value): Promise<number> {
     return this.maths.log(value);
   }
 
-  log10(value): Observable<number> {
+  log10(value): Promise<number> {
     return this.maths.log10(value);
   }
 
-  pi(): Observable<number> {
+  pi(): Promise<number> {
     return this.maths.pi();
   }
 
-  sar(number, bits): Observable<number> {
+  sar(number, bits): Promise<number> {
     return this.maths.sar(number, bits);
   }
 
-  sgn(value): Observable<number> {
+  sgn(value): Promise<number> {
     return this.maths.sgn(value);
   }
 
-  shl(number, bits): Observable<number> {
+  shl(number, bits): Promise<number> {
     return this.maths.shl(number, bits);
   }
 
-  shr(number, bits): Observable<number> {
+  shr(number, bits): Promise<number> {
     return this.maths.shr(number, bits);
   }
 
-  sin(value): Observable<number> {
+  sin(value): Promise<number> {
     return this.maths.sin(value);
   }
 
-  sqr(value): Observable<number> {
+  sqr(value): Promise<number> {
     return this.maths.sqr(value);
   }
 
-  tan(value): Observable<number> {
+  tan(value): Promise<number> {
     return this.maths.tan(value);
   }
 
   // STRINGS
-  asc(string: string): Observable<number> {
+  asc(string: string): Promise<number> {
     return this.strings.asc(string);
   }
 
-  chr(value: number): Observable<string> {
+  chr(value: number): Promise<string> {
     return this.strings.chr(value);
   }
 
-  instr(text: string, search: string, start: number): Observable<number> {
+  instr(text: string, search: string, start: number): Promise<number> {
     return this.strings.instr(text, search, start);
   }
 
-  left(text: string, count: number): Observable<string> {
+  left(text: string, count: number): Promise<string> {
     return this.strings.left(text, count);
   }
 
-  len(text: string): Observable<number> {
+  len(text: string): Promise<number> {
     return this.strings.len(text);
   }
 
-  lower(text: string): Observable<string> {
+  lower(text: string): Promise<string> {
     return this.strings.lower(text);
   }
 
-  lset(text: string, count: number): Observable<string> {
+  lset(text: string, count: number): Promise<string> {
     return this.strings.lset(text, count);
   }
 
-  mid(text: string, start: number, count: number): Observable<string> {
+  mid(text: string, start: number, count: number): Promise<string> {
     return this.strings.mid(text, start, count);
   }
 
-  replace(text: string, search: string, replace: string): Observable<string> {
+  replace(text: string, search: string, replace: string): Promise<string> {
     return this.strings.replace(text, search, replace);
   }
 
-  right(text: string, count: number): Observable<string> {
+  right(text: string, count: number): Promise<string> {
     return this.strings.right(text, count);
   }
 
-  rset(text: string, count: number): Observable<string> {
+  rset(text: string, count: number): Promise<string> {
     return this.strings.rset(text, count);
   }
 
-  str(value: number): Observable<string> {
+  str(value: number): Promise<string> {
     return this.strings.str(value);
   }
 
-  string(text: string, count: number): Observable<string> {
+  string(text: string, count: number): Promise<string> {
     return this.strings.string(text, count);
   }
 
-  trim(text: string): Observable<string> {
+  trim(text: string): Promise<string> {
     return this.strings.trim(text);
   }
 
-  upper(text: string): Observable<string> {
+  upper(text: string): Promise<string> {
     return this.strings.upper(text);
   }
 
   // TIME AND RANDOM
-  createTimer() {
+  createTimer(): Promise<any> {
     return this.timeRandom.createTimer();
   }
 
-  currentDate(): Observable<string> {
+  currentDate(): Promise<string> {
     return this.timeRandom.currentDate();
   }
 
-  currentTime(): Observable<string> {
+  currentTime(): Promise<string> {
     return this.timeRandom.currentTime();
   }
 
-  delay(milliSeconds: number): Observable<void> {
+  delay(milliSeconds: number): Promise<void> {
     return this.timeRandom.delay(milliSeconds);
   }
 
-  freeTimer() {
+  freeTimer(): Promise<void> {
     return this.timeRandom.freeTimer();
   }
 
@@ -231,7 +239,7 @@ export class CommandsBasicsService {
     return this.timeRandom.pauseTimer();
   }
 
-  rand(minOrMax: number, max?: number): Observable<number> {
+  rand(minOrMax: number, max?: number): Promise<number> {
     return this.timeRandom.rand(minOrMax, max);
   }
 
@@ -243,7 +251,7 @@ export class CommandsBasicsService {
     return this.timeRandom.resumeTimer();
   }
 
-  rnd(minOrMax: number, max: number): Observable<number> {
+  rnd(minOrMax: number, max: number): Promise<number> {
     return this.timeRandom.rnd(minOrMax, max);
   }
 
@@ -251,7 +259,7 @@ export class CommandsBasicsService {
     return this.timeRandom.rndSeed();
   }
 
-  seedRnd(value: string): Observable<void> {
+  seedRnd(value: string): Promise<void> {
     return this.timeRandom.seedRnd(value);
   }
 

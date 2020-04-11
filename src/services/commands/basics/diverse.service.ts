@@ -1,42 +1,41 @@
-import {Observable, of, Subscriber} from 'rxjs';
 import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsBasicsDiverseService {
-    constructor(/*private gameState: GameStateService*/) {
+  constructor(/*private gameState: GameStateService*/) {}
 
-    }
+  appTitle(title: string): Promise<void> {
+    return Promise.resolve(null /*this.gameState.setAppTitle(title)*/);
+  }
 
-    appTitle(title: string): Observable<void> {
-        return of(null/*this.gameState.setAppTitle(title)*/);
-    }
+  commandLine(): Promise<void> {
+    return null;
+  }
 
-    commandLine() {
+  debugLog(message: string): Promise<void> {
+    return new Promise<void>((resolve: Function, reject: Function) => {
+      console.log(message);
+      resolve();
+    });
+  }
 
-    }
+  getEnv(): Promise<any> {
+    return null;
+  }
 
-    debugLog(message: string): Observable<void> {
-        return new Observable<void>((observer: Subscriber<void>) => {
-            console.log(message);
+  runtimeError(): Promise<void> {
+    return null;
+  }
 
-            observer.next();
-            observer.complete();
-        });
-    }
+  runtimeStats(): Promise<void> {
+    return null;
+  }
 
-    getEnv() {
-    }
+  setEnv(): Promise<void> {
+    return null;
+  }
 
-    runtimeError() {
-
-    }
-
-    runtimeStats() {
-    }
-
-    setEnv() {
-    }
-
-    systemProperty() {
-    }
+  systemProperty(): Promise<void> {
+    return null;
+  }
 }
