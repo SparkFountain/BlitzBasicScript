@@ -365,21 +365,168 @@ export class InterpreterService {
           evaluatedParams[6],
           evaluatedParams[7]
         );
+      case 'imagerectoverlap':
+        return this.graphics2d.imageRectOverlap();
+      case 'imagescollide':
+        return this.graphics2d.imagesCollide(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4],
+          evaluatedParams[5],
+          evaluatedParams[6],
+          evaluatedParams[7]
+        );
+      case 'imagesoverlap':
+        return this.graphics2d.imagesOverlap(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4],
+          evaluatedParams[5]
+        );
+      case 'imagewidth':
+        return this.graphics2d.imageWidth(evaluatedParams[0]);
+      case 'imagexhandle':
+        return this.graphics2d.imageXHandle(evaluatedParams[0]);
+      case 'imageyhandle':
+        return this.graphics2d.imageYHandle(evaluatedParams[0]);
+      case 'loadanimimage':
+        return this.graphics2d.loadAnimImage(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4]
+        );
+      case 'loadimage':
+        return this.graphics2d.loadImage(evaluatedParams[0]);
+      case 'maskimage':
+        return this.graphics2d.maskImage(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
+      case 'midhandle':
+        return this.graphics2d.midHandle(evaluatedParams[0]);
+      case 'rectsoverlap':
+        return this.graphics2d.rectsOverlap(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4],
+          evaluatedParams[5],
+          evaluatedParams[6],
+          evaluatedParams[7]
+        );
+      case 'resizeimage':
+        return this.graphics2d.resizeImage(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'rotateimage':
+        return this.graphics2d.rotateImage(evaluatedParams[0], evaluatedParams[1]);
+      case 'saveimage':
+        return this.graphics2d.saveImage();
+      case 'scaleimage':
+        return this.graphics2d.scaleImage(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'tileblock':
+        return this.graphics2d.tileBlock(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
+      case 'tileimage':
+        return this.graphics2d.tileImage();
+      // GRAPHICS 2D - MOVIES
+      case 'closemovie':
+        return this.graphics2d.closeMovie(evaluatedParams[0]);
+      case 'drawmovie':
+        return this.graphics2d.drawMovie(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4]
+        );
+      case 'movieheight':
+        return this.graphics2d.movieHeight(evaluatedParams[0]);
+      case 'movieplaying':
+        return this.graphics2d.moviePlaying(evaluatedParams[0]);
+      case 'moviewidth':
+        return this.graphics2d.movieWidth(evaluatedParams[0]);
+      case 'openmovie':
+        return this.graphics2d.openMovie(evaluatedParams[0]);
+      // GRAPHICS 2D - PIXEL
+      case 'colorblue':
+        return this.graphics2d.colorBlue();
+      case 'colorgreen':
+        return this.graphics2d.colorGreen();
+      case 'colorRed':
+        return this.graphics2d.colorRed();
+      case 'plot':
+        return this.graphics2d.plot(evaluatedParams[0], evaluatedParams[1]);
+      case 'fontascent':
+        return this.graphics2d.fontAscent(evaluatedParams[0]);
+      case 'fontdescent':
+        return this.graphics2d.fontDescent(evaluatedParams[0]);
+      case 'fontheight':
+        return this.graphics2d.fontHeight(evaluatedParams[0]);
+      case 'fontname':
+        return this.graphics2d.fontName(evaluatedParams[0]);
+      case 'fontsize':
+        return this.graphics2d.fontSize(evaluatedParams[0]);
+      case 'fontstyle':
+        return this.graphics2d.fontStyle(evaluatedParams[0]);
+      case 'fontwidth':
+        return this.graphics2d.fontWidth(evaluatedParams[0]);
+      case 'freefont':
+        return this.graphics2d.freeFont(evaluatedParams[0]);
+      case 'loadfont':
+        return this.graphics2d.loadFont(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4]
+        );
+      case 'locate':
+        return this.graphics2d.locate(evaluatedParams[0], evaluatedParams[1]);
+      case 'print':
+        return this.graphics2d.print(evaluatedParams[0]);
+      case 'setfont':
+        return this.graphics2d.setFont(evaluatedParams[0]);
+      case 'stringheight':
+        return this.graphics2d.stringHeight(evaluatedParams[0]);
+      case 'stringwidth':
+        return this.graphics2d.stringWidth(evaluatedParams[0]);
+      case 'text':
+        return this.graphics2d.text(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4]
+        );
+      case 'write':
+        return this.graphics2d.write(evaluatedParams[0]);
     }
 
     return null;
   }
 
-  public evaluateExpression(expression: Expression): Promise<any> {
+  public async evaluateExpression(expression: Expression): Promise<any> {
     // console.info('Expression', expression);
 
     switch (expression.constructor.name) {
       case 'NumericExpression':
-        return Promise.resolve((expression as NumericExpression).value);
+        return (expression as NumericExpression).value;
       case 'BooleanExpression':
-        return Promise.resolve((expression as BooleanExpression).value);
+        return (expression as BooleanExpression).value;
       case 'StringExpression':
-        return Promise.resolve((expression as StringExpression).value);
+        return (expression as StringExpression).value;
       case 'VariableExpression':
         const varExpr: VariableExpression = expression as VariableExpression;
         switch (varExpr.scope) {
@@ -387,6 +534,8 @@ export class InterpreterService {
           case 'global':
             return this.gameState.getGlobal(varExpr.id);
         }
+      case 'CommandStatement':
+        return this.executeCommand(expression as CommandStatement);
     }
 
     console.warn('Expression could not be evaluated:', expression);

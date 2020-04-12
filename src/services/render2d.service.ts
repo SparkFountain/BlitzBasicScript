@@ -242,8 +242,7 @@ export class Render2dService {
   }
 
   drawImage(image: GameImage2D, x: number, y: number, frame?: number): Promise<void> {
-    console.info('Draw image:', image);
-    // image = this.gameState.getGlobal('image');
+    // console.info('Draw image:', image);
     if (image.maskColor) {
       return new Promise<void>((resolve: Function, reject: Function) => {
         if (!image.maskedElement) {
@@ -294,7 +293,7 @@ export class Render2dService {
     return Promise.resolve(0);
   }
 
-  fontWidth(): Promise<number> {
+  fontWidth(font: GameFont): Promise<number> {
     return Promise.resolve(this._context2d.measureText('M').width);
   }
 

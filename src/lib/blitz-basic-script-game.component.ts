@@ -201,7 +201,9 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
   testInterpreter(): void {
     this.codeBlocks = [
       new Assignment('global', 'answerOnEverything', new NumericExpression(42)),
-      new CommandStatement('DebugLog', [new VariableExpression('answerOnEverything', 'global')])
+      new CommandStatement('DebugLog', [new VariableExpression('global', 'answerOnEverything')]),
+      new Assignment('global', 'image', new CommandStatement('LoadImage', [new StringExpression('/assets/gfx/blitz.png')])),
+      new CommandStatement('DrawImage', [new VariableExpression('global', 'image'), new NumericExpression(50), new NumericExpression(50)])
     ];
     this.interpreteNextCodeBlock(); // interprete initial code block
   }
@@ -212,12 +214,10 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
 
     switch (codeBlock.constructor.name) {
       case 'Assignment':
-        const assignment: Assignment = codeBlock as Assignment;
-        await this.interpreter.assign(assignment);
+        await this.interpreter.assign(codeBlock as Assignment);
         break;
       case 'CommandStatement':
-        const commandStatement: CommandStatement = codeBlock as CommandStatement;
-        await this.interpreter.executeCommand(commandStatement);
+        await this.interpreter.executeCommand(codeBlock as CommandStatement);
         break;
     }
 
@@ -234,10 +234,10 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
   play(): void {
     this.playing = true;
 
-    const tokens: LexerToken[][] = this.lexer.lexCode(this.code);
-    const gameCode: AbstractSyntax = this.parser.createAbstractSyntax(tokens);
-    console.info('GAME CODE', gameCode);
-    this.executeCode(gameCode);
+    // const tokens: LexerToken[][] = this.lexer.lexCode(this.code);
+    // const gameCode: AbstractSyntax = this.parser.createAbstractSyntax(tokens);
+    // console.info('GAME CODE', gameCode);
+    this.executeCode(null); //gameCode
   }
 
   debug(): void {
@@ -259,6 +259,9 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     this.render2d.initCanvas(this.canvas2d.nativeElement);
     console.info('initCanvas executed');
 
+    // TODO: only for testing
+    this.testInterpreter();
+
     // Initialize GUI Service
     // TODO only if this would be necessary
     // this.gui.initCanvas(this.canvas3d.nativeElement);
@@ -266,48 +269,37 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     // console.info('Source code:', this.code);
 
     // initialize language service
-    this.language.initialize().subscribe(() => {
-      /*console.info(this.code[0].join(''));
-      let lexerTokens: LexerToken[][] = this.lexer.lexCodeReactive(this.code);
-      console.info('Lexer Tokens:', lexerTokens);
+    // this.language.initialize().subscribe(() => {
+    //   /*console.info(this.code[0].join(''));
+    //   let lexerTokens: LexerToken[][] = this.lexer.lexCodeReactive(this.code);
+    //   console.info('Lexer Tokens:', lexerTokens);
 
-      //this.parser.parseCondition(lexerTokens[0]);
+    //   //this.parser.parseCondition(lexerTokens[0]);
 
-      let bbscriptCode: BBScriptCode = this.parser.createGameCode(lexerTokens);
-      console.info('Target Code:', bbscriptCode);
+    //   let bbscriptCode: BBScriptCode = this.parser.createGameCode(lexerTokens);
+    //   console.info('Target Code:', bbscriptCode);
 
-      // Start render loop.
-      this.babylonjs.mainLoop(bbscriptCode.mainLoop);
+    //   // Start render loop.
+    //   this.babylonjs.mainLoop(bbscriptCode.mainLoop);
 
-      //execute code lines
-      this.executeCode(bbscriptCode);*/
-    });
+    //   //execute code lines
+    //   this.executeCode(bbscriptCode);*/
+    // });
 
-    if (this.debugMode) {
-      // TODO different code execution with break points
-    }
+    // if (this.debugMode) {
+    //   // TODO different code execution with break points
+    // }
 
-    console.info('Executing Code');
+    // console.info('Executing Code');
 
-    // TODO handle main loop
-    let stm = code.statements[0];
-    this[stm.category][stm.command](...stm.params).subscribe((res) => {
-      this.gameState.setGlobal(stm.global, res);
+    // // TODO handle main loop
+    // let stm = code.statements[0];
+    // this[stm.category][stm.command](...stm.params).subscribe((res) => {
+    //   this.gameState.setGlobal(stm.global, res);
 
-      let stm2 = code.statements[1];
-      console.info('Statement 2:', stm2);
-      this[stm2.category][stm2.command](...stm2.params).subscribe();
-    });
-
-    // concat(...code.statements.fn()).subscribe(
-    //   () => {
-    //     console.info('Next statement has been executed.');
-    //   },
-    //   () => {
-    //   },
-    //   () => {
-    //     console.info('### ALL CODE STATEMENTS EXECUTED ###');
-    //   }
-    // );
+    //   let stm2 = code.statements[1];
+    //   console.info('Statement 2:', stm2);
+    //   this[stm2.category][stm2.command](...stm2.params).subscribe();
+    // });
   }
 }

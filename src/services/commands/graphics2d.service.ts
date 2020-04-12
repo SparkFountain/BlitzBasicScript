@@ -267,8 +267,8 @@ export class CommandsGraphics2DService {
     return this.textService.fontStyle(font);
   }
 
-  fontWidth(): Promise<number> {
-    return this.textService.fontWidth();
+  fontWidth(font: GameFont): Promise<number> {
+    return this.textService.fontWidth(font);
   }
 
   freeFont(font: GameFont): Promise<void> {

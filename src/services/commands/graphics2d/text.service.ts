@@ -50,8 +50,8 @@ export class CommandsGraphics2dTextService {
     });
   }
 
-  fontWidth(): Promise<number> {
-    return this.graphics2d.fontWidth();
+  fontWidth(font: GameFont): Promise<number> {
+    return this.graphics2d.fontWidth(font);
   }
 
   freeFont(font: GameFont): Promise<void> {
