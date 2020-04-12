@@ -22,6 +22,9 @@ import { CodeBlock } from '../interfaces/code/block';
 import { InterpreterService } from '../services/interpreter.service';
 import { StringExpression } from '../classes/string-expression';
 import { Command } from 'protractor';
+import { Assignment } from '../classes/assignment';
+import { NumericExpression } from '../classes/numerical-expression';
+import { VariableExpression } from '../classes/variable-expression';
 
 @Component({
   selector: 'blitz-basic-script-game',
@@ -197,22 +200,28 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
 
   testInterpreter(): void {
     this.codeBlocks = [
-      new CommandStatement('DebugLog', [new StringExpression('This is a test.')]),
-      new CommandStatement('DebugLog', [new StringExpression('And a second one.')]),
-      new CommandStatement('DebugLog', [new StringExpression("That'ts the final debug log.")])
+      new Assignment('global', 'answerOnEverything', new NumericExpression(42)),
+      new CommandStatement('DebugLog', [new VariableExpression('answerOnEverything', 'global')])
     ];
-    this.interpreteNextCodeBlock(); // initial code block
+    this.interpreteNextCodeBlock(); // interprete initial code block
   }
 
-  interpreteNextCodeBlock() {
+  public async interpreteNextCodeBlock() {
     const codeBlock: CodeBlock = this.codeBlocks[this.codeBlockIndex];
     console.info('Interpreting Code Block', codeBlock, codeBlock.constructor.name);
 
     switch (codeBlock.constructor.name) {
+      case 'Assignment':
+        const assignment: Assignment = codeBlock as Assignment;
+        await this.interpreter.assign(assignment);
+        break;
       case 'CommandStatement':
         const commandStatement: CommandStatement = codeBlock as CommandStatement;
-        this.interpreter.executeCommand(commandStatement.name, commandStatement.params).then(() => this.incrementCodeBlock());
+        await this.interpreter.executeCommand(commandStatement);
+        break;
     }
+
+    this.incrementCodeBlock();
   }
 
   incrementCodeBlock() {

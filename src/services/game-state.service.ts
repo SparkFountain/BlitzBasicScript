@@ -174,18 +174,13 @@ export class GameStateService {
     this[property] = value;
   }
 
-  setGlobal(variableName: string, value: any): any {
-    console.info('Set Global:', variableName, value);
-    this.global[variableName] = value;
+  setGlobal(id: string, value: any): any {
+    console.info('Set Global:', id, value);
+    this.global[id] = value;
   }
 
-  getGlobal(variableName: string): any {
-    return this.global[variableName];
-  }
-
-  getGlobal$(variableName: string): Observable<any> {
-    console.info(`Get Global ${variableName}:`, this.global[variableName]);
-    return of(this.global[variableName]);
+  getGlobal(id: string): any {
+    return this.global[id];
   }
 
   setDim(dimName: string, value: any): any {

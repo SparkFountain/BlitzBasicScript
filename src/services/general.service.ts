@@ -4,7 +4,7 @@ import {ForToNext} from '../interfaces/code/loops/for-to-next';
 import {WhileWend} from '../interfaces/code/loops/while-wend';
 import {RepeatUntil} from '../interfaces/code/loops/repeat-until';
 import {SelectCase} from '../interfaces/code/conditions/select-case';
-import {Assignment} from '../interfaces/code/assignment';
+import {Assignment} from '../classes/assignment';
 import {IfThenElse} from '../interfaces/code/conditions/if-then-else';
 import {Expression} from '../types/expression';
 import { GameStateService } from './game-state.service';

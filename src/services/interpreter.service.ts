@@ -7,12 +7,16 @@ import { CommandsGUIService } from './commands/gui.service';
 import { CommandsIOService } from './commands/io.service';
 import { CommandsSoundService } from './commands/sound.service';
 import { Expression } from '../types/expression';
-import { NumericalExpression } from '../classes/numerical-expression';
+import { NumericExpression } from '../classes/numerical-expression';
 import { BooleanExpression } from '../classes/boolean-expression';
 import { StringExpression } from '../classes/string-expression';
+import { Assignment } from '../classes/assignment';
+import { GameStateService } from './game-state.service';
+import { CommandStatement } from '../classes/command';
+import { VariableExpression } from '../classes/variable-expression';
 
 @Injectable({
-  providedIn: 'root',
+  providedIn: 'root'
 })
 export class InterpreterService {
   constructor(
@@ -22,14 +26,19 @@ export class InterpreterService {
     private graphics3d: CommandsGraphics3DService,
     private gui: CommandsGUIService,
     private io: CommandsIOService,
-    private sound: CommandsSoundService
+    private sound: CommandsSoundService,
+    private gameState: GameStateService
   ) {}
 
-  public executeCommand(command: string, params: any[]): Promise<any> {
-    const evaluatedParams: any[] = params.map((p: any) => this.evaluateExpression(p));
+  public async executeCommand(command: CommandStatement): Promise<any> {
+    // console.info('EXECUTE COMMAND', command);
+
+    const expressionsToEvaluate: Promise<any>[] = [];
+    command.params.forEach((p: Expression) => expressionsToEvaluate.push(this.evaluateExpression(p)));
+    const evaluatedParams: any[] = await Promise.all(expressionsToEvaluate);
     // console.info('Evaluated Params:', evaluatedParams);
 
-    const cmdLower: string = command.toLowerCase();
+    const cmdLower: string = command.name.toLowerCase();
     switch (cmdLower) {
       // BASICS - DIVERSE
       case 'apptitle':
@@ -158,72 +167,240 @@ export class InterpreterService {
       case 'waittimer':
         return this.basics.waitTimer();
       // DATA - BANKS
-      case 'banksize': return this.data.bankSize(evaluatedParams[0]);
-      case 'copybank': return this.data.copyBank(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4]);
-      case 'createbank': return this.data.createBank(evaluatedParams[0]);
-      case 'freebank': return this.data.freeBank(evaluatedParams[0]);
-      case 'peekbyte': return this.data.peekByte(evaluatedParams[0], evaluatedParams[1]);
-      case 'peekfloat': return this.data.peekFloat(evaluatedParams[0], evaluatedParams[1]);
-      case 'peekint': return this.data.peekInt(evaluatedParams[0], evaluatedParams[1]);
-      case 'peekshort': return this.data.peekShort(evaluatedParams[0], evaluatedParams[1]);
-      case 'pokebyte': return this.data.pokeByte(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'pokefloat': return this.data.pokeFloat(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'pokeint': return this.data.pokeInt(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'pokeshort': return this.data.pokeShort(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'readbytes': return this.data.readBytes(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
-      case 'resizebank': return this.data.resizeBank(evaluatedParams[0], evaluatedParams[1]);
-      case 'writebytes': return this.data.writeBytes(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      case 'banksize':
+        return this.data.bankSize(evaluatedParams[0]);
+      case 'copybank':
+        return this.data.copyBank(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4]
+        );
+      case 'createbank':
+        return this.data.createBank(evaluatedParams[0]);
+      case 'freebank':
+        return this.data.freeBank(evaluatedParams[0]);
+      case 'peekbyte':
+        return this.data.peekByte(evaluatedParams[0], evaluatedParams[1]);
+      case 'peekfloat':
+        return this.data.peekFloat(evaluatedParams[0], evaluatedParams[1]);
+      case 'peekint':
+        return this.data.peekInt(evaluatedParams[0], evaluatedParams[1]);
+      case 'peekshort':
+        return this.data.peekShort(evaluatedParams[0], evaluatedParams[1]);
+      case 'pokebyte':
+        return this.data.pokeByte(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'pokefloat':
+        return this.data.pokeFloat(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'pokeint':
+        return this.data.pokeInt(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'pokeshort':
+        return this.data.pokeShort(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'readbytes':
+        return this.data.readBytes(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      case 'resizebank':
+        return this.data.resizeBank(evaluatedParams[0], evaluatedParams[1]);
+      case 'writebytes':
+        return this.data.writeBytes(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
       // DATA - FILE SYSTEM
-      case 'changedir': return this.data.changeDir();
-      case 'closedir': return this.data.closeDir();
-      case 'closefile': return this.data.closeFile();
-      case 'copyfile': return this.data.copyFile();
-      case 'createdir': return this.data.createDir();
-      case 'currentdir': return this.data.currentDir();
-      case 'deletedir': return this.data.deleteDir();
-      case 'deletefile': return this.data.deleteFile();
-      case 'eof': return this.data.eof();
-      case 'filepos': return this.data.filePos();
-      case 'filesize': return this.data.fileSize();
-      case 'filetype': return this.data.fileType();
-      case 'morefiles': return this.data.moreFiles();
-      case 'nextfile': return this.data.nextFile();
-      case 'openfile': return this.data.openFile();
-      case 'readavail': return this.data.readAvail();
-      case 'readbyte': return this.data.readByte();
-      case 'readdir': return this.data.readDir();
-      case 'readfile': return this.data.readFile();
-      case 'readfloat': return this.data.readFloat();
-      case 'readint': return this.data.readInt();
-      case 'readline': return this.data.readLine();
-      case 'readshort': return this.data.readShort();
-      case 'readstring': return this.data.readString();
-      case 'seekfile': return this.data.seekFile();
-      case 'writebyte': return this.data.writeByte();
-      case 'writefile': return this.data.writeFile();
-      case 'writefloat': return this.data.writeFloat();
-      case 'writeint': return this.data.writeInt();
-      case 'writeline': return this.data.writeLine();
-      case 'writeshort': return this.data.writeShort();
-      case 'writestring': return this.data.writeString();
+      case 'changedir':
+        return this.data.changeDir();
+      case 'closedir':
+        return this.data.closeDir();
+      case 'closefile':
+        return this.data.closeFile();
+      case 'copyfile':
+        return this.data.copyFile();
+      case 'createdir':
+        return this.data.createDir();
+      case 'currentdir':
+        return this.data.currentDir();
+      case 'deletedir':
+        return this.data.deleteDir();
+      case 'deletefile':
+        return this.data.deleteFile();
+      case 'eof':
+        return this.data.eof();
+      case 'filepos':
+        return this.data.filePos();
+      case 'filesize':
+        return this.data.fileSize();
+      case 'filetype':
+        return this.data.fileType();
+      case 'morefiles':
+        return this.data.moreFiles();
+      case 'nextfile':
+        return this.data.nextFile();
+      case 'openfile':
+        return this.data.openFile();
+      case 'readavail':
+        return this.data.readAvail();
+      case 'readbyte':
+        return this.data.readByte();
+      case 'readdir':
+        return this.data.readDir();
+      case 'readfile':
+        return this.data.readFile();
+      case 'readfloat':
+        return this.data.readFloat();
+      case 'readint':
+        return this.data.readInt();
+      case 'readline':
+        return this.data.readLine();
+      case 'readshort':
+        return this.data.readShort();
+      case 'readstring':
+        return this.data.readString();
+      case 'seekfile':
+        return this.data.seekFile();
+      case 'writebyte':
+        return this.data.writeByte();
+      case 'writefile':
+        return this.data.writeFile();
+      case 'writefloat':
+        return this.data.writeFloat();
+      case 'writeint':
+        return this.data.writeInt();
+      case 'writeline':
+        return this.data.writeLine();
+      case 'writeshort':
+        return this.data.writeShort();
+      case 'writestring':
+        return this.data.writeString();
+      // GRAPHICS 2D - DISPLAY
+      case 'endgraphics':
+        return this.graphics2d.endGraphics();
+      case 'gfxmodedepth':
+        return this.graphics2d.gfxModeDepth();
+      case 'gfxmodeexists':
+        return this.graphics2d.gfxModeExists();
+      case 'graphics':
+        return this.graphics2d.graphics(evaluatedParams[0], evaluatedParams[1]);
+      case 'graphicsdepth':
+        return this.graphics2d.graphicsDepth();
+      case 'graphicsheight':
+        return this.graphics2d.graphicsHeight();
+      case 'graphicswidth':
+        return this.graphics2d.graphicsWidth();
+      // GRAPHICS 2D - GRAPHICS
+      case 'cls':
+        return this.graphics2d.cls();
+      case 'clscolor':
+        return this.graphics2d.clsColor(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'color':
+        return this.graphics2d.color(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'line':
+        return this.graphics2d.line(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      case 'origin':
+        return this.graphics2d.origin(evaluatedParams[0], evaluatedParams[1]);
+      case 'oval':
+        return this.graphics2d.oval(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4]
+        );
+      case 'rect':
+        return this.graphics2d.rect(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4]
+        );
+      case 'viewport':
+        return this.graphics2d.viewport(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      // GRAPHICS 2D - IMAGES
+      case 'automidhandle':
+        return this.graphics2d.autoMidHandle(evaluatedParams[0]);
+      case 'copyimage':
+        return this.graphics2d.copyImage(evaluatedParams[0]);
+      case 'createimage':
+        return this.graphics2d.createImage(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'drawblock':
+        return this.graphics2d.drawBlock(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
+      case 'drawblockrect':
+        return this.graphics2d.drawBlockRect(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4],
+          evaluatedParams[5],
+          evaluatedParams[6],
+          evaluatedParams[7]
+        );
+      case 'drawimage':
+        return this.graphics2d.drawImage(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
+      case 'drawimagerect':
+        return this.graphics2d.drawImageRect();
+      case 'freeimage':
+        return this.graphics2d.freeImage(evaluatedParams[0]);
+      case 'grabimage':
+        return this.graphics2d.grabImage();
+      case 'handleimage':
+        return this.graphics2d.handleImage(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'imageheight':
+        return this.graphics2d.imageHeight(evaluatedParams[0]);
+      case 'imagerectcollide':
+        return this.graphics2d.imageRectCollide(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4],
+          evaluatedParams[5],
+          evaluatedParams[6],
+          evaluatedParams[7]
+        );
     }
 
     return null;
   }
 
-  public evaluateExpression(expression: Expression): any {
+  public evaluateExpression(expression: Expression): Promise<any> {
     // console.info('Expression', expression);
-    // console.info('Expression class:', expression.constructor.name);
 
-    switch(expression.constructor.name) {
-      case 'NumericalExpression':
-        return (expression as NumericalExpression).value;
+    switch (expression.constructor.name) {
+      case 'NumericExpression':
+        return Promise.resolve((expression as NumericExpression).value);
       case 'BooleanExpression':
-        return (expression as BooleanExpression).value;
+        return Promise.resolve((expression as BooleanExpression).value);
       case 'StringExpression':
-        return (expression as StringExpression).value;
+        return Promise.resolve((expression as StringExpression).value);
+      case 'VariableExpression':
+        const varExpr: VariableExpression = expression as VariableExpression;
+        switch (varExpr.scope) {
+          case 'const':
+          case 'global':
+            return this.gameState.getGlobal(varExpr.id);
+        }
     }
 
+    console.warn('Expression could not be evaluated:', expression);
     return null;
+  }
+
+  public async assign(assignment: Assignment): Promise<void> {
+    const evaluatedExpression: any = await this.evaluateExpression(assignment.value);
+    // console.info('evaluatedExpression:', evaluatedExpression);
+
+    switch (assignment.scope) {
+      case 'const':
+      case 'global':
+        this.gameState.setGlobal(assignment.id, evaluatedExpression);
+    }
   }
 }

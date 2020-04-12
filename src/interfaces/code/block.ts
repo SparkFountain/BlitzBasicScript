@@ -1,4 +1,4 @@
-import { Assignment } from './assignment';
+import { Assignment } from '../../classes/assignment';
 import { IfThenElse } from './conditions/if-then-else';
 import { SelectCase } from './conditions/select-case';
 import { ForToNext } from './loops/for-to-next';

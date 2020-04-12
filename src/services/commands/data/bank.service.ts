@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsDataBankService {
-  constructor(): Promise<any> {
+  constructor() {
     return null;
   }
 

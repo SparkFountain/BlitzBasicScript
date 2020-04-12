@@ -50,7 +50,7 @@ export class CommandsGraphics2dTextService {
     });
   }
 
-  fontWidth() {
+  fontWidth(): Promise<number> {
     return this.graphics2d.fontWidth();
   }
 

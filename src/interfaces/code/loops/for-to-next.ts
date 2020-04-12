@@ -1,4 +1,4 @@
-import {Assignment} from '../assignment';
+import {Assignment} from '../../../classes/assignment';
 import {Observable} from 'rxjs';
 
 export interface ForToNext {

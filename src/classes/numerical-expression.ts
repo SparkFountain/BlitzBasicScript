@@ -1,7 +1,7 @@
-export class NumericalExpression {
+export class NumericExpression {
   public value: number;
 
-  constructor() {
-
+  constructor(value: number) {
+    this.value = value;
   }
 }

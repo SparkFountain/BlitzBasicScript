@@ -1,4 +1,11 @@
+import { AssignmentScope } from '../types/assignment-scope';
+
 export class VariableExpression {
-  private name: string;
-  private scope: 'global' | 'local' | 'dim' // TODO: maybe add some
+  public id: string;
+  public scope: AssignmentScope;
+
+  constructor(id: string, scope: AssignmentScope) {
+    this.id = id;
+    this.scope = scope;
+  }
 }

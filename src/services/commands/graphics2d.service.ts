@@ -20,7 +20,7 @@ export class CommandsGraphics2DService {
   ) { }
 
   // DISPLAY
-  endGraphics() {
+  endGraphics(): Promise<void> {
     return this.display.endGraphics();
   }
 
@@ -107,7 +107,7 @@ export class CommandsGraphics2DService {
     return this.imagesService.drawImage(image, x, y, frame);
   }
 
-  drawImageRect() {
+  drawImageRect(): Promise<void> {
     return this.imagesService.drawImageRect();
   }
 
@@ -115,7 +115,7 @@ export class CommandsGraphics2DService {
     return this.imagesService.freeImage(image);
   }
 
-  grabImage() {
+  grabImage(): Promise<any> {
     return this.imagesService.grabImage();
   }
 
@@ -127,11 +127,11 @@ export class CommandsGraphics2DService {
     return this.imagesService.imageHeight(image);
   }
 
-  imageRectCollide(image: GameImage2D, x: number, y: number, frame: number, beginX: number, beginY: number, width: number, height: number) {
+  imageRectCollide(image: GameImage2D, x: number, y: number, frame: number, beginX: number, beginY: number, width: number, height: number): Promise<boolean>  {
     return this.imagesService.imageRectCollide(image, x, y, frame, beginX, beginY, width, height);
   }
 
-  imageRectOverlap() {
+  imageRectOverlap(): Promise<boolean> {
     return this.imagesService.imageRectOverlap();
   }
 
@@ -155,7 +155,7 @@ export class CommandsGraphics2DService {
     return this.imagesService.imageYHandle(image);
   }
 
-  loadAnimImage(filePath: string, width, height, startFrameIndex: number, totalFrames: number) {
+  loadAnimImage(filePath: string, width, height, startFrameIndex: number, totalFrames: number): Promise<any> {
     return this.imagesService.loadAnimImage(filePath, width, height, startFrameIndex, totalFrames);
   }
 
@@ -267,7 +267,7 @@ export class CommandsGraphics2DService {
     return this.textService.fontStyle(font);
   }
 
-  fontWidth() {
+  fontWidth(): Promise<number> {
     return this.textService.fontWidth();
   }
 

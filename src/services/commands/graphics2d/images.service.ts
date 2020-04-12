@@ -48,7 +48,7 @@ export class CommandsGraphics2dImagesService {
         height: height,
         handle: {
           x: autoMidHandleActive ? width / 2 : 0,
-          y: autoMidHandleActive ? height / 2 : 0,
+          y: autoMidHandleActive ? height / 2 : 0
         },
         rotation: 0
       });
@@ -78,7 +78,9 @@ export class CommandsGraphics2dImagesService {
     return this.graphics2d.drawImage(image, x, y, frame);
   }
 
-  drawImageRect() {}
+  drawImageRect(): Promise<void> {
+    return null;
+  }
 
   freeImage(image: GameImage2D): Promise<void> {
     return new Promise<void>((resolve: Function, reject: Function) => {
@@ -88,7 +90,9 @@ export class CommandsGraphics2dImagesService {
     });
   }
 
-  grabImage() {}
+  grabImage(): Promise<any> {
+    return null;
+  }
 
   handleImage(image: GameImage2D, x: number, y: number): Promise<void> {
     return new Promise<void>((resolve: Function, reject: Function) => {
@@ -112,9 +116,13 @@ export class CommandsGraphics2dImagesService {
     beginY: number,
     width: number,
     height: number
-  ) {}
+  ): Promise<boolean> {
+    return null;
+  }
 
-  imageRectOverlap() {}
+  imageRectOverlap(): Promise<boolean> {
+    return null;
+  }
 
   imagesCollide(
     image1: GameImage2D,
@@ -152,7 +160,9 @@ export class CommandsGraphics2dImagesService {
     return Promise.resolve(image.handle.y);
   }
 
-  loadAnimImage(filePath: string, width, height, startFrameIndex: number, totalFrames: number) {}
+  loadAnimImage(filePath: string, width, height, startFrameIndex: number, totalFrames: number): Promise<any> {
+    return null;
+  }
 
   loadImage(filePath: string): Promise<GameImage2D> {
     console.info('LOAD IMAGE', `${this.environment.getServer()}`, filePath);
@@ -176,9 +186,9 @@ export class CommandsGraphics2dImagesService {
                   height: htmlImage.height,
                   handle: {
                     x: autoMidHandleActive ? htmlImage.width / 2 : 0,
-                    y: autoMidHandleActive ? htmlImage.height / 2 : 0,
+                    y: autoMidHandleActive ? htmlImage.height / 2 : 0
                   },
-                  rotation: 0,
+                  rotation: 0
                 });
               };
               htmlImage.src = reader.result as string;

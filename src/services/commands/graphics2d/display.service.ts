@@ -12,7 +12,7 @@ export class CommandsGraphics2dDisplayService {
 
     }
 
-    endGraphics(): Promise<any> {
+    endGraphics(): Promise<void> {
       return null;
     }
 
