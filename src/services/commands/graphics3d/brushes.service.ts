@@ -1,56 +1,41 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsGraphics3dBrushesService {
-    constructor() {
+  constructor() {}
 
-    }
+  async brushAlpha(brush: any, alpha: number): Promise<void> {}
 
-    brushAlpha(brush: any, alpha: number): void {
-    }
+  async brushBlend(brush: any, mode: number): Promise<void> {}
 
-    brushBlend(brush: any, mode: number): void {
-    }
+  async brushColor(brush: any, red: number, green: number, blue: number): Promise<void> {}
 
-    brushColor(brush: any, red: number, green: number, blue: number): void {
-    }
+  async brushFx(brush: any, effects: number): Promise<void> {}
 
-    brushFx(brush: any, effects: number): void {
-    }
+  async brushShininess(brush: any, shininess: number): Promise<void> {}
 
-    brushShininess(brush: any, shininess: number): void {
-    }
+  async brushTexture(brush: any, texture: any, frame: number, index: number): Promise<void> {}
 
-    brushTexture(brush: any, texture: any, frame: number, index: number): void {
-    }
+  async createBrush(red?: number, green?: number, blue?: number): Promise<any> {
+    //a brush is an invisible object with texture / color information
+    //which can be applied to any entity / vertex / surface
+  }
 
-    createBrush(red?: number, green?: number, blue?: number): any {
-        //a brush is an invisible object with texture / color information
-        //which can be applied to any entity / vertex / surface
-    }
+  async freeBrush(brush: any): Promise<void> {
+    brush.dispose();
+  }
 
-    freeBrush(brush: any): void {
-        brush.dispose();
-    }
+  async getBrushTexture(brush: any, index: number): Promise<any> {}
 
-    getBrushTexture(brush: any, index: number): any {
-    }
+  async getEntityBrush(entity: any): Promise<any> {}
 
-    getEntityBrush(entity: any): any {
-    }
+  async getSurfaceBrush(surface: any): Promise<any> {}
 
-    getSurfaceBrush(surface: any): any {
-    }
+  async loadBrush(filePath: string, modes?: number, scaleU?: number, scaleV?: number) {}
 
-    loadBrush(filePath: string, modes?: number, scaleU?: number, scaleV?: number) {
-    }
+  async paintEntity(entity: any, brush: any): Promise<void> {}
 
-    paintEntity(entity: any, brush: any): void {
-    }
+  async paintMesh(mesh: any, brush: any): Promise<void> {}
 
-    paintMesh(mesh: any, brush: any): void {
-    }
-
-    paintSurface(surface: any, brush: any): void {
-    }
+  async paintSurface(surface: any, brush: any): Promise<void> {}
 }

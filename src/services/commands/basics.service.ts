@@ -13,261 +13,251 @@ export class CommandsBasicsService {
     private timeRandom: CommandsBasicsTimeRandomService
   ) {}
 
-  // TODO: remove later, only for testing purposes
-  test(): Promise<void> {
-    return new Promise((resolve: Function, reject: Function) => {
-      // the function is executed automatically when the promise is constructed
-
-      // after 1 second signal that the job is done with the result "done"
-      setTimeout(() => resolve(), 1000);
-    });
-  }
-
   // DIVERSE
-  appTitle(title: string): Promise<void> {
+  async appTitle(title: string): Promise<void> {
     return this.diverse.appTitle(title);
   }
 
-  commandLine(): Promise<void> {
+  async commandLine(): Promise<void> {
     return this.diverse.commandLine();
   }
 
-  debugLog(message: string): Promise<void> {
+  async debugLog(message: string): Promise<void> {
     return this.diverse.debugLog(message);
   }
 
-  getEnv(): Promise<any> {
+  async getEnv(): Promise<any> {
     return this.diverse.getEnv();
   }
 
-  runtimeError(): Promise<void> {
+  async runtimeError(): Promise<void> {
     return this.diverse.runtimeError();
   }
 
-  runtimeStats(): Promise<void> {
+  async runtimeStats(): Promise<void> {
     return this.diverse.runtimeStats();
   }
 
-  setEnv(): Promise<void> {
+  async setEnv(): Promise<void> {
     return this.diverse.setEnv();
   }
 
-  systemProperty(): Promise<void> {
+  async systemProperty(): Promise<void> {
     return this.diverse.systemProperty();
   }
 
   // MATHS
-  abs(number: number): Promise<number> {
+  async abs(number: number): Promise<number> {
     return this.maths.abs(number);
   }
 
-  acos(number): Promise<number> {
+  async acos(number): Promise<number> {
     return this.maths.acos(number);
   }
 
-  asin(value): Promise<number> {
+  async asin(value): Promise<number> {
     return this.maths.asin(value);
   }
 
-  atan(value): Promise<number> {
+  async atan(value): Promise<number> {
     return this.maths.atan(value);
   }
 
-  atan2(y, x): Promise<number> {
+  async atan2(y, x): Promise<number> {
     return this.maths.atan2(y, x);
   }
 
-  bin(value): Promise<string> {
+  async bin(value): Promise<string> {
     return this.maths.bin(value);
   }
 
-  ceil(value): Promise<number> {
+  async ceil(value): Promise<number> {
     return this.maths.ceil(value);
   }
 
-  cos(value): Promise<number> {
+  async cos(value): Promise<number> {
     return this.maths.cos(value);
   }
 
-  exp(value): Promise<number> {
+  async exp(value): Promise<number> {
     return this.maths.exp(value);
   }
 
-  float(value): Promise<number> {
+  async float(value): Promise<number> {
     return this.maths.float(value);
   }
 
-  floor(value): Promise<number> {
+  async floor(value): Promise<number> {
     return this.maths.floor(value);
   }
 
-  hex(value): Promise<string> {
+  async hex(value): Promise<string> {
     return this.maths.hex(value);
   }
 
-  int(value): Promise<number> {
+  async int(value): Promise<number> {
     return this.maths.int(value);
   }
 
-  log(value): Promise<number> {
+  async log(value): Promise<number> {
     return this.maths.log(value);
   }
 
-  log10(value): Promise<number> {
+  async log10(value): Promise<number> {
     return this.maths.log10(value);
   }
 
-  pi(): Promise<number> {
+  async pi(): Promise<number> {
     return this.maths.pi();
   }
 
-  sar(number, bits): Promise<number> {
+  async sar(number, bits): Promise<number> {
     return this.maths.sar(number, bits);
   }
 
-  sgn(value): Promise<number> {
+  async sgn(value): Promise<number> {
     return this.maths.sgn(value);
   }
 
-  shl(number, bits): Promise<number> {
+  async shl(number, bits): Promise<number> {
     return this.maths.shl(number, bits);
   }
 
-  shr(number, bits): Promise<number> {
+  async shr(number, bits): Promise<number> {
     return this.maths.shr(number, bits);
   }
 
-  sin(value): Promise<number> {
+  async sin(value): Promise<number> {
     return this.maths.sin(value);
   }
 
-  sqr(value): Promise<number> {
+  async sqr(value): Promise<number> {
     return this.maths.sqr(value);
   }
 
-  tan(value): Promise<number> {
+  async tan(value): Promise<number> {
     return this.maths.tan(value);
   }
 
   // STRINGS
-  asc(string: string): Promise<number> {
+  async asc(string: string): Promise<number> {
     return this.strings.asc(string);
   }
 
-  chr(value: number): Promise<string> {
+  async chr(value: number): Promise<string> {
     return this.strings.chr(value);
   }
 
-  instr(text: string, search: string, start: number): Promise<number> {
+  async instr(text: string, search: string, start: number): Promise<number> {
     return this.strings.instr(text, search, start);
   }
 
-  left(text: string, count: number): Promise<string> {
+  async left(text: string, count: number): Promise<string> {
     return this.strings.left(text, count);
   }
 
-  len(text: string): Promise<number> {
+  async len(text: string): Promise<number> {
     return this.strings.len(text);
   }
 
-  lower(text: string): Promise<string> {
+  async lower(text: string): Promise<string> {
     return this.strings.lower(text);
   }
 
-  lset(text: string, count: number): Promise<string> {
+  async lset(text: string, count: number): Promise<string> {
     return this.strings.lset(text, count);
   }
 
-  mid(text: string, start: number, count: number): Promise<string> {
+  async mid(text: string, start: number, count: number): Promise<string> {
     return this.strings.mid(text, start, count);
   }
 
-  replace(text: string, search: string, replace: string): Promise<string> {
+  async replace(text: string, search: string, replace: string): Promise<string> {
     return this.strings.replace(text, search, replace);
   }
 
-  right(text: string, count: number): Promise<string> {
+  async right(text: string, count: number): Promise<string> {
     return this.strings.right(text, count);
   }
 
-  rset(text: string, count: number): Promise<string> {
+  async rset(text: string, count: number): Promise<string> {
     return this.strings.rset(text, count);
   }
 
-  str(value: number): Promise<string> {
+  async str(value: number): Promise<string> {
     return this.strings.str(value);
   }
 
-  string(text: string, count: number): Promise<string> {
+  async string(text: string, count: number): Promise<string> {
     return this.strings.string(text, count);
   }
 
-  trim(text: string): Promise<string> {
+  async trim(text: string): Promise<string> {
     return this.strings.trim(text);
   }
 
-  upper(text: string): Promise<string> {
+  async upper(text: string): Promise<string> {
     return this.strings.upper(text);
   }
 
   // TIME AND RANDOM
-  createTimer(): Promise<any> {
+  async createTimer(): Promise<any> {
     return this.timeRandom.createTimer();
   }
 
-  currentDate(): Promise<string> {
+  async currentDate(): Promise<string> {
     return this.timeRandom.currentDate();
   }
 
-  currentTime(): Promise<string> {
+  async currentTime(): Promise<string> {
     return this.timeRandom.currentTime();
   }
 
-  delay(milliSeconds: number): Promise<void> {
+  async delay(milliSeconds: number): Promise<void> {
     return this.timeRandom.delay(milliSeconds);
   }
 
-  freeTimer(): Promise<void> {
+  async freeTimer(): Promise<void> {
     return this.timeRandom.freeTimer();
   }
 
-  milliSecs(): Promise<number> {
+  async milliSecs(): Promise<number> {
     return this.timeRandom.milliSecs();
   }
 
-  pauseTimer(): Promise<void> {
+  async pauseTimer(): Promise<void> {
     return this.timeRandom.pauseTimer();
   }
 
-  rand(minOrMax: number, max?: number): Promise<number> {
+  async rand(minOrMax: number, max?: number): Promise<number> {
     return this.timeRandom.rand(minOrMax, max);
   }
 
-  resetTimer(): Promise<void> {
+  async resetTimer(): Promise<void> {
     return this.timeRandom.resetTimer();
   }
 
-  resumeTimer(): Promise<void> {
+  async resumeTimer(): Promise<void> {
     return this.timeRandom.resumeTimer();
   }
 
-  rnd(minOrMax: number, max: number): Promise<number> {
+  async rnd(minOrMax: number, max: number): Promise<number> {
     return this.timeRandom.rnd(minOrMax, max);
   }
 
-  rndSeed(): Promise<number> {
+  async rndSeed(): Promise<number> {
     return this.timeRandom.rndSeed();
   }
 
-  seedRnd(value: string): Promise<void> {
+  async seedRnd(value: string): Promise<void> {
     return this.timeRandom.seedRnd(value);
   }
 
-  timerTicks(): Promise<number> {
+  async timerTicks(): Promise<number> {
     return this.timeRandom.timerTicks();
   }
 
-  waitTimer(): Promise<void> {
+  async waitTimer(): Promise<void> {
     return this.timeRandom.waitTimer();
   }
 }

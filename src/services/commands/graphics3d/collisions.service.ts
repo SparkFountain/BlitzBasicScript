@@ -1,77 +1,55 @@
-import {Injectable} from '@angular/core';
-import {Observable, Subscriber} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable, Subscriber } from 'rxjs';
 
 @Injectable()
 export class CommandsGraphics3dCollisionsService {
-    constructor() {
+  constructor() {}
 
-    }
+  async clearCollisions(): Promise<void> {}
 
-    clearCollisions(): Observable<void> {
-        return new Observable<void>((observer: Subscriber<void>) => {
-            observer.next();
-            observer.complete();
-        });
-    }
+  async collisionEntity(entity: any, index: number): Promise<any> {}
 
-    collisionEntity(entity: any, index: number): any {
-    }
+  async collisionNX(entity: any, index: number): Promise<number> {
+    return 0;
+  }
 
-    collisionNX(entity: any, index: number): number {
-        return 0;
-    }
+  async collisionNY(entity: any, index: number): Promise<number> {
+    return 0;
+  }
 
-    collisionNY(entity: any, index: number): number {
-        return 0;
-    }
+  async collisionNZ(entity: any, index: number): Promise<number> {
+    return 0;
+  }
 
-    collisionNZ(entity: any, index: number): number {
-        return 0;
-    }
+  async collisions(sourceEntity: any, targetEntity: any, method: number, reaction: number): Promise<void> {}
 
-    collisions(sourceEntity: any, targetEntity: any, method: number, reaction: number): void {
-    }
+  async collisionSurface(entity: any, index: number): Promise<any> {}
 
-    collisionSurface(entity: any, index: number): any {
-    }
+  async collisionTime(entity: any, index: number): Promise<number> {
+    return 0;
+  }
 
-    collisionTime(entity: any, index: number): number {
-        return 0;
-    }
+  async collisionTriangle() {}
 
-    collisionTriangle() {
-    }
+  async collisionX() {}
 
-    collisionX() {
-    }
+  async collisionY() {}
 
-    collisionY() {
-    }
+  async collisionZ() {}
 
-    collisionZ() {
-    }
+  async countCollisions() {}
 
-    countCollisions() {
-    }
+  async entityBox() {}
 
-    entityBox() {
-    }
+  async entityCollided() {}
 
-    entityCollided() {
-    }
+  async entityRadius() {}
 
-    entityRadius() {
-    }
+  async entityType() {}
 
-    entityType() {
-    }
+  async getEntityType() {}
 
-    getEntityType() {
-    }
+  async meshesIntersect() {}
 
-    meshesIntersect() {
-    }
-
-    resetEntity() {
-    }
+  async resetEntity() {}
 }

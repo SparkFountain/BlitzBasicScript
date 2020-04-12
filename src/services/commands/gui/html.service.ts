@@ -1,32 +1,22 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsGuiHtmlService {
-    constructor() {
+  constructor() {}
 
-    }
+  async createHtmlView() {}
 
-    createHtmlView() {
-    }
+  async htmlViewBack() {}
 
-    htmlViewBack() {
-    }
+  async htmlViewCurrentUrl() {}
 
-    htmlViewCurrentUrl() {
-    }
+  async htmlViewEventUrl() {}
 
-    htmlViewEventUrl() {
-    }
+  async htmlViewForward() {}
 
-    htmlViewForward() {
-    }
+  async htmlViewGo() {}
 
-    htmlViewGo() {
-    }
+  async htmlViewRun() {}
 
-    htmlViewRun() {
-    }
-
-    htmlViewStatus() {
-    }
+  async htmlViewStatus() {}
 }

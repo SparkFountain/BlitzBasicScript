@@ -1,56 +1,38 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsGuiTextAreaService {
-    constructor() {
+  constructor() {}
 
-    }
+  async addTextAreaText() {}
 
-    addTextAreaText() {
-    }
+  async createTextArea() {}
 
-    createTextArea() {
-    }
+  async formatTextAreaText() {}
 
-    formatTextAreaText() {
-    }
+  async lockTextArea() {}
 
-    lockTextArea() {
-    }
+  async setTextAreaColor() {}
 
-    setTextAreaColor() {
-    }
+  async setTextAreaFont() {}
 
-    setTextAreaFont() {
-    }
+  async setTextAreaTabs() {}
 
-    setTextAreaTabs() {
-    }
+  async setTextAreaText() {}
 
-    setTextAreaText() {
-    }
+  async textAreaChar() {}
 
-    textAreaChar() {
-    }
+  async textAreaCursor() {}
 
-    textAreaCursor() {
-    }
+  async textAreaLen() {}
 
-    textAreaLen() {
-    }
+  async textAreaLine() {}
 
-    textAreaLine() {
-    }
+  async textAreaLineLen() {}
 
-    textAreaLineLen() {
-    }
+  async textAreaSelLen() {}
 
-    textAreaSelLen() {
-    }
+  async textAreaText() {}
 
-    textAreaText() {
-    }
-
-    unlockTextArea() {
-    }
+  async unlockTextArea() {}
 }

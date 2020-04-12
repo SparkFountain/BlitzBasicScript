@@ -1,29 +1,32 @@
 import { Injectable } from '@angular/core';
 import { BabylonJSService } from '../../babylon-js.service';
 import { Axis } from '../../../enums/axis';
-import { Observable, of } from 'rxjs';
 import { GameEntity } from '../../../interfaces/game/entity';
 import { Mesh, Camera } from 'babylonjs';
 
 @Injectable()
 export class CommandsGraphics3dCoordinatesService {
-  constructor(private babylonjs: BabylonJSService) {
+  constructor(private babylonjs: BabylonJSService) {}
 
-  }
-
-  alignToVector(entity: any, x: number, y: number, z: number, axis: Axis, tween: number): Observable<void> {
+  async alignToVector(entity: any, x: number, y: number, z: number, axis: Axis, tween: number): Promise<void> {
     return this.babylonjs.alignToVector(entity, x, y, z, axis, tween);
   }
 
-  moveEntity(entity: any, x: number, y: number, z: number): Observable<void> {
+  async moveEntity(entity: any, x: number, y: number, z: number): Promise<void> {
     return this.babylonjs.moveEntity(entity, x, y, z);
   }
 
-  pointEntity(sourceEntity: any, targetEntity: any, roll: number): Observable<void> {
+  async pointEntity(sourceEntity: any, targetEntity: any, roll: number): Promise<void> {
     return this.babylonjs.pointEntity(sourceEntity, targetEntity, roll);
   }
 
-  positionEntity(entity: GameEntity, x: number, y: number, z: number, parentCoordinates?: boolean): Observable<void> {
+  async positionEntity(
+    entity: GameEntity,
+    x: number,
+    y: number,
+    z: number,
+    parentCoordinates?: boolean
+  ): Promise<void> {
     // TODO distinguish between positionMesh and positionEntity!
     let mesh: Mesh | Camera;
     if (entity.camera) {
@@ -34,43 +37,37 @@ export class CommandsGraphics3dCoordinatesService {
     return this.babylonjs.positionMesh(mesh, x, y, z, parentCoordinates);
   }
 
-  rotateEntity(entity: Mesh | Camera, pitch: number, yaw: number, roll: number, parentCoordinates?: boolean) {
+  async rotateEntity(entity: Mesh | Camera, pitch: number, yaw: number, roll: number, parentCoordinates?: boolean) {
     return this.babylonjs.rotateEntity(entity, pitch, yaw, roll, parentCoordinates);
   }
 
-  scaleEntity(entity: any, x: number, y: number, z: number, parentScale?: boolean): Observable<void> {
+  async scaleEntity(entity: any, x: number, y: number, z: number, parentScale?: boolean): Promise<void> {
     return this.babylonjs.scaleMesh(entity, x, y, z, parentScale);
   }
 
-  translateEntity(entity: any, x: number, y: number, z: number, parentAngle?: boolean): Observable<void> {
+  async translateEntity(entity: any, x: number, y: number, z: number, parentAngle?: boolean): Promise<void> {
     return this.babylonjs.translateEntity(entity, x, y, z, parentAngle);
   }
 
-  turnEntity(entity: any, pitch: number, yaw: number, roll: number, parentAngle?: boolean): Observable<void> {
+  async turnEntity(entity: any, pitch: number, yaw: number, roll: number, parentAngle?: boolean): Promise<void> {
     return this.babylonjs.turnEntity(entity, pitch, yaw, roll, parentAngle);
   }
 
-  tFormedX(): Observable<number> {
-    return of(0);
+  async tFormedX(): Promise<number> {
+    return 0;
   }
 
-  tFormedY(): Observable<number> {
-    return of(0);
+  async tFormedY(): Promise<number> {
+    return 0;
   }
 
-  tFormedZ(): Observable<number> {
-    return of(0);
+  async tFormedZ(): Promise<number> {
+    return 0;
   }
 
-  tFormNormal(x: number, y: number, z: number, source: GameEntity, target: GameEntity): Observable<void> {
-    return of(null);
-  }
+  async tFormNormal(x: number, y: number, z: number, source: GameEntity, target: GameEntity): Promise<void> {}
 
-  tFormPoint(x: number, y: number, z: number, source: GameEntity, target: GameEntity): Observable<void> {
-    return of(null);
-  }
+  async tFormPoint(x: number, y: number, z: number, source: GameEntity, target: GameEntity): Promise<void> {}
 
-  tFormVector(x: number, y: number, z: number, source: GameEntity, target: GameEntity): Observable<void> {
-    return of(null);
-  }
+  async tFormVector(x: number, y: number, z: number, source: GameEntity, target: GameEntity): Promise<void> {}
 }

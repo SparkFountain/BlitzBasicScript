@@ -1,143 +1,108 @@
-import {GameSound} from '../../../interfaces/game/sound';
-import {Observable, Subscriber} from 'rxjs';
-import {DebugEnvironment} from '../../../environment/debug.environment';
-import {Injectable} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
-
+import { GameSound } from '../../../interfaces/game/sound';
+import { DebugEnvironment } from '../../../environment/debug.environment';
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable()
 export class CommandsSoundMusicSamplesService {
-    constructor(private http: HttpClient,
-                private environment: DebugEnvironment) {
+  constructor(private http: HttpClient, private environment: DebugEnvironment) {}
 
-    }
+  async playCDTrack() {}
 
-    playCDTrack() {
-    }
+  //TODO Midi will not be natively supported, use MIDI.js or similar library
+  async playMusic(filePath: string, mode?: number): Promise<GameSound> {
+    return this.loadSound(filePath).then((sound: GameSound) => {
+      if (mode !== undefined) {
+        switch (mode) {
+          case 0:
+            //play one time
+            break;
+          case 1:
+            //play loop
+            break;
+          case 3:
+          //set loop without playing
+        }
+      } else {
+        return sound;
+      }
+    });
+  }
 
-    //TODO Midi will not be natively supported, use MIDI.js or similar library
-    playMusic(filePath: string, mode?: number): Observable<GameSound> {
-        return new Observable<GameSound>((observer: Subscriber<GameSound>) => {
-            this.loadSound(filePath).subscribe((sound: GameSound) => {
-                if (mode !== undefined) {
-                    switch (mode) {
-                        case 0:
-                            //play one time
-                            break;
-                        case 1:
-                            //play loop
-                            break;
-                        case 3:
-                        //set loop without playing
-                    }
-                } else {
-                    observer.next(sound);
-                    observer.complete();
-                }
+  async freeSound(sound: GameSound): Promise<void> {
+    sound = null;
+  }
+
+  async loadSound(filePath: string): Promise<GameSound> {
+    //info: the responseType conversion to JSON is a workaround, see https://github.com/angular/angular/issues/18586
+    return this.http
+      .get<ArrayBuffer>(this.environment.getServer() + filePath, { responseType: 'arraybuffer' as 'json' })
+      .toPromise()
+      .then((soundAsBlob: ArrayBuffer) => {
+        let audioCtx: AudioContext = new AudioContext();
+        let bufferSourceNode: AudioBufferSourceNode = audioCtx.createBufferSource();
+        let volumeGain: GainNode = audioCtx.createGain();
+        let pannerNode: StereoPannerNode = audioCtx.createStereoPanner();
+
+        audioCtx.decodeAudioData(soundAsBlob).then(
+          (buffer: AudioBuffer) => {
+            //TODO test if this also works if the state is not initialized with "suspend"
+            audioCtx.resume().then(() => {
+              bufferSourceNode.buffer = buffer;
+
+              volumeGain.gain.value = 0.1;
+              volumeGain.connect(audioCtx.destination);
+
+              pannerNode.pan.value = 0;
+              pannerNode.connect(volumeGain);
+
+              bufferSourceNode.connect(pannerNode);
+
+              return {
+                context: audioCtx,
+                source: bufferSourceNode,
+                volumeGain: volumeGain,
+                stereoPanner: pannerNode
+              };
             });
-        });
-    }
+          },
+          (e) => {
+            console.info('Error with decoding audio data' + e.err);
+          }
+        );
 
-    freeSound(sound: GameSound): Observable<void> {
-        return new Observable<void>((observer: Subscriber<void>) => {
-            sound = null;
+        // TODO: refactor (this should not happen)
+        return null;
+      });
+  }
 
-            observer.next();
-            observer.complete();
-        });
-    }
+  async loopSound(sound: GameSound): Promise<void> {
+    sound.source.loop = true;
+  }
 
-    loadSound(filePath: string): Observable<GameSound> {
-        return new Observable<GameSound>((observer: Subscriber<GameSound>) => {
-            //info: the responseType conversion to JSON is a workaround, see https://github.com/angular/angular/issues/18586
-            this.http.get<ArrayBuffer>(this.environment.getServer() + filePath, {responseType: 'arraybuffer' as 'json'})
-                .subscribe((soundAsBlob: ArrayBuffer) => {
-                    let audioCtx: AudioContext = new AudioContext();
-                    let bufferSourceNode: AudioBufferSourceNode = audioCtx.createBufferSource();
-                    let volumeGain: GainNode = audioCtx.createGain();
-                    let pannerNode: StereoPannerNode = audioCtx.createStereoPanner();
+  async playSound(sound: GameSound): Promise<void> {
+    sound.source.start(0);
+  }
 
-                    audioCtx.decodeAudioData(soundAsBlob).then((buffer: AudioBuffer) => {
-                            //TODO test if this also works if the state is not initialized with "suspend"
-                            audioCtx.resume().then(() => {
-                                bufferSourceNode.buffer = buffer;
+  async soundPan(sound: GameSound, pan: number): Promise<void> {
+    sound.stereoPanner.pan.value = pan;
+  }
 
-                                volumeGain.gain.value = 0.1;
-                                volumeGain.connect(audioCtx.destination);
+  async soundPitch(sound: GameSound, frequency: number): Promise<void> {
+    //TODO check how many channels exist and copy all of them successively
 
-                                pannerNode.pan.value = 0;
-                                pannerNode.connect(volumeGain);
+    let newBufferNode = sound.context.createBufferSource();
+    newBufferNode.buffer = sound.context.createBuffer(2, sound.source.buffer.length, frequency);
+    let leftChannel = sound.source.buffer.getChannelData(0);
+    let rightChannel = sound.source.buffer.getChannelData(1);
+    newBufferNode.buffer.copyToChannel(leftChannel, 0);
+    newBufferNode.buffer.copyToChannel(rightChannel, 1);
 
-                                bufferSourceNode.connect(pannerNode);
+    sound.source = newBufferNode;
+    sound.source.connect(sound.stereoPanner);
+  }
 
-                                observer.next({
-                                    context: audioCtx,
-                                    source: bufferSourceNode,
-                                    volumeGain: volumeGain,
-                                    stereoPanner: pannerNode
-                                });
-                                observer.complete();
-                            });
-                        },
-                        (e) => {
-                            console.info('Error with decoding audio data' + e.err);
-                        });
-                });
-        });
-    }
-
-    loopSound(sound: GameSound): Observable<void> {
-        return new Observable<void>((observer: Subscriber<void>) => {
-            sound.source.loop = true;
-
-            observer.next();
-            observer.complete();
-        });
-    }
-
-    playSound(sound: GameSound): Observable<void> {
-        return new Observable<void>((observer: Subscriber<void>) => {
-            sound.source.start(0);
-
-            observer.next();
-            observer.complete();
-        });
-    }
-
-    soundPan(sound: GameSound, pan: number): Observable<void> {
-        return new Observable<void>((observer: Subscriber<void>) => {
-            sound.stereoPanner.pan.value = pan;
-
-            observer.next();
-            observer.complete();
-        });
-    }
-
-    soundPitch(sound: GameSound, frequency: number): Observable<void> {
-        return new Observable<void>((observer: Subscriber<void>) => {
-            //TODO check how many channels exist and copy all of them successively
-
-            let newBufferNode = sound.context.createBufferSource();
-            newBufferNode.buffer = sound.context.createBuffer(2, sound.source.buffer.length, frequency);
-            let leftChannel = sound.source.buffer.getChannelData(0);
-            let rightChannel = sound.source.buffer.getChannelData(1);
-            newBufferNode.buffer.copyToChannel(leftChannel, 0);
-            newBufferNode.buffer.copyToChannel(rightChannel, 1);
-
-            sound.source = newBufferNode;
-            sound.source.connect(sound.stereoPanner);
-
-            observer.next();
-            observer.complete();
-        });
-    }
-
-    soundVolume(sound: GameSound, volume: number): Observable<void> {
-        return new Observable<void>((observer: Subscriber<void>) => {
-            sound.volumeGain.gain.value = volume;
-
-            observer.next();
-            observer.complete();
-        });
-    }
+  async soundVolume(sound: GameSound, volume: number): Promise<void> {
+    sound.volumeGain.gain.value = volume;
+  }
 }

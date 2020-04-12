@@ -1,11 +1,8 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsGuiDesktopService {
-    constructor() {
+  constructor() {}
 
-    }
-
-    desktop() {
-    }
+  async desktop() {}
 }

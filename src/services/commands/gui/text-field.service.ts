@@ -1,17 +1,12 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsGuiTextFieldService {
-    constructor() {
+  constructor() {}
 
-    }
+  async createLabel() {}
 
-    createLabel() {
-    }
+  async createTextField() {}
 
-    createTextField() {
-    }
-
-    textFieldText() {
-    }
+  async textFieldText() {}
 }

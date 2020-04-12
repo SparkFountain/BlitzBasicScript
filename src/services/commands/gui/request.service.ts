@@ -1,38 +1,26 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsGuiRequestService {
-    constructor() {
+  constructor() {}
 
-    }
+  async confirm() {}
 
-    confirm() {
-    }
+  async notify() {}
 
-    notify() {
-    }
+  async proceed() {}
 
-    proceed() {
-    }
+  async requestColor() {}
 
-    requestColor() {
-    }
+  async requestDir() {}
 
-    requestDir() {
-    }
+  async requestedBlue() {}
 
-    requestedBlue() {
-    }
+  async requestedGreen() {}
 
-    requestedGreen() {
-    }
+  async requestedRed() {}
 
-    requestedRed() {
-    }
+  async requestFile() {}
 
-    requestFile() {
-    }
-
-    requestFont() {
-    }
+  async requestFont() {}
 }

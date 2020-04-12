@@ -1,42 +1,36 @@
-import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {TextureMode} from '../../../enums/texture/texture-mode';
-import {SpriteViewMode} from '../../../enums/sprite/sprite-view-mode';
-import {GameEntity} from '../../../interfaces/game/entity';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
+import { TextureMode } from '../../../enums/texture/texture-mode';
+import { SpriteViewMode } from '../../../enums/sprite/sprite-view-mode';
+import { GameEntity } from '../../../interfaces/game/entity';
 
 @Injectable()
 export class CommandsGraphics3dSpritesService {
-    constructor() {
+  constructor() {}
 
-    }
+  async createSprite(parent?: GameEntity): Promise<GameEntity> {
+    //TODO implementation
+    return null;
+  }
 
-    createSprite(parent?: GameEntity): Observable<GameEntity> {
-        //TODO implementation
-        return of(null);
-    }
+  async handleSprite(sprite: GameEntity, x: number, y: number): Promise<void> {
+    //TODO implementation
+  }
 
-    handleSprite(sprite: GameEntity, x: number, y: number): Observable<void> {
-        //TODO implementation
-        return of(null);
-    }
+  async loadSprite(filePath: string, mode: TextureMode, parent?: any): Promise<GameEntity> {
+    //TODO implementation
+    return null;
+  }
 
-    loadSprite(filePath: string, mode: TextureMode, parent?: any): Observable<GameEntity> {
-        //TODO implementation
-        return of(null);
-    }
+  async rotateSprite(sprite: GameEntity, angle: number): Promise<void> {
+    //TODO implementation
+  }
 
-    rotateSprite(sprite: GameEntity, angle: number): Observable<void> {
-        //TODO implementation
-        return of(null);
-    }
+  async scaleSprite(sprite: GameEntity, x: number, y: number): Promise<void> {
+    //TODO implementation
+  }
 
-    scaleSprite(sprite: GameEntity, x: number, y: number): Observable<void> {
-        //TODO implementation
-        return of(null);
-    }
-
-    spriteViewMode(sprite: GameEntity, mode: SpriteViewMode): Observable<void> {
-        //TODO implementation
-        return of(null);
-    }
+  async spriteViewMode(sprite: GameEntity, mode: SpriteViewMode): Promise<void> {
+    //TODO implementation
+  }
 }

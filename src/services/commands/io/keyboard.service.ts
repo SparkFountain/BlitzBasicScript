@@ -1,44 +1,41 @@
-import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {GameStateService} from '../../game-state.service';
+import { Injectable } from '@angular/core';
+import { GameStateService } from '../../game-state.service';
 
 @Injectable()
 export class CommandsIOKeyboardService {
-    constructor(private gameState: GameStateService) {
+  constructor(private gameState: GameStateService) {}
 
-    }
+  async flushKeys(): Promise<void> {
+    return this.gameState.flushKeys();
+  }
 
-    flushKeys(): Observable<void> {
-        return of(this.gameState.flushKeys());
-    }
+  async getKey(): Promise<number> {
+    return this.gameState.getKeyAsciiCode();
+  }
 
-    getKey(): Observable<number> {
-        return of(this.gameState.getKeyAsciiCode());
-    }
+  async input(message?: string): Promise<string> {
+    //TODO implement:
+    // -get location of x, y from gameState
+    // -print message at that position, followed by a blinking cursor
+    // -insert / delete characters until Enter is hit
+    // -return the input value
+    return '';
+  }
 
-    input(message?: string): Observable<string> {
-        //TODO implement:
-        // -get location of x, y from gameState
-        // -print message at that position, followed by a blinking cursor
-        // -insert / delete characters until Enter is hit
-        // -return the input value
-        return of('');
-    }
+  async keyDown(code: number): Promise<boolean> {
+    return this.gameState.isKeyDown(code);
+  }
 
-    keyDown(code: number): Observable<boolean> {
-        return of(this.gameState.isKeyDown(code));
-    }
+  async keyHit(code: number): Promise<number> {
+    return this.gameState.getKeyHits(code);
+  }
 
-    keyHit(code: number): Observable<number> {
-        return of(this.gameState.getKeyHits(code));
-    }
+  async keyWait(): Promise<number> {
+    return this.waitKey();
+  }
 
-    keyWait(): Observable<number> {
-        return this.waitKey();
-    }
-
-    waitKey(): Observable<number> {
-        //TODO implement
-        return of(0);
-    }
+  async waitKey(): Promise<number> {
+    //TODO implement
+    return 0;
+  }
 }

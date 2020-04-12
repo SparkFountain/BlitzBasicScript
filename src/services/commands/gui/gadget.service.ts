@@ -1,68 +1,46 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsGuiGadgetService {
-    constructor() {
+  constructor() {}
 
-    }
+  async activateGadget() {}
 
-    activateGadget() {
-    }
+  async clientHeight() {}
 
-    clientHeight() {
-    }
+  async clientWidth() {}
 
-    clientWidth() {
-    }
+  async disableGadget() {}
 
-    disableGadget() {
-    }
+  async enableGadget() {}
 
-    enableGadget() {
-    }
+  async freeGadget() {}
 
-    freeGadget() {
-    }
+  async gadgetFont() {}
 
-    gadgetFont() {
-    }
+  async gadgetGroup() {}
 
-    gadgetGroup() {
-    }
+  async gadgetHeight() {}
 
-    gadgetHeight() {
-    }
+  async gadgetText() {}
 
-    gadgetText() {
-    }
+  async gadgetWidth() {}
 
-    gadgetWidth() {
-    }
+  async gadgetX() {}
 
-    gadgetX() {
-    }
+  async gadgetY() {}
 
-    gadgetY() {
-    }
+  async hideGadget() {}
 
-    hideGadget() {
-    }
+  async queryObject() {}
 
-    queryObject() {
-    }
+  async setGadgetFont() {}
 
-    setGadgetFont() {
-    }
+  async setGadgetLayout() {}
 
-    setGadgetLayout() {
-    }
+  async setGadgetShape() {}
 
-    setGadgetShape() {
-    }
+  async setGadgetText() {}
 
-    setGadgetText() {
-    }
-
-    showGadget() {
-    }
+  async showGadget() {}
 }

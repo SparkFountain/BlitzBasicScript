@@ -1,4 +1,4 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 import { CommandsGraphics3dAnimationsService } from './graphics3d/animations.service';
 import { CommandsGraphics3dBrushesService } from './graphics3d/brushes.service';
 import { CommandsGraphics3dCameraService } from './graphics3d/camera.service';
@@ -17,7 +17,6 @@ import { CommandsGraphics3dStatusService } from './graphics3d/status.service';
 import { CommandsGraphics3dSurfacesService } from './graphics3d/surfaces.service';
 import { CommandsGraphics3dTerrainService } from './graphics3d/terrain.service';
 import { CommandsGraphics3dTexturesService } from './graphics3d/textures.service';
-import { Observable } from 'rxjs';
 import { CameraType } from 'bbscript/src/enums/camera/camera-type';
 import { GameEntity } from 'bbscript/src/interfaces/game/entity';
 import { BlendMode } from 'bbscript/src/enums/entity/blend-mode';
@@ -33,7 +32,8 @@ import { Axis } from 'bbscript/src/enums/axis';
 
 @Injectable()
 export class CommandsGraphics3DService {
-  constructor(private animationsService: CommandsGraphics3dAnimationsService,
+  constructor(
+    private animationsService: CommandsGraphics3dAnimationsService,
     private brushesService: CommandsGraphics3dBrushesService,
     private cameraService: CommandsGraphics3dCameraService,
     private collisionsService: CommandsGraphics3dCollisionsService,
@@ -51,959 +51,1009 @@ export class CommandsGraphics3DService {
     private surfacesService: CommandsGraphics3dSurfacesService,
     private terrainService: CommandsGraphics3dTerrainService,
     private texturesService: CommandsGraphics3dTexturesService
-  ) { }
+  ) {}
 
   // ANIMATIONS
-  addAnimSeq(entity: any, duration: number): number {
+  async addAnimSeq(entity: any, duration: number): Promise<number> {
     return this.animationsService.addAnimSeq(entity, duration);
   }
 
-  animate(entity: any, mode?: number, speed?: number, sequenceId?: number, transition?: number): void {
+  async animate(entity: any, mode?: number, speed?: number, sequenceId?: number, transition?: number): Promise<void> {
     return this.animationsService.animate(entity, mode, speed, sequenceId, transition);
   }
 
-  animating(entity: any): boolean {
+  async animating(entity: any): Promise<boolean> {
     return this.animationsService.animating(entity);
   }
 
-  animLength(entity: any): number {
+  async animLength(entity: any): Promise<number> {
     return this.animationsService.animLength(entity);
   }
 
-  animSeq(entity: any): number {
+  async animSeq(entity: any): Promise<number> {
     return this.animationsService.animSeq(entity);
   }
 
-  animTime(entity: any): number {
+  async animTime(entity: any): Promise<number> {
     return this.animationsService.animTime(entity);
   }
 
-  extractAnimSeq(entity: any, start: number, end: number, animSeq?: number): number {
+  async extractAnimSeq(entity: any, start: number, end: number, animSeq?: number): Promise<number> {
     return this.animationsService.extractAnimSeq(entity, start, end, animSeq);
   }
 
-  loadAnimSeq(entity: any, filePath: string): number {
+  async loadAnimSeq(entity: any, filePath: string): Promise<number> {
     return this.animationsService.loadAnimSeq(entity, filePath);
   }
 
-  setAnimKey(entity: any, frame: number, translation?: boolean, rotation?: boolean, scaling?: boolean): void {
+  async setAnimKey(
+    entity: any,
+    frame: number,
+    translation?: boolean,
+    rotation?: boolean,
+    scaling?: boolean
+  ): Promise<void> {
     return this.animationsService.setAnimKey(entity, frame, translation, rotation, scaling);
   }
 
-  setAnimTime(entity: any, time: number, sequenceId?: number): void {
+  async setAnimTime(entity: any, time: number, sequenceId?: number): Promise<void> {
     return this.animationsService.setAnimTime(entity, time, sequenceId);
   }
 
   // BRUSHES
-  brushAlpha(brush: any, alpha: number): void {
+  async brushAlpha(brush: any, alpha: number): Promise<void> {
     return this.brushesService.brushAlpha(brush, alpha);
   }
 
-  brushBlend(brush: any, mode: number): void {
+  async brushBlend(brush: any, mode: number): Promise<void> {
     return this.brushesService.brushBlend(brush, mode);
   }
 
-  brushColor(brush: any, red: number, green: number, blue: number): void {
+  async brushColor(brush: any, red: number, green: number, blue: number): Promise<void> {
     return this.brushesService.brushColor(brush, red, green, blue);
   }
 
-  brushFx(brush: any, effects: number): void {
+  async brushFx(brush: any, effects: number): Promise<void> {
     return this.brushesService.brushFx(brush, effects);
   }
 
-  brushShininess(brush: any, shininess: number): void {
+  async brushShininess(brush: any, shininess: number): Promise<void> {
     return this.brushesService.brushShininess(brush, shininess);
   }
 
-  brushTexture(brush: any, texture: any, frame: number, index: number): void {
+  async brushTexture(brush: any, texture: any, frame: number, index: number): Promise<void> {
     return this.brushesService.brushTexture(brush, texture, frame, index);
   }
 
-  createBrush(red?: number, green?: number, blue?: number): any {
+  async createBrush(red?: number, green?: number, blue?: number): Promise<any> {
     return this.brushesService.createBrush(red, green, blue);
   }
 
-  freeBrush(brush: any): void {
+  async freeBrush(brush: any): Promise<void> {
     return this.brushesService.freeBrush(brush);
   }
 
-  getBrushTexture(brush: any, index: number): any {
+  async getBrushTexture(brush: any, index: number): Promise<any> {
     return this.brushesService.getBrushTexture(brush, index);
   }
 
-  getEntityBrush(entity: any): any {
+  async getEntityBrush(entity: any): Promise<any> {
     return this.brushesService.getEntityBrush(entity);
   }
 
-  getSurfaceBrush(surface: any): any {
+  async getSurfaceBrush(surface: any): Promise<any> {
     return this.brushesService.getSurfaceBrush(surface);
   }
 
-  loadBrush(filePath: string, modes?: number, scaleU?: number, scaleV?: number) {
+  async loadBrush(filePath: string, modes?: number, scaleU?: number, scaleV?: number): Promise<any> {
     return this.brushesService.loadBrush(filePath, modes, scaleU, scaleV);
   }
 
-  paintEntity(entity: any, brush: any): void {
+  async paintEntity(entity: any, brush: any): Promise<void> {
     return this.brushesService.paintEntity(entity, brush);
   }
 
-  paintMesh(mesh: any, brush: any): void {
+  async paintMesh(mesh: any, brush: any): Promise<void> {
     return this.brushesService.paintMesh(mesh, brush);
   }
 
-  paintSurface(surface: any, brush: any): void {
+  async paintSurface(surface: any, brush: any): Promise<void> {
     return this.brushesService.paintSurface(surface, brush);
   }
 
   // CAMERA
-  cameraClsColor(camera: any, red: number, green: number, blue: number): Observable<void> {
+  async cameraClsColor(camera: any, red: number, green: number, blue: number): Promise<void> {
     return this.cameraService.cameraClsColor(camera, red, green, blue);
   }
 
-  cameraClsMode(camera: any, deleteColorBuffer?: boolean, deleteZBuffer?: boolean) {
+  async cameraClsMode(camera: any, deleteColorBuffer?: boolean, deleteZBuffer?: boolean) {
     // TODO
   }
 
-  fogColor(red: number, green: number, blue: number): Observable<void> {
+  async fogColor(red: number, green: number, blue: number): Promise<void> {
     return this.cameraService.fogColor(red, green, blue);
   }
 
-  fogMode(mode): Observable<void> {
+  async fogMode(mode): Promise<void> {
     return this.cameraService.fogMode(mode);
   }
 
-  fogRange(near: number, far: number): Observable<void> {
+  async fogRange(near: number, far: number): Promise<void> {
     return this.cameraService.fogRange(near, far);
   }
 
-  fogDensity(value: number): Observable<void> {
+  async fogDensity(value: number): Promise<void> {
     return this.cameraService.fogDensity(value);
   }
 
-  cameraProject(camera: any, x: number, y: number, z: number): void {
+  async cameraProject(camera: any, x: number, y: number, z: number): Promise<void> {
     return this.cameraService.cameraProject(camera, x, y, z);
   }
 
-  cameraProjMode(camera: any, mode: number): void {
+  async cameraProjMode(camera: any, mode: number): Promise<void> {
     return this.cameraService.cameraProjMode(camera, mode);
   }
 
-  cameraRange(camera: any, near: number, far: number): void {
+  async cameraRange(camera: any, near: number, far: number): Promise<void> {
     return this.cameraService.cameraRange(camera, near, far);
   }
 
-  cameraViewport(camera: any, x: number, y: number, width: number, height: number): void {
+  async cameraViewport(camera: any, x: number, y: number, width: number, height: number): Promise<void> {
     return this.cameraService.cameraViewport(camera, x, y, width, height);
   }
 
-  cameraZoom(camera: any, value: number): void {
+  async cameraZoom(camera: any, value: number): Promise<void> {
     return this.cameraService.cameraZoom(camera, value);
   }
 
-  createCamera(type: CameraType, parent?: GameEntity): Observable<GameEntity> {
+  async createCamera(type: CameraType, parent?: GameEntity): Promise<GameEntity> {
     return this.cameraService.createCamera(type, parent);
   }
 
-  projectedX(): Observable<number> {
+  async projectedX(): Promise<number> {
     return this.cameraService.projectedX();
   }
 
-  projectedY(): Observable<number> {
+  async projectedY(): Promise<number> {
     return this.cameraService.projectedY();
   }
 
-  projectedZ(): Observable<boolean> {
+  async projectedZ(): Promise<boolean> {
     return this.cameraService.projectedZ();
   }
 
   // COLLISIONS
-  clearCollisions(): Observable<void> {
+  async clearCollisions(): Promise<void> {
     return this.collisionsService.clearCollisions();
   }
 
-  collisionEntity(entity: any, index: number): any {
+  async collisionEntity(entity: any, index: number): Promise<any> {
     return this.collisionsService.collisionEntity(entity, index);
   }
 
-  collisionNX(entity: any, index: number): number {
+  async collisionNX(entity: any, index: number): Promise<number> {
     return this.collisionsService.collisionNX(entity, index);
   }
 
-  collisionNY(entity: any, index: number): number {
+  async collisionNY(entity: any, index: number): Promise<number> {
     return this.collisionsService.collisionNY(entity, index);
   }
 
-  collisionNZ(entity: any, index: number): number {
+  async collisionNZ(entity: any, index: number): Promise<number> {
     return this.collisionsService.collisionNZ(entity, index);
   }
 
-  collisions(sourceEntity: any, targetEntity: any, method: number, reaction: number): void {
+  async collisions(sourceEntity: any, targetEntity: any, method: number, reaction: number): Promise<void> {
     return this.collisionsService.collisions(sourceEntity, targetEntity, method, reaction);
   }
 
-  collisionSurface(entity: any, index: number): any {
+  async collisionSurface(entity: any, index: number): Promise<any> {
     return this.collisionsService.collisionSurface(entity, index);
   }
 
-  collisionTime(entity: any, index: number): number {
+  async collisionTime(entity: any, index: number): Promise<number> {
     return this.collisionsService.collisionTime(entity, index);
   }
 
-  collisionTriangle() {
+  async collisionTriangle() {
     return this.collisionsService.collisionTriangle();
   }
 
-  collisionX() {
+  async collisionX() {
     return this.collisionsService.collisionX();
   }
 
-  collisionY() {
+  async collisionY() {
     return this.collisionsService.collisionY();
   }
 
-  collisionZ() {
+  async collisionZ() {
     return this.collisionsService.collisionZ();
   }
 
-  countCollisions() {
+  async countCollisions() {
     return this.collisionsService.countCollisions();
   }
 
-  entityBox() {
+  async entityBox() {
     return this.collisionsService.entityBox();
   }
 
-  entityCollided() {
+  async entityCollided() {
     return this.collisionsService.entityCollided();
   }
 
-  entityRadius() {
+  async entityRadius() {
     return this.collisionsService.entityRadius();
   }
 
-  entityType() {
+  async entityType() {
     return this.collisionsService.entityType();
   }
 
-  getEntityType() {
+  async getEntityType() {
     return this.collisionsService.getEntityType();
   }
 
-  meshesIntersect() {
+  async meshesIntersect() {
     return this.collisionsService.meshesIntersect();
   }
 
-  resetEntity() {
+  async resetEntity() {
     return this.collisionsService.resetEntity();
   }
 
   // CONTROLS
-  copyEntity(entity: GameEntity, parent?: GameEntity): Observable<GameEntity> {
+  async copyEntity(entity: GameEntity, parent?: GameEntity): Promise<GameEntity> {
     return this.controlsService.copyEntity(entity, parent);
   }
 
-  entityAlpha(entity: GameEntity, alpha: number): Observable<void> {
+  async entityAlpha(entity: GameEntity, alpha: number): Promise<void> {
     return this.controlsService.entityAlpha(entity, alpha);
   }
 
-  entityAutoFade(entity: GameEntity, near: number, far: number): Observable<void> {
+  async entityAutoFade(entity: GameEntity, near: number, far: number): Promise<void> {
     return this.controlsService.entityAutoFade(entity, near, far);
   }
 
-  entityBlend(entity: GameEntity, mode: BlendMode): Observable<void> {
+  async entityBlend(entity: GameEntity, mode: BlendMode): Promise<void> {
     return this.controlsService.entityBlend(entity, mode);
   }
 
-  entityColor(entity: GameEntity, red: number, green: number, blue: number): Observable<void> {
+  async entityColor(entity: GameEntity, red: number, green: number, blue: number): Promise<void> {
     return this.controlsService.entityColor(entity, red, green, blue);
   }
 
-  entityFx() {
+  async entityFx() {
     return this.controlsService.entityFx();
   }
 
-  entityOrder() {
+  async entityOrder() {
     return this.controlsService.entityOrder();
   }
 
-  entityParent() {
+  async entityParent() {
     return this.controlsService.entityParent();
   }
 
-  entityShininess() {
+  async entityShininess() {
     return this.controlsService.entityShininess();
   }
 
-  entityTexture() {
+  async entityTexture() {
     return this.controlsService.entityTexture();
   }
 
-  freeEntity() {
+  async freeEntity() {
     return this.controlsService.freeEntity();
   }
 
-  hideEntity() {
+  async hideEntity() {
     return this.controlsService.hideEntity();
   }
 
-  showEntity() {
+  async showEntity() {
     return this.controlsService.showEntity();
   }
 
   // COORDINATES
-  alignToVector(entity: any, x: number, y: number, z: number, axis: Axis, tween: number): Observable<void> {
+  async alignToVector(entity: any, x: number, y: number, z: number, axis: Axis, tween: number): Promise<void> {
     return this.coordinatesService.alignToVector(entity, x, y, z, axis, tween);
   }
 
-  moveEntity(entity: any, x: number, y: number, z: number): Observable<void> {
+  async moveEntity(entity: any, x: number, y: number, z: number): Promise<void> {
     return this.coordinatesService.moveEntity(entity, x, y, z);
   }
 
-  pointEntity(sourceEntity: any, targetEntity: any, roll: number): Observable<void> {
+  async pointEntity(sourceEntity: any, targetEntity: any, roll: number): Promise<void> {
     return this.coordinatesService.pointEntity(sourceEntity, targetEntity, roll);
   }
 
-  positionEntity(entity: GameEntity, x: number, y: number, z: number, parentCoordinates?: boolean): Observable<void> {
+  async positionEntity(
+    entity: GameEntity,
+    x: number,
+    y: number,
+    z: number,
+    parentCoordinates?: boolean
+  ): Promise<void> {
     return this.coordinatesService.positionEntity(entity, x, y, z, parentCoordinates);
   }
 
-  rotateEntity(entity: Mesh | Camera, pitch: number, yaw: number, roll: number, parentCoordinates?: boolean) {
+  async rotateEntity(entity: Mesh | Camera, pitch: number, yaw: number, roll: number, parentCoordinates?: boolean) {
     return this.coordinatesService.rotateEntity(entity, pitch, yaw, roll, parentCoordinates);
   }
 
-  scaleEntity(entity: any, x: number, y: number, z: number, parentScale?: boolean): Observable<void> {
+  async scaleEntity(entity: any, x: number, y: number, z: number, parentScale?: boolean): Promise<void> {
     return this.coordinatesService.scaleEntity(entity, x, y, z, parentScale);
   }
 
-  translateEntity(entity: any, x: number, y: number, z: number, parentAngle?: boolean): Observable<void> {
+  async translateEntity(entity: any, x: number, y: number, z: number, parentAngle?: boolean): Promise<void> {
     return this.coordinatesService.translateEntity(entity, x, y, z, parentAngle);
   }
 
-  turnEntity(entity: any, pitch: number, yaw: number, roll: number, parentAngle?: boolean): Observable<void> {
+  async turnEntity(entity: any, pitch: number, yaw: number, roll: number, parentAngle?: boolean): Promise<void> {
     return this.coordinatesService.turnEntity(entity, pitch, yaw, roll, parentAngle);
   }
 
-  tFormedX(): Observable<number> {
+  async tFormedX(): Promise<number> {
     return this.coordinatesService.tFormedX();
   }
 
-  tFormedY(): Observable<number> {
+  async tFormedY(): Promise<number> {
     return this.coordinatesService.tFormedY();
   }
 
-  tFormedZ(): Observable<number> {
+  async tFormedZ(): Promise<number> {
     return this.coordinatesService.tFormedZ();
   }
 
-  tFormNormal(x: number, y: number, z: number, source: GameEntity, target: GameEntity): Observable<void> {
+  async tFormNormal(x: number, y: number, z: number, source: GameEntity, target: GameEntity): Promise<void> {
     return this.coordinatesService.tFormNormal(x, y, z, source, target);
   }
 
-  tFormPoint(x: number, y: number, z: number, source: GameEntity, target: GameEntity): Observable<void> {
+  async tFormPoint(x: number, y: number, z: number, source: GameEntity, target: GameEntity): Promise<void> {
     return this.coordinatesService.tFormPoint(x, y, z, source, target);
   }
 
-  tFormVector(x: number, y: number, z: number, source: GameEntity, target: GameEntity): Observable<void> {
+  async tFormVector(x: number, y: number, z: number, source: GameEntity, target: GameEntity): Promise<void> {
     return this.coordinatesService.tFormVector(x, y, z, source, target);
   }
 
   // DIVERSE
-  createMirror() {
+  async createMirror() {
     return this.diverseService.createMirror();
   }
 
-  createPivot() {
+  async createPivot() {
     return this.diverseService.createPivot();
   }
 
-  createPlane() {
+  async createPlane() {
     return this.diverseService.createPlane();
   }
 
-  getMatElement() {
+  async getMatElement() {
     return this.diverseService.getMatElement();
   }
 
-  loaderMatrix() {
+  async loaderMatrix() {
     return this.diverseService.loaderMatrix();
   }
 
-  trisRendered() {
+  async trisRendered() {
     return this.diverseService.trisRendered();
   }
 
-  vectorPitch() {
+  async vectorPitch() {
     return this.diverseService.vectorPitch();
   }
 
-  vectorYaw() {
+  async vectorYaw() {
     return this.diverseService.vectorYaw();
   }
 
   // LIGHT AND SHADOW
-  ambientLight(red: number, green: number, blue: number): Observable<void> {
+  async ambientLight(red: number, green: number, blue: number): Promise<void> {
     return this.lightShadowService.ambientLight(red, green, blue);
   }
 
-  createLight(type?: LightType, parent?: any): Observable<any> {
+  async createLight(type?: LightType, parent?: any): Promise<any> {
     return this.lightShadowService.createLight(type, parent);
   }
 
-  lightColor(light: Light, red: number, green: number, blue: number): Observable<void> {
+  async lightColor(light: Light, red: number, green: number, blue: number): Promise<void> {
     return this.lightShadowService.lightColor(light, red, green, blue);
   }
 
-  lightConeAngles() {
+  async lightConeAngles() {
     return this.lightShadowService.lightConeAngles();
   }
 
-  lightMesh() {
+  async lightMesh() {
     return this.lightShadowService.lightMesh();
   }
 
-  lightRange(light: Light, range: number): Observable<void> {
+  async lightRange(light: Light, range: number): Promise<void> {
     return this.lightShadowService.lightRange(light, range);
   }
 
-  createShadowMap() {
+  async createShadowMap() {
     return this.lightShadowService.createShadowMap();
   }
 
-  deleteShadowMap() {
+  async deleteShadowMap() {
     return this.lightShadowService.deleteShadowMap();
   }
 
-  castShadow() {
+  async castShadow() {
     return this.lightShadowService.castShadow();
   }
 
-  receiveShadows() {
+  async receiveShadows() {
     return this.lightShadowService.receiveShadows();
   }
 
-  shadowDarkness() {
+  async shadowDarkness() {
     return this.lightShadowService.shadowDarkness();
   }
 
   // MESHES
-  addMesh(source: any, target: any): Observable<any> {
+  async addMesh(source: any, target: any): Promise<any> {
     return this.meshesService.addMesh(source, target);
   }
 
-  copyMesh(mesh: any, parent?: any): Observable<any> {
+  async copyMesh(mesh: any, parent?: any): Promise<any> {
     return this.meshesService.copyMesh(mesh, parent);
   }
 
-  createCone(segments?: number, hasFloor?: boolean, parent?: GameEntity): Observable<GameEntity> {
+  async createCone(segments?: number, hasFloor?: boolean, parent?: GameEntity): Promise<GameEntity> {
     return this.meshesService.createCone(segments, hasFloor, parent);
   }
 
-  createSphere(segments?: number, parent?: GameEntity): Observable<GameEntity> {
+  async createSphere(segments?: number, parent?: GameEntity): Promise<GameEntity> {
     return this.meshesService.createSphere(segments, parent);
   }
 
-  createCube(parent?: GameEntity): Observable<GameEntity> {
+  async createCube(parent?: GameEntity): Promise<GameEntity> {
     return this.meshesService.createCube(parent);
   }
 
-  createCylinder(segments?: number, hasFloor?: boolean, parent?: GameEntity): Observable<GameEntity> {
+  async createCylinder(segments?: number, hasFloor?: boolean, parent?: GameEntity): Promise<GameEntity> {
     return this.meshesService.createCylinder(segments, hasFloor, parent);
   }
 
-  createPyramid(baseVertexNumber?: number, parent?: any): Observable<GameEntity> {
+  async createPyramid(baseVertexNumber?: number, parent?: any): Promise<GameEntity> {
     return this.meshesService.createPyramid(baseVertexNumber, parent);
   }
 
-  createTorus(parent?: GameEntity): Observable<GameEntity> {
+  async createTorus(parent?: GameEntity): Promise<GameEntity> {
     return this.meshesService.createTorus(parent);
   }
 
-  createTorusKnot(parent?: GameEntity): Observable<GameEntity> {
+  async createTorusKnot(parent?: GameEntity): Promise<GameEntity> {
     return this.meshesService.createTorusKnot(parent);
   }
 
-  fitMesh(mesh: any, x: number, y: number, z: number, width: number, height: number, depth: number, uniform: boolean): void {
+  async fitMesh(
+    mesh: any,
+    x: number,
+    y: number,
+    z: number,
+    width: number,
+    height: number,
+    depth: number,
+    uniform: boolean
+  ): Promise<void> {
     return this.meshesService.fitMesh(mesh, x, y, z, width, height, depth, uniform);
   }
 
-  flipMesh(mesh): void {
+  async flipMesh(mesh): Promise<void> {
     return this.meshesService.flipMesh(mesh);
   }
 
-  loadAnimMesh(filePath: string, parent?: any): any {
+  async loadAnimMesh(filePath: string, parent?: any): Promise<any> {
     return this.meshesService.loadAnimMesh(filePath, parent);
   }
 
-  loadMesh(filePath: string, parent?: any): any {
+  async loadMesh(filePath: string, parent?: any): Promise<any> {
     return this.meshesService.loadMesh(filePath, parent);
   }
 
-  meshCullBox(mesh: any, x: number, y: number, z: number, width: number, height: number, depth: number): void {
+  async meshCullBox(
+    mesh: any,
+    x: number,
+    y: number,
+    z: number,
+    width: number,
+    height: number,
+    depth: number
+  ): Promise<void> {
     return this.meshesService.meshCullBox(mesh, x, y, z, width, height, depth);
   }
 
-  meshDepth(mesh: any): Observable<number> {
+  async meshDepth(mesh: any): Promise<number> {
     return this.meshesService.meshDepth(mesh);
   }
 
-  meshHeight(mesh: any): Observable<number> {
+  async meshHeight(mesh: any): Promise<number> {
     return this.meshesService.meshHeight(mesh);
   }
 
-  meshWidth(mesh: any): Observable<number> {
+  async meshWidth(mesh: any): Promise<number> {
     return this.meshesService.meshWidth(mesh);
   }
 
-  positionMesh(mesh: Mesh, x: number, y: number, z: number): Observable<void> {
+  async positionMesh(mesh: Mesh, x: number, y: number, z: number): Promise<void> {
     return this.meshesService.positionMesh(mesh, x, y, z);
   }
 
-  rotateMesh(mesh: Mesh, pitch: number, yaw: number, roll: number): Observable<void> {
+  async rotateMesh(mesh: Mesh, pitch: number, yaw: number, roll: number): Promise<void> {
     return this.meshesService.rotateMesh(mesh, pitch, yaw, roll);
   }
 
-  scaleMesh(mesh: Mesh, scaleX: number, scaleY: number, scaleZ: number): Observable<void> {
+  async scaleMesh(mesh: Mesh, scaleX: number, scaleY: number, scaleZ: number): Promise<void> {
     return this.meshesService.scaleMesh(mesh, scaleX, scaleY, scaleZ);
   }
 
   // PICKING
-  cameraPick(camera: GameEntity, x: number, y: number): Observable<GameEntity> {
+  async cameraPick(camera: GameEntity, x: number, y: number): Promise<GameEntity> {
     return this.pickingService.cameraPick(camera, x, y);
   }
 
-  entityPick(entity: GameEntity, distance: number): Observable<GameEntity> {
+  async entityPick(entity: GameEntity, distance: number): Promise<GameEntity> {
     return this.pickingService.entityPick(entity, distance);
   }
 
-  entityPickMode(entity: GameEntity, geometry: PickGeometry, coverOtherObjects?: boolean): Observable<void> {
+  async entityPickMode(entity: GameEntity, geometry: PickGeometry, coverOtherObjects?: boolean): Promise<void> {
     return this.pickingService.entityPickMode(entity, geometry);
   }
 
-  linePick(x: number, y: number, z: number, dx: number, dy: number, dz: number, radius?: number): Observable<GameEntity> {
+  async linePick(
+    x: number,
+    y: number,
+    z: number,
+    dx: number,
+    dy: number,
+    dz: number,
+    radius?: number
+  ): Promise<GameEntity> {
     return this.pickingService.linePick(x, y, z, dx, dy, dz, radius);
   }
 
-  pickedEntity(): Observable<GameEntity> {
+  async pickedEntity(): Promise<GameEntity> {
     return this.pickingService.pickedEntity();
   }
 
-  pickedNX(): Observable<number> {
+  async pickedNX(): Promise<number> {
     return this.pickingService.pickedNX();
   }
 
-  pickedNY(): Observable<number> {
+  async pickedNY(): Promise<number> {
     return this.pickingService.pickedNY();
   }
 
-  pickedNZ(): Observable<number> {
+  async pickedNZ(): Promise<number> {
     return this.pickingService.pickedNZ();
   }
 
-  pickedSurface() {
+  async pickedSurface() {
     return this.pickingService.pickedSurface();
   }
 
-  pickedTime() {
+  async pickedTime() {
     return this.pickingService.pickedTime();
   }
 
-  pickedTriangle() {
+  async pickedTriangle() {
     return this.pickingService.pickedTriangle();
   }
 
-  pickedX(): Observable<number> {
+  async pickedX(): Promise<number> {
     return this.pickingService.pickedX();
   }
 
-  pickedY(): Observable<number> {
+  async pickedY(): Promise<number> {
     return this.pickingService.pickedY();
   }
 
-  pickedZ(): Observable<number> {
+  async pickedZ(): Promise<number> {
     return this.pickingService.pickedZ();
   }
 
   // SCENE
-  createSkyBox() {
+  async createSkyBox() {
     return this.sceneService.createSkyBox();
   }
 
-  loadSkyBox() {
+  async loadSkyBox() {
     return this.sceneService.loadSkyBox();
   }
 
-  setGravity() {
+  async setGravity() {
     return this.sceneService.setGravity();
   }
 
   // SCENERY
-  antiAlias(enabled: boolean): Observable<void> {
+  async antiAlias(enabled: boolean): Promise<void> {
     return this.sceneryService.antiAlias(enabled);
   }
 
-  captureWorld(): Observable<void> {
+  async captureWorld(): Promise<void> {
     return this.sceneryService.captureWorld();
   }
 
-  clearWorld(removeEntities?: boolean, removeBrushes?: boolean, removeTextures?: boolean): Observable<void> {
+  async clearWorld(removeEntities?: boolean, removeBrushes?: boolean, removeTextures?: boolean): Promise<void> {
     return this.sceneryService.clearWorld(removeEntities, removeBrushes, removeTextures);
   }
 
-  renderWorld(animationStep: number): Observable<void> {
+  async renderWorld(animationStep: number): Promise<void> {
     return this.sceneryService.renderWorld(animationStep);
   }
 
-  updateWorld(updateSpeed?: number): Observable<void> {
+  async updateWorld(updateSpeed?: number): Promise<void> {
     return this.sceneryService.updateWorld(updateSpeed);
   }
 
-  wireFrame(enabled: boolean): Observable<void> {
+  async wireFrame(enabled: boolean): Promise<void> {
     return this.sceneryService.wireFrame(enabled);
   }
 
   // SCREEN
-  countGfxModes3d(): Observable<number> {
+  async countGfxModes3d(): Promise<number> {
     return this.screenService.countGfxModes3d();
   }
 
-  gfxDriver3D(): Observable<boolean> {
+  async gfxDriver3D(): Promise<boolean> {
     return this.screenService.gfxDriver3D();
   }
 
-  gfxDriverCaps3D(): Observable<number> {
+  async gfxDriverCaps3D(): Promise<number> {
     return this.screenService.gfxDriverCaps3D();
   }
 
-  gfxMode3D(mode: number): Observable<boolean> {
+  async gfxMode3D(mode: number): Promise<boolean> {
     return this.screenService.gfxMode3D(mode);
   }
 
-  gfxMode3DExists(width: number, height: number, depth: number): Observable<boolean> {
+  async gfxMode3DExists(width: number, height: number, depth: number): Promise<boolean> {
     return this.screenService.gfxMode3DExists(width, height, depth);
   }
 
-  windowed3D(): Observable<boolean> {
+  async windowed3D(): Promise<boolean> {
     return this.screenService.windowed3D();
   }
 
   // SPRITES
-  createSprite(parent?: GameEntity): Observable<GameEntity> {
+  async createSprite(parent?: GameEntity): Promise<GameEntity> {
     return this.spritesService.createSprite(parent);
   }
 
-  handleSprite(sprite: GameEntity, x: number, y: number): Observable<void> {
+  async handleSprite(sprite: GameEntity, x: number, y: number): Promise<void> {
     return this.spritesService.handleSprite(sprite, x, y);
   }
 
-  loadSprite(filePath: string, mode: TextureMode, parent?: any): Observable<GameEntity> {
+  async loadSprite(filePath: string, mode: TextureMode, parent?: any): Promise<GameEntity> {
     return this.spritesService.loadSprite(filePath, mode, parent);
   }
 
-  rotateSprite(sprite: GameEntity, angle: number): Observable<void> {
+  async rotateSprite(sprite: GameEntity, angle: number): Promise<void> {
     return this.spritesService.rotateSprite(sprite, angle);
   }
 
-  scaleSprite(sprite: GameEntity, x: number, y: number): Observable<void> {
+  async scaleSprite(sprite: GameEntity, x: number, y: number): Promise<void> {
     return this.spritesService.scaleSprite(sprite, x, y);
   }
 
-  spriteViewMode(sprite: GameEntity, mode: SpriteViewMode): Observable<void> {
+  async spriteViewMode(sprite: GameEntity, mode: SpriteViewMode): Promise<void> {
     return this.spritesService.spriteViewMode(sprite, mode);
   }
 
   // STATUS
-  countChildren(entity: GameEntity): Observable<number> {
+  async countChildren(entity: GameEntity): Promise<number> {
     return this.statusService.countChildren(entity);
   }
 
-  deltaPitch(sourceEntity: GameEntity, targetEntity: GameEntity): Observable<number> {
+  async deltaPitch(sourceEntity: GameEntity, targetEntity: GameEntity): Promise<number> {
     return this.statusService.deltaPitch(sourceEntity, targetEntity);
   }
 
-  deltaYaw(sourceEntity: GameEntity, targetEntity: GameEntity): Observable<number> {
+  async deltaYaw(sourceEntity: GameEntity, targetEntity: GameEntity): Promise<number> {
     return this.statusService.deltaYaw(sourceEntity, targetEntity);
   }
 
-  entityClass(entity: GameEntity): string {
+  async entityClass(entity: GameEntity): Promise<string> {
     return this.statusService.entityClass(entity);
   }
 
-  entityDistance(entity1: GameEntity, entity2: GameEntity): Observable<number> {
+  async entityDistance(entity1: GameEntity, entity2: GameEntity): Promise<number> {
     return this.statusService.entityDistance(entity1, entity2);
   }
 
-  entityInView(entity: GameEntity, camera: GameEntity): Observable<boolean> {
+  async entityInView(entity: GameEntity, camera: GameEntity): Promise<boolean> {
     return this.statusService.entityInView(entity, camera);
   }
 
-  entityName(entity: GameEntity): Observable<string> {
+  async entityName(entity: GameEntity): Promise<string> {
     return this.statusService.entityName(entity);
   }
 
-  entityPitch(entity: GameEntity, global?: boolean): Observable<number> {
+  async entityPitch(entity: GameEntity, global?: boolean): Promise<number> {
     return this.statusService.entityPitch(entity, global);
   }
 
-  entityRoll(entity: GameEntity, global?: boolean): Observable<number> {
+  async entityRoll(entity: GameEntity, global?: boolean): Promise<number> {
     return this.statusService.entityRoll(entity, global);
   }
 
-  entityVisible(entity1: GameEntity, entity2: GameEntity): Observable<boolean> {
+  async entityVisible(entity1: GameEntity, entity2: GameEntity): Promise<boolean> {
     return this.statusService.entityVisible(entity1, entity2);
   }
 
-  entityX(entity: GameEntity, global?: boolean): Observable<number> {
+  async entityX(entity: GameEntity, global?: boolean): Promise<number> {
     return this.statusService.entityX(entity, global);
   }
 
-  entityY(entity: GameEntity, global?: boolean): Observable<number> {
+  async entityY(entity: GameEntity, global?: boolean): Promise<number> {
     return this.statusService.entityY(entity, global);
   }
 
-  entityYaw(entity: GameEntity, global?: boolean): Observable<number> {
+  async entityYaw(entity: GameEntity, global?: boolean): Promise<number> {
     return this.statusService.entityYaw(entity, global);
   }
 
-  entityZ(entity: GameEntity, global?: boolean): Observable<number> {
+  async entityZ(entity: GameEntity, global?: boolean): Promise<number> {
     return this.statusService.entityZ(entity, global);
   }
 
-  findChild(entity: GameEntity, childName: string): Observable<GameEntity | null> {
+  async findChild(entity: GameEntity, childName: string): Promise<GameEntity | null> {
     return this.statusService.findChild(entity, childName);
   }
 
-  getChild(entity: GameEntity, index: number): Observable<GameEntity | null> {
+  async getChild(entity: GameEntity, index: number): Promise<GameEntity | null> {
     return this.statusService.getChild(entity, index);
   }
 
-  getParent(entity: GameEntity): Observable<GameEntity> {
+  async getParent(entity: GameEntity): Promise<GameEntity> {
     return this.statusService.getParent(entity);
   }
 
-  nameEntity(entity: GameEntity, name: string): Observable<void> {
+  async nameEntity(entity: GameEntity, name: string): Promise<void> {
     return this.statusService.nameEntity(entity, name);
   }
 
   // SURFACES
-  addTriangle() {
+  async addTriangle() {
     return this.surfacesService.addTriangle();
   }
 
-  addVertex() {
+  async addVertex() {
     return this.surfacesService.addVertex();
   }
 
-  clearSurface() {
+  async clearSurface() {
     return this.surfacesService.clearSurface();
   }
 
-  countSurfaces() {
+  async countSurfaces() {
     return this.surfacesService.countSurfaces();
   }
 
-  countTriangles() {
+  async countTriangles() {
     return this.surfacesService.countTriangles();
   }
 
-  countVertices() {
+  async countVertices() {
     return this.surfacesService.countVertices();
   }
 
-  createSurface() {
+  async createSurface() {
     return this.surfacesService.createSurface();
   }
 
-  findSurface() {
+  async findSurface() {
     return this.surfacesService.findSurface();
   }
 
-  getSurface() {
+  async getSurface() {
     return this.surfacesService.getSurface();
   }
 
-  triangleVertex() {
+  async triangleVertex() {
     return this.surfacesService.triangleVertex();
   }
 
-  updateNormals() {
+  async updateNormals() {
     return this.surfacesService.updateNormals();
   }
 
-  vertexAlpha() {
+  async vertexAlpha() {
     return this.surfacesService.vertexAlpha();
   }
 
-  vertexBlue() {
+  async vertexBlue() {
     return this.surfacesService.vertexBlue();
   }
 
-  vertexColor() {
+  async vertexColor() {
     return this.surfacesService.vertexColor();
   }
 
-  vertexCoords() {
+  async vertexCoords() {
     return this.surfacesService.vertexCoords();
   }
 
-  vertexGreen() {
+  async vertexGreen() {
     return this.surfacesService.vertexGreen();
   }
 
-  vertexNormal() {
+  async vertexNormal() {
     return this.surfacesService.vertexNormal();
   }
 
-  vertexNX() {
+  async vertexNX() {
     return this.surfacesService.vertexNX();
   }
 
-  vertexNY() {
+  async vertexNY() {
     return this.surfacesService.vertexNY();
   }
 
-  vertexNZ() {
+  async vertexNZ() {
     return this.surfacesService.vertexNZ();
   }
 
-  vertexRed() {
+  async vertexRed() {
     return this.surfacesService.vertexRed();
   }
 
-  vertexTexCoords() {
+  async vertexTexCoords() {
     return this.surfacesService.vertexTexCoords();
   }
 
-  vertexU() {
+  async vertexU() {
     return this.surfacesService.vertexU();
   }
 
-  vertexV() {
+  async vertexV() {
     return this.surfacesService.vertexV();
   }
 
-  vertexW() {
+  async vertexW() {
     return this.surfacesService.vertexW();
   }
 
-  vertexX() {
+  async vertexX() {
     return this.surfacesService.vertexX();
   }
 
-  vertexY() {
+  async vertexY() {
     return this.surfacesService.vertexY();
   }
 
-  vertexZ() {
+  async vertexZ() {
     return this.surfacesService.vertexZ();
   }
 
   // TERRAIN
-  createTerrain(segments: number, parent?: any): Observable<BABYLON.Mesh> {
+  async createTerrain(segments: number, parent?: any): Promise<BABYLON.Mesh> {
     return this.terrainService.createTerrain(segments, parent);
   }
 
-  loadTerrain(filePath: string, parent?: any): Observable<BABYLON.Mesh> {
+  async loadTerrain(filePath: string, parent?: any): Promise<BABYLON.Mesh> {
     return this.terrainService.loadTerrain(filePath, parent);
   }
 
-  modifyTerrain(terrain: BABYLON.Mesh, x: number, z: number, height: number, realTimeUpdate?: boolean): Observable<void> {
+  async modifyTerrain(
+    terrain: BABYLON.Mesh,
+    x: number,
+    z: number,
+    height: number,
+    realTimeUpdate?: boolean
+  ): Promise<void> {
     return this.terrainService.modifyTerrain(terrain, x, z, height, realTimeUpdate);
   }
 
-  terrainDetail(terrain: BABYLON.Mesh, detailLevel: number, enableMorphing: boolean): Observable<void> {
+  async terrainDetail(terrain: BABYLON.Mesh, detailLevel: number, enableMorphing: boolean): Promise<void> {
     return this.terrainService.terrainDetail(terrain, detailLevel, enableMorphing);
   }
 
-  terrainHeight(terrain: BABYLON.Mesh, x: number, z: number): Observable<number> {
+  async terrainHeight(terrain: BABYLON.Mesh, x: number, z: number): Promise<number> {
     return this.terrainService.terrainHeight(terrain, x, z);
   }
 
-  terrainShading(enableShading: boolean): Observable<void> {
+  async terrainShading(enableShading: boolean): Promise<void> {
     return this.terrainService.terrainShading(enableShading);
   }
 
-  terrainSize(terrain: BABYLON.Mesh): Observable<number> {
+  async terrainSize(terrain: BABYLON.Mesh): Promise<number> {
     return this.terrainService.terrainSize(terrain);
   }
 
-  terrainX(terrain: BABYLON.Mesh, x: number, y: number, z: number): Observable<number> {
+  async terrainX(terrain: BABYLON.Mesh, x: number, y: number, z: number): Promise<number> {
     return this.terrainService.terrainX(terrain, x, y, z);
   }
 
-  terrainY(terrain: BABYLON.Mesh, x: number, y: number, z: number): Observable<number> {
+  async terrainY(terrain: BABYLON.Mesh, x: number, y: number, z: number): Promise<number> {
     return this.terrainService.terrainY(terrain, x, y, z);
   }
 
-  terrainZ(terrain: BABYLON.Mesh, x: number, y: number, z: number): Observable<number> {
+  async terrainZ(terrain: BABYLON.Mesh, x: number, y: number, z: number): Promise<number> {
     return this.terrainService.terrainZ(terrain, x, y, z);
   }
 
   // TEXTURES
-  activeTextures(): Observable<number> {
+  async activeTextures(): Promise<number> {
     return this.texturesService.activeTextures();
   }
 
-  clearTextureFilters(): Observable<void> {
+  async clearTextureFilters(): Promise<void> {
     return this.texturesService.clearTextureFilters();
   }
 
-  createTexture(width: number, height: number, mode?: TextureMode, frames?: number): Observable<BABYLON.Texture> {
+  async createTexture(width: number, height: number, mode?: TextureMode, frames?: number): Promise<BABYLON.Texture> {
     return this.texturesService.createTexture(width, height, mode, frames);
   }
 
-  freeTexture(texture: BABYLON.Texture): Observable<void> {
+  async freeTexture(texture: BABYLON.Texture): Promise<void> {
     return this.texturesService.freeTexture(texture);
   }
 
-  loadAnimTexture(filePath: string, mode: TextureMode, width: number, height: number, startFrame: number, totalFrames: number): Observable<BABYLON.Texture> {
+  async loadAnimTexture(
+    filePath: string,
+    mode: TextureMode,
+    width: number,
+    height: number,
+    startFrame: number,
+    totalFrames: number
+  ): Promise<BABYLON.Texture> {
     return this.texturesService.loadAnimTexture(filePath, mode, width, height, startFrame, totalFrames);
   }
 
-  loadTexture(filePath: string, mode: TextureMode): Observable<BABYLON.Texture> {
+  async loadTexture(filePath: string, mode: TextureMode): Promise<BABYLON.Texture> {
     return this.texturesService.loadTexture(filePath, mode);
   }
 
-  positionTexture(texture: BABYLON.Texture, u: number, v: number): Observable<void> {
+  async positionTexture(texture: BABYLON.Texture, u: number, v: number): Promise<void> {
     return this.texturesService.positionTexture(texture, u, v);
   }
 
-  rotateTexture(texture: BABYLON.Texture, angle: number): Observable<void> {
+  async rotateTexture(texture: BABYLON.Texture, angle: number): Promise<void> {
     return this.texturesService.rotateTexture(texture, angle);
   }
 
-  scaleTexture(texture: BABYLON.Texture, u: number, v: number): Observable<void> {
+  async scaleTexture(texture: BABYLON.Texture, u: number, v: number): Promise<void> {
     return this.texturesService.scaleTexture(texture, u, v);
   }
 
-  setCubeFace(texture: BABYLON.Texture, face: CubeMapFace): Observable<void> {
+  async setCubeFace(texture: BABYLON.Texture, face: CubeMapFace): Promise<void> {
     return this.texturesService.setCubeFace(texture, face);
   }
 
-  setCubeMode(texture: BABYLON.Texture, mode: CubeMapMode): Observable<void> {
+  async setCubeMode(texture: BABYLON.Texture, mode: CubeMapMode): Promise<void> {
     return this.texturesService.setCubeMode(texture, mode);
   }
 
-  textureBlend(texture: BABYLON.Texture, mode: TextureBlendMode): Observable<void> {
+  async textureBlend(texture: BABYLON.Texture, mode: TextureBlendMode): Promise<void> {
     return this.texturesService.textureBlend(texture, mode);
   }
 
-  textureCoords(texture: BABYLON.Texture, coordinate: boolean): Observable<void> {
+  async textureCoords(texture: BABYLON.Texture, coordinate: boolean): Promise<void> {
     return this.texturesService.textureCoords(texture, coordinate);
   }
 
-  textureFilter(searchText: string, mode: TextureMode): Observable<void> {
+  async textureFilter(searchText: string, mode: TextureMode): Promise<void> {
     return this.texturesService.textureFilter(searchText, mode);
   }
 
-  textureHeight(texture: BABYLON.Texture): Observable<number> {
+  async textureHeight(texture: BABYLON.Texture): Promise<number> {
     return this.texturesService.textureHeight(texture);
   }
 
-  textureName(texture: BABYLON.Texture): Observable<string> {
+  async textureName(texture: BABYLON.Texture): Promise<string> {
     return this.texturesService.textureName(texture);
   }
 
-  textureWidth(texture: BABYLON.Texture): Observable<number> {
+  async textureWidth(texture: BABYLON.Texture): Promise<number> {
     return this.texturesService.textureWidth(texture);
   }
 }

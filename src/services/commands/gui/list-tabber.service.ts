@@ -1,44 +1,30 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsGuiListTabberService {
-    constructor() {
+  constructor() {}
 
-    }
+  async addGadgetItem() {}
 
-    addGadgetItem() {
-    }
+  async clearGadgetItems() {}
 
-    clearGadgetItems() {
-    }
+  async countGadgetItems() {}
 
-    countGadgetItems() {
-    }
+  async createComboBox() {}
 
-    createComboBox() {
-    }
+  async createListBox() {}
 
-    createListBox() {
-    }
+  async createTabber() {}
 
-    createTabber() {
-    }
+  async gadgetItemText() {}
 
-    gadgetItemText() {
-    }
+  async insertGadgetItem() {}
 
-    insertGadgetItem() {
-    }
+  async modifyGadgetItem() {}
 
-    modifyGadgetItem() {
-    }
+  async removeGadgetItem() {}
 
-    removeGadgetItem() {
-    }
+  async selectedGadgetItem() {}
 
-    selectedGadgetItem() {
-    }
-
-    selectGadgetItem() {
-    }
+  async selectGadgetItem() {}
 }

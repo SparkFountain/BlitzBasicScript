@@ -1,91 +1,89 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsBasicsStringsService {
-    constructor() {
+  constructor() {}
 
-    }
+  async asc(string: string): Promise<number> {
+    return string.charCodeAt(0)
+  }
 
-    asc(string: string): Promise<number> {
-        return Promise.resolve(string.charCodeAt(0));
-    }
+  async chr(value: number): Promise<string> {
+    return String.fromCharCode(value)
+  }
 
-    chr(value: number): Promise<string> {
-        return Promise.resolve(String.fromCharCode(value));
+  async instr(text: string, search: string, start: number): Promise<number> {
+    //remember, BlitzBasic indexes start at 1, not 0
+    if (!start) {
+      start = 1;
     }
+    let posIndex0 = text.indexOf(search, start - 1);
+    return posIndex0 + 1
+  }
 
-    instr(text: string, search: string, start: number): Promise<number> {
-        //remember, BlitzBasic indexes start at 1, not 0
-        if (!start) {
-            start = 1;
-        }
-        let posIndex0 = text.indexOf(search, start - 1);
-        return Promise.resolve(posIndex0 + 1);
-    }
+  async left(text: string, count: number): Promise<string> {
+    return text.substr(0, count)
+  }
 
-    left(text: string, count: number): Promise<string> {
-        return Promise.resolve(text.substr(0, count));
-    }
+  async len(text: string): Promise<number> {
+    return text.length
+  }
 
-    len(text: string): Promise<number> {
-        return Promise.resolve(text.length);
-    }
+  async lower(text: string): Promise<string> {
+    return text.toLowerCase()
+  }
 
-    lower(text: string): Promise<string> {
-        return Promise.resolve(text.toLowerCase());
+  async lset(text: string, count: number): Promise<string> {
+    let len = text.length;
+    if (len > count) {
+      //strip text to the given count
+      return text.substr(0, count)
+    } else {
+      //fill string with space characters until it has the count length
+      return text + Array(count - len).join(' ')
     }
+  }
 
-    lset(text: string, count: number): Promise<string> {
-        let len = text.length;
-        if (len > count) {
-            //strip text to the given count
-            return Promise.resolve(text.substr(0, count));
-        } else {
-            //fill string with space characters until it has the count length
-            return Promise.resolve(text + Array(count - len).join(' '));
-        }
+  async mid(text: string, start: number, count: number): Promise<string> {
+    if (count) {
+      return text.substr(start, count)
+    } else {
+      return text.substr(start)
     }
+  }
 
-    mid(text: string, start: number, count: number): Promise<string> {
-        if (count) {
-            return Promise.resolve(text.substr(start, count));
-        } else {
-            return Promise.resolve(text.substr(start));
-        }
-    }
+  async replace(text: string, search: string, replace: string): Promise<string> {
+    return text.replace(new RegExp(search, 'g'), replace)
+  }
 
-    replace(text: string, search: string, replace: string): Promise<string> {
-        return Promise.resolve(text.replace(new RegExp(search, 'g'), replace));
-    }
+  async right(text: string, count: number): Promise<string> {
+    return text.substr(-count)
+  }
 
-    right(text: string, count: number): Promise<string> {
-        return Promise.resolve(text.substr(-count));
+  async rset(text: string, count: number): Promise<string> {
+    let len = text.length;
+    if (len > count) {
+      //strip text to the given count
+      return text.substr(-count)
+    } else {
+      //fill string with space characters until it has the count length
+      return Array(count - len).join(' ') + text
     }
+  }
 
-    rset(text: string, count: number): Promise<string> {
-        let len = text.length;
-        if (len > count) {
-            //strip text to the given count
-            return Promise.resolve(text.substr(-count));
-        } else {
-            //fill string with space characters until it has the count length
-            return Promise.resolve(Array(count - len).join(' ') + text);
-        }
-    }
+  async str(value: number): Promise<string> {
+    return value.toString()
+  }
 
-    str(value: number): Promise<string> {
-        return Promise.resolve(value.toString());
-    }
+  async string(text: string, count: number): Promise<string> {
+    return Array(count).join(text)
+  }
 
-    string(text: string, count: number): Promise<string> {
-        return Promise.resolve(Array(count).join(text));
-    }
+  async trim(text: string): Promise<string> {
+    return text.trim()
+  }
 
-    trim(text: string): Promise<string> {
-        return Promise.resolve(text.trim());
-    }
-
-    upper(text: string): Promise<string> {
-        return Promise.resolve(text.toUpperCase());
-    }
+  async upper(text: string): Promise<string> {
+    return text.toUpperCase()
+  }
 }

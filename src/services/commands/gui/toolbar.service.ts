@@ -1,20 +1,14 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsGuiToolbarService {
-    constructor() {
+  constructor() {}
 
-    }
+  async createToolBar() {}
 
-    createToolBar() {
-    }
+  async disableToolBarItem() {}
 
-    disableToolBarItem() {
-    }
+  async enableToolBarItem() {}
 
-    enableToolBarItem() {
-    }
-
-    setToolBarTips() {
-    }
+  async setToolBarTips() {}
 }

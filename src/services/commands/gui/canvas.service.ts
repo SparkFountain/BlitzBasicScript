@@ -1,18 +1,21 @@
-import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {BlitzBasicScriptCanvasComponent} from '../../../components/canvas/canvas.component';
+import { Injectable } from '@angular/core';
+import { BlitzBasicScriptCanvasComponent } from '../../../components/canvas/canvas.component';
 
 @Injectable()
 export class CommandsGuiCanvasService {
-    constructor() {
+  constructor() {}
 
-    }
+  async createCanvas(
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    group: any,
+    style?: any
+  ): Promise<BlitzBasicScriptCanvasComponent> {
+    return null;
+  }
 
-    createCanvas(x: number, y: number, width: number, height: number, group: any, style?: any): Observable<BlitzBasicScriptCanvasComponent> {
-        return of(null);
-    }
-
-    //TODO implement or deprecated?
-    flipCanvas(canvas: BlitzBasicScriptCanvasComponent, flip: boolean) {
-    }
+  //TODO implement or deprecated?
+  async flipCanvas(canvas: BlitzBasicScriptCanvasComponent, flip: boolean) {}
 }

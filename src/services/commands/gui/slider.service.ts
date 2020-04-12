@@ -1,20 +1,14 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsGuiSliderService {
-    constructor() {
+  constructor() {}
 
-    }
+  async createSlider() {}
 
-    createSlider() {
-    }
+  async setSliderRange() {}
 
-    setSliderRange() {
-    }
+  async setSliderValue() {}
 
-    setSliderValue() {
-    }
-
-    sliderValue() {
-    }
+  async sliderValue() {}
 }

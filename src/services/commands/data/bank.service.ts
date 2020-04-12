@@ -2,67 +2,43 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsDataBankService {
-  constructor() {
-    return null;
+  constructor() {}
+
+  async bankSize(bank: any): Promise<number> {
+    return 0;
   }
 
-  bankSize(bank: any): Promise<number> {
-    return Promise.resolve(0);
-  }
+  async copyBank(
+    sourceBank: any,
+    sourcePos: number,
+    targetBank: any,
+    targetPos: number,
+    length?: number
+  ): Promise<any> {}
 
-  copyBank(sourceBank: any, sourcePos: number, targetBank: any, targetPos: number, length?: number): Promise<any> {
-    return null;
-  }
+  async createBank(bytes?: number): Promise<any> {}
 
-  createBank(bytes?: number): Promise<any> {
-    return null;
-  }
+  async freeBank(bank: any): Promise<any> {}
 
-  freeBank(bank: any): Promise<any> {
-    return null;
-  }
+  async peekByte(bank: any, pos: number): Promise<any> {}
 
-  peekByte(bank: any, pos: number): Promise<any> {
-    return null;
-  }
+  async peekFloat(bank: any, pos: number): Promise<any> {}
 
-  peekFloat(bank: any, pos: number): Promise<any> {
-    return null;
-  }
+  async peekInt(bank: any, pos: number): Promise<any> {}
 
-  peekInt(bank: any, pos: number): Promise<any> {
-    return null;
-  }
+  async peekShort(bank: any, pos: number): Promise<any> {}
 
-  peekShort(bank: any, pos: number): Promise<any> {
-    return null;
-  }
+  async pokeByte(bank: any, pos: number, value: number): Promise<any> {}
 
-  pokeByte(bank: any, pos: number, value: number): Promise<any> {
-    return null;
-  }
+  async pokeFloat(bank: any, pos: number, value: number): Promise<any> {}
 
-  pokeFloat(bank: any, pos: number, value: number): Promise<any> {
-    return null;
-  }
+  async pokeInt(bank: any, pos: number, value: number): Promise<any> {}
 
-  pokeInt(bank: any, pos: number, value: number): Promise<any> {
-    return null;
-  }
+  async pokeShort(bank: any, pos: number, value: number): Promise<any> {}
 
-  pokeShort(bank: any, pos: number, value: number): Promise<any> {
-    return null;
-  }
+  async readBytes(bank: any, stream: any, startPos: number, length: number): Promise<any> {}
 
-  readBytes(bank: any, stream: any, startPos: number, length: number): Promise<any> {
-    return null;
-  }
+  async resizeBank(bank: any, bytes?: number): Promise<any> {}
 
-  resizeBank(bank: any, bytes?: number): Promise<any> {
-    return null;
-  }
-
-  writeBytes(bank: any, stream: any, startPos: number, length: number): Promise<any> {
-    return null;
-  }
+  async writeBytes(bank: any, stream: any, startPos: number, length: number): Promise<any> {}
 }

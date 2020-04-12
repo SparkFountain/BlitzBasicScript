@@ -1,33 +1,31 @@
-import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 @Injectable()
 export class CommandsGraphics3dScreenService {
-    constructor() {
+  constructor() {}
 
-    }
+  async countGfxModes3d(): Promise<number> {
+    return 1;
+  }
 
-    countGfxModes3d(): Observable<number> {
-        return of(1);
-    }
+  async gfxDriver3D(): Promise<boolean> {
+    return BABYLON.Engine.isSupported();
+  }
 
-    gfxDriver3D(): Observable<boolean> {
-        return of(BABYLON.Engine.isSupported());
-    }
+  async gfxDriverCaps3D(): Promise<number> {
+    return 110;
+  }
 
-    gfxDriverCaps3D(): Observable<number> {
-        return of(110);
-    }
+  async gfxMode3D(mode: number): Promise<boolean> {
+    return true;
+  }
 
-    gfxMode3D(mode: number): Observable<boolean> {
-        return of(true);
-    }
+  async gfxMode3DExists(width: number, height: number, depth: number): Promise<boolean> {
+    return true;
+  }
 
-    gfxMode3DExists(width: number, height: number, depth: number): Observable<boolean> {
-        return of(true);
-    }
-
-    windowed3D(): Observable<boolean> {
-        return of(true);
-    }
+  async windowed3D(): Promise<boolean> {
+    return true;
+  }
 }

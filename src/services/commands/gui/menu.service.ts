@@ -1,41 +1,28 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsGuiMenuService {
-    constructor() {
+  constructor() {}
 
-    }
+  async checkMenu() {}
 
-    checkMenu() {
-    }
+  async createMenu() {}
 
-    createMenu() {
-    }
+  async disableMenu() {}
 
-    disableMenu() {
-    }
+  async enableMenu() {}
 
-    enableMenu() {
-    }
+  async menuChecked() {}
 
-    menuChecked() {
-    }
+  async menuEnabled() {}
 
-    menuEnabled() {
-    }
+  async menuText() {}
 
-    menuText() {
-    }
+  async setMenuText() {}
 
-    setMenuText() {
-    }
+  async uncheckMenu() {}
 
-    uncheckMenu() {
-    }
+  async updateWindowMenu() {}
 
-    updateWindowMenu() {
-    }
-
-    windowMenu() {
-    }
+  async windowMenu() {}
 }

@@ -1,4 +1,4 @@
-import { AssignmentScope } from '../types/assignment-scope';
+import { AssignmentScope } from '../../types/assignment-scope';
 
 export class VariableExpression {
   public scope: AssignmentScope;

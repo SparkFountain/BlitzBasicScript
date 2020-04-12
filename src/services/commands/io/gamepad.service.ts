@@ -1,71 +1,48 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsIOGamepadService {
-    constructor() {
+  constructor() {}
 
-    }
+  async flushJoy() {}
 
-    flushJoy() {
-    }
+  async getJoy() {}
 
-    getJoy() {
-    }
+  async joyDown() {}
 
-    joyDown() {
-    }
+  async joyHat() {}
 
-    joyHat() {
-    }
+  async joyHit() {}
 
-    joyHit() {
-    }
+  async joyPitch() {}
 
-    joyPitch() {
-    }
+  async joyRoll() {}
 
-    joyRoll() {
-    }
+  async joyType() {}
 
-    joyType() {
-    }
+  async joyU() {}
 
-    joyU() {
-    }
+  async joyUDir() {}
 
-    joyUDir() {
-    }
+  async joyV() {}
 
-    joyV() {
-    }
+  async joyVDir() {}
 
-    joyVDir() {
-    }
+  async joyWait() {}
 
-    joyWait() {
-    }
+  async joyX() {}
 
-    joyX() {
-    }
+  async joyXDir() {}
 
-    joyXDir() {
-    }
+  async joyY() {}
 
-    joyY() {
-    }
+  async joyYaw() {}
 
-    joyYaw() {
-    }
+  async joyYDir() {}
 
-    joyYDir() {
-    }
+  async joyZ() {}
 
-    joyZ() {
-    }
+  async joyZDir() {}
 
-    joyZDir() {
-    }
-
-    waitJoy() {
-    }
+  async waitJoy() {}
 }

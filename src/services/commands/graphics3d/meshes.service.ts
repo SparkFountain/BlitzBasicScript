@@ -1,197 +1,149 @@
-import {Observable, Subscriber} from 'rxjs';
-import {Injectable} from '@angular/core';
-import {BabylonJSService} from '../../babylon-js.service';
-import {GameEntity} from '../../../interfaces/game/entity';
+import { Injectable } from '@angular/core';
+import { BabylonJSService } from '../../babylon-js.service';
+import { GameEntity } from '../../../interfaces/game/entity';
 import { Mesh } from 'babylonjs';
 
 @Injectable()
 export class CommandsGraphics3dMeshesService {
-    constructor(private babylonjs: BabylonJSService) {
+  constructor(private babylonjs: BabylonJSService) {}
 
-    }
+  async addMesh(source: any, target: any): Promise<any> {}
 
-    addMesh(source: any, target: any): Observable<any> {
-        return new Observable((observer: Subscriber<any>) => {
-            observer.next();
-            observer.complete();
-        });
-    }
+  async copyMesh(mesh: any, parent?: any): Promise<any> {}
 
-    copyMesh(mesh: any, parent?: any): Observable<any> {
-        return new Observable((observer: Subscriber<any>) => {
-            observer.next();
-            observer.complete();
-        });
-    }
+  async createCone(segments?: number, hasFloor?: boolean, parent?: GameEntity): Promise<GameEntity> {
+    return this.babylonjs.createCone(segments, hasFloor).then((coneMesh: Mesh) => {
+      const coneEntity: GameEntity = {
+        name: 'TODO',
+        class: 'Mesh',
+        parent: parent ? parent : null,
+        mesh: coneMesh
+      };
 
-    createCone(segments?: number, hasFloor?: boolean, parent?: GameEntity): Observable<GameEntity> {
-        return new Observable<GameEntity>((observer: Subscriber<GameEntity>) => {
-            this.babylonjs.createCone(segments, hasFloor).subscribe((coneMesh: Mesh) => {
-                const coneEntity: GameEntity = {
-                    name: 'TODO',
-                    class: 'Mesh',
-                    parent: parent ? parent : null,
-                    mesh: coneMesh
-                };
+      return coneEntity;
+    });
+  }
 
-                observer.next(coneEntity);
-                observer.complete();
-            });
-        });
-    }
+  async createSphere(segments?: number, parent?: GameEntity): Promise<GameEntity> {
+    return this.babylonjs.createSphere(segments).then((sphereMesh: Mesh) => {
+      const sphereEntity: GameEntity = {
+        name: 'TODO',
+        class: 'Mesh',
+        parent: parent ? parent : null,
+        mesh: sphereMesh
+      };
 
-    createSphere(segments?: number, parent?: GameEntity): Observable<GameEntity> {
-        return new Observable<GameEntity>((observer: Subscriber<GameEntity>) => {
-            this.babylonjs.createSphere(segments).subscribe((sphereMesh: Mesh) => {
-                const sphereEntity: GameEntity = {
-                    name: 'TODO',
-                    class: 'Mesh',
-                    parent: parent ? parent : null,
-                    mesh: sphereMesh
-                };
+      return sphereEntity;
+    });
+  }
 
-                observer.next(sphereEntity);
-                observer.complete();
-            });
-        });
-    }
+  async createCube(parent?: GameEntity): Promise<GameEntity> {
+    return this.babylonjs.createCube().then((cubeMesh: Mesh) => {
+      const cubeEntity: GameEntity = {
+        name: 'TODO',
+        class: 'Mesh',
+        parent: parent ? parent : null,
+        mesh: cubeMesh
+      };
 
-    createCube(parent?: GameEntity): Observable<GameEntity> {
-        return new Observable<GameEntity>((observer: Subscriber<GameEntity>) => {
-            this.babylonjs.createCube().subscribe((cubeMesh: Mesh) => {
-                const cubeEntity: GameEntity = {
-                    name: 'TODO',
-                    class: 'Mesh',
-                    parent: parent ? parent : null,
-                    mesh: cubeMesh
-                };
+      return cubeEntity;
+    });
+  }
 
-                observer.next(cubeEntity);
-                observer.complete();
-            });
-        });
-    }
+  async createCylinder(segments?: number, hasFloor?: boolean, parent?: GameEntity): Promise<GameEntity> {
+    return this.babylonjs.createCylinder(segments, hasFloor).then((cylinderMesh: Mesh) => {
+      const cylinderEntity: GameEntity = {
+        name: 'TODO',
+        class: 'Mesh',
+        parent: parent ? parent : null,
+        mesh: cylinderMesh
+      };
 
-    createCylinder(segments?: number, hasFloor?: boolean, parent?: GameEntity): Observable<GameEntity> {
-        return new Observable<GameEntity>((observer: Subscriber<GameEntity>) => {
-            this.babylonjs.createCylinder(segments, hasFloor).subscribe((cylinderMesh: Mesh) => {
-                const cylinderEntity: GameEntity = {
-                    name: 'TODO',
-                    class: 'Mesh',
-                    parent: parent ? parent : null,
-                    mesh: cylinderMesh
-                };
+      return cylinderEntity;
+    });
+  }
 
-                observer.next(cylinderEntity);
-                observer.complete();
-            });
-        });
-    }
+  async createPyramid(baseVertexNumber?: number, parent?: any): Promise<GameEntity> {
+    return this.babylonjs.createPyramid(baseVertexNumber).then((pyramidMesh: Mesh) => {
+      const pyramidEntity: GameEntity = {
+        name: 'TODO',
+        class: 'Mesh',
+        parent: parent ? parent : null,
+        mesh: pyramidMesh
+      };
 
-    createPyramid(baseVertexNumber?: number, parent?: any): Observable<GameEntity> {
-        return new Observable<GameEntity>((observer: Subscriber<GameEntity>) => {
-            this.babylonjs.createPyramid(baseVertexNumber).subscribe((pyramidMesh: Mesh) => {
-                const pyramidEntity: GameEntity = {
-                    name: 'TODO',
-                    class: 'Mesh',
-                    parent: parent ? parent : null,
-                    mesh: pyramidMesh
-                };
+      return pyramidEntity;
+    });
+  }
 
-                observer.next(pyramidEntity);
-                observer.complete();
-            });
-        });
-    }
+  async createTorus(parent?: GameEntity): Promise<GameEntity> {
+    return this.babylonjs.createTorus().then((torusMesh: Mesh) => {
+      const torusEntity: GameEntity = {
+        name: 'TODO',
+        class: 'Mesh',
+        parent: parent ? parent : null,
+        mesh: torusMesh
+      };
 
-    createTorus(parent?: GameEntity): Observable<GameEntity> {
-        return new Observable<GameEntity>((observer: Subscriber<GameEntity>) => {
-            this.babylonjs.createTorus().subscribe((torusMesh: Mesh) => {
-                const torusEntity: GameEntity = {
-                    name: 'TODO',
-                    class: 'Mesh',
-                    parent: parent ? parent : null,
-                    mesh: torusMesh
-                };
+      return torusEntity;
+    });
+  }
 
-                observer.next(torusEntity);
-                observer.complete();
-            });
-        });
-    }
+  async createTorusKnot(parent?: GameEntity): Promise<GameEntity> {
+    return this.babylonjs.createTorusKnot().then((torusKnotMesh: Mesh) => {
+      const torusKnotEntity: GameEntity = {
+        name: 'TODO',
+        class: 'Mesh',
+        parent: parent ? parent : null,
+        mesh: torusKnotMesh
+      };
 
-    createTorusKnot(parent?: GameEntity): Observable<GameEntity> {
-        return new Observable<GameEntity>((observer: Subscriber<GameEntity>) => {
-            this.babylonjs.createTorusKnot().subscribe((torusKnotMesh: Mesh) => {
-                const torusKnotEntity: GameEntity = {
-                    name: 'TODO',
-                    class: 'Mesh',
-                    parent: parent ? parent : null,
-                    mesh: torusKnotMesh
-                };
+      return torusKnotEntity;
+    });
+  }
 
-                observer.next(torusKnotEntity);
-                observer.complete();
-            });
-        });
-    }
+  async fitMesh(
+    mesh: any,
+    x: number,
+    y: number,
+    z: number,
+    width: number,
+    height: number,
+    depth: number,
+    uniform: boolean
+  ): Promise<void> {}
 
-    fitMesh(mesh: any, x: number, y: number, z: number, width: number, height: number, depth: number, uniform: boolean): void {
-    }
+  async flipMesh(mesh): Promise<void> {}
 
-    flipMesh(mesh): void {
+  async loadAnimMesh(filePath: string, parent?: any): Promise<any> {}
 
-    }
+  async loadMesh(filePath: string, parent?: any): Promise<any> {}
 
-    loadAnimMesh(filePath: string, parent?: any): any {
-    }
+  async meshCullBox(
+    mesh: any,
+    x: number,
+    y: number,
+    z: number,
+    width: number,
+    height: number,
+    depth: number
+  ): Promise<void> {}
 
-    loadMesh(filePath: string, parent?: any): any {
+  async meshDepth(mesh: any): Promise<number> {
+    return 0;
+  }
 
-    }
+  async meshHeight(mesh: any): Promise<number> {
+    return 0;
+  }
 
-    meshCullBox(mesh: any, x: number, y: number, z: number, width: number, height: number, depth: number): void {
-    }
+  async meshWidth(mesh: any): Promise<number> {
+    return 0;
+  }
 
-    meshDepth(mesh: any): Observable<number> {
-        return new Observable<number>((observer: Subscriber<number>) => {
-            observer.next(0);
-            observer.complete();
-        });
-    }
+  async positionMesh(mesh: Mesh, x: number, y: number, z: number): Promise<void> {}
 
-    meshHeight(mesh: any): Observable<number> {
-        return new Observable<number>((observer: Subscriber<number>) => {
-            observer.next(0);
-            observer.complete();
-        });
-    }
+  async rotateMesh(mesh: Mesh, pitch: number, yaw: number, roll: number): Promise<void> {}
 
-    meshWidth(mesh: any): Observable<number> {
-        return new Observable<number>((observer: Subscriber<number>) => {
-            observer.next(0);
-            observer.complete();
-        });
-    }
-
-    positionMesh(mesh: Mesh, x: number, y: number, z: number): Observable<void> {
-        return new Observable<void>((observer: Subscriber<void>) => {
-            observer.next();
-            observer.complete();
-        });
-    }
-
-    rotateMesh(mesh: Mesh, pitch: number, yaw: number, roll: number): Observable<void> {
-        return new Observable<void>((observer: Subscriber<void>) => {
-            observer.next();
-            observer.complete();
-        });
-    }
-
-    scaleMesh(mesh: Mesh, scaleX: number, scaleY: number, scaleZ: number): Observable<void> {
-        return new Observable<void>((observer: Subscriber<void>) => {
-            observer.next();
-            observer.complete();
-        });
-    }
+  async scaleMesh(mesh: Mesh, scaleX: number, scaleY: number, scaleZ: number): Promise<void> {}
 }

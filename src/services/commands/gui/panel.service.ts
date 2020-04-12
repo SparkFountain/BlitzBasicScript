@@ -1,17 +1,12 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsGuiPanelService {
-    constructor() {
+  constructor() {}
 
-    }
+  async createPanel() {}
 
-    createPanel() {
-    }
+  async setPanelColor() {}
 
-    setPanelColor() {
-    }
-
-    setPanelImage() {
-    }
+  async setPanelImage() {}
 }

@@ -4,95 +4,95 @@ import { Injectable } from '@angular/core';
 export class CommandsBasicsMathsService {
   constructor() {}
 
-  abs(number: number): Promise<number> {
-    return Promise.resolve(Math.abs(number));
+  async abs(number: number): Promise<number> {
+    return Math.abs(number);
   }
 
-  acos(number: number): Promise<number> {
-    return Promise.resolve(Math.acos(number));
+  async acos(number: number): Promise<number> {
+    return Math.acos(number);
   }
 
-  asin(value: number): Promise<number> {
-    return Promise.resolve(Math.asin(value));
+  async asin(value: number): Promise<number> {
+    return Math.asin(value);
   }
 
-  atan(value: number): Promise<number> {
-    return Promise.resolve(Math.atan(value));
+  async atan(value: number): Promise<number> {
+    return Math.atan(value);
   }
 
-  atan2(y: number, x: number): Promise<number> {
-    return Promise.resolve(Math.atan2(y, x));
+  async atan2(y: number, x: number): Promise<number> {
+    return Math.atan2(y, x);
   }
 
-  bin(value: number): Promise<string> {
-    return Promise.resolve(value.toString(2));
+  async bin(value: number): Promise<string> {
+    return value.toString(2);
   }
 
-  ceil(value: number): Promise<number> {
-    return Promise.resolve(Math.ceil(value));
+  async ceil(value: number): Promise<number> {
+    return Math.ceil(value);
   }
 
-  cos(value: number): Promise<number> {
-    return Promise.resolve(Math.cos(value));
+  async cos(value: number): Promise<number> {
+    return Math.cos(value);
   }
 
-  exp(value: number): Promise<number> {
-    return Promise.resolve(Math.exp(value));
+  async exp(value: number): Promise<number> {
+    return Math.exp(value);
   }
 
-  float(value: string): Promise<number> {
-    return Promise.resolve(parseFloat(value));
+  async float(value: string): Promise<number> {
+    return parseFloat(value);
   }
 
-  floor(value: number): Promise<number> {
-    return Promise.resolve(Math.floor(value));
+  async floor(value: number): Promise<number> {
+    return Math.floor(value);
   }
 
-  hex(value: string): Promise<string> {
-    return Promise.resolve(parseInt(value).toString(16));
+  async hex(value: string): Promise<string> {
+    return parseInt(value).toString(16);
   }
 
-  int(value: string): Promise<number> {
-    return Promise.resolve(parseInt(value));
+  async int(value: string): Promise<number> {
+    return parseInt(value);
   }
 
-  log(value: number): Promise<number> {
-    return Promise.resolve(Math.log(value));
+  async log(value: number): Promise<number> {
+    return Math.log(value);
   }
 
-  log10(value: number): Promise<number> {
-    return Promise.resolve(Math.log(value) / Math.LN10);
+  async log10(value: number): Promise<number> {
+    return Math.log(value) / Math.LN10;
   }
 
-  pi(): Promise<number> {
-    return Promise.resolve(Math.PI);
+  async pi(): Promise<number> {
+    return Math.PI;
   }
 
-  sar(number: number, bits: number): Promise<number> {
-    return Promise.resolve(number >> bits);
+  async sar(number: number, bits: number): Promise<number> {
+    return number >> bits;
   }
 
-  sgn(value: number): Promise<number> {
-    return Promise.resolve(Math.sign(value));
+  async sgn(value: number): Promise<number> {
+    return Math.sign(value);
   }
 
-  shl(number: number, bits: number): Promise<number> {
-    return Promise.resolve(number << bits);
+  async shl(number: number, bits: number): Promise<number> {
+    return number << bits;
   }
 
-  shr(number: number, bits: number): Promise<number> {
-    return Promise.resolve(number >>> bits);
+  async shr(number: number, bits: number): Promise<number> {
+    return number >>> bits;
   }
 
-  sin(value: number): Promise<number> {
-    return Promise.resolve(Math.sin(value));
+  async sin(value: number): Promise<number> {
+    return Math.sin(value);
   }
 
-  sqr(value: number): Promise<number> {
-    return Promise.resolve(Math.sqrt(value));
+  async sqr(value: number): Promise<number> {
+    return Math.sqrt(value);
   }
 
-  tan(value: number): Promise<number> {
-    return Promise.resolve(Math.tan(value));
+  async tan(value: number): Promise<number> {
+    return Math.tan(value);
   }
 }

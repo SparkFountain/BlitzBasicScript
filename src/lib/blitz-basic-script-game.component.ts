@@ -20,12 +20,12 @@ import { Statement } from '../types/statement';
 import { CommandStatement } from '../classes/command';
 import { CodeBlock } from '../interfaces/code/block';
 import { InterpreterService } from '../services/interpreter.service';
-import { StringExpression } from '../classes/string-expression';
+import { StringExpression } from '../classes/expressions/string-expression';
 import { Command } from 'protractor';
 import { Assignment } from '../classes/assignment';
-import { NumericExpression } from '../classes/numerical-expression';
-import { VariableExpression } from '../classes/variable-expression';
-import { ArithmeticExpression } from '../classes/arithmetic-expression';
+import { NumericExpression } from '../classes/expressions/numerical-expression';
+import { VariableExpression } from '../classes/expressions/variable-expression';
+import { ArithmeticExpression } from '../classes/expressions/arithmetic-expression';
 
 @Component({
   selector: 'blitz-basic-script-game',

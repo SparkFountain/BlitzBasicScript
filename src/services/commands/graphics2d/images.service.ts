@@ -18,48 +18,38 @@ export class CommandsGraphics2dImagesService {
     return this.gameState.getImagesProperties().autoMidHandle;
   }
 
-  autoMidHandle(active: boolean): Promise<void> {
-    return new Promise<void>((resolve: Function, reject: Function) => {
-      this.gameState.setImagesAutoMidHandle(active);
-
-      resolve();
-    });
+  async autoMidHandle(active: boolean): Promise<void> {
+    this.gameState.setImagesAutoMidHandle(active);
   }
 
-  copyImage(image: GameImage2D): Promise<GameImage2D> {
-    return new Promise<GameImage2D>((resolve: Function, reject: Function) => {
-      this.createImage(image.width, image.height).then(() => {
-        resolve();
-      });
-    });
+  async copyImage(image: GameImage2D): Promise<GameImage2D> {
+    return this.createImage(image.width, image.height);
   }
 
-  createImage(width: number, height: number, frames?: number): Promise<GameImage2D> {
-    return new Promise<GameImage2D>((resolve: Function, reject: Function) => {
-      let autoMidHandleActive = this.autoMidHandleActive();
-      let htmlImage: HTMLImageElement = document.createElement('img') as HTMLImageElement;
-      htmlImage.width = width;
-      htmlImage.height = height;
+  async createImage(width: number, height: number, frames?: number): Promise<GameImage2D> {
+    let autoMidHandleActive = this.autoMidHandleActive();
+    let htmlImage: HTMLImageElement = document.createElement('img') as HTMLImageElement;
+    htmlImage.width = width;
+    htmlImage.height = height;
 
-      resolve({
-        name: '',
-        element: htmlImage,
-        width: width,
-        height: height,
-        handle: {
-          x: autoMidHandleActive ? width / 2 : 0,
-          y: autoMidHandleActive ? height / 2 : 0
-        },
-        rotation: 0
-      });
-    });
+    return {
+      name: '',
+      element: htmlImage,
+      width: width,
+      height: height,
+      handle: {
+        x: autoMidHandleActive ? width / 2 : 0,
+        y: autoMidHandleActive ? height / 2 : 0
+      },
+      rotation: 0
+    };
   }
 
-  drawBlock(image: any, x: number, y: number, frame?: number): Promise<void> {
+  async drawBlock(image: any, x: number, y: number, frame?: number): Promise<void> {
     return this.graphics2d.drawBlock(image, x, y, frame);
   }
 
-  drawBlockRect(
+  async drawBlockRect(
     image: any,
     x: number,
     y: number,
@@ -68,46 +58,34 @@ export class CommandsGraphics2dImagesService {
     width: number,
     height: number,
     frame?: number
-  ): Promise<void> {
-    return new Promise<any>((resolve: Function, reject: Function) => {
-      resolve('TODO');
-    });
-  }
+  ): Promise<void> {}
 
-  drawImage(image: GameImage2D, x: number, y: number, frame?: number): Promise<void> {
+  async drawImage(image: GameImage2D, x: number, y: number, frame?: number): Promise<void> {
     return this.graphics2d.drawImage(image, x, y, frame);
   }
 
-  drawImageRect(): Promise<void> {
+  async drawImageRect(): Promise<void> {
     return null;
   }
 
-  freeImage(image: GameImage2D): Promise<void> {
-    return new Promise<void>((resolve: Function, reject: Function) => {
-      image = null;
-
-      resolve();
-    });
+  async freeImage(image: GameImage2D): Promise<void> {
+    image = null;
   }
 
-  grabImage(): Promise<any> {
+  async grabImage(): Promise<any> {
     return null;
   }
 
-  handleImage(image: GameImage2D, x: number, y: number): Promise<void> {
-    return new Promise<void>((resolve: Function, reject: Function) => {
-      image.handle.x = x;
-      image.handle.y = y;
-
-      resolve();
-    });
+  async handleImage(image: GameImage2D, x: number, y: number): Promise<void> {
+    image.handle.x = x;
+    image.handle.y = y;
   }
 
-  imageHeight(image: GameImage2D): Promise<number> {
+  async imageHeight(image: GameImage2D): Promise<number> {
     return Promise.resolve(image.height);
   }
 
-  imageRectCollide(
+  async imageRectCollide(
     image: GameImage2D,
     x: number,
     y: number,
@@ -120,11 +98,11 @@ export class CommandsGraphics2dImagesService {
     return null;
   }
 
-  imageRectOverlap(): Promise<boolean> {
+  async imageRectOverlap(): Promise<boolean> {
     return null;
   }
 
-  imagesCollide(
+  async imagesCollide(
     image1: GameImage2D,
     x1: number,
     y1: number,
@@ -137,7 +115,7 @@ export class CommandsGraphics2dImagesService {
     return Promise.resolve(false);
   }
 
-  imagesOverlap(
+  async imagesOverlap(
     image1: GameImage2D,
     x1: number,
     y1: number,
@@ -148,23 +126,23 @@ export class CommandsGraphics2dImagesService {
     return this.rectsOverlap(x1, y1, image1.width, image1.height, x2, y2, image2.width, image2.height);
   }
 
-  imageWidth(image: GameImage2D): Promise<number> {
+  async imageWidth(image: GameImage2D): Promise<number> {
     return Promise.resolve(image.width);
   }
 
-  imageXHandle(image: GameImage2D): Promise<number> {
+  async imageXHandle(image: GameImage2D): Promise<number> {
     return Promise.resolve(image.handle.x);
   }
 
-  imageYHandle(image: GameImage2D): Promise<number> {
+  async imageYHandle(image: GameImage2D): Promise<number> {
     return Promise.resolve(image.handle.y);
   }
 
-  loadAnimImage(filePath: string, width, height, startFrameIndex: number, totalFrames: number): Promise<any> {
+  async loadAnimImage(filePath: string, width, height, startFrameIndex: number, totalFrames: number): Promise<any> {
     return null;
   }
 
-  loadImage(filePath: string): Promise<GameImage2D> {
+  async loadImage(filePath: string): Promise<GameImage2D> {
     console.info('LOAD IMAGE', `${this.environment.getServer()}`, filePath);
     return new Promise<GameImage2D>((resolve: Function, reject: Function) => {
       //info: the responseType conversion to JSON is a workaround, see https://github.com/angular/angular/issues/18586
@@ -203,20 +181,16 @@ export class CommandsGraphics2dImagesService {
     });
   }
 
-  maskImage(image: GameImage2D, red: number, green: number, blue: number): Promise<void> {
+  async maskImage(image: GameImage2D, red: number, green: number, blue: number): Promise<void> {
     return this.graphics2d.maskImage(image, red, green, blue);
   }
 
-  midHandle(image: GameImage2D): Promise<void> {
-    return new Promise<void>((resolve: Function, reject: Function) => {
-      image.handle.x = image.width / 2;
-      image.handle.y = image.height / 2;
-
-      resolve();
-    });
+  async midHandle(image: GameImage2D): Promise<void> {
+    image.handle.x = image.width / 2;
+    image.handle.y = image.height / 2;
   }
 
-  rectsOverlap(
+  async rectsOverlap(
     x1: number,
     y1: number,
     width1: number,
@@ -229,56 +203,36 @@ export class CommandsGraphics2dImagesService {
     return Promise.resolve(x1 < x2 + width2 && x1 + width1 > x2 && y1 < y2 + height2 && y1 + height1 > y2);
   }
 
-  resizeImage(image: GameImage2D, width: number, height: number): Promise<void> {
-    return new Promise<void>((resolve: Function, reject: Function) => {
-      image.width = width;
-      image.height = height;
+  async resizeImage(image: GameImage2D, width: number, height: number): Promise<void> {
+    image.width = width;
+    image.height = height;
 
-      if (this.autoMidHandleActive()) {
-        image.handle.x = width / 2;
-        image.handle.y = height / 2;
-      } else {
-        image.handle.x = 0;
-        image.handle.y = 0;
-      }
-
-      resolve();
-    });
+    if (this.autoMidHandleActive()) {
+      image.handle.x = width / 2;
+      image.handle.y = height / 2;
+    } else {
+      image.handle.x = 0;
+      image.handle.y = 0;
+    }
   }
 
-  rotateImage(image: GameImage2D, angle: number): Promise<void> {
-    return new Promise<void>((resolve: Function, reject: Function) => {
-      image.rotation = angle;
-
-      resolve();
-    });
+  async rotateImage(image: GameImage2D, angle: number): Promise<void> {
+    image.rotation = angle;
   }
 
-  saveImage(): Promise<void> {
-    return new Promise<any>((resolve: Function, reject: Function) => {
-      resolve('TODO');
-    });
+  async saveImage(): Promise<void> {}
+
+  async scaleImage(image: GameImage2D, zoomX: number, zoomY: number): Promise<void> {
+    let newWidth = Math.trunc(image.width * zoomX);
+    let newHeight = Math.trunc(image.height * zoomY);
+
+    image.width = newWidth;
+    image.height = newHeight;
   }
 
-  scaleImage(image: GameImage2D, zoomX: number, zoomY: number): Promise<void> {
-    return new Promise<void>((resolve: Function, reject: Function) => {
-      let newWidth = Math.trunc(image.width * zoomX);
-      let newHeight = Math.trunc(image.height * zoomY);
-
-      image.width = newWidth;
-      image.height = newHeight;
-
-      resolve();
-    });
-  }
-
-  tileBlock(image: GameImage2D, offsetX: number, offsetY: number, frame?: number): Promise<void> {
+  async tileBlock(image: GameImage2D, offsetX: number, offsetY: number, frame?: number): Promise<void> {
     return this.graphics2d.tileBlock(image, offsetX, offsetY, frame);
   }
 
-  tileImage(): Promise<void> {
-    return new Promise<any>((resolve: Function, reject: Function) => {
-      resolve('TODO');
-    });
-  }
+  async tileImage(): Promise<void> {}
 }

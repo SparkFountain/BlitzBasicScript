@@ -11,67 +11,51 @@ export class CommandsGraphics2dGraphicsService {
     private gameState: GameStateService
   ) {}
 
-  cls(): Promise<void> {
+  async cls(): Promise<void> {
     return this.render2dService.cls();
   }
 
-  clsColor(red: number, green: number, blue: number): Promise<void> {
-    return new Promise<void>((resolve: Function, reject: Function) => {
-      this.gameState.setScreenClsColor({
-        red: red,
-        green: green,
-        blue: blue,
-      });
-
-      resolve();
+  async clsColor(red: number, green: number, blue: number): Promise<void> {
+    this.gameState.setScreenClsColor({
+      red: red,
+      green: green,
+      blue: blue
     });
   }
 
-  color(red: number, green: number, blue: number): Promise<void> {
-    return new Promise<void>((resolve: Function, reject: Function) => {
-      this.gameState.setScreenColor({
-        red: red,
-        green: green,
-        blue: blue,
-      });
-
-      resolve();
+  async color(red: number, green: number, blue: number): Promise<void> {
+    this.gameState.setScreenColor({
+      red: red,
+      green: green,
+      blue: blue
     });
   }
 
-  line(beginX: number, beginY: number, endX: number, endY: number) {
+  async line(beginX: number, beginY: number, endX: number, endY: number) {
     return this.render2dService.line(beginX, beginY, endX, endY);
   }
 
-  origin(x: number, y: number): Promise<void> {
-    return new Promise<void>((resolve: Function, reject: Function) => {
-      this.gameState.setScreenOrigin({
-        x: x,
-        y: y,
-      });
-
-      resolve();
+  async origin(x: number, y: number): Promise<void> {
+    this.gameState.setScreenOrigin({
+      x: x,
+      y: y
     });
   }
 
-  oval(x: number, y: number, width: number, height: number, filled?: boolean): Promise<void> {
+  async oval(x: number, y: number, width: number, height: number, filled?: boolean): Promise<void> {
     return this.render2dService.oval(x, y, width, height, filled);
   }
 
-  rect(x: number, y: number, width: number, height: number, filled?: boolean): Promise<void> {
+  async rect(x: number, y: number, width: number, height: number, filled?: boolean): Promise<void> {
     return this.render2dService.rect(x, y, width, height, filled);
   }
 
-  viewport(beginX: number, beginY: number, width: number, height: number): Promise<void> {
-    return new Promise<void>((resolve: Function, reject: Function) => {
-      this.gameState.setScreenViewport({
-        beginX: beginX,
-        beginY: beginY,
-        width: width,
-        height: height,
-      });
-
-      resolve();
+  async viewport(beginX: number, beginY: number, width: number, height: number): Promise<void> {
+    this.gameState.setScreenViewport({
+      beginX: beginX,
+      beginY: beginY,
+      width: width,
+      height: height
     });
   }
 }

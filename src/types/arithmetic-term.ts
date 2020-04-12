@@ -1,10 +1,10 @@
-import { NumericExpression } from '../classes/numerical-expression';
-import { BooleanExpression } from '../classes/boolean-expression';
-import { StringExpression } from '../classes/string-expression';
+import { NumericExpression } from '../classes/expressions/numerical-expression';
+import { BooleanExpression } from '../classes/expressions/boolean-expression';
+import { StringExpression } from '../classes/expressions/string-expression';
 import { CommandStatement } from '../classes/command';
-import { ArithmeticExpression } from '../classes/arithmetic-expression';
+import { ArithmeticExpression } from '../classes/expressions/arithmetic-expression';
 
-export type ArithmeticTerm =
+export type Term =
   | NumericExpression
   | BooleanExpression
   | StringExpression

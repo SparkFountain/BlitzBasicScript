@@ -1,17 +1,12 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsSound3DService {
-    constructor() {
+  constructor() {}
 
-    }
+  async createListener() {}
 
-    createListener() {
-    }
+  async emitSound() {}
 
-    emitSound() {
-    }
-
-    load3DSound() {
-    }
+  async load3DSound() {}
 }

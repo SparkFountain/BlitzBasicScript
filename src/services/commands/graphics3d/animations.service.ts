@@ -1,48 +1,46 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsGraphics3dAnimationsService {
-    constructor() {
+  constructor() {}
 
-    }
+  async addAnimSeq(entity: any, duration: number): Promise<number> {
+    return 0;
+  }
 
-    addAnimSeq(entity: any, duration: number): number {
-        return 0;
-    }
+  async animate(entity: any, mode?: number, speed?: number, sequenceId?: number, transition?: number): Promise<void> {}
 
-    animate(entity: any, mode?: number, speed?: number, sequenceId?: number, transition?: number): void {
+  async animating(entity: any): Promise<boolean> {
+    return false;
+  }
 
-    }
+  async animLength(entity: any): Promise<number> {
+    return 0;
+  }
 
-    animating(entity: any): boolean {
-        return false;
-    }
+  async animSeq(entity: any): Promise<number> {
+    return 0;
+  }
 
-    animLength(entity: any): number {
-        return 0;
-    }
+  async animTime(entity: any): Promise<number> {
+    return 0;
+  }
 
-    animSeq(entity: any): number {
-        return 0;
-    }
+  async extractAnimSeq(entity: any, start: number, end: number, animSeq?: number): Promise<number> {
+    return 0;
+  }
 
-    animTime(entity: any): number {
-        return 0;
-    }
+  async loadAnimSeq(entity: any, filePath: string): Promise<number> {
+    return 0;
+  }
 
-    extractAnimSeq(entity: any, start: number, end: number, animSeq?: number): number {
-        return 0;
-    }
+  async setAnimKey(
+    entity: any,
+    frame: number,
+    translation?: boolean,
+    rotation?: boolean,
+    scaling?: boolean
+  ): Promise<void> {}
 
-    loadAnimSeq(entity: any, filePath: string): number {
-        return 0;
-    }
-
-    setAnimKey(entity: any, frame: number, translation?: boolean, rotation?: boolean, scaling?: boolean): void {
-
-    }
-
-    setAnimTime(entity: any, time: number, sequenceId?: number): void {
-
-    }
+  async setAnimTime(entity: any, time: number, sequenceId?: number): Promise<void> {}
 }

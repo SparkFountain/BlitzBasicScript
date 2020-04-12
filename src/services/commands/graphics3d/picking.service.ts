@@ -1,64 +1,64 @@
-import {Injectable} from '@angular/core';
-import {GameEntity} from '../../../interfaces/game/entity';
-import {Observable, of} from 'rxjs';
-import {PickGeometry} from '../../../enums/pick/geometry';
+import { Injectable } from '@angular/core';
+import { GameEntity } from '../../../interfaces/game/entity';
+import { PickGeometry } from '../../../enums/pick/geometry';
 
 @Injectable()
 export class CommandsGraphics3dPickingService {
-    constructor() {
+  constructor() {}
 
-    }
+  async cameraPick(camera: GameEntity, x: number, y: number): Promise<GameEntity> {
+    return null;
+  }
 
-    cameraPick(camera: GameEntity, x: number, y: number): Observable<GameEntity> {
-        return of(null);
-    }
+  async entityPick(entity: GameEntity, distance: number): Promise<GameEntity> {
+    return null;
+  }
 
-    entityPick(entity: GameEntity, distance: number): Observable<GameEntity> {
-        return of(null);
-    }
+  async entityPickMode(entity: GameEntity, geometry: PickGeometry, coverOtherObjects?: boolean): Promise<void> {}
 
-    entityPickMode(entity: GameEntity, geometry: PickGeometry, coverOtherObjects?: boolean): Observable<void> {
-        return of(null);
-    }
+  async linePick(
+    x: number,
+    y: number,
+    z: number,
+    dx: number,
+    dy: number,
+    dz: number,
+    radius?: number
+  ): Promise<GameEntity> {
+    return null;
+  }
 
-    linePick(x: number, y: number, z: number, dx: number, dy: number, dz: number, radius?: number): Observable<GameEntity> {
-        return of(null);
-    }
+  async pickedEntity(): Promise<GameEntity> {
+    return null;
+  }
 
-    pickedEntity(): Observable<GameEntity> {
-        return of(null);
-    }
+  async pickedNX(): Promise<number> {
+    return 0;
+  }
 
-    pickedNX(): Observable<number> {
-        return of(0);
-    }
+  async pickedNY(): Promise<number> {
+    return 0;
+  }
 
-    pickedNY(): Observable<number> {
-        return of(0);
-    }
+  async pickedNZ(): Promise<number> {
+    return 0;
+  }
 
-    pickedNZ(): Observable<number> {
-        return of(0);
-    }
+  async pickedSurface() {}
 
-    pickedSurface() {
-    }
+  async pickedTime() {}
 
-    pickedTime() {
-    }
+  async pickedTriangle() {}
 
-    pickedTriangle() {
-    }
+  async pickedX(): Promise<number> {
+    return 0;
+  }
 
-    pickedX(): Observable<number> {
-        return of(0);
-    }
+  async pickedY(): Promise<number> {
+    return 0;
+  }
 
-    pickedY(): Observable<number> {
-        return of(0);
-    }
-
-    pickedZ(): Observable<number> {
-        return of(0);
-    }
+  async pickedZ(): Promise<number> {
+    return 0;
+  }
 }

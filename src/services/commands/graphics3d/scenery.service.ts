@@ -1,38 +1,31 @@
-import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
-import {GameStateService} from '../../game-state.service';
+import { Injectable } from '@angular/core';
+import { GameStateService } from '../../game-state.service';
 
 @Injectable()
 export class CommandsGraphics3dSceneryService {
-    constructor(private gameState: GameStateService) {
+  constructor(private gameState: GameStateService) {}
 
-    }
+  async antiAlias(enabled: boolean): Promise<void> {
+    return this.gameState.setAntiAliasing(enabled);
+  }
 
-    antiAlias(enabled: boolean): Observable<void> {
-        return of(this.gameState.setAntiAliasing(enabled));
-    }
+  async captureWorld(): Promise<void> {
+    //TODO implementation
+  }
 
-    captureWorld(): Observable<void> {
-        //TODO implementation
-        return of(null);
-    }
+  async clearWorld(removeEntities?: boolean, removeBrushes?: boolean, removeTextures?: boolean): Promise<void> {
+    //TODO implementation
+  }
 
-    clearWorld(removeEntities?: boolean, removeBrushes?: boolean, removeTextures?: boolean): Observable<void> {
-        //TODO implementation
-        return of(null);
-    }
+  async renderWorld(animationStep: number): Promise<void> {
+    //TODO implementation
+  }
 
-    renderWorld(animationStep: number): Observable<void> {
-        //TODO implementation
-        return of(null);
-    }
+  async updateWorld(updateSpeed?: number): Promise<void> {
+    //TODO implementation
+  }
 
-    updateWorld(updateSpeed?: number): Observable<void> {
-        //TODO implementation
-        return of(null);
-    }
-
-    wireFrame(enabled: boolean): Observable<void> {
-        return of(this.gameState.setWireFrame(enabled));
-    }
+  async wireFrame(enabled: boolean): Promise<void> {
+    return this.gameState.setWireFrame(enabled);
+  }
 }

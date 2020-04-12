@@ -1,33 +1,22 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsGraphics3dDiverseService {
-    constructor() {
+  constructor() {}
 
-    }
+  async createMirror() {}
 
-    createMirror() {
+  async createPivot() {}
 
-    }
+  async createPlane() {}
 
-    createPivot() {
-    }
+  async getMatElement() {}
 
-    createPlane() {
-    }
+  async loaderMatrix() {}
 
-    getMatElement() {
-    }
+  async trisRendered() {}
 
-    loaderMatrix() {
-    }
+  async vectorPitch() {}
 
-    trisRendered() {
-    }
-
-    vectorPitch() {
-    }
-
-    vectorYaw() {
-    }
+  async vectorYaw() {}
 }

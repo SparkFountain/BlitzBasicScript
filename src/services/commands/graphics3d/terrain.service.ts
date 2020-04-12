@@ -1,59 +1,60 @@
-import {Injectable} from '@angular/core';
-import {Observable, of} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 
 @Injectable()
 export class CommandsGraphics3dTerrainService {
-    constructor() {
+  constructor() {}
 
-    }
+  async createTerrain(segments: number, parent?: any): Promise<BABYLON.Mesh> {
+    //TODO implementation
+    return null;
+  }
 
-    createTerrain(segments: number, parent?: any): Observable<BABYLON.Mesh> {
-        //TODO implementation
-        return of(null);
-    }
+  async loadTerrain(filePath: string, parent?: any): Promise<BABYLON.Mesh> {
+    //TODO implementation, see https://www.babylonjs-playground.com/#E6OZX#7
+    return null;
+  }
 
-    loadTerrain(filePath: string, parent?: any): Observable<BABYLON.Mesh> {
-        //TODO implementation, see https://www.babylonjs-playground.com/#E6OZX#7
-        return of(null);
-    }
+  async modifyTerrain(
+    terrain: BABYLON.Mesh,
+    x: number,
+    z: number,
+    height: number,
+    realTimeUpdate?: boolean
+  ): Promise<void> {
+    //TODO implementation
+  }
 
-    modifyTerrain(terrain: BABYLON.Mesh, x: number, z: number, height: number, realTimeUpdate?: boolean): Observable<void> {
-        //TODO implementation
-        return of(null);
-    }
+  async terrainDetail(terrain: BABYLON.Mesh, detailLevel: number, enableMorphing: boolean): Promise<void> {
+    //TODO implementation
+  }
 
-    terrainDetail(terrain: BABYLON.Mesh, detailLevel: number, enableMorphing: boolean): Observable<void> {
-        //TODO implementation
-        return of(null);
-    }
+  async terrainHeight(terrain: BABYLON.Mesh, x: number, z: number): Promise<number> {
+    //TODO implementation
+    return 0;
+  }
 
-    terrainHeight(terrain: BABYLON.Mesh, x: number, z: number): Observable<number> {
-        //TODO implementation
-        return of(0);
-    }
+  async terrainShading(enableShading: boolean): Promise<void> {
+    //TODO implementation
+  }
 
-    terrainShading(enableShading: boolean): Observable<void> {
-        //TODO implementation
-        return of(null);
-    }
+  async terrainSize(terrain: BABYLON.Mesh): Promise<number> {
+    //TODO implementation
+    return 0;
+  }
 
-    terrainSize(terrain: BABYLON.Mesh): Observable<number> {
-        //TODO implementation
-        return of(0);
-    }
+  async terrainX(terrain: BABYLON.Mesh, x: number, y: number, z: number): Promise<number> {
+    //TODO implementation
+    return 0;
+  }
 
-    terrainX(terrain: BABYLON.Mesh, x: number, y: number, z: number): Observable<number> {
-        //TODO implementation
-        return of(0);
-    }
+  async terrainY(terrain: BABYLON.Mesh, x: number, y: number, z: number): Promise<number> {
+    //TODO implementation
+    return 0;
+  }
 
-    terrainY(terrain: BABYLON.Mesh, x: number, y: number, z: number): Observable<number> {
-        //TODO implementation
-        return of(0);
-    }
-
-    terrainZ(terrain: BABYLON.Mesh, x: number, y: number, z: number): Observable<number> {
-        //TODO implementation
-        return of(0);
-    }
+  async terrainZ(terrain: BABYLON.Mesh, x: number, y: number, z: number): Promise<number> {
+    //TODO implementation
+    return 0;
+  }
 }

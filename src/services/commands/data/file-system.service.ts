@@ -2,135 +2,69 @@ import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsDataFileSystemService {
-  constructor() {
-    return null;
-  }
+  constructor() {}
 
-  changeDir(): Promise<any> {
-    return null;
-  }
+  async changeDir(): Promise<any> {}
 
-  closeDir(): Promise<any> {
-    return null;
-  }
+  async closeDir(): Promise<any> {}
 
-  closeFile(): Promise<any> {
-    return null;
-  }
+  async closeFile(): Promise<any> {}
 
-  copyFile(): Promise<any> {
-    return null;
-  }
+  async copyFile(): Promise<any> {}
 
-  createDir(): Promise<any> {
-    return null;
-  }
+  async createDir(): Promise<any> {}
 
-  currentDir(): Promise<any> {
-    return null;
-  }
+  async currentDir(): Promise<any> {}
 
-  deleteDir(): Promise<any> {
-    return null;
-  }
+  async deleteDir(): Promise<any> {}
 
-  deleteFile(): Promise<any> {
-    return null;
-  }
+  async deleteFile(): Promise<any> {}
 
-  eof(): Promise<any> {
-    return null;
-  }
+  async eof(): Promise<any> {}
 
-  filePos(): Promise<any> {
-    return null;
-  }
+  async filePos(): Promise<any> {}
 
-  fileSize(): Promise<any> {
-    return null;
-  }
+  async fileSize(): Promise<any> {}
 
-  fileType(): Promise<any> {
-    return null;
-  }
+  async fileType(): Promise<any> {}
 
-  moreFiles(): Promise<any> {
-    return null;
-  }
+  async moreFiles(): Promise<any> {}
 
-  nextFile(): Promise<any> {
-    return null;
-  }
+  async nextFile(): Promise<any> {}
 
-  openFile(): Promise<any> {
-    return null;
-  }
+  async openFile(): Promise<any> {}
 
-  readAvail(): Promise<any> {
-    return null;
-  }
+  async readAvail(): Promise<any> {}
 
-  readByte(): Promise<any> {
-    return null;
-  }
+  async readByte(): Promise<any> {}
 
-  readDir(): Promise<any> {
-    return null;
-  }
+  async readDir(): Promise<any> {}
 
-  readFile(): Promise<any> {
-    return null;
-  }
+  async readFile(): Promise<any> {}
 
-  readFloat(): Promise<any> {
-    return null;
-  }
+  async readFloat(): Promise<any> {}
 
-  readInt(): Promise<any> {
-    return null;
-  }
+  async readInt(): Promise<any> {}
 
-  readLine(): Promise<any> {
-    return null;
-  }
+  async readLine(): Promise<any> {}
 
-  readShort(): Promise<any> {
-    return null;
-  }
+  async readShort(): Promise<any> {}
 
-  readString(): Promise<any> {
-    return null;
-  }
+  async readString(): Promise<any> {}
 
-  seekFile(): Promise<any> {
-    return null;
-  }
+  async seekFile(): Promise<any> {}
 
-  writeByte(): Promise<any> {
-    return null;
-  }
+  async writeByte(): Promise<void> {}
 
-  writeFile(): Promise<any> {
-    return null;
-  }
+  async writeFile(): Promise<void> {}
 
-  writeFloat(): Promise<any> {
-    return null;
-  }
+  async writeFloat(): Promise<void> {}
 
-  writeInt(): Promise<any> {
-    return null;
-  }
+  async writeInt(): Promise<void> {}
 
-  writeLine(): Promise<any> {
-    return null;
-  }
+  async writeLine(): Promise<void> {}
 
-  writeShort(): Promise<any> {
-    return null;
-  }
+  async writeShort(): Promise<void> {}
 
-  writeString(): Promise<any> {
-    return null;
-  }
+  async writeString(): Promise<void> {}
 }

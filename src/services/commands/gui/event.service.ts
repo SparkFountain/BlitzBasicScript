@@ -1,38 +1,26 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsGuiEventService {
-    constructor() {
+  constructor() {}
 
-    }
+  async eventData() {}
 
-    eventData() {
-    }
+  async eventId() {}
 
-    eventId() {
-    }
+  async eventSource() {}
 
-    eventSource() {
-    }
+  async eventX() {}
 
-    eventX() {
-    }
+  async eventY() {}
 
-    eventY() {
-    }
+  async eventZ() {}
 
-    eventZ() {
-    }
+  async flushEvents() {}
 
-    flushEvents() {
-    }
+  async hotKeyEvent() {}
 
-    hotKeyEvent() {
-    }
+  async peekEvent() {}
 
-    peekEvent() {
-    }
-
-    waitEvent() {
-    }
+  async waitEvent() {}
 }

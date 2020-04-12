@@ -1,100 +1,99 @@
-import {Injectable} from '@angular/core';
-import {Observable, of, Subscriber} from 'rxjs';
-import {TextureMode} from '../../../enums/texture/texture-mode';
-import {CubeMapFace} from '../../../enums/texture/cube-map-face';
-import {CubeMapMode} from '../../../enums/texture/cube-map-mode';
-import {TextureBlendMode} from '../../../enums/texture/texture-blend-mode';
+import { Injectable } from '@angular/core';
+import { TextureMode } from '../../../enums/texture/texture-mode';
+import { CubeMapFace } from '../../../enums/texture/cube-map-face';
+import { CubeMapMode } from '../../../enums/texture/cube-map-mode';
+import { TextureBlendMode } from '../../../enums/texture/texture-blend-mode';
 
 @Injectable()
 export class CommandsGraphics3dTexturesService {
-    constructor() {
+  constructor() {}
 
-    }
+  async activeTextures(): Promise<number> {
+    //TODO implement
+    return 0;
+  }
 
-    activeTextures(): Observable<number> {
-        //TODO implement
-        return of(0);
-    }
+  async clearTextureFilters(): Promise<void> {
+    //TODO implement
+    return null;
+  }
 
-    clearTextureFilters(): Observable<void> {
-        //TODO implement
-        return of(null);
-    }
+  async createTexture(width: number, height: number, mode?: TextureMode, frames?: number): Promise<BABYLON.Texture> {
+    //TODO implementation
+    return null;
+  }
 
-    createTexture(width: number, height: number, mode?: TextureMode, frames?: number): Observable<BABYLON.Texture> {
-        //TODO implementation
-        return of(null);
-    }
+  async freeTexture(texture: BABYLON.Texture): Promise<void> {
+    texture = null;
+  }
 
-    freeTexture(texture: BABYLON.Texture): Observable<void> {
-        return new Observable<void>((observer: Subscriber<void>) => {
-            texture = null;
+  async loadAnimTexture(
+    filePath: string,
+    mode: TextureMode,
+    width: number,
+    height: number,
+    startFrame: number,
+    totalFrames: number
+  ): Promise<BABYLON.Texture> {
+    //TODO implementation
+    return null;
+  }
 
-            observer.next();
-            observer.complete();
-        });
-    }
+  async loadTexture(filePath: string, mode: TextureMode): Promise<BABYLON.Texture> {
+    //TODO implementation
+    return null;
+  }
 
-    loadAnimTexture(filePath: string, mode: TextureMode, width: number, height: number, startFrame: number, totalFrames: number): Observable<BABYLON.Texture> {
-        //TODO implementation
-        return of(null);
-    }
+  async positionTexture(texture: BABYLON.Texture, u: number, v: number): Promise<void> {
+    //TODO implementation
+    return null;
+  }
 
-    loadTexture(filePath: string, mode: TextureMode): Observable<BABYLON.Texture> {
-        //TODO implementation
-        return of(null);
-    }
+  async rotateTexture(texture: BABYLON.Texture, angle: number): Promise<void> {
+    //TODO implementation
+    return null;
+  }
 
-    positionTexture(texture: BABYLON.Texture, u: number, v: number): Observable<void> {
-        //TODO implementation
-        return of(null);
-    }
+  async scaleTexture(texture: BABYLON.Texture, u: number, v: number): Promise<void> {
+    //TODO implementation
+    return null;
+  }
 
-    rotateTexture(texture: BABYLON.Texture, angle: number): Observable<void> {
-        //TODO implementation
-        return of(null);
-    }
+  async setCubeFace(texture: BABYLON.Texture, face: CubeMapFace): Promise<void> {
+    //TODO implementation
+    return null;
+  }
 
-    scaleTexture(texture: BABYLON.Texture, u: number, v: number): Observable<void> {
-        //TODO implementation
-        return of(null);
-    }
+  async setCubeMode(texture: BABYLON.Texture, mode: CubeMapMode): Promise<void> {
+    //TODO implementation
+    return null;
+  }
 
-    setCubeFace(texture: BABYLON.Texture, face: CubeMapFace): Observable<void> {
-        //TODO implementation
-        return of(null);
-    }
+  async textureBlend(texture: BABYLON.Texture, mode: TextureBlendMode): Promise<void> {
+    //TODO implementation
+    return null;
+  }
 
-    setCubeMode(texture: BABYLON.Texture, mode: CubeMapMode): Observable<void> {
-        //TODO implementation
-        return of(null);
-    }
+  async textureCoords(texture: BABYLON.Texture, coordinate: boolean): Promise<void> {
+    //TODO implementation
+    return null;
+  }
 
-    textureBlend(texture: BABYLON.Texture, mode: TextureBlendMode): Observable<void> {
-        //TODO implementation
-        return of(null);
-    }
+  async textureFilter(searchText: string, mode: TextureMode): Promise<void> {
+    //TODO implementation
+    return null;
+  }
 
-    textureCoords(texture: BABYLON.Texture, coordinate: boolean): Observable<void> {
-        //TODO implementation
-        return of(null);
-    }
+  async textureHeight(texture: BABYLON.Texture): Promise<number> {
+    return texture.getBaseSize().height;
+  }
 
-    textureFilter(searchText: string, mode: TextureMode): Observable<void> {
-        //TODO implementation
-        return of(null);
-    }
+  async textureName(texture: BABYLON.Texture): Promise<string> {
+    //TODO implementation
+    return '';
+  }
 
-    textureHeight(texture: BABYLON.Texture): Observable<number> {
-        return of(texture.getBaseSize().height);
-    }
-
-    textureName(texture: BABYLON.Texture): Observable<string> {
-        //TODO implementation
-        return of('');
-    }
-
-    textureWidth(texture: BABYLON.Texture): Observable<number> {
-        return of(texture.getBaseSize().width);
-    }
+  async textureWidth(texture: BABYLON.Texture): Promise<number> {
+    return texture.getBaseSize().width;
+  }
 }

@@ -1,58 +1,44 @@
-import {Injectable} from '@angular/core';
-import {Observable, Subscriber} from 'rxjs';
-import {BabylonJSService} from '../../babylon-js.service';
-import {LightType} from '../../../enums/light/light-type';
+import { Injectable } from '@angular/core';
+import { BabylonJSService } from '../../babylon-js.service';
+import { LightType } from '../../../enums/light/light-type';
 import { Light } from 'babylonjs';
 
 @Injectable()
 export class CommandsGraphics3dLightShadowService {
-    constructor(private babylonjs: BabylonJSService) {
+  constructor(private babylonjs: BabylonJSService) {}
 
-    }
+  async ambientLight(red: number, green: number, blue: number): Promise<void> {
+    return this.babylonjs.ambientLight(red, green, blue);
+  }
 
-    ambientLight(red: number, green: number, blue: number): Observable<void> {
-        return this.babylonjs.ambientLight(red, green, blue);
-    }
+  async createLight(type?: LightType, parent?: any): Promise<any> {
+    return this.babylonjs.createLight(type).then((light: any) => {
+      if (parent) {
+        light.parent = parent;
+      }
+      return light;
+    });
+  }
 
-    createLight(type?: LightType, parent?: any): Observable<any> {
-        return new Observable((observer: Subscriber<any>) => {
-            this.babylonjs.createLight(type).subscribe((light: any) => {
-                if (parent) {
-                    light.parent = parent;
-                }
+  async lightColor(light: Light, red: number, green: number, blue: number): Promise<void> {
+    return this.babylonjs.lightColor(light, red, green, blue);
+  }
 
-                observer.next(light);
-                observer.complete();
-            });
-        });
-    }
+  async lightConeAngles() {}
 
-    lightColor(light: Light, red: number, green: number, blue: number): Observable<void> {
-        return this.babylonjs.lightColor(light, red, green, blue);
-    }
+  async lightMesh() {}
 
-    lightConeAngles() {
-    }
+  async lightRange(light: Light, range: number): Promise<void> {
+    return this.babylonjs.lightRange(light, range);
+  }
 
-    lightMesh() {
-    }
+  async createShadowMap() {}
 
-    lightRange(light: Light, range: number): Observable<void> {
-        return this.babylonjs.lightRange(light, range);
-    }
+  async deleteShadowMap() {}
 
-    createShadowMap() {
-    }
+  async castShadow() {}
 
-    deleteShadowMap() {
-    }
+  async receiveShadows() {}
 
-    castShadow() {
-    }
-
-    receiveShadows() {
-    }
-
-    shadowDarkness() {
-    }
+  async shadowDarkness() {}
 }

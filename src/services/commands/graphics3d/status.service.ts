@@ -1,87 +1,79 @@
-import {Injectable} from '@angular/core';
-import {GameEntity} from '../../../interfaces/game/entity';
-import {Observable, of, Subscriber} from 'rxjs';
+import { Injectable } from '@angular/core';
+import { GameEntity } from '../../../interfaces/game/entity';
 
 @Injectable()
 export class CommandsGraphics3dStatusService {
-    constructor() {
+  constructor() {}
 
-    }
+  async countChildren(entity: GameEntity): Promise<number> {
+    return -1;
+  }
 
-    countChildren(entity: GameEntity): Observable<number> {
-        return of(-1);
-    }
+  async deltaPitch(sourceEntity: GameEntity, targetEntity: GameEntity): Promise<number> {
+    return -1;
+  }
 
-    deltaPitch(sourceEntity: GameEntity, targetEntity: GameEntity): Observable<number> {
-        return of(-1);
-    }
+  async deltaYaw(sourceEntity: GameEntity, targetEntity: GameEntity): Promise<number> {
+    return -1;
+  }
 
-    deltaYaw(sourceEntity: GameEntity, targetEntity: GameEntity): Observable<number> {
-        return of(-1);
-    }
+  async entityClass(entity: GameEntity): Promise<string> {
+    return entity.class;
+  }
 
-    entityClass(entity: GameEntity): string {
-        return entity.class;
-    }
+  async entityDistance(entity1: GameEntity, entity2: GameEntity): Promise<number> {
+    return -1;
+  }
 
-    entityDistance(entity1: GameEntity, entity2: GameEntity): Observable<number> {
-        return of(-1);
-    }
+  async entityInView(entity: GameEntity, camera: GameEntity): Promise<boolean> {
+    return false;
+  }
 
-    entityInView(entity: GameEntity, camera: GameEntity): Observable<boolean> {
-        return of(false);
-    }
+  async entityName(entity: GameEntity): Promise<string> {
+    return entity.name;
+  }
 
-    entityName(entity: GameEntity): Observable<string> {
-        return of(entity.name);
-    }
+  async entityPitch(entity: GameEntity, global?: boolean): Promise<number> {
+    return 0;
+  }
 
-    entityPitch(entity: GameEntity, global?: boolean): Observable<number> {
-        return of(0);
-    }
+  async entityRoll(entity: GameEntity, global?: boolean): Promise<number> {
+    return 0;
+  }
 
-    entityRoll(entity: GameEntity, global?: boolean): Observable<number> {
-        return of(0);
-    }
+  async entityVisible(entity1: GameEntity, entity2: GameEntity): Promise<boolean> {
+    return false;
+  }
 
-    entityVisible(entity1: GameEntity, entity2: GameEntity): Observable<boolean> {
-        return of(false);
-    }
+  async entityX(entity: GameEntity, global?: boolean): Promise<number> {
+    return null;
+  }
 
-    entityX(entity: GameEntity, global?: boolean): Observable<number> {
-        return of(null);
-    }
+  async entityY(entity: GameEntity, global?: boolean): Promise<number> {
+    return null;
+  }
 
-    entityY(entity: GameEntity, global?: boolean): Observable<number> {
-        return of(null);
-    }
+  async entityYaw(entity: GameEntity, global?: boolean): Promise<number> {
+    return null;
+  }
 
-    entityYaw(entity: GameEntity, global?: boolean): Observable<number> {
-        return of(null);
-    }
+  async entityZ(entity: GameEntity, global?: boolean): Promise<number> {
+    return null;
+  }
 
-    entityZ(entity: GameEntity, global?: boolean): Observable<number> {
-        return of(null);
-    }
+  async findChild(entity: GameEntity, childName: string): Promise<GameEntity | null> {
+    return null;
+  }
 
-    findChild(entity: GameEntity, childName: string): Observable<GameEntity | null> {
-        return of(null);
-    }
+  async getChild(entity: GameEntity, index: number): Promise<GameEntity | null> {
+    return null;
+  }
 
-    getChild(entity: GameEntity, index: number): Observable<GameEntity | null> {
-        return of(null);
-    }
+  async getParent(entity: GameEntity): Promise<GameEntity> {
+    return entity.parent;
+  }
 
-    getParent(entity: GameEntity): Observable<GameEntity> {
-        return of(entity.parent);
-    }
-
-    nameEntity(entity: GameEntity, name: string): Observable<void> {
-        return new Observable<void>((observer: Subscriber<void>) => {
-            entity.name = name;
-
-            observer.next();
-            observer.complete();
-        });
-    }
+  async nameEntity(entity: GameEntity, name: string): Promise<void> {
+    entity.name = name;
+  }
 }

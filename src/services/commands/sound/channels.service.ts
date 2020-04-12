@@ -1,29 +1,20 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class CommandsSoundChannelsService {
-    constructor() {
+  constructor() {}
 
-    }
+  async channelPan() {}
 
-    channelPan() {
-    }
+  async channelPitch() {}
 
-    channelPitch() {
-    }
+  async channelPlaying() {}
 
-    channelPlaying() {
-    }
+  async channelVolume() {}
 
-    channelVolume() {
-    }
+  async pauseChannel() {}
 
-    pauseChannel() {
-    }
+  async resumeChannel() {}
 
-    resumeChannel() {
-    }
-
-    stopChannel() {
-    }
+  async stopChannel() {}
 }

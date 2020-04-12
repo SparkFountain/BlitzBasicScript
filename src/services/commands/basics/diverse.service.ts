@@ -4,38 +4,25 @@ import { Injectable } from '@angular/core';
 export class CommandsBasicsDiverseService {
   constructor(/*private gameState: GameStateService*/) {}
 
-  appTitle(title: string): Promise<void> {
+  async appTitle(title: string): Promise<void> {
     return Promise.resolve(null /*this.gameState.setAppTitle(title)*/);
   }
 
-  commandLine(): Promise<void> {
+  async commandLine(): Promise<void> {
     return null;
   }
 
-  debugLog(message: string): Promise<void> {
-    return new Promise<void>((resolve: Function, reject: Function) => {
-      console.log(message);
-      resolve();
-    });
+  async debugLog(message: string): Promise<void> {
+    console.log(message);
   }
 
-  getEnv(): Promise<any> {
-    return null;
-  }
+  async getEnv(): Promise<any> {}
 
-  runtimeError(): Promise<void> {
-    return null;
-  }
+  async runtimeError(): Promise<void> {}
 
-  runtimeStats(): Promise<void> {
-    return null;
-  }
+  async runtimeStats(): Promise<void> {}
 
-  setEnv(): Promise<void> {
-    return null;
-  }
+  async setEnv(): Promise<void> {}
 
-  systemProperty(): Promise<void> {
-    return null;
-  }
+  async systemProperty(): Promise<void> {}
 }
