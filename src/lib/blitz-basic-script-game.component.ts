@@ -25,6 +25,7 @@ import { Command } from 'protractor';
 import { Assignment } from '../classes/assignment';
 import { NumericExpression } from '../classes/numerical-expression';
 import { VariableExpression } from '../classes/variable-expression';
+import { ArithmeticExpression } from '../classes/arithmetic-expression';
 
 @Component({
   selector: 'blitz-basic-script-game',
@@ -200,10 +201,26 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
 
   testInterpreter(): void {
     this.codeBlocks = [
+      new Assignment(
+        'global',
+        'result',
+        new ArithmeticExpression(
+          [new NumericExpression(13), new NumericExpression(15), new NumericExpression(Math.PI), new NumericExpression(8)],
+          ['+', '-', '/']
+        )
+      ),
       new Assignment('global', 'answerOnEverything', new NumericExpression(42)),
       new CommandStatement('DebugLog', [new VariableExpression('global', 'answerOnEverything')]),
-      new Assignment('global', 'image', new CommandStatement('LoadImage', [new StringExpression('/assets/gfx/blitz.png')])),
-      new CommandStatement('DrawImage', [new VariableExpression('global', 'image'), new NumericExpression(50), new NumericExpression(50)])
+      new Assignment(
+        'global',
+        'image',
+        new CommandStatement('LoadImage', [new StringExpression('/assets/gfx/blitz.png')])
+      ),
+      new CommandStatement('DrawImage', [
+        new VariableExpression('global', 'image'),
+        new NumericExpression(50),
+        new NumericExpression(50)
+      ])
     ];
     this.interpreteNextCodeBlock(); // interprete initial code block
   }

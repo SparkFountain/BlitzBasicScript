@@ -14,6 +14,8 @@ import { Assignment } from '../classes/assignment';
 import { GameStateService } from './game-state.service';
 import { CommandStatement } from '../classes/command';
 import { VariableExpression } from '../classes/variable-expression';
+import { ArithmeticExpression } from '../classes/arithmetic-expression';
+import { ArithmeticTerm } from '../types/arithmetic-term';
 
 @Injectable({
   providedIn: 'root'
@@ -536,6 +538,21 @@ export class InterpreterService {
         }
       case 'CommandStatement':
         return this.executeCommand(expression as CommandStatement);
+      case 'ArithmeticExpression':
+        const arithExpr: ArithmeticExpression = expression as ArithmeticExpression;
+
+        const termsToEvaluate: Promise<string>[] = [];
+        arithExpr.terms.forEach((term: ArithmeticTerm) => termsToEvaluate.push(this.evaluateExpression(term)));
+        const evaluatedTerms: any[] = await Promise.all(termsToEvaluate);
+
+        let result = '';
+        evaluatedTerms.forEach((term: string, index: number) => {
+          result += term;
+          if (index < arithExpr.terms.length - 1) {
+            result += arithExpr.operators[index];
+          }
+        });
+        return eval(result);
     }
 
     console.warn('Expression could not be evaluated:', expression);
