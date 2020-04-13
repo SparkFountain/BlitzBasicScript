@@ -3,7 +3,7 @@ import { LexerService } from '../services/lexer.service';
 import { ParserService } from '../services/parser.service';
 import { AbstractSyntax } from '../interfaces/abstract-syntax';
 import { concat, Observable, Subscriber } from 'rxjs';
-import { GameStateService } from '../services/game-state.service';
+import { GameStateService, ScreenProperties } from '../services/game-state.service';
 import { BabylonJSService } from '../services/babylon-js.service';
 import { GuiService } from '../services/gui.service';
 import { LanguageService } from '../services/language.service';
@@ -33,6 +33,7 @@ import { ArithmeticExpression } from '../classes/expressions/arithmetic-expressi
   styleUrls: ['blitz-basic-script-game.scss']
 })
 export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
+  @Input('icon') iconPath?: string;
   @Input() code: string[];
   @Input() debugMode?: boolean;
   @Input() title?: string;
@@ -40,6 +41,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
   @ViewChild('canvas2d') canvas2d: ElementRef;
   @ViewChild('canvas3d') canvas3d: ElementRef;
   public canvasFocused: boolean;
+  public screen: ScreenProperties;
 
   public playing: boolean;
 
@@ -180,11 +182,12 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     private babylonjs: BabylonJSService,
     private render2d: Render2dService,
     // private gui: GuiService,
-
     private interpreter: InterpreterService
   ) {
     this.canvasFocused = false;
     this.playing = false;
+
+    this.screen = this.gameState.getScreenProperties(); // TODO: event mechanism to reflect changes
 
     this.codeBlockIndex = 0;
   }
@@ -201,11 +204,17 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
 
   testInterpreter(): void {
     this.codeBlocks = [
+      new Assignment('global', 'cone', new CommandStatement('CreateCone', [])),
       new Assignment(
         'global',
         'result',
         new ArithmeticExpression(
-          [new NumericExpression(13), new NumericExpression(15), new NumericExpression(Math.PI), new NumericExpression(8)],
+          [
+            new NumericExpression(13),
+            new NumericExpression(15),
+            new NumericExpression(Math.PI),
+            new NumericExpression(8)
+          ],
           ['+', '-', '/']
         )
       ),

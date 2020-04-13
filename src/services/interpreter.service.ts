@@ -16,6 +16,12 @@ import { CommandStatement } from '../classes/command';
 import { VariableExpression } from '../classes/expressions/variable-expression';
 import { ArithmeticExpression } from '../classes/expressions/arithmetic-expression';
 import { Term } from '../types/arithmetic-term';
+import { IfBlock } from '../classes/conditions/if-block';
+import { SelectBlock } from '../classes/conditions/select-block';
+import { ForToLoop } from '../classes/loops/for-to-loop';
+import { RepeatLoop } from '../classes/loops/repeat-loop';
+import { WhileLoop } from '../classes/loops/while-loop';
+import { LogicalExpression } from '../classes/expressions/logical-expression';
 
 @Injectable({
   providedIn: 'root'
@@ -519,12 +525,17 @@ export class InterpreterService {
         return this.graphics3d.addAnimSeq(evaluatedParams[0], evaluatedParams[1]);
       case 'animate':
         return this.graphics3d.animate(evaluatedParams[0], evaluatedParams[1]);
+      case 'animating':
+        return this.graphics3d.animating(evaluatedParams[0]);
     }
 
     return null;
   }
 
   public async evaluateExpression(expression: Expression): Promise<any> {
+    const termsToEvaluate: Promise<string>[] = [];
+    let evaluatedTerms: any[];
+    let result = '';
     // console.info('Expression', expression);
 
     switch (expression.constructor.name) {
@@ -546,15 +557,27 @@ export class InterpreterService {
       case 'ArithmeticExpression':
         const arithExpr: ArithmeticExpression = expression as ArithmeticExpression;
 
-        const termsToEvaluate: Promise<string>[] = [];
-        arithExpr.terms.forEach((term: Term) => termsToEvaluate.push(this.evaluateExpression(term)));
-        const evaluatedTerms: any[] = await Promise.all(termsToEvaluate);
 
-        let result = '';
+        arithExpr.terms.forEach((term: Term) => termsToEvaluate.push(this.evaluateExpression(term)));
+        evaluatedTerms = await Promise.all(termsToEvaluate);
+
         evaluatedTerms.forEach((term: string, index: number) => {
           result += term;
           if (index < arithExpr.terms.length - 1) {
             result += arithExpr.operators[index];
+          }
+        });
+        return eval(result);
+      case 'LogicalExpression':
+        const logicExpr: LogicalExpression = expression as LogicalExpression;
+
+        logicExpr.terms.forEach((term: Term) => termsToEvaluate.push(this.evaluateExpression(term)));
+        evaluatedTerms = await Promise.all(termsToEvaluate);
+
+        evaluatedTerms.forEach((term: string, index: number) => {
+          result += term;
+          if (index < logicExpr.terms.length - 1) {
+            result += logicExpr.operators[index];
           }
         });
         return eval(result);
@@ -574,4 +597,21 @@ export class InterpreterService {
         this.gameState.setGlobal(assignment.id, evaluatedExpression);
     }
   }
+
+  public async ifBlock(ifBlock: IfBlock): Promise<void> {
+    const expressionsToEvaluate: Promise<any>[] = [];
+    ifBlock.conditions.forEach((condition: LogicalExpression) =>
+      expressionsToEvaluate.push(this.evaluateExpression(condition))
+    );
+    const evaluatedConditions: any[] = await Promise.all(expressionsToEvaluate);
+    // console.info('Evaluated Conditions:', evaluatedConditions);
+  }
+
+  public async selectBlock(selectBlock: SelectBlock): Promise<void> {}
+
+  public async forToLoop(forToLoop: ForToLoop): Promise<void> {}
+
+  public async repeatLoop(repeatLoop: RepeatLoop): Promise<void> {}
+
+  public async whileLoop(whileLoop: WhileLoop): Promise<void> {}
 }
