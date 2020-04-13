@@ -2,26 +2,16 @@ import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, View
 import { LexerService } from '../services/lexer.service';
 import { ParserService } from '../services/parser.service';
 import { AbstractSyntax } from '../interfaces/abstract-syntax';
-import { concat, Observable, Subscriber } from 'rxjs';
 import { GameStateService, ScreenProperties } from '../services/game-state.service';
 import { BabylonJSService } from '../services/babylon-js.service';
 import { GuiService } from '../services/gui.service';
 import { LanguageService } from '../services/language.service';
 import { Render2dService } from '../services/render2d.service';
 import { LexerToken } from '../interfaces/lexer-token';
-import { CommandsBasicsService } from '../services/commands/basics.service';
-import { CommandsDataService } from '../services/commands/data.service';
-import { CommandsGraphics2DService } from '../services/commands/graphics2d.service';
-import { CommandsGraphics3DService } from '../services/commands/graphics3d.service';
-import { CommandsGUIService } from '../services/commands/gui.service';
-import { CommandsIOService } from '../services/commands/io.service';
-import { CommandsSoundService } from '../services/commands/sound.service';
-import { Statement } from '../types/statement';
 import { CommandStatement } from '../classes/command';
 import { CodeBlock } from '../interfaces/code/block';
 import { InterpreterService } from '../services/interpreter.service';
 import { StringExpression } from '../classes/expressions/string-expression';
-import { Command } from 'protractor';
 import { Assignment } from '../classes/assignment';
 import { NumericExpression } from '../classes/expressions/numerical-expression';
 import { VariableExpression } from '../classes/expressions/variable-expression';
@@ -53,7 +43,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:keydown', ['$event'])
   keyDownEvent(event: KeyboardEvent) {
-    console.info('[KEY DOWN]', event);
+    // console.info('[KEY DOWN]', event);
     this.gameState.setKeyDown(KeyCode[this.general.formatUpper(event.code)], true);
     this.gameState.setKeyAsciiCode(event.key.charCodeAt(0));
   }
@@ -65,7 +55,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
 
   @HostListener('window:mousedown', ['$event'])
   mouseDownEvent(event: MouseEvent) {
-    console.info('[MOUSE DOWN]', event);
+    // console.info('[MOUSE DOWN]', event);
     switch (event.which) {
       case 1:
         this.gameState.setMouseDown(MouseCode.LEFT, true);
@@ -182,10 +172,10 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
   play(): void {
     this.playing = true;
 
-    // const tokens: LexerToken[][] = this.lexer.lexCode(this.code);
-    // const gameCode: AbstractSyntax = this.parser.createAbstractSyntax(tokens);
-    // console.info('GAME CODE', gameCode);
-    this.executeCode(null); //gameCode
+    const tokens: LexerToken[][] = this.lexer.lexCode(this.code);
+    const abstractSyntax: AbstractSyntax = this.parser.createAbstractSyntax(tokens);
+    console.info('Abstract Syntax:', abstractSyntax);
+    this.executeCode(abstractSyntax);
   }
 
   debug(): void {
@@ -196,7 +186,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     this.playing = false;
   }
 
-  executeCode(code: AbstractSyntax): void {
+  executeCode(abstractSyntax: AbstractSyntax): void {
     // Initialize BabylonJS Engine
     this.babylonjs.initEngine(this.canvas3d.nativeElement);
 
@@ -205,10 +195,13 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
 
     // Initialize 2D Service
     this.render2d.initCanvas(this.canvas2d.nativeElement);
-    console.info('initCanvas executed');
+    // console.info('initCanvas executed');
+
+    this.codeBlocks = abstractSyntax.codeBlocks;
+    this.interpreteNextCodeBlock();
 
     // TODO: only for testing
-    this.testInterpreter();
+    // this.testInterpreter();
 
     // Initialize GUI Service
     // TODO only if this would be necessary

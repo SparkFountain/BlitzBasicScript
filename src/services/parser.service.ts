@@ -2,20 +2,17 @@ import { LexerToken } from '../interfaces/lexer-token';
 import { LexerTokenCategory } from '../enums/lexer/lexer-token-category';
 import { Injectable } from '@angular/core';
 import { AbstractSyntax } from '../interfaces/abstract-syntax';
-import { GeneralService } from './general.service';
 import { GameStateService } from './game-state.service';
 import { ParserState } from '../enums/parser/parser-state';
 import { LanguageService } from './language.service';
 import { ApiCommand } from '../interfaces/api/api-command';
-import { CommandsBasicsService } from './commands/basics.service';
-import { CommandsDataService } from './commands/data.service';
-import { CommandsGraphics2DService } from './commands/graphics2d.service';
-import { CommandsGraphics3DService } from './commands/graphics3d.service';
-import { CommandsGUIService } from './commands/gui.service';
-import { CommandsIOService } from './commands/io.service';
-import { CommandsSoundService } from './commands/sound.service';
 import { ConstStatement } from '../interfaces/code/statements/const';
 import { ParserStatementType } from '../enums/parser/parser-statement-type';
+import { Expression } from '../types/expression';
+import { NumericExpression } from '../classes/expressions/numerical-expression';
+import { CommandStatement } from '../classes/command';
+import { BooleanExpression } from '../classes/expressions/boolean-expression';
+import { StringExpression } from '../classes/expressions/string-expression';
 
 type CommandResponse = { category: string; command: string; params: any[] };
 
@@ -91,107 +88,24 @@ export class ParserService {
 
   individuals: object;
   stack: any[];
-  state;
+  state: any;
   abstractSyntax: AbstractSyntax;
 
-  constructor(
-    private generalService: GeneralService,
-    private gameState: GameStateService,
-    private language: LanguageService,
-    private basics: CommandsBasicsService,
-    private data: CommandsDataService,
-    private graphics2d: CommandsGraphics2DService,
-    private graphics3d: CommandsGraphics3DService,
-    private gui: CommandsGUIService,
-    private io: CommandsIOService,
-    private sound: CommandsSoundService
-  ) {
-    this.resetParser();
+  constructor(private gameState: GameStateService, private language: LanguageService) {
+    //stores individual values
+    this.individuals = {};
+
+    //stores code sections (e. g. conditions, selections, loops)
+    this.stack = [];
+    this.state = '?';
+
     this.abstractSyntax = {
       globals: [],
-      statements: [],
+      codeBlocks: [],
       mainLoop: [],
       functions: [],
       types: []
     };
-  }
-
-  /**
-   * Resets (or initializes) the parser object, as well as helper variables.
-   */
-  resetParser(): void {
-    //stores individual values
-    this.individuals = {};
-    //stores code sections (e. g. conditions, selections, loops)
-    this.stack = [];
-    this.state = '?';
-  }
-
-  /**
-   * Retrieves all global variables, constants, dim-arrays, function and type names
-   * from a given lexer code.
-   * @param lexerCode An array of lexer token arrays, preprocessed by the lexer
-   */
-  getIndividuals(lexerCode: Array<LexerToken[]>): any {
-    let result = {
-      global: [],
-      const: [],
-      dim: [],
-      fn: [],
-      type: []
-    };
-
-    lexerCode.forEach((lexerTokens: LexerToken[]) => {
-      for (let i = 0; i < lexerTokens.length; i++) {
-        if (lexerTokens[i].which === LexerTokenCategory.INDIVIDUAL) {
-          if (i > 0 && lexerTokens[i - 1].which === LexerTokenCategory.KEYWORD) {
-            //console.info('Previous token is a key word:', lexerTokens[i-1]);
-            let keywordValue = (lexerTokens[i - 1].value as string).toLowerCase();
-            switch (keywordValue) {
-              case 'global':
-                if (result.global.indexOf(keywordValue) === -1) {
-                  result.global.push(lexerTokens[i].value);
-                }
-                break;
-              case 'const':
-                if (result.const.indexOf(keywordValue) === -1) {
-                  result.const.push(lexerTokens[i].value);
-                }
-                break;
-              case 'dim':
-                if (result.dim.indexOf(keywordValue) === -1) {
-                  result.dim.push(lexerTokens[i].value);
-                }
-                break;
-              case 'function':
-                if (result.fn.indexOf(keywordValue) === -1) {
-                  result.fn.push(lexerTokens[i].value);
-                }
-                break;
-              case 'type':
-                if (result.type.indexOf(keywordValue) === -1) {
-                  result.type.push(lexerTokens[i].value);
-                }
-                break;
-            }
-          }
-        }
-      }
-    });
-
-    return result;
-  }
-
-  /**
-   * Retrieves all local variables from a given lexer code.
-   * If a function name is passed, only local variables of this function will be retrieved.
-   * Otherwise, all local variables of all code functions will be retrieved.
-   * @param lexerCode
-   * @param fn
-   */
-  getLocals(lexerCode: Array<LexerToken[]>, fn?: string): any {
-    if (fn) {
-    }
   }
 
   /** RULES **/
@@ -257,17 +171,17 @@ export class ParserService {
   // [Sar]: [NumExpr] Shl [NumExpr]
   // [Sar]: [NumExpr] Shr [NumExpr]
   createAbstractSyntax(lexerCode: Array<LexerToken[]>): AbstractSyntax {
-    // reset game code
+    // initialize abstract syntax object
     this.abstractSyntax = {
       globals: [],
-      statements: [],
+      codeBlocks: [],
       mainLoop: [],
       functions: [],
       types: []
     };
 
     // parse code line by line
-    lexerCode.forEach((lexerTokens: LexerToken[]) => {
+    lexerCode.forEach((lexerTokens: LexerToken[], index: number) => {
       // perform token cleanup: remove comments
       const obsoleteTokenCategories: LexerTokenCategory[] = [
         LexerTokenCategory.COMMENT_MARKER,
@@ -275,7 +189,7 @@ export class ParserService {
       ];
       lexerTokens = lexerTokens.filter((token: LexerToken) => !obsoleteTokenCategories.includes(token.which));
 
-      console.info('INITIAL TOKENS:', lexerTokens);
+      console.info(`#${index} Tokens:`, lexerTokens);
 
       /*
        * Entry points:
@@ -360,8 +274,7 @@ export class ParserService {
       // }
     });
 
-    console.info('Game State:', this.gameState);
-    console.info('Abstract Syntax:', this.abstractSyntax);
+    console.info('Final Abstract Syntax:', this.abstractSyntax);
     return this.abstractSyntax;
   }
 
@@ -380,9 +293,7 @@ export class ParserService {
           break;
         case 'commaOrAssignment':
           if (token.which === LexerTokenCategory.COMMA) {
-            this.abstractSyntax.statements.push(
-              { type: ParserStatementType.GLOBAL, name: variableName, value: null }
-            )
+            this.abstractSyntax.codeBlocks.push({ type: ParserStatementType.GLOBAL, name: variableName, value: null });
             context = 'variable';
           } else if (token.which === LexerTokenCategory.ASSIGNMENT) {
             context = 'expression';
@@ -396,7 +307,7 @@ export class ParserService {
 
           if (token.which === LexerTokenCategory.COMMAND) {
             const cmdResponse: CommandResponse = this.simpleCommandParser(global.slice(2), true) as CommandResponse;
-            this.abstractSyntax.statements.push({
+            this.abstractSyntax.codeBlocks.push({
               global: variableName,
               category: cmdResponse.category,
               command: cmdResponse.command,
@@ -426,7 +337,7 @@ export class ParserService {
     let params: { name: string; optional: boolean }[] = cmdFromJson.params;
     let minParams: number = 0;
     const maxParams: number = params.length;
-    params.forEach(param => {
+    params.forEach((param) => {
       if (!param.optional) {
         minParams++;
       }
@@ -437,7 +348,7 @@ export class ParserService {
     if (commandParams >= minParams && commandParams <= maxParams) {
       reducedTokens.shift(); // remove command itself
       const finalParams: any[] = [];
-      reducedTokens.forEach(t => {
+      reducedTokens.forEach((t) => {
         if (t.which === LexerTokenCategory.VARIABLE) {
           finalParams.push(this.gameState.getGlobal(t.value as string)); // this function must NOT be called here!
         } else if ([LexerTokenCategory.INTEGER, LexerTokenCategory.FLOAT].indexOf(t.which) > -1) {
@@ -449,7 +360,7 @@ export class ParserService {
       });
 
       // push new statement to game code
-      const cmdCall = (firstToken.value as string).replace(/^\w/, c => c.toLowerCase());
+      const cmdCall = (firstToken.value as string).replace(/^\w/, (c) => c.toLowerCase());
       // console.info(`${cmdFromJson.category} ${cmdCall}`);
       if (withReturn) {
         return {
@@ -458,7 +369,7 @@ export class ParserService {
           params: finalParams
         };
       } else {
-        this.abstractSyntax.statements.push({
+        this.abstractSyntax.codeBlocks.push({
           category: cmdFromJson.category,
           command: cmdCall,
           params: finalParams
@@ -471,6 +382,11 @@ export class ParserService {
     }
   }
 
+  /**
+   * Parses a code line in a specific state.
+   * @param state The current parser state
+   * @param tokens All tokens of the current code line
+   */
   parseState(state: ParserState, tokens: LexerToken[]): any {
     //investigate first token, which is relevant for the current state
     let firstToken: LexerToken = tokens[0];
@@ -488,7 +404,7 @@ export class ParserService {
           LexerTokenCategory.INDIVIDUAL
         ];
         if (!validTokenCategories.includes(firstToken.which)) {
-          console.error('Invalid token category:', firstToken);
+          console.error(`[${state}] Invalid token category "${firstToken.which}"`);
           return;
         }
 
@@ -515,7 +431,7 @@ export class ParserService {
                     context = 'value';
                   } else if (currentInnerToken.which === LexerTokenCategory.COMMA) {
                     // push newConst to abstract syntax and reset its values
-                    this.abstractSyntax.statements.push({ ...newConst });
+                    this.abstractSyntax.codeBlocks.push({ ...newConst });
                     newConst.name = '';
                     newConst.value = '';
                     context = 'name';
@@ -533,7 +449,7 @@ export class ParserService {
                   if (validCategories.includes(currentInnerToken.which)) {
                     newConst.value = currentInnerToken.value;
                     // push newConst to abstract syntax and reset its values
-                    this.abstractSyntax.statements.push({ ...newConst });
+                    this.abstractSyntax.codeBlocks.push({ ...newConst });
                     newConst.name = '';
                     newConst.value = '';
                     context = 'comma';
@@ -666,17 +582,22 @@ export class ParserService {
             }
             break;
           case LexerTokenCategory.COMMAND:
-            const params = this.parseState(ParserState.COMMAND_CALL, tokens);
-            this.abstractSyntax.statements.push(
-              { type: ParserStatementType.COMMAND, name: firstToken.value, params: params }
-            )
+            let commandName = tokens[0].value as string;
+            let command: ApiCommand = this.language.commands[commandName.toLowerCase()];
+            console.info('Command:', command);
+
+            const expressions: Expression[] = this.parseExpressions(tokens.slice(1));
+            console.info('Parsed Expressions:', expressions);
+
+            this.abstractSyntax.codeBlocks.push(new CommandStatement(firstToken.value as string, expressions));
+            this.state = ParserState.INITIAL;
             break;
           case LexerTokenCategory.LABEL_DOT:
             this.parseState(ParserState.LABEL, tokens);
             break;
           case LexerTokenCategory.INDIVIDUAL:
             let hasAssignment = false;
-            tokens.forEach(token => {
+            tokens.forEach((token) => {
               if (token.which === LexerTokenCategory.ASSIGNMENT) {
                 hasAssignment = true;
               }
@@ -690,6 +611,7 @@ export class ParserService {
           default:
             console.error('Invalid key word:', firstToken);
         }
+        break;
 
       case ParserState.DECLARATION:
         // these are not the key words but the actual variables!
@@ -720,18 +642,52 @@ export class ParserService {
       case ParserState.ASSIGNMENT:
         //Valid following tokens: ( [Number] [String] True False Pi First Last [Individual] [Command]
         break;
-      case ParserState.COMMAND_CALL:
-        console.info('Command call with', tokens);
-
-        let commandName = tokens[0].value as string;
-        let command: ApiCommand = this.language.commands[commandName.toLowerCase()];
-        console.info('Command:', command);
-
-      // let service: string = `commands${command.category.charAt(0).toUpperCase()}${command.category.slice(
-      //   1
-      // )}${command.subCategory.charAt(0).toUpperCase()}${command.subCategory.slice(1)}`;
-      // console.info('Service:', service);
     }
+  }
+
+  parseExpressions(tokens: LexerToken[]): Expression[] {
+    const result: Expression[] = [];
+    let remainingExpressions: boolean = true;
+    let index = 0;
+    let initialToken: LexerToken;
+    let stack; // TODO: implement
+
+    while (remainingExpressions) {
+      initialToken = tokens[index];
+      console.info('Initial Expression Token:', initialToken);
+
+      // TODO: this is not yet correct, e. g. an integer can be followed by an arithmetic operator
+      switch (initialToken.which) {
+        case LexerTokenCategory.INTEGER:
+        case LexerTokenCategory.FLOAT:
+          result.push(new NumericExpression(initialToken.value as number));
+          break;
+        case LexerTokenCategory.BOOLEAN:
+          result.push(new BooleanExpression(initialToken.value as boolean));
+          break;
+        case LexerTokenCategory.STRING:
+          result.push(new StringExpression(initialToken.value as string));
+          break;
+      }
+
+      switch (initialToken.which) {
+        case LexerTokenCategory.INTEGER:
+        case LexerTokenCategory.FLOAT:
+        case LexerTokenCategory.BOOLEAN:
+        case LexerTokenCategory.STRING:
+          if (index + 1 < tokens.length && tokens[index + 1].which !== LexerTokenCategory.COMMA) {
+            console.error('Numeric expression must be followed by comma');
+            remainingExpressions = false;
+          } else if (index + 1 === tokens.length) {
+            remainingExpressions = false;
+          } else {
+            index += 2;
+          }
+          break;
+      }
+    }
+
+    return result;
   }
 
   parseCondition(tokens: LexerToken[]) {
@@ -791,7 +747,7 @@ export class ParserService {
     }
   }
 
-  parseExpression(expression: LexerToken[]) {
+  parseExpression(expression: LexerToken[]): any {
     console.info('Parse Expression', expression);
 
     // check if expression has valid brackets
@@ -821,7 +777,6 @@ export class ParserService {
         case LexerTokenCategory.FLOAT:
         case LexerTokenCategory.STRING:
         case LexerTokenCategory.BOOLEAN:
-
           break;
       }
     });
@@ -852,7 +807,7 @@ export class ParserService {
     }
     console.info(`Split by ${operator}:`, result);
     return result;
-  };
+  }
 
   splitTokens(tokens: LexerToken[], operator: LexerToken): any {
     const result: LexerToken[][] = [];
@@ -883,18 +838,18 @@ export class ParserService {
   // this will only take strings containing * operator [ no + ]
   parseMultiplicationSeparatedExpression(expression: string): number {
     const numbersString: string[] = this.split(expression, '*');
-    const numbers: number[] = numbersString.map(noStr => {
+    const numbers: number[] = numbersString.map((noStr) => {
       if (noStr[0] == '(') {
         const expr = noStr.substr(1, noStr.length - 2);
         // recursive call to the main function
         return this.parsePlusSeparatedExpression(expr);
       }
-      return +noStr;  // convert string to number
+      return +noStr; // convert string to number
     });
     const initialValue = 1.0;
     const result = numbers.reduce((acc: number, no: number) => acc * no, initialValue);
     return result;
-  };
+  }
 
   // parseMultiplicationSeparatedTokens(tokens: LexerToken[]): any {
   //   const numbersString: string[] = this.splitTokens(tokens, '*');
@@ -915,12 +870,12 @@ export class ParserService {
   parseMinusSeparatedExpression(expression: string): number {
     const numbersString: string[] = this.split(expression, '-');
     console.info('Numbers String (minus):', numbersString);
-    const numbers: number[] = numbersString.map(noStr => this.parseMultiplicationSeparatedExpression(noStr));
+    const numbers: number[] = numbersString.map((noStr) => this.parseMultiplicationSeparatedExpression(noStr));
     console.info('Numbers (minus):', numbers);
     const initialValue: number = numbers[0];
     const result: number = numbers.slice(1).reduce((acc, no) => acc - no, initialValue);
     return result;
-  };
+  }
 
   // parseMinusSeparatedTokens(tokens: LexerToken[]): any {
   //   const numbersString: string[] = this.splitTokens(tokens, '-');
@@ -936,12 +891,12 @@ export class ParserService {
   parsePlusSeparatedExpression(expression: string): number {
     const numbersString: string[] = this.split(expression, '+');
     console.info('Numbers string:', numbersString);
-    const numbers: number[] = numbersString.map(noStr => this.parseMinusSeparatedExpression(noStr));
+    const numbers: number[] = numbersString.map((noStr) => this.parseMinusSeparatedExpression(noStr));
     console.info('Numbers:', numbers);
     const initialValue: number = 0.0;
     const result: number = numbers.reduce((acc, no) => acc + no, initialValue);
     return result;
-  };
+  }
 
   // parsePlusSeparatedTokens(tokens: LexerToken[]): any {
   //   const numbersString: string[] = this.split(tokens, '+');
@@ -959,175 +914,11 @@ export class ParserService {
     const result: number = this.parsePlusSeparatedExpression(expression.replace(/\s/g, ''));
     console.info('RESULT:', result);
     return result;
-  };
+  }
 
   parseTokens(tokens: LexerToken[]): any {
     const result: number = 0; // this.parsePlusSeparatedTokens(tokens);
     console.info('RESULT:', result);
     return result;
   }
-
-  //TODO code must be executed later, for the services are not initialized yet
-  // this.graphics2d.graphics(800, 600),
-  // //this.graphics2d.cameraClsColor(255,0,0),  //TODO wrong implementation, fix
-  // this.generalService.assign({
-  //   variable: 'i',
-  //   type: 'global',
-  //   expression: {
-  //     value: of(42)
-  //   }
-  // }),
-
-  // //CAMERA
-  // this.generalService.assign({
-  //   variable: 'camera',
-  //   type: 'global',
-  //   expression: {
-  //     value: this.graphics3d.createCamera(CameraType.FREE)
-  //   }
-  // }),
-  // new Observable(observer => {
-  //   this.gameState.getGlobal$('camera').subscribe((camera: GameEntity) => {
-  //     this.graphics3d.positionEntity(camera, 0, 2, -5).subscribe(() => {
-  //       observer.next();
-  //       observer.complete();
-  //     });
-  //   });
-  // }),
-  // new Observable(observer => {
-  //   this.gameState.getGlobal$('camera').subscribe((camera: Camera) => {
-  //     this.graphics3d.cameraClsColor(camera, 50, 200, 240).subscribe(() => {
-  //       observer.next();
-  //       observer.complete();
-  //     });
-  //   });
-  // }),
-
-  // //LIGHT
-  // this.generalService.assign({
-  //   variable: 'light',
-  //   type: 'global',
-  //   expression: {
-  //     value: this.graphics3d.createLight(1)
-  //   }
-  // }),
-  // new Observable(observer => {
-  //   this.gameState.getGlobal$('light').subscribe((light: Light) => {
-  //     this.graphics3d.lightColor(light, 255, 255, 0).subscribe(() => {
-  //       observer.next();
-  //       observer.complete();
-  //     });
-  //   });
-  // }),
-
-  // //PRIMITIVE MESH
-  // this.generalService.assign({
-  //   variable: 'cube',
-  //   type: 'global',
-  //   expression: {
-  //     value: this.graphics3d.createCube()
-  //   }
-  // }),
-  // new Observable(observer => {
-  //   this.gameState.getGlobal$('cube').subscribe((cube: GameEntity) => {
-  //     this.graphics3d.positionEntity(cube, 0, 1, 0).subscribe(done => {
-  //       observer.next();
-  //       observer.complete();
-  //     });
-  //   });
-  // }),
-  // new Observable(observer => {
-  //   this.gameState.getGlobal$('cube').subscribe((cube: GameEntity) => {
-  //     this.graphics3d.entityColor(cube, 0, 255, 0).subscribe(done => {
-  //       observer.next();
-  //       observer.complete();
-  //     });
-  //   });
-  // }),
-
-  // this.graphics3d.ambientLight(128, 200, 50),
-
-  // //2D GRAPHICS
-  // this.graphics2d.color(0, 128, 0),
-
-  // //this.commandsBasicsTimeRandom.delay(2000),
-
-  // this.graphics2d.oval(50, 200, 20, 40, false),
-  // this.graphics2d.line(300, 40, 350, 120),
-
-  // //this.graphics2d.color(255, 255, 0),
-  // this.graphics2d.plot(200, 200),
-
-  // //IMAGE
-  // this.graphics2d.autoMidHandle(true),
-  // this.generalService.assign({
-  //   variable: 'image',
-  //   type: 'global',
-  //   expression: {
-  //     value: this.graphics2d.loadImage('/assets/gfx/face.png')
-  //   }
-  // }),
-  // new Observable(observer => {
-  //   this.gameState.getGlobal$('image').subscribe((image: GameImage2D) => {
-  //     this.graphics2d.resizeImage(image, 128, 128).subscribe(() => {
-  //       observer.next();
-  //       observer.complete();
-  //     });
-  //   });
-  // }),
-  // new Observable(observer => {
-  //   this.gameState.getGlobal$('image').subscribe((image: GameImage2D) => {
-  //     this.graphics2d.rotateImage(image, 30).subscribe(() => {
-  //       observer.next();
-  //       observer.complete();
-  //     });
-  //   });
-  // }),
-  // new Observable(observer => {
-  //   this.gameState.getGlobal$('image').subscribe((image: GameImage2D) => {
-  //     this.graphics2d.drawBlock(image, 200, 250).subscribe(() => {
-  //       observer.next();
-  //       observer.complete();
-  //     });
-  //   });
-  // }),
-  // this.graphics2d.rect(195, 245, 10, 10, true),
-  // this.graphics2d.rect(195 - 64, 245 - 64, 10, 10, true),
-
-  // //TEXT
-  // this.generalService.assign({
-  //   variable: 'font',
-  //   type: 'global',
-  //   expression: {
-  //     value: this.graphics2d.loadFont('Arial', 32, true, true, true)
-  //   }
-  // }),
-  // new Observable(observer => {
-  //   this.gameState.getGlobal$('font').subscribe((font: GameFont) => {
-  //     this.graphics2d.setFont(font).subscribe(() => {
-  //       observer.next();
-  //       observer.complete();
-  //     });
-  //   });
-  // }),
-
-  // this.graphics2d.text(50, 50, 'HELLO WORLD!'),
-  // this.graphics2d.stringWidth('HELLO WORLD!'),
-  // this.graphics2d.stringHeight('HELLO WORLD!'),
-  // this.generalService.assign({
-  //   variable: 'rndValue',
-  //   type: 'global',
-  //   expression: {
-  //     value: of('Hello World')
-  //   }
-  // }),
-  // this.basics.seedRnd('Hello World'),
-  // new Observable(observer => {
-  //   this.gameState.getGlobal$('image').subscribe((image: GameImage2D) => {
-  //     this.graphics2d.maskImage(image, 255, 0, 255).subscribe(() => {
-  //       observer.next();
-  //       observer.complete();
-  //     });
-  //   });
-  // })
 }
