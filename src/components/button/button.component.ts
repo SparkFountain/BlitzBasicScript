@@ -1,5 +1,5 @@
 import {Component, Input} from '@angular/core';
-import {GuiButtonStyle} from '../../enums/gui/button-style';
+import {GuiButtonStyle} from '../../enums/gui/buttons/button-style';
 
 @Component({
     selector: 'blitz-basic-script-button',

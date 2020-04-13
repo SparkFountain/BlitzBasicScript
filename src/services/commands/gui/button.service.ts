@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { ButtonComponent } from '../../../components/button/button.component';
-import { GuiButtonStyle } from '../../../enums/gui/button-style';
+import { GuiButtonStyle } from '../../../enums/gui/buttons/button-style';
 
 @Injectable()
 export class CommandsGuiButtonService {
