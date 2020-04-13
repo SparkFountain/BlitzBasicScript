@@ -13,6 +13,15 @@ import { GameStateService } from './game-state.service';
 export class GeneralService {
   constructor(private gameState: GameStateService) {}
 
+  // implementation from: https://stackoverflow.com/a/2117523/2764486
+  public createUuid(): string {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, (c) => {
+      let r = (Math.random() * 16) | 0,
+        v = c == 'x' ? r : (r & 0x3) | 0x8;
+      return v.toString(16);
+    });
+  }
+
   public assign(e: Assignment): Promise<void> {
     // TODO: must be completely refactored (is implemented by interpreter service)
     return null;

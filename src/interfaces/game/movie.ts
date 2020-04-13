@@ -1,4 +1,4 @@
 export interface GameMovie {
-    name: string,
-    video: HTMLVideoElement
+  name: string;
+  video: HTMLVideoElement;
 }

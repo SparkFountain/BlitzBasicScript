@@ -11,15 +11,16 @@ export class CommandsGraphics2dDisplayService {
     private gameState: GameStateService
   ) {}
 
-  async endGraphics(): Promise<void> {
-    return null;
-  }
+  async endGraphics(): Promise<void> {}
 
-  async gfxModeDepth(): Promise<number> {
+  async gfxModeDepth(mode: number): Promise<number> {
     return 32;
   }
 
-  async gfxModeExists(): Promise<boolean> {
+  async gfxModeExists(width: number, height: number, depth: number): Promise<boolean> {
+    if (depth != 32) {
+      return false;
+    }
     return true;
   }
 
@@ -34,7 +35,6 @@ export class CommandsGraphics2dDisplayService {
     });
 
     // TODO: refactor
-    return null;
     // return concat(
     //     this.babylonjs.initGraphics(width, height),
     //     this.graphics2d.initGraphics(width, height)

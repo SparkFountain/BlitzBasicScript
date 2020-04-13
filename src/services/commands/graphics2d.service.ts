@@ -25,12 +25,12 @@ export class CommandsGraphics2DService {
     return this.display.endGraphics();
   }
 
-  async gfxModeDepth(): Promise<number> {
-    return this.display.gfxModeDepth();
+  async gfxModeDepth(mode: number): Promise<number> {
+    return this.display.gfxModeDepth(mode);
   }
 
-  async gfxModeExists(): Promise<boolean> {
-    return this.display.gfxModeExists();
+  async gfxModeExists(width: number, height: number, depth: number): Promise<boolean> {
+    return this.display.gfxModeExists(width, height, depth);
   }
 
   async graphics(width: number, height: number): Promise<void> {

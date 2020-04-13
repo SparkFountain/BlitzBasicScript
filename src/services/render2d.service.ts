@@ -63,7 +63,7 @@ export class Render2dService {
     return this.gameState.getScreenProperties().viewport;
   }
 
-  cls(): Promise<void> {
+  async cls(): Promise<void> {
     return new Promise<void>((resolve: Function, reject: Function) => {
       this.loadActiveClsColor();
 
@@ -72,8 +72,6 @@ export class Render2dService {
         height: this.gameState.getScreenProperties().height,
       };
       this._context2d.fillRect(0, 0, screen.width, screen.height);
-
-      resolve();
     });
   }
 

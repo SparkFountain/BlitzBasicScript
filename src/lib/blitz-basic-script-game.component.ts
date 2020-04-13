@@ -204,39 +204,68 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
 
   testInterpreter(): void {
     this.codeBlocks = [
-      new Assignment('global', 'cone', new CommandStatement('CreateCone', [])),
       new Assignment(
         'global',
-        'result',
-        new ArithmeticExpression(
-          [
-            new NumericExpression(13),
-            new NumericExpression(15),
-            new NumericExpression(Math.PI),
-            new NumericExpression(8)
-          ],
-          ['+', '-', '/']
-        )
+        'movie',
+        new CommandStatement('OpenMovie', [new StringExpression('/assets/gfx/mov_bbb.mp4')])
       ),
-      new Assignment('global', 'answerOnEverything', new NumericExpression(42)),
-      new CommandStatement('DebugLog', [new VariableExpression('global', 'answerOnEverything')]),
+      new CommandStatement('DrawMovie', [
+        new VariableExpression('global', 'movie'),
+        new NumericExpression(100),
+        new NumericExpression(100),
+        new NumericExpression(800),
+        new NumericExpression(400)
+      ]),
       new Assignment(
         'global',
-        'image',
-        new CommandStatement('LoadImage', [new StringExpression('/assets/gfx/blitz.png')])
+        'movieWidth',
+        new CommandStatement('MovieWidth', [new VariableExpression('global', 'movie')])
       ),
-      new CommandStatement('DrawImage', [
-        new VariableExpression('global', 'image'),
-        new NumericExpression(50),
-        new NumericExpression(50)
-      ])
+      new CommandStatement('DebugLog', [new VariableExpression('global', 'movieWidth')])
+      // new Assignment('global', 'cone', new CommandStatement('CreateCone', [])),
+      // new Assignment(
+      //   'global',
+      //   'result',
+      //   new ArithmeticExpression(
+      //     [
+      //       new NumericExpression(13),
+      //       new NumericExpression(15),
+      //       new NumericExpression(Math.PI),
+      //       new NumericExpression(8)
+      //     ],
+      //     ['+', '-', '/']
+      //   )
+      // ),
+      // new Assignment('global', 'answerOnEverything', new NumericExpression(42)),
+      // new CommandStatement('DebugLog', [new VariableExpression('global', 'answerOnEverything')]),
+      // new Assignment(
+      //   'global',
+      //   'image',
+      //   new CommandStatement('LoadImage', [new StringExpression('/assets/gfx/blitz.png')])
+      // ),
+      // new CommandStatement('DrawImage', [
+      //   new VariableExpression('global', 'image'),
+      //   new NumericExpression(50),
+      //   new NumericExpression(50)
+      // ]),
+      // new CommandStatement('Color', [
+      //   new NumericExpression(255),
+      //   new NumericExpression(255),
+      //   new NumericExpression(255)
+      // ]),
+      // new CommandStatement('Rect', [
+      //   new NumericExpression(75),
+      //   new NumericExpression(75),
+      //   new NumericExpression(150),
+      //   new NumericExpression(150)
+      // ])
     ];
     this.interpreteNextCodeBlock(); // interprete initial code block
   }
 
   public async interpreteNextCodeBlock() {
     const codeBlock: CodeBlock = this.codeBlocks[this.codeBlockIndex];
-    console.info('Interpreting Code Block', codeBlock, codeBlock.constructor.name);
+    console.info('Interpreting Code Block', codeBlock);
 
     switch (codeBlock.constructor.name) {
       case 'Assignment':

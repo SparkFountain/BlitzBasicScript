@@ -1,45 +1,45 @@
 import { Injectable } from '@angular/core';
 
 export interface ScreenProperties {
-  width: number,
-  height: number,
+  width: number;
+  height: number;
   origin: {
-    x: number,
-    y: number
-  },
+    x: number;
+    y: number;
+  };
   color: {
-    red: number,
-    green: number,
-    blue: number
-  },
+    red: number;
+    green: number;
+    blue: number;
+  };
   clsColor: {
-    red: number,
-    green: number,
-    blue: number
-  },
+    red: number;
+    green: number;
+    blue: number;
+  };
   viewport: {
-    beginX: number,
-    beginY: number,
-    width: number,
-    height: number
-  }
+    beginX: number;
+    beginY: number;
+    width: number;
+    height: number;
+  };
 }
 
 export interface ImagesProperties {
-  autoMidHandle: boolean
+  autoMidHandle: boolean;
 }
 
 export interface TextModeProperties {
   offset: {
-    x: number,
-    y: number
-  }
+    x: number;
+    y: number;
+  };
 }
 
 export interface AppProperties {
-  title: string,
-  antiAliasing: boolean,
-  wireFrame: boolean
+  title: string;
+  antiAliasing: boolean;
+  wireFrame: boolean;
 }
 
 @Injectable()
@@ -80,8 +80,8 @@ export class GameStateService {
     };
 
     this.screen = {
-      width: 400,
-      height: 300,
+      width: 1366,
+      height: 768,
       origin: {
         x: 0,
         y: 0
@@ -134,19 +134,19 @@ export class GameStateService {
     this.screen.height = height;
   }
 
-  public setScreenOrigin(origin: { x: number, y: number }): void {
+  public setScreenOrigin(origin: { x: number; y: number }): void {
     this.screen.origin = origin;
   }
 
-  public setScreenColor(color: { red: number, green: number, blue: number }): void {
+  public setScreenColor(color: { red: number; green: number; blue: number }): void {
     this.screen.color = color;
   }
 
-  public setScreenClsColor(clsColor: { red: number, green: number, blue: number }): void {
+  public setScreenClsColor(clsColor: { red: number; green: number; blue: number }): void {
     this.screen.clsColor = clsColor;
   }
 
-  public setScreenViewport(viewport: { beginX: number, beginY: number, width: number, height: number }): void {
+  public setScreenViewport(viewport: { beginX: number; beginY: number; width: number; height: number }): void {
     this.screen.viewport = viewport;
   }
 
@@ -162,10 +162,9 @@ export class GameStateService {
     return this.textMode;
   }
 
-  public setTextModeOffset(offset: { x: number, y: number }): void {
+  public setTextModeOffset(offset: { x: number; y: number }): void {
     this.textMode.offset = offset;
   }
-
 
   //TODO which of the below methods are still in use? remove the others...
 

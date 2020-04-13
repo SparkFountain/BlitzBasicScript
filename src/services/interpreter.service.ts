@@ -280,9 +280,9 @@ export class InterpreterService {
       case 'endgraphics':
         return this.graphics2d.endGraphics();
       case 'gfxmodedepth':
-        return this.graphics2d.gfxModeDepth();
+        return this.graphics2d.gfxModeDepth(evaluatedParams[0]);
       case 'gfxmodeexists':
-        return this.graphics2d.gfxModeExists();
+        return this.graphics2d.gfxModeExists(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
       case 'graphics':
         return this.graphics2d.graphics(evaluatedParams[0], evaluatedParams[1]);
       case 'graphicsdepth':
