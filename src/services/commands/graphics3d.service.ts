@@ -174,7 +174,7 @@ export class CommandsGraphics3DService {
     return this.cameraService.fogColor(red, green, blue);
   }
 
-  async fogMode(mode): Promise<void> {
+  async fogMode(mode: any): Promise<void> {
     return this.cameraService.fogMode(mode);
   }
 
@@ -481,8 +481,8 @@ export class CommandsGraphics3DService {
     return this.lightShadowService.createShadowMap();
   }
 
-  async deleteShadowMap() {
-    return this.lightShadowService.deleteShadowMap();
+  async freeShadowMap() {
+    return this.lightShadowService.freeShadowMap();
   }
 
   async castShadow() {

@@ -527,6 +527,258 @@ export class InterpreterService {
         return this.graphics3d.animate(evaluatedParams[0], evaluatedParams[1]);
       case 'animating':
         return this.graphics3d.animating(evaluatedParams[0]);
+      case 'animlength':
+        return this.graphics3d.animLength(evaluatedParams[0]);
+      case 'animseq':
+        return this.graphics3d.animSeq(evaluatedParams[0]);
+      case 'animtime':
+        return this.graphics3d.animTime(evaluatedParams[0]);
+      case 'extractanimseq':
+        return this.graphics3d.extractAnimSeq(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      case 'setanimkey':
+        return this.graphics3d.setAnimKey(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4]);
+      case 'setanimtime':
+        return this.graphics3d.setAnimTime(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      // GRAPHICS 3D - BRUSHES
+      case 'brushalpha':
+        return this.graphics3d.brushAlpha(evaluatedParams[0], evaluatedParams[1]);
+      case 'brushblend':
+        return this.graphics3d.brushBlend(evaluatedParams[0], evaluatedParams[1]);
+      case 'brushcolor':
+        return this.graphics3d.brushColor(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      case 'brushfx':
+        return this.graphics3d.brushFx(evaluatedParams[0], evaluatedParams[1]);
+      case 'brushshininess':
+        return this.graphics3d.brushShininess(evaluatedParams[0], evaluatedParams[1]);
+      case 'brushtexture':
+        return this.graphics3d.brushTexture(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      case 'createbrush':
+        return this.graphics3d.createBrush(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'freebrush':
+        return this.graphics3d.freeBrush(evaluatedParams[0]);
+      case 'freebrush':
+        return this.graphics3d.getBrushTexture(evaluatedParams[0], evaluatedParams[1]);
+      case 'getentitybrush':
+        return this.graphics3d.getEntityBrush(evaluatedParams[0]);
+      case 'getsurfacebrush':
+        return this.graphics3d.getSurfaceBrush(evaluatedParams[0]);
+      case 'loadbrush':
+        return this.graphics3d.loadBrush(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      case 'paintentity':
+        return this.graphics3d.paintEntity(evaluatedParams[0], evaluatedParams[1]);
+      case 'paintmesh':
+        return this.graphics3d.paintMesh(evaluatedParams[0], evaluatedParams[1]);
+      case 'paintsurface':
+        return this.graphics3d.paintSurface(evaluatedParams[0], evaluatedParams[1]);
+      // GRAPHICS 3D - CAMERA
+      case 'cameraclscolor':
+        return this.graphics3d.cameraClsColor(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      case 'cameraclsmode':
+        return this.graphics3d.cameraClsMode(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'fogcolor':
+        return this.graphics3d.fogColor(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'fogmode':
+        return this.graphics3d.fogMode(evaluatedParams[0]);
+      case 'fogrange':
+        return this.graphics3d.fogRange(evaluatedParams[0], evaluatedParams[1]);
+      case 'fogdensity':
+        return this.graphics3d.fogDensity(evaluatedParams[0]);
+      case 'cameraproject':
+        return this.graphics3d.cameraProject(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      case 'cameraprojmode':
+        return this.graphics3d.cameraProjMode(evaluatedParams[0], evaluatedParams[1]);
+      case 'camerarange':
+        return this.graphics3d.cameraRange(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'cameraviewport':
+        return this.graphics3d.cameraViewport(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4]);
+      case 'camerazoom':
+        return this.graphics3d.cameraZoom(evaluatedParams[0], evaluatedParams[1]);
+      case 'createcamera':
+        return this.graphics3d.createCamera(evaluatedParams[0], evaluatedParams[1]);
+      case 'projectedx':
+        return this.graphics3d.projectedX();
+      case 'projectedy':
+        return this.graphics3d.projectedY();
+      case 'projectedz':
+        return this.graphics3d.projectedZ();
+      // GRAPHICS 3D - COLLISIONS
+      case 'clearcollisions':
+        return this.graphics3d.clearCollisions();
+      case 'collisionentity':
+        return this.graphics3d.collisionEntity(evaluatedParams[0], evaluatedParams[1]);
+      case 'collisionnx':
+        return this.graphics3d.collisionNX(evaluatedParams[0], evaluatedParams[1]);
+      case 'collisionny':
+        return this.graphics3d.collisionNY(evaluatedParams[0], evaluatedParams[1]);
+      case 'collisionnz':
+        return this.graphics3d.collisionNZ(evaluatedParams[0], evaluatedParams[1]);
+      case 'collisions':
+        return this.graphics3d.collisions(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      case 'collisionsurface':
+        return this.graphics3d.collisionSurface(evaluatedParams[0], evaluatedParams[1]);
+      case 'collisiontime':
+        return this.graphics3d.collisionTime(evaluatedParams[0], evaluatedParams[1]);
+      case 'collisiontriangle':
+        return this.graphics3d.collisionTriangle();
+      case 'collisionx':
+        return this.graphics3d.collisionX();
+      case 'collisiony':
+        return this.graphics3d.collisionY();
+      case 'collisionz':
+        return this.graphics3d.collisionZ();
+      case 'countcollisions':
+        return this.graphics3d.countCollisions();
+      case 'entitybox':
+        return this.graphics3d.entityBox();
+      case 'entitycollided':
+        return this.graphics3d.entityCollided();
+      case 'entityradius':
+        return this.graphics3d.entityRadius();
+      case 'entitytype':
+        return this.graphics3d.entityType();
+      case 'getentitytype':
+        return this.graphics3d.getEntityType();
+      case 'meshesintersect':
+        return this.graphics3d.meshesIntersect();
+      case 'resetentity':
+        return this.graphics3d.resetEntity();
+      // GRAPHICS 3D - CONTROLS
+      case 'copyentity':
+        return this.graphics3d.copyEntity(evaluatedParams[0], evaluatedParams[1]);
+      case 'entityalpha':
+        return this.graphics3d.entityAlpha(evaluatedParams[0], evaluatedParams[1]);
+      case 'entityautofade':
+        return this.graphics3d.entityAutoFade(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'entityblend':
+        return this.graphics3d.entityBlend(evaluatedParams[0], evaluatedParams[1]);
+      case 'entitycolor':
+        return this.graphics3d.entityColor(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      case 'entityfx':
+        return this.graphics3d.entityFx();
+      case 'entityorder':
+        return this.graphics3d.entityOrder();
+      case 'entityparent':
+        return this.graphics3d.entityParent();
+      case 'entityshininess':
+        return this.graphics3d.entityShininess();
+      case 'entitytexture':
+        return this.graphics3d.entityTexture();
+      case 'freeentity':
+        return this.graphics3d.freeEntity();
+      case 'hideentity':
+        return this.graphics3d.hideEntity();
+      case 'showentity':
+        return this.graphics3d.showEntity();
+      case 'aligntovector':
+        return this.graphics3d.alignToVector(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4], evaluatedParams[5]);
+      case 'moveentity':
+        return this.graphics3d.moveEntity(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      case 'pointentity':
+        return this.graphics3d.pointEntity(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'positionentity':
+        return this.graphics3d.positionEntity(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4]);
+      case 'rotateentity':
+        return this.graphics3d.rotateEntity(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4]);
+      case 'scaleentity':
+        return this.graphics3d.scaleEntity(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4]);
+      case 'translateentity':
+        return this.graphics3d.translateEntity(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4]);
+      case 'turnentity':
+        return this.graphics3d.turnEntity(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4]);
+      case 'tformedx':
+        return this.graphics3d.tFormedX();
+      case 'tformedy':
+        return this.graphics3d.tFormedY();
+      case 'tformedz':
+        return this.graphics3d.tFormedZ();
+      case 'tformnormal':
+        return this.graphics3d.tFormNormal(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4]);
+      case 'tformpoint':
+        return this.graphics3d.tFormPoint(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4]);
+      case 'tformvector':
+        return this.graphics3d.tFormVector(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4]);
+      // GRAPHICS 3D - DIVERSE
+      case 'createmirror':
+        return this.graphics3d.createMirror();
+      case 'createpivot':
+        return this.graphics3d.createPivot();
+      case 'createplane':
+        return this.graphics3d.createPlane();
+      case 'getmatelement':
+        return this.graphics3d.getMatElement();
+      case 'loadermatrix':
+        return this.graphics3d.loaderMatrix();
+      case 'trisrendered':
+        return this.graphics3d.trisRendered();
+      case 'vectorpitch':
+        return this.graphics3d.vectorPitch();
+      case 'vectoryaw':
+        return this.graphics3d.vectorYaw();
+      // GRAPHICS 3D - LIGHT AND SHADOW
+      case 'ambientlight':
+        return this.graphics3d.ambientLight(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'createlight':
+        return this.graphics3d.createLight(evaluatedParams[0], evaluatedParams[1]);
+      case 'lightcolor':
+        return this.graphics3d.lightColor(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      case 'lightconeangles':
+        return this.graphics3d.lightConeAngles();
+      case 'lightmesh':
+        return this.graphics3d.lightMesh();
+      case 'lightrange':
+        return this.graphics3d.lightRange(evaluatedParams[0], evaluatedParams[1]);
+      case 'createshadowmap':
+        return this.graphics3d.createShadowMap();
+      case 'freeshadowmap':
+        return this.graphics3d.freeShadowMap();
+      case 'castshadow':
+        return this.graphics3d.castShadow();
+      case 'receiveshadows':
+        return this.graphics3d.receiveShadows();
+      case 'shadowdarkness':
+        return this.graphics3d.shadowDarkness();
+      // GRAPHICS 3D - MESHES
+      case 'addmesh':
+        return this.graphics3d.addMesh(evaluatedParams[0], evaluatedParams[1]);
+      case 'copymesh':
+        return this.graphics3d.copyMesh(evaluatedParams[0], evaluatedParams[1]);
+      case 'createcone':
+        return this.graphics3d.createCone(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'createsphere':
+        return this.graphics3d.createSphere(evaluatedParams[0], evaluatedParams[1]);
+      case 'createcube':
+        return this.graphics3d.createCube(evaluatedParams[0]);
+      case 'createcylinder':
+        return this.graphics3d.createCylinder(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'createpyramid':
+        return this.graphics3d.createPyramid(evaluatedParams[0], evaluatedParams[1]);
+      case 'createtorus':
+        return this.graphics3d.createTorus(evaluatedParams[0]);
+      case 'createtorusknot':
+        return this.graphics3d.createTorusKnot(evaluatedParams[0]);
+      case 'fitmesh':
+        return this.graphics3d.fitMesh(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4], evaluatedParams[5], evaluatedParams[6], evaluatedParams[7]);
+      case 'flipmesh':
+        return this.graphics3d.flipMesh(evaluatedParams[0]);
+      case 'loadanimmesh':
+        return this.graphics3d.loadAnimMesh(evaluatedParams[0], evaluatedParams[1]);
+      case 'loadmesh':
+        return this.graphics3d.loadMesh(evaluatedParams[0], evaluatedParams[1]);
+      case 'meshcullbox':
+        return this.graphics3d.meshCullBox(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4], evaluatedParams[5], evaluatedParams[6]);
+      case 'meshdepth':
+        return this.graphics3d.meshDepth(evaluatedParams[0]);
+      case 'meshheight':
+        return this.graphics3d.meshHeight(evaluatedParams[0]);
+      case 'meshwidth':
+        return this.graphics3d.meshWidth(evaluatedParams[0]);
+      case 'positionmesh':
+        return this.graphics3d.positionMesh(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      case 'rotatemesh':
+        return this.graphics3d.rotateMesh(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      case 'scalemesh':
+        return this.graphics3d.scaleMesh(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      // GRAPHICS 3D - PICKING
     }
 
     return null;
@@ -556,7 +808,6 @@ export class InterpreterService {
         return this.executeCommand(expression as CommandStatement);
       case 'ArithmeticExpression':
         const arithExpr: ArithmeticExpression = expression as ArithmeticExpression;
-
 
         arithExpr.terms.forEach((term: Term) => termsToEvaluate.push(this.evaluateExpression(term)));
         evaluatedTerms = await Promise.all(termsToEvaluate);

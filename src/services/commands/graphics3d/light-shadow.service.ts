@@ -34,7 +34,7 @@ export class CommandsGraphics3dLightShadowService {
 
   async createShadowMap() {}
 
-  async deleteShadowMap() {}
+  async freeShadowMap() {}
 
   async castShadow() {}
 
