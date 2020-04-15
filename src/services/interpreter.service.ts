@@ -779,6 +779,232 @@ export class InterpreterService {
       case 'scalemesh':
         return this.graphics3d.scaleMesh(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
       // GRAPHICS 3D - PICKING
+      case 'camerapick':
+        return this.graphics3d.cameraPick(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'entitypick':
+        return this.graphics3d.entityPick(evaluatedParams[0], evaluatedParams[1]);
+      case 'entitypickmode':
+        return this.graphics3d.entityPickMode(evaluatedParams[0], evaluatedParams[1]);
+      case 'linepick':
+        return this.graphics3d.linePick(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4], evaluatedParams[5]);
+      case 'pickedentity':
+        return this.graphics3d.pickedEntity();
+      case 'pickednx':
+        return this.graphics3d.pickedNX();
+      case 'pickedny':
+        return this.graphics3d.pickedNY();
+      case 'pickednz':
+        return this.graphics3d.pickedNZ();
+      case 'pickedsurface':
+        return this.graphics3d.pickedSurface();
+      case 'pickedtime':
+        return this.graphics3d.pickedTime();
+      case 'pickedtriangle':
+        return this.graphics3d.pickedTriangle();
+      case 'pickedx':
+        return this.graphics3d.pickedX();
+      case 'pickedy':
+        return this.graphics3d.pickedY();
+      case 'pickedz':
+        return this.graphics3d.pickedZ();
+      // GRAPHICS 3D - SCENE
+      case 'createskybox':
+        return this.graphics3d.createSkyBox();
+      case 'loadskybox':
+        return this.graphics3d.loadSkyBox();
+      case 'setgravity':
+        return this.graphics3d.setGravity();
+      case 'setgravity':
+        return this.graphics3d.setGravity();
+      // GRAPHICS 3D - SCENERY
+      case 'antialias':
+        return this.graphics3d.antiAlias(evaluatedParams[0]);
+      case 'captureworld':
+        return this.graphics3d.captureWorld();
+      case 'clearworld':
+        return this.graphics3d.clearWorld(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'renderworld':
+        return this.graphics3d.renderWorld(evaluatedParams[0]);
+      case 'updateworld':
+        return this.graphics3d.updateWorld(evaluatedParams[0]);
+      case 'wireframe':
+        return this.graphics3d.wireFrame(evaluatedParams[0]);
+      // GRAPHICS 3D - SCREEN
+      case 'countgfxmodes3d':
+        return this.graphics3d.countGfxModes3d();
+      case 'gfxdriver3d':
+        return this.graphics3d.gfxDriver3D();
+      case 'gfxdrivercaps3d':
+        return this.graphics3d.gfxDriverCaps3D();
+      case 'gfxmode3d':
+        return this.graphics3d.gfxMode3D(evaluatedParams[0]);
+      case 'gfxmode3dexists':
+        return this.graphics3d.gfxMode3DExists(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'windowed3d':
+        return this.graphics3d.windowed3D();
+      // GRAPHICS 3D - SPRITES
+      case 'createSprite':
+        return this.graphics3d.createSprite(evaluatedParams[0]);
+      case 'handlesprite':
+        return this.graphics3d.handleSprite(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'loadsprite':
+        return this.graphics3d.loadSprite(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'rotatesprite':
+        return this.graphics3d.rotateSprite(evaluatedParams[0], evaluatedParams[1]);
+      case 'scalesprite':
+        return this.graphics3d.scaleSprite(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'spriteviewmode':
+        return this.graphics3d.spriteViewMode(evaluatedParams[0], evaluatedParams[1]);
+      // GRAPHICS 3D - STATUS
+      case 'countchildren':
+        return this.graphics3d.countChildren(evaluatedParams[0]);
+      case 'deltapitch':
+        return this.graphics3d.deltaPitch(evaluatedParams[0], evaluatedParams[1]);
+      case 'deltayaw':
+        return this.graphics3d.deltaYaw(evaluatedParams[0], evaluatedParams[1]);
+      case 'entityclass':
+        return this.graphics3d.entityClass(evaluatedParams[0]);
+      case 'entitydistance':
+        return this.graphics3d.entityDistance(evaluatedParams[0], evaluatedParams[1]);
+      case 'entityinview':
+        return this.graphics3d.entityInView(evaluatedParams[0], evaluatedParams[1]);
+      case 'entityname':
+        return this.graphics3d.entityName(evaluatedParams[0]);
+      case 'entitypitch':
+        return this.graphics3d.entityPitch(evaluatedParams[0], evaluatedParams[1]);
+      case 'entityroll':
+        return this.graphics3d.entityRoll(evaluatedParams[0], evaluatedParams[1]);
+      case 'entityvisible':
+        return this.graphics3d.entityVisible(evaluatedParams[0], evaluatedParams[1]);
+      case 'entityx':
+        return this.graphics3d.entityX(evaluatedParams[0], evaluatedParams[1]);
+      case 'entityy':
+        return this.graphics3d.entityY(evaluatedParams[0], evaluatedParams[1]);
+      case 'entityyaw':
+        return this.graphics3d.entityYaw(evaluatedParams[0], evaluatedParams[1]);
+      case 'entityz':
+        return this.graphics3d.entityZ(evaluatedParams[0], evaluatedParams[1]);
+      case 'findchild':
+        return this.graphics3d.findChild(evaluatedParams[0], evaluatedParams[1]);
+      case 'getchild':
+        return this.graphics3d.getChild(evaluatedParams[0], evaluatedParams[1]);
+      case 'getparent':
+        return this.graphics3d.getParent(evaluatedParams[0]);
+      case 'nameentity':
+        return this.graphics3d.nameEntity(evaluatedParams[0], evaluatedParams[1]);
+      // GRAPHICS 3D - SURFACES
+      case 'addtriangle':
+        return this.graphics3d.addTriangle();
+      case 'addvertex':
+        return this.graphics3d.addVertex();
+      case 'clearsurface':
+        return this.graphics3d.clearSurface();
+      case 'countsurfaces':
+        return this.graphics3d.countSurfaces();
+      case 'counttriangles':
+        return this.graphics3d.countTriangles();
+      case 'countvertices':
+        return this.graphics3d.countVertices();
+      case 'createsurface':
+        return this.graphics3d.createSurface();
+      case 'findsurface':
+        return this.graphics3d.findSurface();
+      case 'getsurface':
+        return this.graphics3d.getSurface();
+      case 'trianglevertex':
+        return this.graphics3d.triangleVertex();
+      case 'updatenormals':
+        return this.graphics3d.updateNormals();
+      case 'vertexalpha':
+        return this.graphics3d.vertexAlpha();
+      case 'vertexblue':
+        return this.graphics3d.vertexBlue();
+      case 'vertexcolor':
+        return this.graphics3d.vertexColor();
+      case 'vertexcoords':
+        return this.graphics3d.vertexCoords();
+      case 'vertexgreen':
+        return this.graphics3d.vertexGreen();
+      case 'vertexnormal':
+        return this.graphics3d.vertexNormal();
+      case 'vertexnx':
+        return this.graphics3d.vertexNX();
+      case 'vertexny':
+        return this.graphics3d.vertexNY();
+      case 'vertexnz':
+        return this.graphics3d.vertexNZ();
+      case 'vertexred':
+        return this.graphics3d.vertexRed();
+      case 'vertextexcoords':
+        return this.graphics3d.vertexTexCoords();
+      case 'vertexu':
+        return this.graphics3d.vertexU();
+      case 'vertexv':
+        return this.graphics3d.vertexV();
+      case 'vertexw':
+        return this.graphics3d.vertexW();
+      case 'vertexx':
+        return this.graphics3d.vertexX();
+      case 'vertexy':
+        return this.graphics3d.vertexY();
+      case 'vertexz':
+        return this.graphics3d.vertexZ();
+      // GRAPHICS 3D - TERRAIN
+      case 'createterrain':
+        return this.graphics3d.createTerrain(evaluatedParams[0], evaluatedParams[1]);
+      case 'loadterrain':
+        return this.graphics3d.loadTerrain(evaluatedParams[0], evaluatedParams[1]);
+      case 'modifyterrain':
+        return this.graphics3d.modifyTerrain(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4]);
+      case 'terraindetail':
+        return this.graphics3d.terrainDetail(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'terrainheight':
+        return this.graphics3d.terrainHeight(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'terrainshading':
+        return this.graphics3d.terrainShading(evaluatedParams[0]);
+      case 'terrainsize':
+        return this.graphics3d.terrainSize(evaluatedParams[0]);
+      case 'terrainx':
+        return this.graphics3d.terrainX(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      case 'terrainy':
+        return this.graphics3d.terrainY(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      case 'terrainz':
+        return this.graphics3d.terrainZ(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      // GRAPHICS 3D - TEXTURES
+      case 'activetextures':
+        return this.graphics3d.activeTextures();
+      case 'cleartexturefilters':
+        return this.graphics3d.clearTextureFilters();
+      case 'createtexture':
+        return this.graphics3d.createTexture(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      case 'freetexture':
+        return this.graphics3d.freeTexture(evaluatedParams[0]);
+      case 'loadanimtexture':
+        return this.graphics3d.loadAnimTexture(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4], evaluatedParams[5]);
+      case 'loadtexture':
+        return this.graphics3d.loadTexture(evaluatedParams[0], evaluatedParams[1]);
+      case 'positiontexture':
+        return this.graphics3d.positionTexture(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'rotatetexture':
+        return this.graphics3d.rotateTexture(evaluatedParams[0], evaluatedParams[1]);
+      case 'scaletexture':
+        return this.graphics3d.scaleTexture(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'setcubeface':
+        return this.graphics3d.setCubeFace(evaluatedParams[0], evaluatedParams[1]);
+      case 'setcubemode':
+        return this.graphics3d.setCubeMode(evaluatedParams[0], evaluatedParams[1]);
+      case 'textureblend':
+        return this.graphics3d.textureBlend(evaluatedParams[0], evaluatedParams[1]);
+      case 'texturecoords':
+        return this.graphics3d.textureCoords(evaluatedParams[0], evaluatedParams[1]);
+      case 'texturefilter':
+        return this.graphics3d.textureFilter(evaluatedParams[0], evaluatedParams[1]);
+      case 'textureheight':
+        return this.graphics3d.textureHeight(evaluatedParams[0]);
+      case 'texturename':
+        return this.graphics3d.textureName(evaluatedParams[0]);
+      case 'texturewidth':
+        return this.graphics3d.textureWidth(evaluatedParams[0]);
     }
 
     return null;
