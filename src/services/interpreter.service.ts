@@ -534,9 +534,20 @@ export class InterpreterService {
       case 'animtime':
         return this.graphics3d.animTime(evaluatedParams[0]);
       case 'extractanimseq':
-        return this.graphics3d.extractAnimSeq(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+        return this.graphics3d.extractAnimSeq(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
       case 'setanimkey':
-        return this.graphics3d.setAnimKey(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4]);
+        return this.graphics3d.setAnimKey(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4]
+        );
       case 'setanimtime':
         return this.graphics3d.setAnimTime(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
       // GRAPHICS 3D - BRUSHES
@@ -545,13 +556,23 @@ export class InterpreterService {
       case 'brushblend':
         return this.graphics3d.brushBlend(evaluatedParams[0], evaluatedParams[1]);
       case 'brushcolor':
-        return this.graphics3d.brushColor(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+        return this.graphics3d.brushColor(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
       case 'brushfx':
         return this.graphics3d.brushFx(evaluatedParams[0], evaluatedParams[1]);
       case 'brushshininess':
         return this.graphics3d.brushShininess(evaluatedParams[0], evaluatedParams[1]);
       case 'brushtexture':
-        return this.graphics3d.brushTexture(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+        return this.graphics3d.brushTexture(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
       case 'createbrush':
         return this.graphics3d.createBrush(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
       case 'freebrush':
@@ -563,7 +584,12 @@ export class InterpreterService {
       case 'getsurfacebrush':
         return this.graphics3d.getSurfaceBrush(evaluatedParams[0]);
       case 'loadbrush':
-        return this.graphics3d.loadBrush(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+        return this.graphics3d.loadBrush(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
       case 'paintentity':
         return this.graphics3d.paintEntity(evaluatedParams[0], evaluatedParams[1]);
       case 'paintmesh':
@@ -572,7 +598,12 @@ export class InterpreterService {
         return this.graphics3d.paintSurface(evaluatedParams[0], evaluatedParams[1]);
       // GRAPHICS 3D - CAMERA
       case 'cameraclscolor':
-        return this.graphics3d.cameraClsColor(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+        return this.graphics3d.cameraClsColor(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
       case 'cameraclsmode':
         return this.graphics3d.cameraClsMode(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
       case 'fogcolor':
@@ -584,13 +615,24 @@ export class InterpreterService {
       case 'fogdensity':
         return this.graphics3d.fogDensity(evaluatedParams[0]);
       case 'cameraproject':
-        return this.graphics3d.cameraProject(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+        return this.graphics3d.cameraProject(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
       case 'cameraprojmode':
         return this.graphics3d.cameraProjMode(evaluatedParams[0], evaluatedParams[1]);
       case 'camerarange':
         return this.graphics3d.cameraRange(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
       case 'cameraviewport':
-        return this.graphics3d.cameraViewport(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4]);
+        return this.graphics3d.cameraViewport(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4]
+        );
       case 'camerazoom':
         return this.graphics3d.cameraZoom(evaluatedParams[0], evaluatedParams[1]);
       case 'createcamera':
@@ -613,7 +655,12 @@ export class InterpreterService {
       case 'collisionnz':
         return this.graphics3d.collisionNZ(evaluatedParams[0], evaluatedParams[1]);
       case 'collisions':
-        return this.graphics3d.collisions(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+        return this.graphics3d.collisions(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
       case 'collisionsurface':
         return this.graphics3d.collisionSurface(evaluatedParams[0], evaluatedParams[1]);
       case 'collisiontime':
@@ -652,7 +699,12 @@ export class InterpreterService {
       case 'entityblend':
         return this.graphics3d.entityBlend(evaluatedParams[0], evaluatedParams[1]);
       case 'entitycolor':
-        return this.graphics3d.entityColor(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+        return this.graphics3d.entityColor(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
       case 'entityfx':
         return this.graphics3d.entityFx();
       case 'entityorder':
@@ -670,21 +722,63 @@ export class InterpreterService {
       case 'showentity':
         return this.graphics3d.showEntity();
       case 'aligntovector':
-        return this.graphics3d.alignToVector(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4], evaluatedParams[5]);
+        return this.graphics3d.alignToVector(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4],
+          evaluatedParams[5]
+        );
       case 'moveentity':
-        return this.graphics3d.moveEntity(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+        return this.graphics3d.moveEntity(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
       case 'pointentity':
         return this.graphics3d.pointEntity(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
       case 'positionentity':
-        return this.graphics3d.positionEntity(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4]);
+        return this.graphics3d.positionEntity(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4]
+        );
       case 'rotateentity':
-        return this.graphics3d.rotateEntity(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4]);
+        return this.graphics3d.rotateEntity(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4]
+        );
       case 'scaleentity':
-        return this.graphics3d.scaleEntity(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4]);
+        return this.graphics3d.scaleEntity(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4]
+        );
       case 'translateentity':
-        return this.graphics3d.translateEntity(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4]);
+        return this.graphics3d.translateEntity(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4]
+        );
       case 'turnentity':
-        return this.graphics3d.turnEntity(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4]);
+        return this.graphics3d.turnEntity(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4]
+        );
       case 'tformedx':
         return this.graphics3d.tFormedX();
       case 'tformedy':
@@ -692,11 +786,29 @@ export class InterpreterService {
       case 'tformedz':
         return this.graphics3d.tFormedZ();
       case 'tformnormal':
-        return this.graphics3d.tFormNormal(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4]);
+        return this.graphics3d.tFormNormal(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4]
+        );
       case 'tformpoint':
-        return this.graphics3d.tFormPoint(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4]);
+        return this.graphics3d.tFormPoint(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4]
+        );
       case 'tformvector':
-        return this.graphics3d.tFormVector(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4]);
+        return this.graphics3d.tFormVector(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4]
+        );
       // GRAPHICS 3D - DIVERSE
       case 'createmirror':
         return this.graphics3d.createMirror();
@@ -720,7 +832,12 @@ export class InterpreterService {
       case 'createlight':
         return this.graphics3d.createLight(evaluatedParams[0], evaluatedParams[1]);
       case 'lightcolor':
-        return this.graphics3d.lightColor(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+        return this.graphics3d.lightColor(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
       case 'lightconeangles':
         return this.graphics3d.lightConeAngles();
       case 'lightmesh':
@@ -757,7 +874,16 @@ export class InterpreterService {
       case 'createtorusknot':
         return this.graphics3d.createTorusKnot(evaluatedParams[0]);
       case 'fitmesh':
-        return this.graphics3d.fitMesh(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4], evaluatedParams[5], evaluatedParams[6], evaluatedParams[7]);
+        return this.graphics3d.fitMesh(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4],
+          evaluatedParams[5],
+          evaluatedParams[6],
+          evaluatedParams[7]
+        );
       case 'flipmesh':
         return this.graphics3d.flipMesh(evaluatedParams[0]);
       case 'loadanimmesh':
@@ -765,7 +891,15 @@ export class InterpreterService {
       case 'loadmesh':
         return this.graphics3d.loadMesh(evaluatedParams[0], evaluatedParams[1]);
       case 'meshcullbox':
-        return this.graphics3d.meshCullBox(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4], evaluatedParams[5], evaluatedParams[6]);
+        return this.graphics3d.meshCullBox(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4],
+          evaluatedParams[5],
+          evaluatedParams[6]
+        );
       case 'meshdepth':
         return this.graphics3d.meshDepth(evaluatedParams[0]);
       case 'meshheight':
@@ -773,11 +907,26 @@ export class InterpreterService {
       case 'meshwidth':
         return this.graphics3d.meshWidth(evaluatedParams[0]);
       case 'positionmesh':
-        return this.graphics3d.positionMesh(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+        return this.graphics3d.positionMesh(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
       case 'rotatemesh':
-        return this.graphics3d.rotateMesh(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+        return this.graphics3d.rotateMesh(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
       case 'scalemesh':
-        return this.graphics3d.scaleMesh(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+        return this.graphics3d.scaleMesh(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
       // GRAPHICS 3D - PICKING
       case 'camerapick':
         return this.graphics3d.cameraPick(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
@@ -786,7 +935,14 @@ export class InterpreterService {
       case 'entitypickmode':
         return this.graphics3d.entityPickMode(evaluatedParams[0], evaluatedParams[1]);
       case 'linepick':
-        return this.graphics3d.linePick(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4], evaluatedParams[5]);
+        return this.graphics3d.linePick(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4],
+          evaluatedParams[5]
+        );
       case 'pickedentity':
         return this.graphics3d.pickedEntity();
       case 'pickednx':
@@ -955,7 +1111,13 @@ export class InterpreterService {
       case 'loadterrain':
         return this.graphics3d.loadTerrain(evaluatedParams[0], evaluatedParams[1]);
       case 'modifyterrain':
-        return this.graphics3d.modifyTerrain(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4]);
+        return this.graphics3d.modifyTerrain(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4]
+        );
       case 'terraindetail':
         return this.graphics3d.terrainDetail(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
       case 'terrainheight':
@@ -976,11 +1138,23 @@ export class InterpreterService {
       case 'cleartexturefilters':
         return this.graphics3d.clearTextureFilters();
       case 'createtexture':
-        return this.graphics3d.createTexture(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+        return this.graphics3d.createTexture(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
       case 'freetexture':
         return this.graphics3d.freeTexture(evaluatedParams[0]);
       case 'loadanimtexture':
-        return this.graphics3d.loadAnimTexture(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3], evaluatedParams[4], evaluatedParams[5]);
+        return this.graphics3d.loadAnimTexture(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4],
+          evaluatedParams[5]
+        );
       case 'loadtexture':
         return this.graphics3d.loadTexture(evaluatedParams[0], evaluatedParams[1]);
       case 'positiontexture':
@@ -1005,6 +1179,442 @@ export class InterpreterService {
         return this.graphics3d.textureName(evaluatedParams[0]);
       case 'texturewidth':
         return this.graphics3d.textureWidth(evaluatedParams[0]);
+      // GUI - BUTTON
+      case 'buttonstate':
+        return this.gui.buttonState(evaluatedParams[0]);
+      case 'createbutton':
+        return this.gui.createButton(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4],
+          evaluatedParams[5],
+          evaluatedParams[6]
+        );
+      case 'setbuttonstate':
+        return this.gui.setButtonState(evaluatedParams[0], evaluatedParams[1]);
+      // GUI - CANVAS
+      case 'createcanvas':
+        return this.gui.createCanvas(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4],
+          evaluatedParams[5]
+        );
+      case 'flipcanvas':
+        return this.gui.flipCanvas(evaluatedParams[0], evaluatedParams[1]);
+      // GUI - DESKTOP
+      case 'desktop':
+        return this.gui.desktop();
+      // GUI - DIVERSE
+      case 'activeobjects':
+        return this.gui.activeObjects();
+      case 'autosuspend':
+        return this.gui.autoSuspend();
+      case 'createprocess':
+        return this.gui.createProcess();
+      case 'debugobjects':
+        return this.gui.debugObjects();
+      // GUI - EVENT
+      case 'eventdata':
+        return this.gui.eventData();
+      case 'eventid':
+        return this.gui.eventId();
+      case 'eventsource':
+        return this.gui.eventSource();
+      case 'eventx':
+        return this.gui.eventX();
+      case 'eventy':
+        return this.gui.eventY();
+      case 'eventz':
+        return this.gui.eventZ();
+      case 'flushevents':
+        return this.gui.flushEvents();
+      case 'hotkeyevent':
+        return this.gui.hotKeyEvent();
+      case 'peekevent':
+        return this.gui.peekEvent();
+      case 'waitevent':
+        return this.gui.waitEvent();
+      case 'activategadget':
+        return this.gui.activateGadget();
+      case 'clientheight':
+        return this.gui.clientHeight();
+      case 'clientwidth':
+        return this.gui.clientWidth();
+      case 'disablegadget':
+        return this.gui.disableGadget();
+      case 'enablegadget':
+        return this.gui.enableGadget();
+      case 'freegadget':
+        return this.gui.freeGadget();
+      case 'gadgetfont':
+        return this.gui.gadgetFont();
+      case 'gadgetgroup':
+        return this.gui.gadgetGroup();
+      case 'gadgetheight':
+        return this.gui.gadgetHeight();
+      case 'gadgettext':
+        return this.gui.gadgetText();
+      case 'gadgetwidth':
+        return this.gui.gadgetWidth();
+      case 'gadgetx':
+        return this.gui.gadgetX();
+      case 'gadgety':
+        return this.gui.gadgetY();
+      case 'hidegadget':
+        return this.gui.hideGadget();
+      case 'queryobject':
+        return this.gui.queryObject();
+      case 'setgadgetfont':
+        return this.gui.setGadgetFont();
+      case 'setgadgetlayout':
+        return this.gui.setGadgetLayout();
+      case 'setgadgetshape':
+        return this.gui.setGadgetShape();
+      case 'setgadgettext':
+        return this.gui.setGadgetText();
+      case 'showgadget':
+        return this.gui.showGadget();
+      // GUI - HTML
+      case 'createhtmlview':
+        return this.gui.createHtmlView();
+      case 'htmlviewback':
+        return this.gui.htmlViewBack();
+      case 'htmlviewcurrenturl':
+        return this.gui.htmlViewCurrentUrl();
+      case 'htmlvieweventurl':
+        return this.gui.htmlViewEventUrl();
+      case 'htmlviewforward':
+        return this.gui.htmlViewForward();
+      case 'htmlviewgo':
+        return this.gui.htmlViewGo();
+      case 'htmlviewrun':
+        return this.gui.htmlViewRun();
+      case 'htmlviewstatus':
+        return this.gui.htmlViewStatus();
+      // GUI - ICON STRIP
+      case 'freeiconstrip':
+        return this.gui.freeIconStrip();
+      case 'loadiconstrip':
+        return this.gui.loadIconStrip();
+      case 'setgadgeticonstrip':
+        return this.gui.setGadgetIconStrip();
+      // GUI - LIST TABBER
+      case 'addgadgetitem':
+        return this.gui.addGadgetItem();
+      case 'cleargadgetitems':
+        return this.gui.clearGadgetItems();
+      case 'countgadgetitems':
+        return this.gui.countGadgetItems();
+      case 'createcombobox':
+        return this.gui.createComboBox();
+      case 'createlistbox':
+        return this.gui.createListBox();
+      case 'createtabber':
+        return this.gui.createTabber();
+      case 'gadgetitemtext':
+        return this.gui.gadgetItemText();
+      case 'insertgadgetitem':
+        return this.gui.insertGadgetItem();
+      case 'modifygadgetitem':
+        return this.gui.modifyGadgetItem();
+      case 'removegadgetitem':
+        return this.gui.removeGadgetItem();
+      case 'selectedgadgetitem':
+        return this.gui.selectedGadgetItem();
+      case 'selectgadgetitem':
+        return this.gui.selectGadgetItem();
+      // GUI - MENU
+      case 'checkmenu':
+        return this.gui.checkMenu();
+      case 'createmenu':
+        return this.gui.createMenu();
+      case 'disablemenu':
+        return this.gui.disableMenu();
+      case 'enablemenu':
+        return this.gui.enableMenu();
+      case 'menuchecked':
+        return this.gui.menuChecked();
+      case 'menuenabled':
+        return this.gui.menuEnabled();
+      case 'menutext':
+        return this.gui.menuText();
+      case 'setmenutext':
+        return this.gui.setMenuText();
+      case 'uncheckmenu':
+        return this.gui.uncheckMenu();
+      case 'updatewindowmenu':
+        return this.gui.updateWindowMenu();
+      case 'windowmenu':
+        return this.gui.windowMenu();
+      // GUI - PANEL
+      case 'createpanel':
+        return this.gui.createPanel();
+      case 'setpanelcolor':
+        return this.gui.setPanelColor();
+      case 'setpanelimage':
+        return this.gui.setPanelImage();
+      // GUI - PROGRESS BAR
+      case 'createprogbar':
+        return this.gui.createProgBar();
+      case 'updateprogbar':
+        return this.gui.updateProgBar();
+      // GUI - REQUEST SERVICE
+      case 'confirm':
+        return this.gui.confirm();
+      case 'notify':
+        return this.gui.notify();
+      case 'proceed':
+        return this.gui.proceed();
+      case 'requestcolor':
+        return this.gui.requestColor();
+      case 'requestdir':
+        return this.gui.requestDir();
+      case 'requestedblue':
+        return this.gui.requestedBlue();
+      case 'requestedgreen':
+        return this.gui.requestedGreen();
+      case 'requestedred':
+        return this.gui.requestedRed();
+      case 'requestfile':
+        return this.gui.requestFile();
+      case 'requestfont':
+        return this.gui.requestFont();
+      // GUI - SLIDER
+      case 'createslider':
+        return this.gui.createSlider();
+      case 'setsliderrange':
+        return this.gui.setSliderRange();
+      case 'setslidervalue':
+        return this.gui.setSliderValue();
+      case 'slidervalue':
+        return this.gui.sliderValue();
+      // GUI - TEXT AREA
+      case 'addtextareatext':
+        return this.gui.addTextAreaText();
+      case 'createtextarea':
+        return this.gui.createTextArea();
+      case 'formattextareatext':
+        return this.gui.formatTextAreaText();
+      case 'locktextarea':
+        return this.gui.lockTextArea();
+      case 'settextareacolor':
+        return this.gui.setTextAreaColor();
+      case 'settextareafont':
+        return this.gui.setTextAreaFont();
+      case 'settextareatabs':
+        return this.gui.setTextAreaTabs();
+      case 'settextareatext':
+        return this.gui.setTextAreaText();
+      case 'textareachar':
+        return this.gui.textAreaChar();
+      case 'textareacursor':
+        return this.gui.textAreaCursor();
+      case 'textarealen':
+        return this.gui.textAreaLen();
+      case 'textarealine':
+        return this.gui.textAreaLine();
+      case 'textarealinelen':
+        return this.gui.textAreaLineLen();
+      case 'textareasellen':
+        return this.gui.textAreaSelLen();
+      case 'textareatext':
+        return this.gui.textAreaText();
+      case 'unlocktextarea':
+        return this.gui.unlockTextArea();
+      // GUI - TEXT FIELD
+      case 'createlabel':
+        return this.gui.createLabel();
+      case 'createtextfield':
+        return this.gui.createTextField();
+      case 'textfieldtext':
+        return this.gui.textFieldText();
+      // GUI - TOOLBAR
+      case 'createtoolbar':
+        return this.gui.createToolBar();
+      case 'disabletoolbaritem':
+        return this.gui.disableToolBarItem();
+      case 'enabletoolbaritem':
+        return this.gui.enableToolBarItem();
+      case 'settoolbartips':
+        return this.gui.setToolBarTips();
+      // GUI - TREE VIEW
+      case 'addtreeviewnode':
+        return this.gui.addTreeViewNode();
+      case 'collapsetreeviewnode':
+        return this.gui.collapseTreeViewNode();
+      case 'counttreeviewnodes':
+        return this.gui.countTreeViewNodes();
+      case 'createtreeview':
+        return this.gui.createTreeView();
+      case 'expandtreeviewnode':
+        return this.gui.expandTreeViewNode();
+      case 'freetreeviewnode':
+        return this.gui.freeTreeViewNode();
+      case 'inserttreeviewnode':
+        return this.gui.insertTreeViewNode();
+      case 'modifytreeviewnode':
+        return this.gui.modifyTreeViewNode();
+      case 'selectedtreeviewnode':
+        return this.gui.selectedTreeViewNode();
+      case 'selecttreeviewnode':
+        return this.gui.selectTreeViewNode();
+      case 'treeviewnodetext':
+        return this.gui.treeViewNodeText();
+      case 'treeviewroot':
+        return this.gui.treeViewRoot();
+      // GUI - WINDOW
+      case 'activatewindow':
+        return this.gui.activateWindow();
+      case 'activewindow':
+        return this.gui.activeWindow();
+      case 'createwindow':
+        return this.gui.createWindow();
+      case 'maximizewindow':
+        return this.gui.maximizeWindow();
+      case 'minimizewindow':
+        return this.gui.minimizeWindow();
+      case 'restorewindow':
+        return this.gui.restoreWindow();
+      case 'setminwindowsize':
+        return this.gui.setMinWindowSize();
+      case 'setstatustext':
+        return this.gui.setStatusText();
+      case 'windowmaximized':
+        return this.gui.windowMaximized();
+      case 'windowminimized':
+        return this.gui.windowMinimized();
+      // IO - GAMEPAD
+      case 'flushjoy':
+        return this.io.flushJoy();
+      case 'getjoy':
+        return this.io.getJoy();
+      case 'joydown':
+        return this.io.joyDown();
+      case 'joyhat':
+        return this.io.joyHat();
+      case 'joyhit':
+        return this.io.joyHit();
+      case 'joypitch':
+        return this.io.joyPitch();
+      case 'joyroll':
+        return this.io.joyRoll();
+      case 'joytype':
+        return this.io.joyType();
+      case 'joyu':
+        return this.io.joyU();
+      case 'joyudir':
+        return this.io.joyUDir();
+      case 'joyv':
+        return this.io.joyV();
+      case 'joyvdir':
+        return this.io.joyVDir();
+      case 'joywait':
+        return this.io.joyWait();
+      case 'joyx':
+        return this.io.joyX();
+      case 'joyxdir':
+        return this.io.joyXDir();
+      case 'joyy':
+        return this.io.joyY();
+      case 'joyyaw':
+        return this.io.joyYaw();
+      case 'joyydir':
+        return this.io.joyYDir();
+      case 'joyz':
+        return this.io.joyZ();
+      case 'joyzdir':
+        return this.io.joyZDir();
+      case 'waitjoy':
+        return this.io.waitJoy();
+      // IO - KEYBOARD
+      case 'flushkeys':
+        return this.io.flushKeys();
+      case 'getkey':
+        return this.io.getKey();
+      case 'input':
+        return this.io.input(evaluatedParams[0]);
+      case 'keydown':
+        return this.io.keyDown(evaluatedParams[0]);
+      case 'keyhit':
+        return this.io.keyHit(evaluatedParams[0]);
+      case 'keywait':
+        return this.io.keyWait();
+      case 'waitKey':
+        return this.io.waitKey();
+      // IO - MOUSE
+      case 'flushmouse':
+        return this.io.flushMouse();
+      case 'getmouse':
+        return this.io.getMouse();
+      case 'hidepointer':
+        return this.io.hidePointer();
+      case 'mousedown':
+        return this.io.mouseDown(evaluatedParams[0]);
+      case 'mousehit':
+        return this.io.mouseHit(evaluatedParams[0]);
+      case 'mousewait':
+        return this.io.mouseWait();
+      case 'mousex':
+        return this.io.mouseX();
+      case 'mousexspeed':
+        return this.io.mouseXSpeed();
+      case 'mousey':
+        return this.io.mouseY();
+      case 'mouseyspeed':
+        return this.io.mouseYSpeed();
+      case 'mousez':
+        return this.io.mouseZ();
+      case 'mousezspeed':
+        return this.io.mouseZSpeed();
+      case 'movemouse':
+        return this.io.moveMouse();
+      case 'showpointer':
+        return this.io.showPointer();
+      case 'waitmouse':
+        return this.io.waitMouse();
+      // SOUND - 3D
+      case 'createlistener':
+        return this.sound.createListener();
+      case 'emitsound':
+        return this.sound.emitSound();
+      case 'load3dsound':
+        return this.sound.load3DSound();
+      case 'channelpan':
+        return this.sound.channelPan();
+      case 'channelpitch':
+        return this.sound.channelPitch();
+      case 'channelplaying':
+        return this.sound.channelPlaying();
+      case 'channelvolume':
+        return this.sound.channelVolume();
+      case 'pausechannel':
+        return this.sound.pauseChannel();
+      case 'resumechannel':
+        return this.sound.resumeChannel();
+      case 'stopchannel':
+        return this.sound.stopChannel();
+      // SOUND - MUSIC SAMPLES
+      case 'playcdtrack':
+        return this.sound.playCDTrack();
+      case 'playmusic':
+        return this.sound.playMusic(evaluatedParams[0], evaluatedParams[1]);
+      case 'freesound':
+        return this.sound.freeSound(evaluatedParams[0]);
+      case 'loadsound':
+        return this.sound.loadSound(evaluatedParams[0]);
+      case 'loopsound':
+        return this.sound.loopSound(evaluatedParams[0]);
+      case 'playsound':
+        return this.sound.playSound(evaluatedParams[0]);
+      case 'soundpan':
+        return this.sound.soundPan(evaluatedParams[0], evaluatedParams[1]);
+      case 'soundvolume':
+        return this.sound.soundVolume(evaluatedParams[0], evaluatedParams[1]);
     }
 
     return null;

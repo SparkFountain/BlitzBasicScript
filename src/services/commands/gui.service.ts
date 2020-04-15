@@ -250,7 +250,7 @@ export class CommandsGUIService {
   }
 
   async htmlViewGo() {
-    this.htmlViewGo();
+    return this.htmlService.htmlViewGo();
   }
 
   async htmlViewRun() {
