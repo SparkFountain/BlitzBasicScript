@@ -5,17 +5,17 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "peerDependencies": {
-    "babylonjs": "4.0.3",
-    "seedrandom": "3.0.1"
+    "babylonjs": "4.1.0",
+    "seedrandom": "3.0.5"
   },
   "devDependencies": {
-    "@types/chai": "4.2.7",
-    "@types/mocha": "5.2.7",
+    "@types/chai": "4.2.11",
+    "@types/mocha": "7.0.2",
     "chai": "4.2.0",
-    "mocha": "7.0.0",
-    "ts-node": "8.5.4",
-    "typescript": "3.4.5",
-    "lodash": ">=4.17.12"
+    "mocha": "7.1.1",
+    "ts-node": "8.8.2",
+    "typescript": "3.8.3",
+    "lodash": "4.17.15"
   },
   "scripts": {
     "test": "mocha --reporter spec --compilers ts:ts-node/register \"src/**/*.test.ts\""
