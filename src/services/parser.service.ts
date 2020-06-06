@@ -10,7 +10,7 @@ import { ConstStatement } from '../interfaces/code/statements/const';
 import { ParserStatementType } from '../enums/parser/parser-statement-type';
 import { Expression } from '../types/expression';
 import { NumericExpression } from '../classes/expressions/numerical-expression';
-import { CommandStatement } from '../classes/command';
+import { CommandStatement } from '../classes/command-statement';
 import { BooleanExpression } from '../classes/expressions/boolean-expression';
 import { StringExpression } from '../classes/expressions/string-expression';
 
@@ -225,60 +225,12 @@ export class ParserService {
        * // -quit program: end
        */
       this.parseState(ParserState.INITIAL, lexerTokens);
-
-      //TODO: this is only a very basic parsing function
-      // remove double quote and comma tokens
-      // lexerTokens.forEach((token: LexerToken, index: number) => {
-      //   if (token.which === LexerTokenCategory.DOUBLE_QUOTE) {
-      //     lexerTokens.splice(index, 1);
-      //   }
-      // });
-
-      // if (lexerTokens.length === 0) {
-      //   return;
-      // }
-
-      // const firstToken = lexerTokens[0];
-
-      // if (firstToken.which === LexerTokenCategory.COMMAND) {
-      //   console.info('COMMAND FOUND');
-      //   this.simpleCommandParser(lexerTokens, false);
-      // } else if (firstToken.which === LexerTokenCategory.KEYWORD && firstToken.value.toLowerCase() === 'global') {
-      //   console.info('GLOBAL FOUND');
-      //   lexerTokens.shift();
-      //   this.parseGlobals(lexerTokens);
-      //   // const varName = lexerTokens[1].value;
-      //   // switch (lexerTokens[3].which) {
-      //   //   case LexerTokenCategory.COMMAND:
-      //   //     this.simpleCommandParser(lexerTokens.splice(4), true);
-      //   //     break;
-      //   //   case LexerTokenCategory.INTEGER:
-      //   //   case LexerTokenCategory.FLOAT:
-      //   //     this.gameState.setGlobal(varName, Number(lexerTokens[3].value));
-      //   //     break;
-      //   //   case LexerTokenCategory.STRING:
-      //   //     this.gameState.setGlobal(varName, lexerTokens[3].value);
-      //   //     break;
-      //   //   case LexerTokenCategory.KEYWORD:
-      //   //     if (['true', 'false'].indexOf(lexerTokens[3].value.toLowerCase()) > -1) {
-      //   //       this.gameState.setGlobal(varName, lexerTokens[3].value);
-      //   //     } else {
-      //   //       console.error('Invalid key word (only True and False are allowed)');
-      //   //     }
-      //   //     break;
-      //   //   default:
-      //   //     console.error('Found invalid token:', lexerTokens[3]);
-      //   // }
-      // } else {
-      //   console.error('First token MUST BE a command or the "Global" keyword!', lexerTokens[0]);
-      // }
     });
 
-    console.info('Final Abstract Syntax:', this.abstractSyntax);
     return this.abstractSyntax;
   }
 
-  parseGlobal(global: LexerToken[]) {
+  parseGlobal(global: LexerToken[]): void {
     let variableName: string;
     let context: GlobalContext = 'variable' as GlobalContext;
     global.forEach((token: LexerToken, index: number) => {
@@ -397,6 +349,7 @@ export class ParserService {
     switch (state) {
       case ParserState.INITIAL:
         validTokenCategories = [
+          // TODO: add all categories from the switch cases below
           LexerTokenCategory.CONST,
           LexerTokenCategory.GLOBAL,
           LexerTokenCategory.COMMAND,
@@ -667,6 +620,11 @@ export class ParserService {
           break;
         case LexerTokenCategory.STRING:
           result.push(new StringExpression(initialToken.value as string));
+          break;
+        case LexerTokenCategory.DOUBLE_QUOTE:
+          // TODO: clean up
+          result.push(new StringExpression(tokens[1].value as string));
+          remainingExpressions = false;
           break;
       }
 

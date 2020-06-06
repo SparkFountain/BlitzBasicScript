@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { CommandsGraphics2DService } from '../graphics2d.service';
 
 @Injectable()
 export class CommandsGraphics3dScreenService {
-  constructor() {}
+  constructor(private graphics2D: CommandsGraphics2DService) {}
 
   async countGfxModes3d(): Promise<number> {
     return 1;
@@ -23,6 +23,10 @@ export class CommandsGraphics3dScreenService {
 
   async gfxMode3DExists(width: number, height: number, depth: number): Promise<boolean> {
     return true;
+  }
+
+  async graphics3D(width: number, height: number, depth: number, mode: number): Promise<void> {
+    return this.graphics2D.graphics(width, height, depth, mode);
   }
 
   async windowed3D(): Promise<boolean> {

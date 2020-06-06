@@ -12,7 +12,7 @@ import { BooleanExpression } from '../classes/expressions/boolean-expression';
 import { StringExpression } from '../classes/expressions/string-expression';
 import { Assignment } from '../classes/assignment';
 import { GameStateService } from './game-state.service';
-import { CommandStatement } from '../classes/command';
+import { CommandStatement } from '../classes/command-statement';
 import { VariableExpression } from '../classes/expressions/variable-expression';
 import { ArithmeticExpression } from '../classes/expressions/arithmetic-expression';
 import { Term } from '../types/arithmetic-term';
@@ -22,11 +22,16 @@ import { ForToLoop } from '../classes/loops/for-to-loop';
 import { RepeatLoop } from '../classes/loops/repeat-loop';
 import { WhileLoop } from '../classes/loops/while-loop';
 import { LogicalExpression } from '../classes/expressions/logical-expression';
+import { AbstractSyntax } from '../interfaces/abstract-syntax';
+import { CodeBlock } from '../interfaces/code/block';
 
 @Injectable({
   providedIn: 'root'
 })
 export class InterpreterService {
+  private abstractSyntax: AbstractSyntax;
+  private codeBlockIndex: number;
+
   constructor(
     private basics: CommandsBasicsService,
     private data: CommandsDataService,
@@ -36,7 +41,61 @@ export class InterpreterService {
     private io: CommandsIOService,
     private sound: CommandsSoundService,
     private gameState: GameStateService
-  ) {}
+  ) {
+    this.codeBlockIndex = 0;
+  }
+
+  public initializeAbstractSyntax(abstractSyntax: AbstractSyntax): void {
+    this.abstractSyntax = abstractSyntax;
+    console.info('Abstract Syntax:', abstractSyntax);
+  }
+
+  public run(): void {
+    this.interpreteNextCodeBlock();
+  }
+
+  public async interpreteNextCodeBlock(): Promise<void> {
+    const codeBlock: CodeBlock = this.abstractSyntax.codeBlocks[this.codeBlockIndex];
+    console.info('Interpreting Code Block', codeBlock);
+
+    switch (codeBlock.constructor.name) {
+      case 'Assignment':
+        await this.assign(codeBlock as Assignment);
+        break;
+      case 'CommandStatement':
+        await this.executeCommand(codeBlock as CommandStatement);
+        break;
+      case 'ConstStatement':
+        break;
+      case 'ExpressionStatement':
+        break;
+      case 'IfThenElse':
+        break;
+      case 'SelectCase':
+        break;
+      case 'ForToNext':
+        break;
+      case 'WhileWend':
+        break;
+      case 'RepeatUntil':
+        break;
+      case 'Include':
+        break;
+      case 'Include':
+        break;
+      case 'DataBlock':
+        break;
+    }
+
+    this.incrementCodeBlock();
+  }
+
+  incrementCodeBlock() {
+    this.codeBlockIndex++;
+    if (this.codeBlockIndex < this.abstractSyntax.codeBlocks.length) {
+      this.interpreteNextCodeBlock();
+    }
+  }
 
   public async executeCommand(command: CommandStatement): Promise<any> {
     // console.info('EXECUTE COMMAND', command);
@@ -284,7 +343,7 @@ export class InterpreterService {
       case 'gfxmodeexists':
         return this.graphics2d.gfxModeExists(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
       case 'graphics':
-        return this.graphics2d.graphics(evaluatedParams[0], evaluatedParams[1]);
+        return this.graphics2d.graphics(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
       case 'graphicsdepth':
         return this.graphics2d.graphicsDepth();
       case 'graphicsheight':

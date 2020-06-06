@@ -33,7 +33,7 @@ export class CommandsGraphics2DService {
     return this.display.gfxModeExists(width, height, depth);
   }
 
-  async graphics(width: number, height: number): Promise<void> {
+  async graphics(width: number, height: number, depth: number, mode: number): Promise<void> {
     return this.display.graphics(width, height);
   }
 

@@ -3,7 +3,7 @@ import { CodeBlock } from './code/block';
 export interface AbstractSyntax {
   globals: object;
   codeBlocks: CodeBlock[];
-  mainLoop: any[];
+  mainLoop: CodeBlock[];
   functions: any[];
   types: object;
   // TODO: data blocks
