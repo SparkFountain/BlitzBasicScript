@@ -23,23 +23,18 @@ export class LanguageService {
     return this.http
       .get('/assets/keywords.json')
       .toPromise()
-      .then(() => {
+      .then((keywords: object) => {
+        this.keywords = keywords;
+
         this.http
           .get('/assets/commands.json')
           .toPromise()
-          .then(() => {
-            // this.keywords = files[0];
-            // this.commands = files[1];
+          .then((commands: object) => {
+            this.commands = commands;
 
             // if (responses[1].status === 'success') {
             //     responses[1].data.forEach((apiKeyword: ApiKeyword) => {
             //         this.deprecatedKeywords[apiKeyword.name.toLowerCase()] = true;
-            //     });
-            // }
-
-            // if (responses[2].status === 'success') {
-            //     responses[2].data.forEach((apiCommand: ApiCommand) => {
-            //         this.commands[apiCommand.name.toLowerCase()] = apiCommand;
             //     });
             // }
 
