@@ -19,6 +19,8 @@ import { ArithmeticExpression } from '../classes/expressions/arithmetic-expressi
 import { KeyCode } from '../enums/events/key-codes';
 import { MouseCode } from '../enums/events/mouse-codes';
 import { GeneralService } from '../services/general.service';
+import { WhileLoop } from '../classes/loops/while-loop';
+import { LogicalExpression } from '../classes/expressions/logical-expression';
 
 @Component({
   selector: 'blitz-basic-script-game',
@@ -97,46 +99,67 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(): void {}
 
   testInterpreter(): void {
-    // this.codeBlocks = [
-    //   new Assignment('global', 'cone', new CommandStatement('CreateCone', [])),
-    //   new Assignment(
-    //     'global',
-    //     'result',
-    //     new ArithmeticExpression(
-    //       [
-    //         new NumericExpression(13),
-    //         new NumericExpression(15),
-    //         new NumericExpression(Math.PI),
-    //         new NumericExpression(8)
-    //       ],
-    //       ['+', '-', '/']
-    //     )
-    //   ),
-    //   new Assignment('global', 'answerOnEverything', new NumericExpression(42)),
-    //   new CommandStatement('DebugLog', [new VariableExpression('global', 'answerOnEverything')]),
-    //   new Assignment(
-    //     'global',
-    //     'image',
-    //     new CommandStatement('LoadImage', [new StringExpression('/assets/gfx/blitz.png')])
-    //   ),
-    //   new CommandStatement('DrawImage', [
-    //     new VariableExpression('global', 'image'),
-    //     new NumericExpression(50),
-    //     new NumericExpression(50)
-    //   ]),
-    //   new CommandStatement('Color', [
-    //     new NumericExpression(255),
-    //     new NumericExpression(255),
-    //     new NumericExpression(255)
-    //   ]),
-    //   new CommandStatement('Rect', [
-    //     new NumericExpression(75),
-    //     new NumericExpression(75),
-    //     new NumericExpression(150),
-    //     new NumericExpression(150)
-    //   ])
-    // ];
-    // this.interpreteNextCodeBlock(); // interprete initial code block
+    this.playing = true;
+
+    // initialize BabylonJS Engine
+    this.babylonjs.initEngine(this.canvas3d.nativeElement);
+
+    // create the scene
+    this.babylonjs.createScene();
+
+    // initialize 2D Service
+    this.render2d.initCanvas(this.canvas2d.nativeElement);
+
+    const codeBlocks: CodeBlock[] = [
+      new WhileLoop(new LogicalExpression([], []), [])
+
+      // new Assignment('global', 'cone', new CommandStatement('CreateCone', []))
+      // new Assignment(
+      //   'global',
+      //   'result',
+      //   new ArithmeticExpression(
+      //     [
+      //       new NumericExpression(13),
+      //       new NumericExpression(15),
+      //       new NumericExpression(Math.PI),
+      //       new NumericExpression(8)
+      //     ],
+      //     ['+', '-', '/']
+      //   )
+      // ),
+      // new Assignment('global', 'answerOnEverything', new NumericExpression(42)),
+      // new CommandStatement('DebugLog', [new VariableExpression('global', 'answerOnEverything')]),
+      // new Assignment(
+      //   'global',
+      //   'image',
+      //   new CommandStatement('LoadImage', [new StringExpression('/assets/gfx/blitz.png')])
+      // ),
+      // new CommandStatement('DrawImage', [
+      //   new VariableExpression('global', 'image'),
+      //   new NumericExpression(50),
+      //   new NumericExpression(50)
+      // ]),
+      // new CommandStatement('Color', [
+      //   new NumericExpression(255),
+      //   new NumericExpression(255),
+      //   new NumericExpression(255)
+      // ]),
+      // new CommandStatement('Rect', [
+      //   new NumericExpression(75),
+      //   new NumericExpression(75),
+      //   new NumericExpression(150),
+      //   new NumericExpression(150)
+      // ])
+    ];
+
+    this.interpreter.initializeAbstractSyntax({
+      globals: {},
+      codeBlocks: codeBlocks,
+      mainLoop: [],
+      functions: [],
+      types: {}
+    });
+    this.interpreter.run();
   }
 
   play(): void {

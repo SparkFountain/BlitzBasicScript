@@ -50,12 +50,13 @@ export class InterpreterService {
     console.info('Abstract Syntax:', abstractSyntax);
   }
 
-  public run(): void {
-    this.interpreteNextCodeBlock();
+  public async run(): Promise<void> {
+    for (let i = 0; i < this.abstractSyntax.codeBlocks.length; i++) {
+      await this.interpreteCodeBlock(this.abstractSyntax.codeBlocks[i]);
+    }
   }
 
-  public async interpreteNextCodeBlock(): Promise<void> {
-    const codeBlock: CodeBlock = this.abstractSyntax.codeBlocks[this.codeBlockIndex];
+  public async interpreteCodeBlock(codeBlock: CodeBlock): Promise<void> {
     console.info('Interpreting Code Block', codeBlock);
 
     switch (codeBlock.constructor.name) {
@@ -76,6 +77,7 @@ export class InterpreterService {
       case 'ForToNext':
         break;
       case 'WhileWend':
+        this.whileLoop(codeBlock as WhileLoop);
         break;
       case 'RepeatUntil':
         break;
@@ -85,15 +87,6 @@ export class InterpreterService {
         break;
       case 'DataBlock':
         break;
-    }
-
-    this.incrementCodeBlock();
-  }
-
-  incrementCodeBlock() {
-    this.codeBlockIndex++;
-    if (this.codeBlockIndex < this.abstractSyntax.codeBlocks.length) {
-      this.interpreteNextCodeBlock();
     }
   }
 
@@ -1759,5 +1752,12 @@ export class InterpreterService {
 
   public async repeatLoop(repeatLoop: RepeatLoop): Promise<void> {}
 
-  public async whileLoop(whileLoop: WhileLoop): Promise<void> {}
+  public async whileLoop(whileLoop: WhileLoop): Promise<void> {
+    this.evaluateExpression(whileLoop.condition).then((condition: boolean) => {
+      if (condition === true) {
+      } else {
+        return null;
+      }
+    });
+  }
 }

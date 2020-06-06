@@ -3,7 +3,7 @@
     <img class="bbscript-game-icon" *ngIf="iconPath !== undefined" [src]="iconPath" />
     <div class="bbscript-game-title">{{ title }}</div>
     <div class="bbscript-right-buttons">
-      <button *ngIf="!playing" (click)="play()">
+      <button *ngIf="!playing" (click)="testInterpreter()"> <!-- play() -->
         <i class="fa fa-fw fa-play-circle" aria-hidden="true"></i>
       </button>
       <button *ngIf="debugMode && !playing" (click)="debug()">
