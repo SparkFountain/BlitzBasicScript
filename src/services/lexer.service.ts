@@ -9,7 +9,6 @@ import { fromArray } from 'rxjs/internal/observable/fromArray';
 @Injectable()
 export class LexerService {
   private individuals: any;
-  private individualCategory: LexerTokenCategory;
 
   constructor(private http: HttpClient, private language: LanguageService) {
     this.individuals = {
