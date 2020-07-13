@@ -8,15 +8,6 @@
     "babylonjs": "4.1.0",
     "seedrandom": "3.0.5"
   },
-  "devDependencies": {
-    "@types/chai": "4.2.11",
-    "@types/mocha": "7.0.2",
-    "chai": "4.2.0",
-    "mocha": "8.0.1",
-    "ts-node": "8.10.2",
-    "typescript": "3.9.5",
-    "lodash": "4.17.15"
-  },
   "scripts": {
     "test": "mocha --reporter spec --compilers ts:ts-node/register \"src/**/*.test.ts\""
   },
@@ -35,6 +26,15 @@
     "url": "https://github.com/SparkFountain/BlitzBasicScript/issues"
   },
   "homepage": "https://github.com/SparkFountain/BlitzBasicScript#readme",
+  "devDependencies": {
+    "@types/chai": "4.2.11",
+    "@types/mocha": "8.0.0",
+    "chai": "4.2.0",
+    "mocha": "8.0.1",
+    "ts-node": "8.10.2",
+    "typescript": "3.9.6",
+    "lodash": "4.17.19"
+  },
   "dependencies": {
     "ngx-ace-wrapper": "9.0.1"
   }
