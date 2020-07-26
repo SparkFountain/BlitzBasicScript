@@ -58,11 +58,15 @@ export class LexerService {
       switch (charsLowerCase) {
         case 'true':
         case 'false':
-          return { which: LexerTokenCategory.BOOLEAN, value: chars === 'true' ? true : false, offset: { x: i + 1, y: 0 } };
+          return {
+            which: LexerTokenCategory.BOOLEAN,
+            value: chars === 'true' ? true : false,
+            offset: { x: i + 1, y: 0 }
+          };
         case 'pi':
           return { which: LexerTokenCategory.FLOAT, value: Math.PI, offset: { x: i + 1, y: 0 } };
         default:
-          return { which: LexerTokenCategory[charsLowerCase.toUpperCase()], value: chars, offset: { x: i + 1, y: 0 } };
+          return { which: LexerTokenCategory.KEYWORD, value: chars, offset: { x: i + 1, y: 0 } };
       }
     } else if (this.language.commands.hasOwnProperty(charsLowerCase)) {
       return { which: LexerTokenCategory.COMMAND, value: chars, offset: { x: i + 1, y: 0 } };
@@ -101,20 +105,6 @@ export class LexerService {
       }
     }
     return result;
-  }
-
-  /**
-   * Converts a given token's "which" property into a corresponding CSS class.
-   * This is done by replacing camel case syntax by hyphens (-) and small letters.
-   * @param tokenWhich A token's "which" property
-   * @return The corresponding CSS class name
-   */
-  getCssClass(tokenWhich: LexerToken['which']): string {
-    //TODO must be refactored for the sake of using an enum of LexerTokenCategories now
-    return 'TODO';
-    /*return tokenWhich.replace(new RegExp('([A-Z])', 'g'), function(match, p1) {
-        return '-' + p1.toLowerCase();
-    });*/
   }
 
   /**
