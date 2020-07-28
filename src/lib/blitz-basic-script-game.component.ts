@@ -96,7 +96,9 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     }
   }
 
-  ngAfterViewInit(): void {}
+  ngAfterViewInit(): void {
+    this.play();
+  }
 
   testInterpreter(): void {
     this.playing = true;

@@ -1,9 +1,9 @@
 <div id="bbscript-root-container" [ngStyle]="{'width': screen.width+'px', 'height': screen.height+'px'}">
-  <div id="bbscript-top-bar">
+  <!-- <div id="bbscript-top-bar">
     <img class="bbscript-game-icon" *ngIf="iconPath !== undefined" [src]="iconPath" />
     <div class="bbscript-game-title">{{ title }}</div>
     <div class="bbscript-right-buttons">
-      <button *ngIf="!playing" (click)="testInterpreter()"> <!-- play() -->
+      <button *ngIf="!playing" (click)="testInterpreter()">
         <i class="fa fa-fw fa-play-circle" aria-hidden="true"></i>
       </button>
       <button *ngIf="debugMode && !playing" (click)="debug()">
@@ -13,7 +13,7 @@
         <i class="fa fa-fw fa-stop-circle" aria-hidden="true"></i>
       </button>
     </div>
-  </div>
+  </div> -->
 
   <div id="bbscript-canvas-container">
     <canvas #canvas3d (focus)="canvasFocused = true" (blur)="canvasFocused = false"></canvas>
