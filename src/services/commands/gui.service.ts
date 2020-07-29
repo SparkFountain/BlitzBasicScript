@@ -90,546 +90,546 @@ export class CommandsGUIService {
   }
 
   // DIVERSE
-  async activeObjects() {
+  async activeObjects(): Promise<any> {
     return this.diverseService.activeObjects();
   }
 
-  async autoSuspend() {
+  async autoSuspend(): Promise<any> {
     return this.diverseService.autoSuspend();
   }
 
-  async createProcess() {
+  async createProcess(): Promise<any> {
     return this.diverseService.createProcess();
   }
 
-  async debugObjects() {
+  async debugObjects(): Promise<any> {
     return this.diverseService.debugObjects();
   }
 
   // EVENT
-  async eventData() {
+  async eventData(): Promise<any> {
     return this.eventService.eventData();
   }
 
-  async eventId() {
+  async eventId(): Promise<any> {
     return this.eventService.eventId();
   }
 
-  async eventSource() {
+  async eventSource(): Promise<any> {
     return this.eventService.eventSource();
   }
 
-  async eventX() {
+  async eventX(): Promise<any> {
     return this.eventService.eventX();
   }
 
-  async eventY() {
+  async eventY(): Promise<any> {
     return this.eventService.eventY();
   }
 
-  async eventZ() {
+  async eventZ(): Promise<any> {
     return this.eventService.eventZ();
   }
 
-  async flushEvents() {
+  async flushEvents(): Promise<any> {
     return this.eventService.flushEvents();
   }
 
-  async hotKeyEvent() {
+  async hotKeyEvent(): Promise<any> {
     return this.eventService.hotKeyEvent();
   }
 
-  async peekEvent() {
+  async peekEvent(): Promise<any> {
     return this.eventService.peekEvent();
   }
 
-  async waitEvent() {
+  async waitEvent(): Promise<any> {
     return this.eventService.waitEvent();
   }
 
   // GADGET
-  async activateGadget() {
+  async activateGadget(): Promise<any> {
     return this.gadgetService.activateGadget();
   }
 
-  async clientHeight() {
+  async clientHeight(): Promise<any> {
     return this.gadgetService.clientHeight();
   }
 
-  async clientWidth() {
+  async clientWidth(): Promise<any> {
     return this.gadgetService.clientWidth();
   }
 
-  async disableGadget() {
+  async disableGadget(): Promise<any> {
     return this.gadgetService.disableGadget();
   }
 
-  async enableGadget() {
+  async enableGadget(): Promise<any> {
     return this.gadgetService.enableGadget();
   }
 
-  async freeGadget() {
+  async freeGadget(): Promise<any> {
     return this.gadgetService.freeGadget();
   }
 
-  async gadgetFont() {
+  async gadgetFont(): Promise<any> {
     return this.gadgetService.gadgetFont();
   }
 
-  async gadgetGroup() {
+  async gadgetGroup(): Promise<any> {
     return this.gadgetService.gadgetGroup();
   }
 
-  async gadgetHeight() {
+  async gadgetHeight(): Promise<any> {
     return this.gadgetService.gadgetHeight();
   }
 
-  async gadgetText() {
+  async gadgetText(): Promise<any> {
     return this.gadgetService.gadgetText();
   }
 
-  async gadgetWidth() {
+  async gadgetWidth(): Promise<any> {
     return this.gadgetService.gadgetWidth();
   }
 
-  async gadgetX() {
+  async gadgetX(): Promise<any> {
     return this.gadgetService.gadgetX();
   }
 
-  async gadgetY() {
+  async gadgetY(): Promise<any> {
     return this.gadgetService.gadgetY();
   }
 
-  async hideGadget() {
+  async hideGadget(): Promise<any> {
     return this.gadgetService.hideGadget();
   }
 
-  async queryObject() {
+  async queryObject(): Promise<any> {
     return this.gadgetService.queryObject();
   }
 
-  async setGadgetFont() {
+  async setGadgetFont(): Promise<any> {
     return this.gadgetService.setGadgetFont();
   }
 
-  async setGadgetLayout() {
+  async setGadgetLayout(): Promise<any> {
     return this.gadgetService.setGadgetLayout();
   }
 
-  async setGadgetShape() {
+  async setGadgetShape(): Promise<any> {
     return this.gadgetService.setGadgetShape();
   }
 
-  async setGadgetText() {
+  async setGadgetText(): Promise<any> {
     return this.gadgetService.setGadgetText();
   }
 
-  async showGadget() {
+  async showGadget(): Promise<any> {
     return this.gadgetService.showGadget();
   }
 
   // HTML
-  async createHtmlView() {
+  async createHtmlView(): Promise<any> {
     return this.htmlService.createHtmlView();
   }
 
-  async htmlViewBack() {
+  async htmlViewBack(): Promise<any> {
     return this.htmlService.htmlViewBack();
   }
 
-  async htmlViewCurrentUrl() {
+  async htmlViewCurrentUrl(): Promise<any> {
     return this.htmlService.htmlViewCurrentUrl();
   }
 
-  async htmlViewEventUrl() {
+  async htmlViewEventUrl(): Promise<any> {
     return this.htmlService.htmlViewEventUrl();
   }
 
-  async htmlViewForward() {
+  async htmlViewForward(): Promise<any> {
     return this.htmlService.htmlViewForward();
   }
 
-  async htmlViewGo() {
+  async htmlViewGo(): Promise<any> {
     return this.htmlService.htmlViewGo();
   }
 
-  async htmlViewRun() {
+  async htmlViewRun(): Promise<any> {
     return this.htmlService.htmlViewRun();
   }
 
-  async htmlViewStatus() {
+  async htmlViewStatus(): Promise<any> {
     return this.htmlService.htmlViewStatus();
   }
 
   // ICON STRIP
-  async freeIconStrip() {
+  async freeIconStrip(): Promise<any> {
     return this.iconStripService.freeIconStrip();
   }
 
-  async loadIconStrip() {
+  async loadIconStrip(): Promise<any> {
     return this.iconStripService.loadIconStrip();
   }
 
-  async setGadgetIconStrip() {
+  async setGadgetIconStrip(): Promise<any> {
     return this.iconStripService.setGadgetIconStrip();
   }
 
   // LIST TABBER
-  async addGadgetItem() {
+  async addGadgetItem(): Promise<any> {
     return this.listTabberService.addGadgetItem();
   }
 
-  async clearGadgetItems() {
+  async clearGadgetItems(): Promise<any> {
     return this.listTabberService.clearGadgetItems();
   }
 
-  async countGadgetItems() {
+  async countGadgetItems(): Promise<any> {
     return this.listTabberService.countGadgetItems();
   }
 
-  async createComboBox() {
+  async createComboBox(): Promise<any> {
     return this.listTabberService.createComboBox();
   }
 
-  async createListBox() {
+  async createListBox(): Promise<any> {
     return this.listTabberService.createListBox();
   }
 
-  async createTabber() {
+  async createTabber(): Promise<any> {
     return this.listTabberService.createTabber();
   }
 
-  async gadgetItemText() {
+  async gadgetItemText(): Promise<any> {
     return this.listTabberService.gadgetItemText();
   }
 
-  async insertGadgetItem() {
+  async insertGadgetItem(): Promise<any> {
     return this.listTabberService.insertGadgetItem();
   }
 
-  async modifyGadgetItem() {
+  async modifyGadgetItem(): Promise<any> {
     return this.listTabberService.modifyGadgetItem();
   }
 
-  async removeGadgetItem() {
+  async removeGadgetItem(): Promise<any> {
     return this.listTabberService.removeGadgetItem();
   }
 
-  async selectedGadgetItem() {
+  async selectedGadgetItem(): Promise<any> {
     return this.listTabberService.selectedGadgetItem();
   }
 
-  async selectGadgetItem() {
+  async selectGadgetItem(): Promise<any> {
     return this.listTabberService.selectGadgetItem();
   }
 
   // MENU
-  async checkMenu() {
+  async checkMenu(): Promise<any> {
     return this.menuService.checkMenu();
   }
 
-  async createMenu() {
+  async createMenu(): Promise<any> {
     return this.menuService.createMenu();
   }
 
-  async disableMenu() {
+  async disableMenu(): Promise<any> {
     return this.menuService.disableMenu();
   }
 
-  async enableMenu() {
+  async enableMenu(): Promise<any> {
     return this.menuService.enableMenu();
   }
 
-  async menuChecked() {
+  async menuChecked(): Promise<any> {
     return this.menuService.menuChecked();
   }
 
-  async menuEnabled() {
+  async menuEnabled(): Promise<any> {
     return this.menuService.menuEnabled();
   }
 
-  async menuText() {
+  async menuText(): Promise<any> {
     return this.menuService.menuText();
   }
 
-  async setMenuText() {
+  async setMenuText(): Promise<any> {
     return this.menuService.setMenuText();
   }
 
-  async uncheckMenu() {
+  async uncheckMenu(): Promise<any> {
     return this.menuService.uncheckMenu();
   }
 
-  async updateWindowMenu() {
+  async updateWindowMenu(): Promise<any> {
     return this.menuService.updateWindowMenu();
   }
 
-  async windowMenu() {
+  async windowMenu(): Promise<any> {
     return this.menuService.windowMenu();
   }
 
   // PANEL
-  async createPanel() {
+  async createPanel(): Promise<any> {
     return this.panelService.createPanel();
   }
 
-  async setPanelColor() {
+  async setPanelColor(): Promise<any> {
     return this.panelService.setPanelColor();
   }
 
-  async setPanelImage() {
+  async setPanelImage(): Promise<any> {
     return this.panelService.setPanelImage();
   }
 
   // PROGRESS BAR
-  async createProgBar() {
+  async createProgBar(): Promise<any> {
     return this.progressBarService.createProgBar();
   }
 
-  async updateProgBar() {
+  async updateProgBar(): Promise<any> {
     return this.progressBarService.updateProgBar();
   }
 
   // REQUEST SERVICE
-  async confirm() {
+  async confirm(): Promise<any> {
     return this.requestService.confirm();
   }
 
-  async notify() {
+  async notify(): Promise<any> {
     return this.requestService.notify();
   }
 
-  async proceed() {
+  async proceed(): Promise<any> {
     return this.requestService.proceed();
   }
 
-  async requestColor() {
+  async requestColor(): Promise<any> {
     return this.requestService.requestColor();
   }
 
-  async requestDir() {
+  async requestDir(): Promise<any> {
     return this.requestService.requestDir();
   }
 
-  async requestedBlue() {
+  async requestedBlue(): Promise<any> {
     return this.requestService.requestedBlue();
   }
 
-  async requestedGreen() {
+  async requestedGreen(): Promise<any> {
     return this.requestService.requestedGreen();
   }
 
-  async requestedRed() {
+  async requestedRed(): Promise<any> {
     return this.requestService.requestedRed();
   }
 
-  async requestFile() {
+  async requestFile(): Promise<any> {
     return this.requestService.requestFile();
   }
 
-  async requestFont() {
+  async requestFont(): Promise<any> {
     return this.requestService.requestFont();
   }
 
   // SLIDER
-  async createSlider() {
+  async createSlider(): Promise<any> {
     return this.sliderService.createSlider();
   }
 
-  async setSliderRange() {
+  async setSliderRange(): Promise<any> {
     return this.sliderService.setSliderRange();
   }
 
-  async setSliderValue() {
+  async setSliderValue(): Promise<any> {
     return this.sliderService.setSliderValue();
   }
 
-  async sliderValue() {
+  async sliderValue(): Promise<any> {
     return this.sliderService.sliderValue();
   }
 
   // TEXT AREA
-  async addTextAreaText() {
+  async addTextAreaText(): Promise<any> {
     return this.textAreaService.addTextAreaText();
   }
 
-  async createTextArea() {
+  async createTextArea(): Promise<any> {
     return this.textAreaService.createTextArea();
   }
 
-  async formatTextAreaText() {
+  async formatTextAreaText(): Promise<any> {
     return this.textAreaService.formatTextAreaText();
   }
 
-  async lockTextArea() {
+  async lockTextArea(): Promise<any> {
     return this.textAreaService.lockTextArea();
   }
 
-  async setTextAreaColor() {
+  async setTextAreaColor(): Promise<any> {
     return this.textAreaService.setTextAreaColor();
   }
 
-  async setTextAreaFont() {
+  async setTextAreaFont(): Promise<any> {
     return this.textAreaService.setTextAreaFont();
   }
 
-  async setTextAreaTabs() {
+  async setTextAreaTabs(): Promise<any> {
     return this.textAreaService.setTextAreaTabs();
   }
 
-  async setTextAreaText() {
+  async setTextAreaText(): Promise<any> {
     return this.textAreaService.setTextAreaText();
   }
 
-  async textAreaChar() {
+  async textAreaChar(): Promise<any> {
     return this.textAreaService.textAreaChar();
   }
 
-  async textAreaCursor() {
+  async textAreaCursor(): Promise<any> {
     return this.textAreaService.textAreaCursor();
   }
 
-  async textAreaLen() {
+  async textAreaLen(): Promise<any> {
     return this.textAreaService.textAreaLen();
   }
 
-  async textAreaLine() {
+  async textAreaLine(): Promise<any> {
     return this.textAreaService.textAreaLine();
   }
 
-  async textAreaLineLen() {
+  async textAreaLineLen(): Promise<any> {
     return this.textAreaService.textAreaLineLen();
   }
 
-  async textAreaSelLen() {
+  async textAreaSelLen(): Promise<any> {
     return this.textAreaService.textAreaSelLen();
   }
 
-  async textAreaText() {
+  async textAreaText(): Promise<any> {
     return this.textAreaService.textAreaText();
   }
 
-  async unlockTextArea() {
+  async unlockTextArea(): Promise<any> {
     return this.textAreaService.unlockTextArea();
   }
 
   // TEXT FIELD
-  async createLabel() {
+  async createLabel(): Promise<any> {
     return this.textFieldService.createLabel();
   }
 
-  async createTextField() {
+  async createTextField(): Promise<any> {
     return this.textFieldService.createTextField();
   }
 
-  async textFieldText() {
+  async textFieldText(): Promise<any> {
     return this.textFieldService.textFieldText();
   }
 
   // TOOLBAR
-  async createToolBar() {
+  async createToolBar(): Promise<any> {
     return this.toolbarService.createToolBar();
   }
 
-  async disableToolBarItem() {
+  async disableToolBarItem(): Promise<any> {
     return this.toolbarService.disableToolBarItem;
   }
 
-  async enableToolBarItem() {
+  async enableToolBarItem(): Promise<any> {
     return this.toolbarService.enableToolBarItem();
   }
 
-  async setToolBarTips() {
+  async setToolBarTips(): Promise<any> {
     return this.toolbarService.setToolBarTips();
   }
 
   // TREE VIEW
-  async addTreeViewNode() {
+  async addTreeViewNode(): Promise<any> {
     return this.treeViewService.addTreeViewNode();
   }
 
-  async collapseTreeViewNode() {
+  async collapseTreeViewNode(): Promise<any> {
     return this.treeViewService.collapseTreeViewNode();
   }
 
-  async countTreeViewNodes() {
+  async countTreeViewNodes(): Promise<any> {
     return this.treeViewService.countTreeViewNodes();
   }
 
-  async createTreeView() {
+  async createTreeView(): Promise<any> {
     return this.treeViewService.createTreeView();
   }
 
-  async expandTreeViewNode() {
+  async expandTreeViewNode(): Promise<any> {
     return this.treeViewService.expandTreeViewNode();
   }
 
-  async freeTreeViewNode() {
+  async freeTreeViewNode(): Promise<any> {
     return this.treeViewService.freeTreeViewNode();
   }
 
-  async insertTreeViewNode() {
+  async insertTreeViewNode(): Promise<any> {
     return this.treeViewService.insertTreeViewNode();
   }
 
-  async modifyTreeViewNode() {
+  async modifyTreeViewNode(): Promise<any> {
     return this.treeViewService.modifyTreeViewNode();
   }
 
-  async selectedTreeViewNode() {
+  async selectedTreeViewNode(): Promise<any> {
     return this.treeViewService.selectedTreeViewNode();
   }
 
-  async selectTreeViewNode() {
+  async selectTreeViewNode(): Promise<any> {
     return this.treeViewService.selectTreeViewNode();
   }
 
-  async treeViewNodeText() {
+  async treeViewNodeText(): Promise<any> {
     return this.treeViewService.treeViewNodeText();
   }
 
-  async treeViewRoot() {
+  async treeViewRoot(): Promise<any> {
     return this.treeViewService.treeViewRoot();
   }
 
   // WINDOW
-  async activateWindow() {
+  async activateWindow(): Promise<any> {
     return this.windowService.activateWindow();
   }
 
-  async activeWindow() {
+  async activeWindow(): Promise<any> {
     return this.windowService.activeWindow();
   }
 
-  async createWindow() {
+  async createWindow(): Promise<any> {
     return this.windowService.createWindow();
   }
 
-  async maximizeWindow() {
+  async maximizeWindow(): Promise<any> {
     return this.windowService.maximizeWindow();
   }
 
-  async minimizeWindow() {
+  async minimizeWindow(): Promise<any> {
     return this.windowService.minimizeWindow();
   }
 
-  async restoreWindow() {
+  async restoreWindow(): Promise<any> {
     return this.windowService.restoreWindow();
   }
 
-  async setMinWindowSize() {
+  async setMinWindowSize(): Promise<any> {
     return this.windowService.setMinWindowSize();
   }
 
-  async setStatusText() {
+  async setStatusText(): Promise<any> {
     return this.windowService.setStatusText();
   }
 
-  async windowMaximized() {
+  async windowMaximized(): Promise<any> {
     return this.windowService.windowMaximized();
   }
 
-  async windowMinimized() {
+  async windowMinimized(): Promise<any> {
     return this.windowService.windowMinimized();
   }
 }

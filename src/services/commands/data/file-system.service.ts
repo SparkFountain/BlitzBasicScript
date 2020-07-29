@@ -4,67 +4,89 @@ import { Injectable } from '@angular/core';
 export class CommandsDataFileSystemService {
   constructor() {}
 
-  async changeDir(): Promise<any> {}
+  async changeDir(path: string): Promise<any> {}
 
-  async closeDir(): Promise<any> {}
+  async closeDir(directory: any): Promise<any> {}
 
-  async closeFile(): Promise<any> {}
+  async closeFile(stream: any): Promise<any> {}
 
-  async copyFile(): Promise<any> {}
+  async copyFile(source: string, target: string): Promise<any> {}
 
-  async createDir(): Promise<any> {}
+  async createDir(path: string): Promise<any> {}
 
-  async currentDir(): Promise<any> {}
+  async currentDir(): Promise<string> {
+    return null;
+  }
 
-  async deleteDir(): Promise<any> {}
+  async deleteDir(path: string): Promise<any> {}
 
-  async deleteFile(): Promise<any> {}
+  async deleteFile(path: string): Promise<any> {}
 
-  async eof(): Promise<any> {}
+  async eof(stream: any): Promise<-1 | 0 | 1> {
+    return 0;
+  }
 
-  async filePos(): Promise<any> {}
+  async filePos(stream: any): Promise<number> {
+    return 0;
+  }
 
-  async fileSize(): Promise<any> {}
+  async fileSize(path: string): Promise<number> {
+    return 0;
+  }
 
-  async fileType(): Promise<any> {}
+  async fileType(path: string): Promise<0 | 1 | 2> {
+    return 0;
+  }
 
-  async moreFiles(): Promise<any> {}
+  async moreFiles(path: string): Promise<0 | 1> {
+    return 0;
+  }
 
-  async nextFile(): Promise<any> {}
+  async nextFile(path: string): Promise<string> {
+    return null;
+  }
 
-  async openFile(): Promise<any> {}
+  async openFile(path: string): Promise<any> {}
 
-  async readAvail(): Promise<any> {}
+  async readAvail(stream: any): Promise<number> {
+    return 0;
+  }
 
-  async readByte(): Promise<any> {}
+  async readByte(stream: any): Promise<number> {
+    return 0;
+  }
 
-  async readDir(): Promise<any> {}
+  async readDir(path: string): Promise<any> {}
 
-  async readFile(): Promise<any> {}
+  async readFile(path: string): Promise<any> {}
 
-  async readFloat(): Promise<any> {}
+  async readFloat(stream: any): Promise<any> {
+    return null;
+  }
 
-  async readInt(): Promise<any> {}
+  async readInt(stream: any): Promise<any> {}
 
-  async readLine(): Promise<any> {}
+  async readLine(stream: any): Promise<any> {}
 
-  async readShort(): Promise<any> {}
+  async readShort(stream: any): Promise<any> {}
 
-  async readString(): Promise<any> {}
+  async readString(stream: any): Promise<any> {}
 
-  async seekFile(): Promise<any> {}
+  async seekFile(stream: any, position: number): Promise<number> {
+    return 0;
+  }
 
-  async writeByte(): Promise<void> {}
+  async writeByte(stream: any, value: number): Promise<void> {}
 
-  async writeFile(): Promise<void> {}
+  async writeFile(stream: any): Promise<void> {}
 
-  async writeFloat(): Promise<void> {}
+  async writeFloat(stream: any, value: number): Promise<void> {}
 
-  async writeInt(): Promise<void> {}
+  async writeInt(stream: any, value: number): Promise<void> {}
 
-  async writeLine(): Promise<void> {}
+  async writeLine(stream: any, value: number): Promise<void> {}
 
-  async writeShort(): Promise<void> {}
+  async writeShort(stream: any, value: number): Promise<void> {}
 
-  async writeString(): Promise<void> {}
+  async writeString(stream: any, value: number): Promise<void> {}
 }

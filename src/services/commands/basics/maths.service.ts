@@ -4,12 +4,12 @@ import { Injectable } from '@angular/core';
 export class CommandsBasicsMathsService {
   constructor() {}
 
-  async abs(number: number): Promise<number> {
-    return Math.abs(number);
+  async abs(value: number): Promise<number> {
+    return Math.abs(value);
   }
 
-  async acos(number: number): Promise<number> {
-    return Math.acos(number);
+  async acos(value: number): Promise<number> {
+    return Math.acos(value);
   }
 
   async asin(value: number): Promise<number> {
@@ -40,20 +40,20 @@ export class CommandsBasicsMathsService {
     return Math.exp(value);
   }
 
-  async float(value: string): Promise<number> {
-    return parseFloat(value);
+  async float(value: number | string): Promise<number> {
+    return parseFloat(value.toString());
   }
 
   async floor(value: number): Promise<number> {
     return Math.floor(value);
   }
 
-  async hex(value: string): Promise<string> {
-    return parseInt(value).toString(16);
+  async hex(value: number | string): Promise<string> {
+    return parseInt(value.toString()).toString(16);
   }
 
-  async int(value: string): Promise<number> {
-    return parseInt(value);
+  async int(value: number | string): Promise<number> {
+    return parseInt(value.toString());
   }
 
   async log(value: number): Promise<number> {
@@ -68,20 +68,8 @@ export class CommandsBasicsMathsService {
     return Math.PI;
   }
 
-  async sar(number: number, bits: number): Promise<number> {
-    return number >> bits;
-  }
-
   async sgn(value: number): Promise<number> {
     return Math.sign(value);
-  }
-
-  async shl(number: number, bits: number): Promise<number> {
-    return number << bits;
-  }
-
-  async shr(number: number, bits: number): Promise<number> {
-    return number >>> bits;
   }
 
   async sin(value: number): Promise<number> {

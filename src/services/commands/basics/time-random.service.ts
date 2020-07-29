@@ -77,7 +77,7 @@ export class CommandsBasicsTimeRandomService {
     return null;
   }
 
-  async waitTimer(): Promise<void> {
+  async waitTimer(timer: any): Promise<void> {
     return null;
   }
 }

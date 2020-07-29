@@ -4,7 +4,7 @@ import { Injectable } from '@angular/core';
 export class CommandsBasicsDiverseService {
   constructor(/*private gameState: GameStateService*/) {}
 
-  async appTitle(title: string): Promise<void> {
+  async appTitle(title: string, onEndMessage?: string): Promise<void> {
     return Promise.resolve(null /*this.gameState.setAppTitle(title)*/);
   }
 
@@ -16,13 +16,13 @@ export class CommandsBasicsDiverseService {
     console.log(message);
   }
 
-  async getEnv(): Promise<any> {}
+  async getEnv(variable: string): Promise<any> {}
 
-  async runtimeError(): Promise<void> {}
+  async runtimeError(message: string): Promise<void> {}
 
   async runtimeStats(): Promise<void> {}
 
-  async setEnv(): Promise<void> {}
+  async setEnv(variable: string, value: string): Promise<void> {}
 
-  async systemProperty(): Promise<void> {}
+  async systemProperty(property: string): Promise<void> {}
 }

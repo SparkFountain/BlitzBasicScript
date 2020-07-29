@@ -14,8 +14,8 @@ export class CommandsBasicsService {
   ) {}
 
   // DIVERSE
-  async appTitle(title: string): Promise<void> {
-    return this.diverse.appTitle(title);
+  async appTitle(title: string, onEndMessage?: string): Promise<void> {
+    return this.diverse.appTitle(title, onEndMessage);
   }
 
   async commandLine(): Promise<void> {
@@ -26,84 +26,84 @@ export class CommandsBasicsService {
     return this.diverse.debugLog(message);
   }
 
-  async getEnv(): Promise<any> {
-    return this.diverse.getEnv();
+  async getEnv(variable: string): Promise<any> {
+    return this.diverse.getEnv(variable);
   }
 
-  async runtimeError(): Promise<void> {
-    return this.diverse.runtimeError();
+  async runtimeError(message: string): Promise<void> {
+    return this.diverse.runtimeError(message);
   }
 
   async runtimeStats(): Promise<void> {
     return this.diverse.runtimeStats();
   }
 
-  async setEnv(): Promise<void> {
-    return this.diverse.setEnv();
+  async setEnv(variable: string, value: string): Promise<void> {
+    return this.diverse.setEnv(variable, value);
   }
 
-  async systemProperty(): Promise<void> {
-    return this.diverse.systemProperty();
+  async systemProperty(property: string): Promise<void> {
+    return this.diverse.systemProperty(property);
   }
 
   // MATHS
-  async abs(number: number): Promise<number> {
-    return this.maths.abs(number);
+  async abs(value: number): Promise<number> {
+    return this.maths.abs(value);
   }
 
-  async acos(number): Promise<number> {
-    return this.maths.acos(number);
+  async acos(value: number): Promise<number> {
+    return this.maths.acos(value);
   }
 
-  async asin(value): Promise<number> {
+  async asin(value: number): Promise<number> {
     return this.maths.asin(value);
   }
 
-  async atan(value): Promise<number> {
+  async atan(value: number): Promise<number> {
     return this.maths.atan(value);
   }
 
-  async atan2(y, x): Promise<number> {
+  async atan2(y: number, x: number): Promise<number> {
     return this.maths.atan2(y, x);
   }
 
-  async bin(value): Promise<string> {
+  async bin(value: number): Promise<string> {
     return this.maths.bin(value);
   }
 
-  async ceil(value): Promise<number> {
+  async ceil(value: number): Promise<number> {
     return this.maths.ceil(value);
   }
 
-  async cos(value): Promise<number> {
+  async cos(value: number): Promise<number> {
     return this.maths.cos(value);
   }
 
-  async exp(value): Promise<number> {
+  async exp(value: number): Promise<number> {
     return this.maths.exp(value);
   }
 
-  async float(value): Promise<number> {
+  async float(value: number | string): Promise<number> {
     return this.maths.float(value);
   }
 
-  async floor(value): Promise<number> {
+  async floor(value: number): Promise<number> {
     return this.maths.floor(value);
   }
 
-  async hex(value): Promise<string> {
+  async hex(value: number | string): Promise<string> {
     return this.maths.hex(value);
   }
 
-  async int(value): Promise<number> {
+  async int(value: number | string): Promise<number> {
     return this.maths.int(value);
   }
 
-  async log(value): Promise<number> {
+  async log(value: number): Promise<number> {
     return this.maths.log(value);
   }
 
-  async log10(value): Promise<number> {
+  async log10(value: number): Promise<number> {
     return this.maths.log10(value);
   }
 
@@ -111,31 +111,19 @@ export class CommandsBasicsService {
     return this.maths.pi();
   }
 
-  async sar(number, bits): Promise<number> {
-    return this.maths.sar(number, bits);
-  }
-
-  async sgn(value): Promise<number> {
+  async sgn(value: number): Promise<number> {
     return this.maths.sgn(value);
   }
 
-  async shl(number, bits): Promise<number> {
-    return this.maths.shl(number, bits);
-  }
-
-  async shr(number, bits): Promise<number> {
-    return this.maths.shr(number, bits);
-  }
-
-  async sin(value): Promise<number> {
+  async sin(value: number): Promise<number> {
     return this.maths.sin(value);
   }
 
-  async sqr(value): Promise<number> {
+  async sqr(value: number): Promise<number> {
     return this.maths.sqr(value);
   }
 
-  async tan(value): Promise<number> {
+  async tan(value: number): Promise<number> {
     return this.maths.tan(value);
   }
 
@@ -257,7 +245,7 @@ export class CommandsBasicsService {
     return this.timeRandom.timerTicks();
   }
 
-  async waitTimer(): Promise<void> {
-    return this.timeRandom.waitTimer();
+  async waitTimer(timer: any): Promise<void> {
+    return this.timeRandom.waitTimer(timer);
   }
 }

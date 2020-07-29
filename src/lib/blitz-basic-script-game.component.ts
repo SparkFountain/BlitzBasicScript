@@ -183,9 +183,10 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
 
     // lex, parse and initialize abstract syntax
     const tokens: LexerToken[][] = this.lexer.lexCode(this.code);
+    console.info('')
     const abstractSyntax: AbstractSyntax = this.parser.createAbstractSyntax(tokens);
-    this.interpreter.initializeAbstractSyntax(abstractSyntax);
-    this.interpreter.run();
+    // this.interpreter.initializeAbstractSyntax(abstractSyntax);
+    // this.interpreter.run();
   }
 
   debug(): void {

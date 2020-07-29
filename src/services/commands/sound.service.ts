@@ -13,49 +13,49 @@ export class CommandsSoundService {
   ) {}
 
   // 3D SOUND
-  async createListener() {
+  async createListener(): Promise<any> {
     return this.sound3dService.createListener();
   }
 
-  async emitSound() {
+  async emitSound(): Promise<any> {
     return this.sound3dService.emitSound();
   }
 
-  async load3DSound() {
+  async load3DSound(): Promise<any> {
     return this.sound3dService.load3DSound();
   }
 
   // CHANNELS
-  async channelPan() {
+  async channelPan(): Promise<any> {
     return this.channelService.channelPan();
   }
 
-  async channelPitch() {
+  async channelPitch(): Promise<any> {
     return this.channelService.channelPitch();
   }
 
-  async channelPlaying() {
+  async channelPlaying(): Promise<any> {
     return this.channelService.channelPlaying();
   }
 
-  async channelVolume() {
+  async channelVolume(): Promise<any> {
     return this.channelService.channelVolume();
   }
 
-  async pauseChannel() {
+  async pauseChannel(): Promise<any> {
     return this.channelService.pauseChannel();
   }
 
-  async resumeChannel() {
+  async resumeChannel(): Promise<any> {
     return this.channelService.resumeChannel();
   }
 
-  async stopChannel() {
+  async stopChannel(): Promise<any> {
     return this.channelService.stopChannel();
   }
 
   // MUSIC SAMPLES
-  async playCDTrack() {
+  async playCDTrack(): Promise<any> {
     return this.musicSamplesService.playCDTrack();
   }
 

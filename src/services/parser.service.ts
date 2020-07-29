@@ -171,6 +171,9 @@ export class ParserService {
   // [Sar]: [NumExpr] Shl [NumExpr]
   // [Sar]: [NumExpr] Shr [NumExpr]
   createAbstractSyntax(lexerCode: Array<LexerToken[]>): AbstractSyntax {
+    console.warn('[PARSER] Must be refactored before next usage!');
+    return null;
+
     // initialize abstract syntax object
     this.abstractSyntax = {
       globals: [],
@@ -289,7 +292,7 @@ export class ParserService {
     let params: { name: string; optional: boolean }[] = cmdFromJson.params;
     let minParams: number = 0;
     const maxParams: number = params.length;
-    params.forEach((param) => {
+    params.forEach(param => {
       if (!param.optional) {
         minParams++;
       }
@@ -300,7 +303,7 @@ export class ParserService {
     if (commandParams >= minParams && commandParams <= maxParams) {
       reducedTokens.shift(); // remove command itself
       const finalParams: any[] = [];
-      reducedTokens.forEach((t) => {
+      reducedTokens.forEach(t => {
         if (t.which === LexerTokenCategory.VARIABLE) {
           finalParams.push(this.gameState.getGlobal(t.value as string)); // this function must NOT be called here!
         } else if ([LexerTokenCategory.INTEGER, LexerTokenCategory.FLOAT].indexOf(t.which) > -1) {
@@ -312,7 +315,7 @@ export class ParserService {
       });
 
       // push new statement to game code
-      const cmdCall = (firstToken.value as string).replace(/^\w/, (c) => c.toLowerCase());
+      const cmdCall = (firstToken.value as string).replace(/^\w/, c => c.toLowerCase());
       // console.info(`${cmdFromJson.category} ${cmdCall}`);
       if (withReturn) {
         return {
@@ -550,7 +553,7 @@ export class ParserService {
             break;
           case LexerTokenCategory.INDIVIDUAL:
             let hasAssignment = false;
-            tokens.forEach((token) => {
+            tokens.forEach(token => {
               if (token.which === LexerTokenCategory.ASSIGNMENT) {
                 hasAssignment = true;
               }
@@ -796,7 +799,7 @@ export class ParserService {
   // this will only take strings containing * operator [ no + ]
   parseMultiplicationSeparatedExpression(expression: string): number {
     const numbersString: string[] = this.split(expression, '*');
-    const numbers: number[] = numbersString.map((noStr) => {
+    const numbers: number[] = numbersString.map(noStr => {
       if (noStr[0] == '(') {
         const expr = noStr.substr(1, noStr.length - 2);
         // recursive call to the main function
@@ -828,7 +831,7 @@ export class ParserService {
   parseMinusSeparatedExpression(expression: string): number {
     const numbersString: string[] = this.split(expression, '-');
     console.info('Numbers String (minus):', numbersString);
-    const numbers: number[] = numbersString.map((noStr) => this.parseMultiplicationSeparatedExpression(noStr));
+    const numbers: number[] = numbersString.map(noStr => this.parseMultiplicationSeparatedExpression(noStr));
     console.info('Numbers (minus):', numbers);
     const initialValue: number = numbers[0];
     const result: number = numbers.slice(1).reduce((acc, no) => acc - no, initialValue);
@@ -849,7 +852,7 @@ export class ParserService {
   parsePlusSeparatedExpression(expression: string): number {
     const numbersString: string[] = this.split(expression, '+');
     console.info('Numbers string:', numbersString);
-    const numbers: number[] = numbersString.map((noStr) => this.parseMinusSeparatedExpression(noStr));
+    const numbers: number[] = numbersString.map(noStr => this.parseMinusSeparatedExpression(noStr));
     console.info('Numbers:', numbers);
     const initialValue: number = 0.0;
     const result: number = numbers.reduce((acc, no) => acc + no, initialValue);

@@ -12,87 +12,87 @@ export class CommandsIOService {
   ) {}
 
   // GAMEPAD
-  async flushJoy() {
+  async flushJoy(): Promise<any> {
     return this.gamepadService.flushJoy();
   }
 
-  async getJoy() {
+  async getJoy(): Promise<any> {
     return this.gamepadService.getJoy();
   }
 
-  async joyDown() {
+  async joyDown(): Promise<any> {
     return this.gamepadService.joyDown();
   }
 
-  async joyHat() {
+  async joyHat(): Promise<any> {
     return this.gamepadService.joyHat();
   }
 
-  async joyHit() {
+  async joyHit(): Promise<any> {
     return this.gamepadService.joyHit();
   }
 
-  async joyPitch() {
+  async joyPitch(): Promise<any> {
     return this.gamepadService.joyPitch();
   }
 
-  async joyRoll() {
+  async joyRoll(): Promise<any> {
     return this.gamepadService.joyRoll();
   }
 
-  async joyType() {
+  async joyType(): Promise<any> {
     return this.gamepadService.joyType();
   }
 
-  async joyU() {
+  async joyU(): Promise<any> {
     return this.gamepadService.joyU();
   }
 
-  async joyUDir() {
+  async joyUDir(): Promise<any> {
     return this.gamepadService.joyUDir();
   }
 
-  async joyV() {
+  async joyV(): Promise<any> {
     return this.gamepadService.joyV();
   }
 
-  async joyVDir() {
+  async joyVDir(): Promise<any> {
     return this.gamepadService.joyVDir();
   }
 
-  async joyWait() {
+  async joyWait(): Promise<any> {
     return this.gamepadService.joyWait();
   }
 
-  async joyX() {
+  async joyX(): Promise<any> {
     return this.gamepadService.joyX();
   }
 
-  async joyXDir() {
+  async joyXDir(): Promise<any> {
     return this.gamepadService.joyXDir();
   }
 
-  async joyY() {
+  async joyY(): Promise<any> {
     return this.gamepadService.joyY();
   }
 
-  async joyYaw() {
+  async joyYaw(): Promise<any> {
     return this.gamepadService.joyYaw();
   }
 
-  async joyYDir() {
+  async joyYDir(): Promise<any> {
     return this.gamepadService.joyYDir();
   }
 
-  async joyZ() {
+  async joyZ(): Promise<any> {
     return this.gamepadService.joyZ();
   }
 
-  async joyZDir() {
+  async joyZDir(): Promise<any> {
     return this.gamepadService.joyZDir();
   }
 
-  async waitJoy() {
+  async waitJoy(): Promise<any> {
     return this.gamepadService.waitJoy();
   }
 
@@ -130,7 +130,7 @@ export class CommandsIOService {
     return this.mouseService.flushMouse();
   }
 
-  async getMouse() {
+  async getMouse(): Promise<any> {
     return this.mouseService.getMouse();
   }
 
@@ -146,43 +146,43 @@ export class CommandsIOService {
     return this.mouseService.mouseHit(code);
   }
 
-  async mouseWait() {
+  async mouseWait(): Promise<any> {
     return this.mouseService.mouseWait();
   }
 
-  async mouseX() {
+  async mouseX(): Promise<any> {
     return this.mouseService.mouseX();
   }
 
-  async mouseXSpeed() {
+  async mouseXSpeed(): Promise<any> {
     return this.mouseService.mouseXSpeed();
   }
 
-  async mouseY() {
+  async mouseY(): Promise<any> {
     return this.mouseService.mouseY();
   }
 
-  async mouseYSpeed() {
+  async mouseYSpeed(): Promise<any> {
     return this.mouseService.mouseYSpeed();
   }
 
-  async mouseZ() {
+  async mouseZ(): Promise<any> {
     return this.mouseService.mouseZ();
   }
 
-  async mouseZSpeed() {
+  async mouseZSpeed(): Promise<any> {
     return this.mouseService.mouseZSpeed();
   }
 
-  async moveMouse() {
+  async moveMouse(): Promise<any> {
     return this.mouseService.moveMouse();
   }
 
-  async showPointer() {
+  async showPointer(): Promise<any> {
     return this.mouseService.showPointer();
   }
 
-  async waitMouse() {
+  async waitMouse(): Promise<any> {
     return this.mouseService.waitMouse();
   }
 }

@@ -74,131 +74,131 @@ export class CommandsDataService {
   }
 
   // FILE SYSTEM
-  async changeDir(): Promise<any> {
-    return this.fileSystem.changeDir();
+  async changeDir(path: string): Promise<any> {
+    return this.fileSystem.changeDir(path);
   }
 
-  async closeDir(): Promise<any> {
-    return this.fileSystem.closeDir();
+  async closeDir(directory: any): Promise<any> {
+    return this.fileSystem.closeDir(directory);
   }
 
-  async closeFile(): Promise<any> {
-    return this.fileSystem.closeFile();
+  async closeFile(stream: any): Promise<any> {
+    return this.fileSystem.closeFile(stream);
   }
 
-  async copyFile(): Promise<any> {
-    return this.fileSystem.copyFile();
+  async copyFile(source: string, target: string): Promise<any> {
+    return this.fileSystem.copyFile(source, target);
   }
 
-  async createDir(): Promise<any> {
-    return this.fileSystem.createDir();
+  async createDir(path: string): Promise<any> {
+    return this.fileSystem.createDir(path);
   }
 
-  async currentDir(): Promise<any> {
+  async currentDir(): Promise<string> {
     return this.fileSystem.currentDir();
   }
 
-  async deleteDir(): Promise<any> {
-    return this.fileSystem.deleteDir();
+  async deleteDir(path: string): Promise<any> {
+    return this.fileSystem.deleteDir(path);
   }
 
-  async deleteFile(): Promise<any> {
-    return this.fileSystem.deleteFile();
+  async deleteFile(path: string): Promise<any> {
+    return this.fileSystem.deleteFile(path);
   }
 
-  async eof(): Promise<any> {
-    return this.fileSystem.eof();
+  async eof(stream: any): Promise<-1 | 0 | 1> {
+    return this.fileSystem.eof(stream);
   }
 
-  async filePos(): Promise<any> {
-    return this.fileSystem.filePos();
+  async filePos(stream: any): Promise<number> {
+    return this.fileSystem.filePos(stream);
   }
 
-  async fileSize(): Promise<any> {
-    return this.fileSystem.fileSize();
+  async fileSize(path: string): Promise<number> {
+    return this.fileSystem.fileSize(path);
   }
 
-  async fileType(): Promise<any> {
-    return this.fileSystem.fileType();
+  async fileType(path: string): Promise<0 | 1 | 2> {
+    return this.fileSystem.fileType(path);
   }
 
-  async moreFiles(): Promise<any> {
-    return this.fileSystem.moreFiles();
+  async moreFiles(path: string): Promise<0 | 1> {
+    return this.fileSystem.moreFiles(path);
   }
 
-  async nextFile(): Promise<any> {
-    return this.fileSystem.nextFile();
+  async nextFile(path: string): Promise<string> {
+    return this.fileSystem.nextFile(path);
   }
 
-  async openFile(): Promise<any> {
-    return this.fileSystem.openFile();
+  async openFile(path: string): Promise<any> {
+    return this.fileSystem.openFile(path);
   }
 
-  async readAvail(): Promise<any> {
-    return this.fileSystem.readAvail();
+  async readAvail(stream: any): Promise<number> {
+    return this.fileSystem.readAvail(stream);
   }
 
-  async readByte(): Promise<any> {
-    return this.fileSystem.readByte();
+  async readByte(stream: any): Promise<number> {
+    return this.fileSystem.readByte(stream);
   }
 
-  async readDir(): Promise<any> {
-    return this.fileSystem.readDir();
+  async readDir(path: string): Promise<any> {
+    return this.fileSystem.readDir(path);
   }
 
-  async readFile(): Promise<any> {
-    return this.fileSystem.readFile();
+  async readFile(path: string): Promise<any> {
+    return this.fileSystem.readFile(path);
   }
 
-  async readFloat(): Promise<any> {
-    return this.fileSystem.readFloat();
+  async readFloat(stream: any): Promise<any> {
+    return this.fileSystem.readFloat(stream);
   }
 
-  async readInt(): Promise<any> {
-    return this.fileSystem.readInt();
+  async readInt(stream: any): Promise<any> {
+    return this.fileSystem.readInt(stream);
   }
 
-  async readLine(): Promise<any> {
-    return this.fileSystem.readLine();
+  async readLine(stream: any): Promise<any> {
+    return this.fileSystem.readLine(stream);
   }
 
-  async readShort(): Promise<any> {
-    return this.fileSystem.readShort();
+  async readShort(stream: any): Promise<any> {
+    return this.fileSystem.readShort(stream);
   }
 
-  async readString(): Promise<any> {
-    return this.fileSystem.readString();
+  async readString(stream: any): Promise<any> {
+    return this.fileSystem.readString(stream);
   }
 
-  async seekFile(): Promise<any> {
-    return this.fileSystem.seekFile();
+  async seekFile(stream: any, position: number): Promise<number> {
+    return this.fileSystem.seekFile(stream, position);
   }
 
-  async writeByte(): Promise<any> {
-    return this.fileSystem.writeByte();
+  async writeByte(stream: any, value: number): Promise<any> {
+    return this.fileSystem.writeByte(stream, value);
   }
 
-  async writeFile(): Promise<any> {
-    return this.fileSystem.writeFile();
+  async writeFile(stream: any): Promise<any> {
+    return this.fileSystem.writeFile(stream);
   }
 
-  async writeFloat(): Promise<any> {
-    return this.fileSystem.writeFloat();
+  async writeFloat(stream: any, value: number): Promise<any> {
+    return this.fileSystem.writeFloat(stream, value);
   }
 
-  async writeInt(): Promise<any> {
-    return this.fileSystem.writeInt();
+  async writeInt(stream: any, value: number): Promise<any> {
+    return this.fileSystem.writeInt(stream, value);
   }
 
-  async writeLine(): Promise<any> {
-    return this.fileSystem.writeLine();
+  async writeLine(stream: any, value: number): Promise<any> {
+    return this.fileSystem.writeLine(stream, value);
   }
 
-  async writeShort(): Promise<any> {
-    return this.fileSystem.writeShort();
+  async writeShort(stream: any, value: number): Promise<any> {
+    return this.fileSystem.writeShort(stream, value);
   }
 
-  async writeString(): Promise<any> {
-    return this.fileSystem.writeString();
+  async writeString(stream: any, value: number): Promise<any> {
+    return this.fileSystem.writeString(stream, value);
   }
 }
