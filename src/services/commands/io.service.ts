@@ -1,7 +1,7 @@
-import { Injectable } from '@angular/core';
-import { CommandsIOGamepadService } from './io/gamepad.service';
-import { CommandsIOKeyboardService } from './io/keyboard.service';
-import { CommandsIOMouseService } from './io/mouse.service';
+import { Injectable } from "@angular/core";
+import { CommandsIOGamepadService } from "./io/gamepad.service";
+import { CommandsIOKeyboardService } from "./io/keyboard.service";
+import { CommandsIOMouseService } from "./io/mouse.service";
 
 @Injectable()
 export class CommandsIOService {
@@ -12,88 +12,88 @@ export class CommandsIOService {
   ) {}
 
   // GAMEPAD
-  async flushJoy(): Promise<any> {
+  async flushJoy(): Promise<void> {
     return this.gamepadService.flushJoy();
   }
 
-  async getJoy(): Promise<any> {
-    return this.gamepadService.getJoy();
+  async getJoy(port?: number): Promise<number> {
+    return this.gamepadService.getJoy(port);
   }
 
-  async joyDown(): Promise<any> {
-    return this.gamepadService.joyDown();
+  async joyDown(button: any, port?: number): Promise<boolean> {
+    return this.gamepadService.joyDown(button, port);
   }
 
-  async joyHat(): Promise<any> {
-    return this.gamepadService.joyHat();
+  async joyHat(port?: number): Promise<number> {
+    return this.gamepadService.joyHat(port);
   }
 
-  async joyHit(): Promise<any> {
-    return this.gamepadService.joyHit();
+  async joyHit(button: any, port?: number): Promise<number> {
+    return this.gamepadService.joyHit(button, port);
   }
 
-  async joyPitch(): Promise<any> {
-    return this.gamepadService.joyPitch();
+  async joyPitch(port?: number): Promise<number> {
+    return this.gamepadService.joyPitch(port);
   }
 
-  async joyRoll(): Promise<any> {
-    return this.gamepadService.joyRoll();
+  async joyRoll(port?: number): Promise<number> {
+    return this.gamepadService.joyRoll(port);
   }
 
-  async joyType(): Promise<any> {
-    return this.gamepadService.joyType();
+  async joyType(port?: number): Promise<0 | 1 | 2> {
+    return this.gamepadService.joyType(port);
   }
 
-  async joyU(): Promise<any> {
-    return this.gamepadService.joyU();
+  async joyU(port?: number): Promise<number> {
+    return this.gamepadService.joyU(port);
   }
 
-  async joyUDir(): Promise<any> {
-    return this.gamepadService.joyUDir();
+  async joyUDir(port?: number): Promise<number> {
+    return this.gamepadService.joyUDir(port);
   }
 
-  async joyV(): Promise<any> {
-    return this.gamepadService.joyV();
+  async joyV(port?: number): Promise<number> {
+    return this.gamepadService.joyV(port);
   }
 
-  async joyVDir(): Promise<any> {
-    return this.gamepadService.joyVDir();
+  async joyVDir(port?: number): Promise<number> {
+    return this.gamepadService.joyVDir(port);
   }
 
-  async joyWait(): Promise<any> {
-    return this.gamepadService.joyWait();
+  async joyWait(port?: number): Promise<number> {
+    return this.gamepadService.joyWait(port);
   }
 
-  async joyX(): Promise<any> {
-    return this.gamepadService.joyX();
+  async joyX(port?: number): Promise<number> {
+    return this.gamepadService.joyX(port);
   }
 
-  async joyXDir(): Promise<any> {
-    return this.gamepadService.joyXDir();
+  async joyXDir(port?: number): Promise<number> {
+    return this.gamepadService.joyXDir(port);
   }
 
-  async joyY(): Promise<any> {
-    return this.gamepadService.joyY();
+  async joyY(port?: number): Promise<number> {
+    return this.gamepadService.joyY(port);
   }
 
-  async joyYaw(): Promise<any> {
-    return this.gamepadService.joyYaw();
+  async joyYaw(port?: number): Promise<any> {
+    return this.gamepadService.joyYaw(port);
   }
 
-  async joyYDir(): Promise<any> {
-    return this.gamepadService.joyYDir();
+  async joyYDir(port?: number): Promise<number> {
+    return this.gamepadService.joyYDir(port);
   }
 
-  async joyZ(): Promise<any> {
-    return this.gamepadService.joyZ();
+  async joyZ(port?: number): Promise<number> {
+    return this.gamepadService.joyZ(port);
   }
 
-  async joyZDir(): Promise<any> {
-    return this.gamepadService.joyZDir();
+  async joyZDir(port?: number): Promise<number> {
+    return this.gamepadService.joyZDir(port);
   }
 
-  async waitJoy(): Promise<any> {
-    return this.gamepadService.waitJoy();
+  async waitJoy(port?: number): Promise<number> {
+    return this.gamepadService.waitJoy(port);
   }
 
   // KEYBOARD
