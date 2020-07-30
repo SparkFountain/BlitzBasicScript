@@ -1,22 +1,37 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
+import { BbScriptHtmlView } from "bbscript/src/classes/in-game/gui/html-view";
+import { BbScriptHtmlViewLoadingState } from "bbscript/src/enums/gui/html-view/loading-state";
 
 @Injectable()
 export class CommandsGuiHtmlService {
   constructor() {}
 
-  async createHtmlView() {}
+  async createHtmlView(): Promise<BbScriptHtmlView> {
+    return null;
+  }
 
-  async htmlViewBack() {}
+  async htmlViewBack(htmlView: BbScriptHtmlView): Promise<void> {}
 
-  async htmlViewCurrentUrl() {}
+  async htmlViewCurrentUrl(htmlView: BbScriptHtmlView): Promise<string> {
+    return "";
+  }
 
-  async htmlViewEventUrl() {}
+  async htmlViewEventUrl(htmlView: BbScriptHtmlView): Promise<string> {
+    return "";
+  }
 
-  async htmlViewForward() {}
+  async htmlViewForward(htmlView: BbScriptHtmlView): Promise<void> {}
 
-  async htmlViewGo() {}
+  async htmlViewGo(htmlView: BbScriptHtmlView, url: string): Promise<void> {}
 
-  async htmlViewRun() {}
+  async htmlViewRun(
+    htmlView: BbScriptHtmlView,
+    code: string[]
+  ): Promise<void> {}
 
-  async htmlViewStatus() {}
+  async htmlViewStatus(
+    htmlView: BbScriptHtmlView
+  ): Promise<BbScriptHtmlViewLoadingState> {
+    return null;
+  }
 }

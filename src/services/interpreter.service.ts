@@ -1,32 +1,32 @@
-import { Injectable } from '@angular/core';
-import { CommandsBasicsService } from './commands/basics.service';
-import { CommandsDataService } from './commands/data.service';
-import { CommandsGraphics2DService } from './commands/graphics2d.service';
-import { CommandsGraphics3DService } from './commands/graphics3d.service';
-import { CommandsGUIService } from './commands/gui.service';
-import { CommandsIOService } from './commands/io.service';
-import { CommandsSoundService } from './commands/sound.service';
-import { Expression } from '../types/expression';
-import { NumericExpression } from '../classes/expressions/numerical-expression';
-import { BooleanExpression } from '../classes/expressions/boolean-expression';
-import { StringExpression } from '../classes/expressions/string-expression';
-import { Assignment } from '../classes/assignment';
-import { GameStateService } from './game-state.service';
-import { CommandStatement } from '../classes/command-statement';
-import { VariableExpression } from '../classes/expressions/variable-expression';
-import { ArithmeticExpression } from '../classes/expressions/arithmetic-expression';
-import { Term } from '../types/arithmetic-term';
-import { IfBlock } from '../classes/conditions/if-block';
-import { SelectBlock } from '../classes/conditions/select-block';
-import { ForToLoop } from '../classes/loops/for-to-loop';
-import { RepeatLoop } from '../classes/loops/repeat-loop';
-import { WhileLoop } from '../classes/loops/while-loop';
-import { LogicalExpression } from '../classes/expressions/logical-expression';
-import { AbstractSyntax } from '../interfaces/abstract-syntax';
-import { CodeBlock } from '../interfaces/code/block';
+import { Injectable } from "@angular/core";
+import { CommandsBasicsService } from "./commands/basics.service";
+import { CommandsDataService } from "./commands/data.service";
+import { CommandsGraphics2DService } from "./commands/graphics2d.service";
+import { CommandsGraphics3DService } from "./commands/graphics3d.service";
+import { CommandsGUIService } from "./commands/gui.service";
+import { CommandsIOService } from "./commands/io.service";
+import { CommandsSoundService } from "./commands/sound.service";
+import { Expression } from "../types/expression";
+import { NumericExpression } from "../classes/expressions/numerical-expression";
+import { BooleanExpression } from "../classes/expressions/boolean-expression";
+import { StringExpression } from "../classes/expressions/string-expression";
+import { Assignment } from "../classes/assignment";
+import { GameStateService } from "./game-state.service";
+import { CommandStatement } from "../classes/command-statement";
+import { VariableExpression } from "../classes/expressions/variable-expression";
+import { ArithmeticExpression } from "../classes/expressions/arithmetic-expression";
+import { Term } from "../types/arithmetic-term";
+import { IfBlock } from "../classes/conditions/if-block";
+import { SelectBlock } from "../classes/conditions/select-block";
+import { ForToLoop } from "../classes/loops/for-to-loop";
+import { RepeatLoop } from "../classes/loops/repeat-loop";
+import { WhileLoop } from "../classes/loops/while-loop";
+import { LogicalExpression } from "../classes/expressions/logical-expression";
+import { AbstractSyntax } from "../interfaces/abstract-syntax";
+import { CodeBlock } from "../interfaces/code/block";
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: "root",
 })
 export class InterpreterService {
   private abstractSyntax: AbstractSyntax;
@@ -47,7 +47,7 @@ export class InterpreterService {
 
   public initializeAbstractSyntax(abstractSyntax: AbstractSyntax): void {
     this.abstractSyntax = abstractSyntax;
-    console.info('Abstract Syntax:', abstractSyntax);
+    console.info("Abstract Syntax:", abstractSyntax);
   }
 
   public async run(): Promise<void> {
@@ -57,35 +57,35 @@ export class InterpreterService {
   }
 
   public async interpreteCodeBlock(codeBlock: CodeBlock): Promise<void> {
-    console.info('Interpreting Code Block', codeBlock);
+    console.info("Interpreting Code Block", codeBlock);
 
     switch (codeBlock.constructor.name) {
-      case 'Assignment':
+      case "Assignment":
         await this.assign(codeBlock as Assignment);
         break;
-      case 'CommandStatement':
+      case "CommandStatement":
         await this.executeCommand(codeBlock as CommandStatement);
         break;
-      case 'ConstStatement':
+      case "ConstStatement":
         break;
-      case 'ExpressionStatement':
+      case "ExpressionStatement":
         break;
-      case 'IfThenElse':
+      case "IfThenElse":
         break;
-      case 'SelectCase':
+      case "SelectCase":
         break;
-      case 'ForToNext':
+      case "ForToNext":
         break;
-      case 'WhileWend':
+      case "WhileWend":
         this.whileLoop(codeBlock as WhileLoop);
         break;
-      case 'RepeatUntil':
+      case "RepeatUntil":
         break;
-      case 'Include':
+      case "Include":
         break;
-      case 'Include':
+      case "Include":
         break;
-      case 'DataBlock':
+      case "DataBlock":
         break;
     }
   }
@@ -94,142 +94,150 @@ export class InterpreterService {
     // console.info('EXECUTE COMMAND', command);
 
     const expressionsToEvaluate: Promise<any>[] = [];
-    command.params.forEach((p: Expression) => expressionsToEvaluate.push(this.evaluateExpression(p)));
+    command.params.forEach((p: Expression) =>
+      expressionsToEvaluate.push(this.evaluateExpression(p))
+    );
     const evaluatedParams: any[] = await Promise.all(expressionsToEvaluate);
     // console.info('Evaluated Params:', evaluatedParams);
 
     const cmdLower: string = command.name.toLowerCase();
     switch (cmdLower) {
       // BASICS - DIVERSE
-      case 'apptitle':
+      case "apptitle":
         return this.basics.appTitle(evaluatedParams[0]);
-      case 'commandline':
+      case "commandline":
         return this.basics.commandLine();
-      case 'debuglog':
+      case "debuglog":
         return this.basics.debugLog(evaluatedParams[0]);
-      case 'getenv':
-        return this.basics.getEnv();
-      case 'runtimeerror':
-        return this.basics.runtimeError();
-      case 'runtimestats':
+      case "getenv":
+        return this.basics.getEnv(evaluatedParams[0]);
+      case "runtimeerror":
+        return this.basics.runtimeError(evaluatedParams[0]);
+      case "runtimestats":
         return this.basics.runtimeStats();
-      case 'setenv':
-        return this.basics.setEnv();
-      case 'systemproperty':
-        return this.basics.systemProperty();
+      case "setenv":
+        return this.basics.setEnv(evaluatedParams[0], evaluatedParams[1]);
+      case "systemproperty":
+        return this.basics.systemProperty(evaluatedParams[0]);
       // BASICS - MATHS
-      case 'abs':
+      case "abs":
         return this.basics.abs(evaluatedParams[0]);
-      case 'acos':
+      case "acos":
         return this.basics.acos(evaluatedParams[0]);
-      case 'asin':
+      case "asin":
         return this.basics.asin(evaluatedParams[0]);
-      case 'atan':
+      case "atan":
         return this.basics.atan(evaluatedParams[0]);
-      case 'atan2':
+      case "atan2":
         return this.basics.atan2(evaluatedParams[0], evaluatedParams[1]);
-      case 'bin':
+      case "bin":
         return this.basics.bin(evaluatedParams[0]);
-      case 'ceil':
+      case "ceil":
         return this.basics.ceil(evaluatedParams[0]);
-      case 'cos':
+      case "cos":
         return this.basics.cos(evaluatedParams[0]);
-      case 'exp':
+      case "exp":
         return this.basics.exp(evaluatedParams[0]);
-      case 'float':
+      case "float":
         return this.basics.float(evaluatedParams[0]);
-      case 'floor':
+      case "floor":
         return this.basics.floor(evaluatedParams[0]);
-      case 'hex':
+      case "hex":
         return this.basics.hex(evaluatedParams[0]);
-      case 'int':
+      case "int":
         return this.basics.int(evaluatedParams[0]);
-      case 'log':
+      case "log":
         return this.basics.log(evaluatedParams[0]);
-      case 'log10':
+      case "log10":
         return this.basics.log10(evaluatedParams[0]);
-      case 'pi':
+      case "pi":
         return this.basics.pi();
-      case 'sar':
-        return this.basics.sar(evaluatedParams[0], evaluatedParams[1]);
-      case 'sgn':
+      case "sgn":
         return this.basics.sgn(evaluatedParams[0]);
-      case 'shl':
-        return this.basics.shl(evaluatedParams[0], evaluatedParams[1]);
-      case 'shr':
-        return this.basics.shr(evaluatedParams[0], evaluatedParams[1]);
-      case 'sin':
+      case "sin":
         return this.basics.sin(evaluatedParams[0]);
-      case 'sqr':
+      case "sqr":
         return this.basics.sqr(evaluatedParams[0]);
-      case 'tan':
+      case "tan":
         return this.basics.tan(evaluatedParams[0]);
       // BASICS - STRINGS
-      case 'asc':
+      case "asc":
         return this.basics.asc(evaluatedParams[0]);
-      case 'chr':
+      case "chr":
         return this.basics.chr(evaluatedParams[0]);
-      case 'instr':
-        return this.basics.instr(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'left':
+      case "instr":
+        return this.basics.instr(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "left":
         return this.basics.left(evaluatedParams[0], evaluatedParams[1]);
-      case 'len':
+      case "len":
         return this.basics.len(evaluatedParams[0]);
-      case 'lower':
+      case "lower":
         return this.basics.lower(evaluatedParams[0]);
-      case 'lset':
+      case "lset":
         return this.basics.lset(evaluatedParams[0], evaluatedParams[1]);
-      case 'mid':
-        return this.basics.mid(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'replace':
-        return this.basics.replace(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'right':
+      case "mid":
+        return this.basics.mid(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "replace":
+        return this.basics.replace(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "right":
         return this.basics.right(evaluatedParams[0], evaluatedParams[1]);
-      case 'rset':
+      case "rset":
         return this.basics.rset(evaluatedParams[0], evaluatedParams[1]);
-      case 'str':
+      case "str":
         return this.basics.str(evaluatedParams[0]);
-      case 'string':
+      case "string":
         return this.basics.string(evaluatedParams[0], evaluatedParams[1]);
-      case 'trim':
+      case "trim":
         return this.basics.trim(evaluatedParams[0]);
-      case 'upper':
+      case "upper":
         return this.basics.upper(evaluatedParams[0]);
       // BASICS - TIME AND RANDOM
-      case 'createtimer':
-        return this.basics.createTimer();
-      case 'currentdate':
+      case "createtimer":
+        return this.basics.createTimer(evaluatedParams[0]);
+      case "currentdate":
         return this.basics.currentDate();
-      case 'currenttime':
+      case "currenttime":
         return this.basics.currentTime();
-      case 'delay':
+      case "delay":
         return this.basics.delay(evaluatedParams[0]);
-      case 'freetimer':
-        return this.basics.freeTimer();
-      case 'millisecs':
+      case "freetimer":
+        return this.basics.freeTimer(evaluatedParams[0]);
+      case "millisecs":
         return this.basics.milliSecs();
-      case 'pausetimer':
-        return this.basics.pauseTimer();
-      case 'rand':
+      case "pausetimer":
+        return this.basics.pauseTimer(evaluatedParams[0]);
+      case "rand":
         return this.basics.rand(evaluatedParams[0], evaluatedParams[1]);
-      case 'resettimer':
-        return this.basics.resetTimer();
-      case 'resumetimer':
-        return this.basics.resumeTimer();
-      case 'rnd':
+      case "resettimer":
+        return this.basics.resetTimer(evaluatedParams[0]);
+      case "resumetimer":
+        return this.basics.resumeTimer(evaluatedParams[0]);
+      case "rnd":
         return this.basics.rnd(evaluatedParams[0], evaluatedParams[1]);
-      case 'rndseed':
+      case "rndseed":
         return this.basics.rndSeed();
-      case 'seedrnd':
+      case "seedrnd":
         return this.basics.seedRnd(evaluatedParams[0]);
-      case 'timerticks':
+      case "timerticks":
         return this.basics.timerTicks();
-      case 'waittimer':
-        return this.basics.waitTimer();
+      case "waittimer":
+        return this.basics.waitTimer(evaluatedParams[0]);
       // DATA - BANKS
-      case 'banksize':
+      case "banksize":
         return this.data.bankSize(evaluatedParams[0]);
-      case 'copybank':
+      case "copybank":
         return this.data.copyBank(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -237,124 +245,172 @@ export class InterpreterService {
           evaluatedParams[3],
           evaluatedParams[4]
         );
-      case 'createbank':
+      case "createbank":
         return this.data.createBank(evaluatedParams[0]);
-      case 'freebank':
+      case "freebank":
         return this.data.freeBank(evaluatedParams[0]);
-      case 'peekbyte':
+      case "peekbyte":
         return this.data.peekByte(evaluatedParams[0], evaluatedParams[1]);
-      case 'peekfloat':
+      case "peekfloat":
         return this.data.peekFloat(evaluatedParams[0], evaluatedParams[1]);
-      case 'peekint':
+      case "peekint":
         return this.data.peekInt(evaluatedParams[0], evaluatedParams[1]);
-      case 'peekshort':
+      case "peekshort":
         return this.data.peekShort(evaluatedParams[0], evaluatedParams[1]);
-      case 'pokebyte':
-        return this.data.pokeByte(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'pokefloat':
-        return this.data.pokeFloat(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'pokeint':
-        return this.data.pokeInt(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'pokeshort':
-        return this.data.pokeShort(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'readbytes':
-        return this.data.readBytes(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
-      case 'resizebank':
+      case "pokebyte":
+        return this.data.pokeByte(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "pokefloat":
+        return this.data.pokeFloat(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "pokeint":
+        return this.data.pokeInt(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "pokeshort":
+        return this.data.pokeShort(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "readbytes":
+        return this.data.readBytes(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
+      case "resizebank":
         return this.data.resizeBank(evaluatedParams[0], evaluatedParams[1]);
-      case 'writebytes':
-        return this.data.writeBytes(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      case "writebytes":
+        return this.data.writeBytes(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
       // DATA - FILE SYSTEM
-      case 'changedir':
-        return this.data.changeDir();
-      case 'closedir':
-        return this.data.closeDir();
-      case 'closefile':
-        return this.data.closeFile();
-      case 'copyfile':
-        return this.data.copyFile();
-      case 'createdir':
-        return this.data.createDir();
-      case 'currentdir':
+      case "changedir":
+        return this.data.changeDir(evaluatedParams[0]);
+      case "closedir":
+        return this.data.closeDir(evaluatedParams[0]);
+      case "closefile":
+        return this.data.closeFile(evaluatedParams[0]);
+      case "copyfile":
+        return this.data.copyFile(evaluatedParams[0], evaluatedParams[1]);
+      case "createdir":
+        return this.data.createDir(evaluatedParams[0]);
+      case "currentdir":
         return this.data.currentDir();
-      case 'deletedir':
-        return this.data.deleteDir();
-      case 'deletefile':
-        return this.data.deleteFile();
-      case 'eof':
-        return this.data.eof();
-      case 'filepos':
-        return this.data.filePos();
-      case 'filesize':
-        return this.data.fileSize();
-      case 'filetype':
-        return this.data.fileType();
-      case 'morefiles':
-        return this.data.moreFiles();
-      case 'nextfile':
-        return this.data.nextFile();
-      case 'openfile':
-        return this.data.openFile();
-      case 'readavail':
-        return this.data.readAvail();
-      case 'readbyte':
-        return this.data.readByte();
-      case 'readdir':
-        return this.data.readDir();
-      case 'readfile':
-        return this.data.readFile();
-      case 'readfloat':
-        return this.data.readFloat();
-      case 'readint':
-        return this.data.readInt();
-      case 'readline':
-        return this.data.readLine();
-      case 'readshort':
-        return this.data.readShort();
-      case 'readstring':
-        return this.data.readString();
-      case 'seekfile':
-        return this.data.seekFile();
-      case 'writebyte':
-        return this.data.writeByte();
-      case 'writefile':
-        return this.data.writeFile();
-      case 'writefloat':
-        return this.data.writeFloat();
-      case 'writeint':
-        return this.data.writeInt();
-      case 'writeline':
-        return this.data.writeLine();
-      case 'writeshort':
-        return this.data.writeShort();
-      case 'writestring':
-        return this.data.writeString();
+      case "deletedir":
+        return this.data.deleteDir(evaluatedParams[0]);
+      case "deletefile":
+        return this.data.deleteFile(evaluatedParams[0]);
+      case "eof":
+        return this.data.eof(evaluatedParams[0]);
+      case "filepos":
+        return this.data.filePos(evaluatedParams[0]);
+      case "filesize":
+        return this.data.fileSize(evaluatedParams[0]);
+      case "filetype":
+        return this.data.fileType(evaluatedParams[0]);
+      case "morefiles":
+        return this.data.moreFiles(evaluatedParams[0]);
+      case "nextfile":
+        return this.data.nextFile(evaluatedParams[0]);
+      case "openfile":
+        return this.data.openFile(evaluatedParams[0]);
+      case "readavail":
+        return this.data.readAvail(evaluatedParams[0]);
+      case "readbyte":
+        return this.data.readByte(evaluatedParams[0]);
+      case "readdir":
+        return this.data.readDir(evaluatedParams[0]);
+      case "readfile":
+        return this.data.readFile(evaluatedParams[0]);
+      case "readfloat":
+        return this.data.readFloat(evaluatedParams[0]);
+      case "readint":
+        return this.data.readInt(evaluatedParams[0]);
+      case "readline":
+        return this.data.readLine(evaluatedParams[0]);
+      case "readshort":
+        return this.data.readShort(evaluatedParams[0]);
+      case "readstring":
+        return this.data.readString(evaluatedParams[0]);
+      case "seekfile":
+        return this.data.seekFile(evaluatedParams[0], evaluatedParams[1]);
+      case "writebyte":
+        return this.data.writeByte(evaluatedParams[0], evaluatedParams[1]);
+      case "writefile":
+        return this.data.writeFile(evaluatedParams[0]);
+      case "writefloat":
+        return this.data.writeFloat(evaluatedParams[0], evaluatedParams[1]);
+      case "writeint":
+        return this.data.writeInt(evaluatedParams[0], evaluatedParams[1]);
+      case "writeline":
+        return this.data.writeLine(evaluatedParams[0], evaluatedParams[1]);
+      case "writeshort":
+        return this.data.writeShort(evaluatedParams[0], evaluatedParams[1]);
+      case "writestring":
+        return this.data.writeString(evaluatedParams[0], evaluatedParams[1]);
       // GRAPHICS 2D - DISPLAY
-      case 'endgraphics':
+      case "endgraphics":
         return this.graphics2d.endGraphics();
-      case 'gfxmodedepth':
+      case "gfxmodedepth":
         return this.graphics2d.gfxModeDepth(evaluatedParams[0]);
-      case 'gfxmodeexists':
-        return this.graphics2d.gfxModeExists(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'graphics':
-        return this.graphics2d.graphics(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
-      case 'graphicsdepth':
+      case "gfxmodeexists":
+        return this.graphics2d.gfxModeExists(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "graphics":
+        return this.graphics2d.graphics(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
+      case "graphicsdepth":
         return this.graphics2d.graphicsDepth();
-      case 'graphicsheight':
+      case "graphicsheight":
         return this.graphics2d.graphicsHeight();
-      case 'graphicswidth':
+      case "graphicswidth":
         return this.graphics2d.graphicsWidth();
       // GRAPHICS 2D - GRAPHICS
-      case 'cls':
+      case "cls":
         return this.graphics2d.cls();
-      case 'clscolor':
-        return this.graphics2d.clsColor(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'color':
-        return this.graphics2d.color(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'line':
-        return this.graphics2d.line(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
-      case 'origin':
+      case "clscolor":
+        return this.graphics2d.clsColor(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "color":
+        return this.graphics2d.color(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "line":
+        return this.graphics2d.line(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
+      case "origin":
         return this.graphics2d.origin(evaluatedParams[0], evaluatedParams[1]);
-      case 'oval':
+      case "oval":
         return this.graphics2d.oval(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -362,7 +418,7 @@ export class InterpreterService {
           evaluatedParams[3],
           evaluatedParams[4]
         );
-      case 'rect':
+      case "rect":
         return this.graphics2d.rect(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -370,23 +426,32 @@ export class InterpreterService {
           evaluatedParams[3],
           evaluatedParams[4]
         );
-      case 'viewport':
-        return this.graphics2d.viewport(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      case "viewport":
+        return this.graphics2d.viewport(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
       // GRAPHICS 2D - IMAGES
-      case 'automidhandle':
+      case "automidhandle":
         return this.graphics2d.autoMidHandle(evaluatedParams[0]);
-      case 'copyimage':
+      case "copyimage":
         return this.graphics2d.copyImage(evaluatedParams[0]);
-      case 'createimage':
-        return this.graphics2d.createImage(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'drawblock':
+      case "createimage":
+        return this.graphics2d.createImage(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "drawblock":
         return this.graphics2d.drawBlock(
           evaluatedParams[0],
           evaluatedParams[1],
           evaluatedParams[2],
           evaluatedParams[3]
         );
-      case 'drawblockrect':
+      case "drawblockrect":
         return this.graphics2d.drawBlockRect(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -397,24 +462,28 @@ export class InterpreterService {
           evaluatedParams[6],
           evaluatedParams[7]
         );
-      case 'drawimage':
+      case "drawimage":
         return this.graphics2d.drawImage(
           evaluatedParams[0],
           evaluatedParams[1],
           evaluatedParams[2],
           evaluatedParams[3]
         );
-      case 'drawimagerect':
+      case "drawimagerect":
         return this.graphics2d.drawImageRect();
-      case 'freeimage':
+      case "freeimage":
         return this.graphics2d.freeImage(evaluatedParams[0]);
-      case 'grabimage':
+      case "grabimage":
         return this.graphics2d.grabImage();
-      case 'handleimage':
-        return this.graphics2d.handleImage(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'imageheight':
+      case "handleimage":
+        return this.graphics2d.handleImage(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "imageheight":
         return this.graphics2d.imageHeight(evaluatedParams[0]);
-      case 'imagerectcollide':
+      case "imagerectcollide":
         return this.graphics2d.imageRectCollide(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -425,9 +494,9 @@ export class InterpreterService {
           evaluatedParams[6],
           evaluatedParams[7]
         );
-      case 'imagerectoverlap':
+      case "imagerectoverlap":
         return this.graphics2d.imageRectOverlap();
-      case 'imagescollide':
+      case "imagescollide":
         return this.graphics2d.imagesCollide(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -438,7 +507,7 @@ export class InterpreterService {
           evaluatedParams[6],
           evaluatedParams[7]
         );
-      case 'imagesoverlap':
+      case "imagesoverlap":
         return this.graphics2d.imagesOverlap(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -447,13 +516,13 @@ export class InterpreterService {
           evaluatedParams[4],
           evaluatedParams[5]
         );
-      case 'imagewidth':
+      case "imagewidth":
         return this.graphics2d.imageWidth(evaluatedParams[0]);
-      case 'imagexhandle':
+      case "imagexhandle":
         return this.graphics2d.imageXHandle(evaluatedParams[0]);
-      case 'imageyhandle':
+      case "imageyhandle":
         return this.graphics2d.imageYHandle(evaluatedParams[0]);
-      case 'loadanimimage':
+      case "loadanimimage":
         return this.graphics2d.loadAnimImage(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -461,18 +530,18 @@ export class InterpreterService {
           evaluatedParams[3],
           evaluatedParams[4]
         );
-      case 'loadimage':
+      case "loadimage":
         return this.graphics2d.loadImage(evaluatedParams[0]);
-      case 'maskimage':
+      case "maskimage":
         return this.graphics2d.maskImage(
           evaluatedParams[0],
           evaluatedParams[1],
           evaluatedParams[2],
           evaluatedParams[3]
         );
-      case 'midhandle':
+      case "midhandle":
         return this.graphics2d.midHandle(evaluatedParams[0]);
-      case 'rectsoverlap':
+      case "rectsoverlap":
         return this.graphics2d.rectsOverlap(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -483,27 +552,38 @@ export class InterpreterService {
           evaluatedParams[6],
           evaluatedParams[7]
         );
-      case 'resizeimage':
-        return this.graphics2d.resizeImage(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'rotateimage':
-        return this.graphics2d.rotateImage(evaluatedParams[0], evaluatedParams[1]);
-      case 'saveimage':
+      case "resizeimage":
+        return this.graphics2d.resizeImage(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "rotateimage":
+        return this.graphics2d.rotateImage(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "saveimage":
         return this.graphics2d.saveImage();
-      case 'scaleimage':
-        return this.graphics2d.scaleImage(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'tileblock':
+      case "scaleimage":
+        return this.graphics2d.scaleImage(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "tileblock":
         return this.graphics2d.tileBlock(
           evaluatedParams[0],
           evaluatedParams[1],
           evaluatedParams[2],
           evaluatedParams[3]
         );
-      case 'tileimage':
+      case "tileimage":
         return this.graphics2d.tileImage();
       // GRAPHICS 2D - MOVIES
-      case 'closemovie':
+      case "closemovie":
         return this.graphics2d.closeMovie(evaluatedParams[0]);
-      case 'drawmovie':
+      case "drawmovie":
         return this.graphics2d.drawMovie(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -511,40 +591,40 @@ export class InterpreterService {
           evaluatedParams[3],
           evaluatedParams[4]
         );
-      case 'movieheight':
+      case "movieheight":
         return this.graphics2d.movieHeight(evaluatedParams[0]);
-      case 'movieplaying':
+      case "movieplaying":
         return this.graphics2d.moviePlaying(evaluatedParams[0]);
-      case 'moviewidth':
+      case "moviewidth":
         return this.graphics2d.movieWidth(evaluatedParams[0]);
-      case 'openmovie':
+      case "openmovie":
         return this.graphics2d.openMovie(evaluatedParams[0]);
       // GRAPHICS 2D - PIXEL
-      case 'colorblue':
+      case "colorblue":
         return this.graphics2d.colorBlue();
-      case 'colorgreen':
+      case "colorgreen":
         return this.graphics2d.colorGreen();
-      case 'colorRed':
+      case "colorRed":
         return this.graphics2d.colorRed();
-      case 'plot':
+      case "plot":
         return this.graphics2d.plot(evaluatedParams[0], evaluatedParams[1]);
-      case 'fontascent':
+      case "fontascent":
         return this.graphics2d.fontAscent(evaluatedParams[0]);
-      case 'fontdescent':
+      case "fontdescent":
         return this.graphics2d.fontDescent(evaluatedParams[0]);
-      case 'fontheight':
+      case "fontheight":
         return this.graphics2d.fontHeight(evaluatedParams[0]);
-      case 'fontname':
+      case "fontname":
         return this.graphics2d.fontName(evaluatedParams[0]);
-      case 'fontsize':
+      case "fontsize":
         return this.graphics2d.fontSize(evaluatedParams[0]);
-      case 'fontstyle':
+      case "fontstyle":
         return this.graphics2d.fontStyle(evaluatedParams[0]);
-      case 'fontwidth':
+      case "fontwidth":
         return this.graphics2d.fontWidth(evaluatedParams[0]);
-      case 'freefont':
+      case "freefont":
         return this.graphics2d.freeFont(evaluatedParams[0]);
-      case 'loadfont':
+      case "loadfont":
         return this.graphics2d.loadFont(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -552,17 +632,17 @@ export class InterpreterService {
           evaluatedParams[3],
           evaluatedParams[4]
         );
-      case 'locate':
+      case "locate":
         return this.graphics2d.locate(evaluatedParams[0], evaluatedParams[1]);
-      case 'print':
+      case "print":
         return this.graphics2d.print(evaluatedParams[0]);
-      case 'setfont':
+      case "setfont":
         return this.graphics2d.setFont(evaluatedParams[0]);
-      case 'stringheight':
+      case "stringheight":
         return this.graphics2d.stringHeight(evaluatedParams[0]);
-      case 'stringwidth':
+      case "stringwidth":
         return this.graphics2d.stringWidth(evaluatedParams[0]);
-      case 'text':
+      case "text":
         return this.graphics2d.text(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -570,29 +650,32 @@ export class InterpreterService {
           evaluatedParams[3],
           evaluatedParams[4]
         );
-      case 'write':
+      case "write":
         return this.graphics2d.write(evaluatedParams[0]);
       // GRAPHICS 3D - ANIMATIONS
-      case 'addanimseq':
-        return this.graphics3d.addAnimSeq(evaluatedParams[0], evaluatedParams[1]);
-      case 'animate':
+      case "addanimseq":
+        return this.graphics3d.addAnimSeq(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "animate":
         return this.graphics3d.animate(evaluatedParams[0], evaluatedParams[1]);
-      case 'animating':
+      case "animating":
         return this.graphics3d.animating(evaluatedParams[0]);
-      case 'animlength':
+      case "animlength":
         return this.graphics3d.animLength(evaluatedParams[0]);
-      case 'animseq':
+      case "animseq":
         return this.graphics3d.animSeq(evaluatedParams[0]);
-      case 'animtime':
+      case "animtime":
         return this.graphics3d.animTime(evaluatedParams[0]);
-      case 'extractanimseq':
+      case "extractanimseq":
         return this.graphics3d.extractAnimSeq(
           evaluatedParams[0],
           evaluatedParams[1],
           evaluatedParams[2],
           evaluatedParams[3]
         );
-      case 'setanimkey':
+      case "setanimkey":
         return this.graphics3d.setAnimKey(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -600,84 +683,128 @@ export class InterpreterService {
           evaluatedParams[3],
           evaluatedParams[4]
         );
-      case 'setanimtime':
-        return this.graphics3d.setAnimTime(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case "setanimtime":
+        return this.graphics3d.setAnimTime(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
       // GRAPHICS 3D - BRUSHES
-      case 'brushalpha':
-        return this.graphics3d.brushAlpha(evaluatedParams[0], evaluatedParams[1]);
-      case 'brushblend':
-        return this.graphics3d.brushBlend(evaluatedParams[0], evaluatedParams[1]);
-      case 'brushcolor':
+      case "brushalpha":
+        return this.graphics3d.brushAlpha(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "brushblend":
+        return this.graphics3d.brushBlend(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "brushcolor":
         return this.graphics3d.brushColor(
           evaluatedParams[0],
           evaluatedParams[1],
           evaluatedParams[2],
           evaluatedParams[3]
         );
-      case 'brushfx':
+      case "brushfx":
         return this.graphics3d.brushFx(evaluatedParams[0], evaluatedParams[1]);
-      case 'brushshininess':
-        return this.graphics3d.brushShininess(evaluatedParams[0], evaluatedParams[1]);
-      case 'brushtexture':
+      case "brushshininess":
+        return this.graphics3d.brushShininess(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "brushtexture":
         return this.graphics3d.brushTexture(
           evaluatedParams[0],
           evaluatedParams[1],
           evaluatedParams[2],
           evaluatedParams[3]
         );
-      case 'createbrush':
-        return this.graphics3d.createBrush(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'freebrush':
+      case "createbrush":
+        return this.graphics3d.createBrush(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "freebrush":
         return this.graphics3d.freeBrush(evaluatedParams[0]);
-      case 'freebrush':
-        return this.graphics3d.getBrushTexture(evaluatedParams[0], evaluatedParams[1]);
-      case 'getentitybrush':
+      case "freebrush":
+        return this.graphics3d.getBrushTexture(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "getentitybrush":
         return this.graphics3d.getEntityBrush(evaluatedParams[0]);
-      case 'getsurfacebrush':
+      case "getsurfacebrush":
         return this.graphics3d.getSurfaceBrush(evaluatedParams[0]);
-      case 'loadbrush':
+      case "loadbrush":
         return this.graphics3d.loadBrush(
           evaluatedParams[0],
           evaluatedParams[1],
           evaluatedParams[2],
           evaluatedParams[3]
         );
-      case 'paintentity':
-        return this.graphics3d.paintEntity(evaluatedParams[0], evaluatedParams[1]);
-      case 'paintmesh':
-        return this.graphics3d.paintMesh(evaluatedParams[0], evaluatedParams[1]);
-      case 'paintsurface':
-        return this.graphics3d.paintSurface(evaluatedParams[0], evaluatedParams[1]);
+      case "paintentity":
+        return this.graphics3d.paintEntity(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "paintmesh":
+        return this.graphics3d.paintMesh(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "paintsurface":
+        return this.graphics3d.paintSurface(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
       // GRAPHICS 3D - CAMERA
-      case 'cameraclscolor':
+      case "cameraclscolor":
         return this.graphics3d.cameraClsColor(
           evaluatedParams[0],
           evaluatedParams[1],
           evaluatedParams[2],
           evaluatedParams[3]
         );
-      case 'cameraclsmode':
-        return this.graphics3d.cameraClsMode(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'fogcolor':
-        return this.graphics3d.fogColor(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'fogmode':
+      case "cameraclsmode":
+        return this.graphics3d.cameraClsMode(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "fogcolor":
+        return this.graphics3d.fogColor(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "fogmode":
         return this.graphics3d.fogMode(evaluatedParams[0]);
-      case 'fogrange':
+      case "fogrange":
         return this.graphics3d.fogRange(evaluatedParams[0], evaluatedParams[1]);
-      case 'fogdensity':
+      case "fogdensity":
         return this.graphics3d.fogDensity(evaluatedParams[0]);
-      case 'cameraproject':
+      case "cameraproject":
         return this.graphics3d.cameraProject(
           evaluatedParams[0],
           evaluatedParams[1],
           evaluatedParams[2],
           evaluatedParams[3]
         );
-      case 'cameraprojmode':
-        return this.graphics3d.cameraProjMode(evaluatedParams[0], evaluatedParams[1]);
-      case 'camerarange':
-        return this.graphics3d.cameraRange(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'cameraviewport':
+      case "cameraprojmode":
+        return this.graphics3d.cameraProjMode(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "camerarange":
+        return this.graphics3d.cameraRange(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "cameraviewport":
         return this.graphics3d.cameraViewport(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -685,95 +812,132 @@ export class InterpreterService {
           evaluatedParams[3],
           evaluatedParams[4]
         );
-      case 'camerazoom':
-        return this.graphics3d.cameraZoom(evaluatedParams[0], evaluatedParams[1]);
-      case 'createcamera':
-        return this.graphics3d.createCamera(evaluatedParams[0], evaluatedParams[1]);
-      case 'projectedx':
+      case "camerazoom":
+        return this.graphics3d.cameraZoom(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "createcamera":
+        return this.graphics3d.createCamera(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "projectedx":
         return this.graphics3d.projectedX();
-      case 'projectedy':
+      case "projectedy":
         return this.graphics3d.projectedY();
-      case 'projectedz':
+      case "projectedz":
         return this.graphics3d.projectedZ();
       // GRAPHICS 3D - COLLISIONS
-      case 'clearcollisions':
+      case "clearcollisions":
         return this.graphics3d.clearCollisions();
-      case 'collisionentity':
-        return this.graphics3d.collisionEntity(evaluatedParams[0], evaluatedParams[1]);
-      case 'collisionnx':
-        return this.graphics3d.collisionNX(evaluatedParams[0], evaluatedParams[1]);
-      case 'collisionny':
-        return this.graphics3d.collisionNY(evaluatedParams[0], evaluatedParams[1]);
-      case 'collisionnz':
-        return this.graphics3d.collisionNZ(evaluatedParams[0], evaluatedParams[1]);
-      case 'collisions':
+      case "collisionentity":
+        return this.graphics3d.collisionEntity(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "collisionnx":
+        return this.graphics3d.collisionNX(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "collisionny":
+        return this.graphics3d.collisionNY(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "collisionnz":
+        return this.graphics3d.collisionNZ(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "collisions":
         return this.graphics3d.collisions(
           evaluatedParams[0],
           evaluatedParams[1],
           evaluatedParams[2],
           evaluatedParams[3]
         );
-      case 'collisionsurface':
-        return this.graphics3d.collisionSurface(evaluatedParams[0], evaluatedParams[1]);
-      case 'collisiontime':
-        return this.graphics3d.collisionTime(evaluatedParams[0], evaluatedParams[1]);
-      case 'collisiontriangle':
+      case "collisionsurface":
+        return this.graphics3d.collisionSurface(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "collisiontime":
+        return this.graphics3d.collisionTime(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "collisiontriangle":
         return this.graphics3d.collisionTriangle();
-      case 'collisionx':
+      case "collisionx":
         return this.graphics3d.collisionX();
-      case 'collisiony':
+      case "collisiony":
         return this.graphics3d.collisionY();
-      case 'collisionz':
+      case "collisionz":
         return this.graphics3d.collisionZ();
-      case 'countcollisions':
+      case "countcollisions":
         return this.graphics3d.countCollisions();
-      case 'entitybox':
+      case "entitybox":
         return this.graphics3d.entityBox();
-      case 'entitycollided':
+      case "entitycollided":
         return this.graphics3d.entityCollided();
-      case 'entityradius':
+      case "entityradius":
         return this.graphics3d.entityRadius();
-      case 'entitytype':
+      case "entitytype":
         return this.graphics3d.entityType();
-      case 'getentitytype':
+      case "getentitytype":
         return this.graphics3d.getEntityType();
-      case 'meshesintersect':
+      case "meshesintersect":
         return this.graphics3d.meshesIntersect();
-      case 'resetentity':
+      case "resetentity":
         return this.graphics3d.resetEntity();
       // GRAPHICS 3D - CONTROLS
-      case 'copyentity':
-        return this.graphics3d.copyEntity(evaluatedParams[0], evaluatedParams[1]);
-      case 'entityalpha':
-        return this.graphics3d.entityAlpha(evaluatedParams[0], evaluatedParams[1]);
-      case 'entityautofade':
-        return this.graphics3d.entityAutoFade(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'entityblend':
-        return this.graphics3d.entityBlend(evaluatedParams[0], evaluatedParams[1]);
-      case 'entitycolor':
+      case "copyentity":
+        return this.graphics3d.copyEntity(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "entityalpha":
+        return this.graphics3d.entityAlpha(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "entityautofade":
+        return this.graphics3d.entityAutoFade(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "entityblend":
+        return this.graphics3d.entityBlend(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "entitycolor":
         return this.graphics3d.entityColor(
           evaluatedParams[0],
           evaluatedParams[1],
           evaluatedParams[2],
           evaluatedParams[3]
         );
-      case 'entityfx':
+      case "entityfx":
         return this.graphics3d.entityFx();
-      case 'entityorder':
+      case "entityorder":
         return this.graphics3d.entityOrder();
-      case 'entityparent':
+      case "entityparent":
         return this.graphics3d.entityParent();
-      case 'entityshininess':
+      case "entityshininess":
         return this.graphics3d.entityShininess();
-      case 'entitytexture':
+      case "entitytexture":
         return this.graphics3d.entityTexture();
-      case 'freeentity':
+      case "freeentity":
         return this.graphics3d.freeEntity();
-      case 'hideentity':
+      case "hideentity":
         return this.graphics3d.hideEntity();
-      case 'showentity':
+      case "showentity":
         return this.graphics3d.showEntity();
-      case 'aligntovector':
+      case "aligntovector":
         return this.graphics3d.alignToVector(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -782,16 +946,20 @@ export class InterpreterService {
           evaluatedParams[4],
           evaluatedParams[5]
         );
-      case 'moveentity':
+      case "moveentity":
         return this.graphics3d.moveEntity(
           evaluatedParams[0],
           evaluatedParams[1],
           evaluatedParams[2],
           evaluatedParams[3]
         );
-      case 'pointentity':
-        return this.graphics3d.pointEntity(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'positionentity':
+      case "pointentity":
+        return this.graphics3d.pointEntity(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "positionentity":
         return this.graphics3d.positionEntity(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -799,7 +967,7 @@ export class InterpreterService {
           evaluatedParams[3],
           evaluatedParams[4]
         );
-      case 'rotateentity':
+      case "rotateentity":
         return this.graphics3d.rotateEntity(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -807,7 +975,7 @@ export class InterpreterService {
           evaluatedParams[3],
           evaluatedParams[4]
         );
-      case 'scaleentity':
+      case "scaleentity":
         return this.graphics3d.scaleEntity(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -815,7 +983,7 @@ export class InterpreterService {
           evaluatedParams[3],
           evaluatedParams[4]
         );
-      case 'translateentity':
+      case "translateentity":
         return this.graphics3d.translateEntity(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -823,7 +991,7 @@ export class InterpreterService {
           evaluatedParams[3],
           evaluatedParams[4]
         );
-      case 'turnentity':
+      case "turnentity":
         return this.graphics3d.turnEntity(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -831,13 +999,13 @@ export class InterpreterService {
           evaluatedParams[3],
           evaluatedParams[4]
         );
-      case 'tformedx':
+      case "tformedx":
         return this.graphics3d.tFormedX();
-      case 'tformedy':
+      case "tformedy":
         return this.graphics3d.tFormedY();
-      case 'tformedz':
+      case "tformedz":
         return this.graphics3d.tFormedZ();
-      case 'tformnormal':
+      case "tformnormal":
         return this.graphics3d.tFormNormal(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -845,7 +1013,7 @@ export class InterpreterService {
           evaluatedParams[3],
           evaluatedParams[4]
         );
-      case 'tformpoint':
+      case "tformpoint":
         return this.graphics3d.tFormPoint(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -853,7 +1021,7 @@ export class InterpreterService {
           evaluatedParams[3],
           evaluatedParams[4]
         );
-      case 'tformvector':
+      case "tformvector":
         return this.graphics3d.tFormVector(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -862,70 +1030,94 @@ export class InterpreterService {
           evaluatedParams[4]
         );
       // GRAPHICS 3D - DIVERSE
-      case 'createmirror':
+      case "createmirror":
         return this.graphics3d.createMirror();
-      case 'createpivot':
+      case "createpivot":
         return this.graphics3d.createPivot();
-      case 'createplane':
+      case "createplane":
         return this.graphics3d.createPlane();
-      case 'getmatelement':
+      case "getmatelement":
         return this.graphics3d.getMatElement();
-      case 'loadermatrix':
+      case "loadermatrix":
         return this.graphics3d.loaderMatrix();
-      case 'trisrendered':
+      case "trisrendered":
         return this.graphics3d.trisRendered();
-      case 'vectorpitch':
+      case "vectorpitch":
         return this.graphics3d.vectorPitch();
-      case 'vectoryaw':
+      case "vectoryaw":
         return this.graphics3d.vectorYaw();
       // GRAPHICS 3D - LIGHT AND SHADOW
-      case 'ambientlight':
-        return this.graphics3d.ambientLight(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'createlight':
-        return this.graphics3d.createLight(evaluatedParams[0], evaluatedParams[1]);
-      case 'lightcolor':
+      case "ambientlight":
+        return this.graphics3d.ambientLight(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "createlight":
+        return this.graphics3d.createLight(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "lightcolor":
         return this.graphics3d.lightColor(
           evaluatedParams[0],
           evaluatedParams[1],
           evaluatedParams[2],
           evaluatedParams[3]
         );
-      case 'lightconeangles':
+      case "lightconeangles":
         return this.graphics3d.lightConeAngles();
-      case 'lightmesh':
+      case "lightmesh":
         return this.graphics3d.lightMesh();
-      case 'lightrange':
-        return this.graphics3d.lightRange(evaluatedParams[0], evaluatedParams[1]);
-      case 'createshadowmap':
+      case "lightrange":
+        return this.graphics3d.lightRange(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "createshadowmap":
         return this.graphics3d.createShadowMap();
-      case 'freeshadowmap':
+      case "freeshadowmap":
         return this.graphics3d.freeShadowMap();
-      case 'castshadow':
+      case "castshadow":
         return this.graphics3d.castShadow();
-      case 'receiveshadows':
+      case "receiveshadows":
         return this.graphics3d.receiveShadows();
-      case 'shadowdarkness':
+      case "shadowdarkness":
         return this.graphics3d.shadowDarkness();
       // GRAPHICS 3D - MESHES
-      case 'addmesh':
+      case "addmesh":
         return this.graphics3d.addMesh(evaluatedParams[0], evaluatedParams[1]);
-      case 'copymesh':
+      case "copymesh":
         return this.graphics3d.copyMesh(evaluatedParams[0], evaluatedParams[1]);
-      case 'createcone':
-        return this.graphics3d.createCone(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'createsphere':
-        return this.graphics3d.createSphere(evaluatedParams[0], evaluatedParams[1]);
-      case 'createcube':
+      case "createcone":
+        return this.graphics3d.createCone(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "createsphere":
+        return this.graphics3d.createSphere(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "createcube":
         return this.graphics3d.createCube(evaluatedParams[0]);
-      case 'createcylinder':
-        return this.graphics3d.createCylinder(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'createpyramid':
-        return this.graphics3d.createPyramid(evaluatedParams[0], evaluatedParams[1]);
-      case 'createtorus':
+      case "createcylinder":
+        return this.graphics3d.createCylinder(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "createpyramid":
+        return this.graphics3d.createPyramid(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "createtorus":
         return this.graphics3d.createTorus(evaluatedParams[0]);
-      case 'createtorusknot':
+      case "createtorusknot":
         return this.graphics3d.createTorusKnot(evaluatedParams[0]);
-      case 'fitmesh':
+      case "fitmesh":
         return this.graphics3d.fitMesh(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -936,13 +1128,16 @@ export class InterpreterService {
           evaluatedParams[6],
           evaluatedParams[7]
         );
-      case 'flipmesh':
+      case "flipmesh":
         return this.graphics3d.flipMesh(evaluatedParams[0]);
-      case 'loadanimmesh':
-        return this.graphics3d.loadAnimMesh(evaluatedParams[0], evaluatedParams[1]);
-      case 'loadmesh':
+      case "loadanimmesh":
+        return this.graphics3d.loadAnimMesh(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "loadmesh":
         return this.graphics3d.loadMesh(evaluatedParams[0], evaluatedParams[1]);
-      case 'meshcullbox':
+      case "meshcullbox":
         return this.graphics3d.meshCullBox(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -952,27 +1147,27 @@ export class InterpreterService {
           evaluatedParams[5],
           evaluatedParams[6]
         );
-      case 'meshdepth':
+      case "meshdepth":
         return this.graphics3d.meshDepth(evaluatedParams[0]);
-      case 'meshheight':
+      case "meshheight":
         return this.graphics3d.meshHeight(evaluatedParams[0]);
-      case 'meshwidth':
+      case "meshwidth":
         return this.graphics3d.meshWidth(evaluatedParams[0]);
-      case 'positionmesh':
+      case "positionmesh":
         return this.graphics3d.positionMesh(
           evaluatedParams[0],
           evaluatedParams[1],
           evaluatedParams[2],
           evaluatedParams[3]
         );
-      case 'rotatemesh':
+      case "rotatemesh":
         return this.graphics3d.rotateMesh(
           evaluatedParams[0],
           evaluatedParams[1],
           evaluatedParams[2],
           evaluatedParams[3]
         );
-      case 'scalemesh':
+      case "scalemesh":
         return this.graphics3d.scaleMesh(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -980,13 +1175,23 @@ export class InterpreterService {
           evaluatedParams[3]
         );
       // GRAPHICS 3D - PICKING
-      case 'camerapick':
-        return this.graphics3d.cameraPick(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'entitypick':
-        return this.graphics3d.entityPick(evaluatedParams[0], evaluatedParams[1]);
-      case 'entitypickmode':
-        return this.graphics3d.entityPickMode(evaluatedParams[0], evaluatedParams[1]);
-      case 'linepick':
+      case "camerapick":
+        return this.graphics3d.cameraPick(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "entitypick":
+        return this.graphics3d.entityPick(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "entitypickmode":
+        return this.graphics3d.entityPickMode(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "linepick":
         return this.graphics3d.linePick(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -995,174 +1200,233 @@ export class InterpreterService {
           evaluatedParams[4],
           evaluatedParams[5]
         );
-      case 'pickedentity':
+      case "pickedentity":
         return this.graphics3d.pickedEntity();
-      case 'pickednx':
+      case "pickednx":
         return this.graphics3d.pickedNX();
-      case 'pickedny':
+      case "pickedny":
         return this.graphics3d.pickedNY();
-      case 'pickednz':
+      case "pickednz":
         return this.graphics3d.pickedNZ();
-      case 'pickedsurface':
+      case "pickedsurface":
         return this.graphics3d.pickedSurface();
-      case 'pickedtime':
+      case "pickedtime":
         return this.graphics3d.pickedTime();
-      case 'pickedtriangle':
+      case "pickedtriangle":
         return this.graphics3d.pickedTriangle();
-      case 'pickedx':
+      case "pickedx":
         return this.graphics3d.pickedX();
-      case 'pickedy':
+      case "pickedy":
         return this.graphics3d.pickedY();
-      case 'pickedz':
+      case "pickedz":
         return this.graphics3d.pickedZ();
       // GRAPHICS 3D - SCENE
-      case 'createskybox':
+      case "createskybox":
         return this.graphics3d.createSkyBox();
-      case 'loadskybox':
+      case "loadskybox":
         return this.graphics3d.loadSkyBox();
-      case 'setgravity':
+      case "setgravity":
         return this.graphics3d.setGravity();
-      case 'setgravity':
+      case "setgravity":
         return this.graphics3d.setGravity();
       // GRAPHICS 3D - SCENERY
-      case 'antialias':
+      case "antialias":
         return this.graphics3d.antiAlias(evaluatedParams[0]);
-      case 'captureworld':
+      case "captureworld":
         return this.graphics3d.captureWorld();
-      case 'clearworld':
-        return this.graphics3d.clearWorld(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'renderworld':
+      case "clearworld":
+        return this.graphics3d.clearWorld(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "renderworld":
         return this.graphics3d.renderWorld(evaluatedParams[0]);
-      case 'updateworld':
+      case "updateworld":
         return this.graphics3d.updateWorld(evaluatedParams[0]);
-      case 'wireframe':
+      case "wireframe":
         return this.graphics3d.wireFrame(evaluatedParams[0]);
       // GRAPHICS 3D - SCREEN
-      case 'countgfxmodes3d':
+      case "countgfxmodes3d":
         return this.graphics3d.countGfxModes3d();
-      case 'gfxdriver3d':
+      case "gfxdriver3d":
         return this.graphics3d.gfxDriver3D();
-      case 'gfxdrivercaps3d':
+      case "gfxdrivercaps3d":
         return this.graphics3d.gfxDriverCaps3D();
-      case 'gfxmode3d':
+      case "gfxmode3d":
         return this.graphics3d.gfxMode3D(evaluatedParams[0]);
-      case 'gfxmode3dexists':
-        return this.graphics3d.gfxMode3DExists(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'windowed3d':
+      case "gfxmode3dexists":
+        return this.graphics3d.gfxMode3DExists(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "windowed3d":
         return this.graphics3d.windowed3D();
       // GRAPHICS 3D - SPRITES
-      case 'createSprite':
+      case "createSprite":
         return this.graphics3d.createSprite(evaluatedParams[0]);
-      case 'handlesprite':
-        return this.graphics3d.handleSprite(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'loadsprite':
-        return this.graphics3d.loadSprite(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'rotatesprite':
-        return this.graphics3d.rotateSprite(evaluatedParams[0], evaluatedParams[1]);
-      case 'scalesprite':
-        return this.graphics3d.scaleSprite(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'spriteviewmode':
-        return this.graphics3d.spriteViewMode(evaluatedParams[0], evaluatedParams[1]);
+      case "handlesprite":
+        return this.graphics3d.handleSprite(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "loadsprite":
+        return this.graphics3d.loadSprite(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "rotatesprite":
+        return this.graphics3d.rotateSprite(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "scalesprite":
+        return this.graphics3d.scaleSprite(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "spriteviewmode":
+        return this.graphics3d.spriteViewMode(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
       // GRAPHICS 3D - STATUS
-      case 'countchildren':
+      case "countchildren":
         return this.graphics3d.countChildren(evaluatedParams[0]);
-      case 'deltapitch':
-        return this.graphics3d.deltaPitch(evaluatedParams[0], evaluatedParams[1]);
-      case 'deltayaw':
+      case "deltapitch":
+        return this.graphics3d.deltaPitch(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "deltayaw":
         return this.graphics3d.deltaYaw(evaluatedParams[0], evaluatedParams[1]);
-      case 'entityclass':
+      case "entityclass":
         return this.graphics3d.entityClass(evaluatedParams[0]);
-      case 'entitydistance':
-        return this.graphics3d.entityDistance(evaluatedParams[0], evaluatedParams[1]);
-      case 'entityinview':
-        return this.graphics3d.entityInView(evaluatedParams[0], evaluatedParams[1]);
-      case 'entityname':
+      case "entitydistance":
+        return this.graphics3d.entityDistance(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "entityinview":
+        return this.graphics3d.entityInView(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "entityname":
         return this.graphics3d.entityName(evaluatedParams[0]);
-      case 'entitypitch':
-        return this.graphics3d.entityPitch(evaluatedParams[0], evaluatedParams[1]);
-      case 'entityroll':
-        return this.graphics3d.entityRoll(evaluatedParams[0], evaluatedParams[1]);
-      case 'entityvisible':
-        return this.graphics3d.entityVisible(evaluatedParams[0], evaluatedParams[1]);
-      case 'entityx':
+      case "entitypitch":
+        return this.graphics3d.entityPitch(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "entityroll":
+        return this.graphics3d.entityRoll(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "entityvisible":
+        return this.graphics3d.entityVisible(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "entityx":
         return this.graphics3d.entityX(evaluatedParams[0], evaluatedParams[1]);
-      case 'entityy':
+      case "entityy":
         return this.graphics3d.entityY(evaluatedParams[0], evaluatedParams[1]);
-      case 'entityyaw':
-        return this.graphics3d.entityYaw(evaluatedParams[0], evaluatedParams[1]);
-      case 'entityz':
+      case "entityyaw":
+        return this.graphics3d.entityYaw(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "entityz":
         return this.graphics3d.entityZ(evaluatedParams[0], evaluatedParams[1]);
-      case 'findchild':
-        return this.graphics3d.findChild(evaluatedParams[0], evaluatedParams[1]);
-      case 'getchild':
+      case "findchild":
+        return this.graphics3d.findChild(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "getchild":
         return this.graphics3d.getChild(evaluatedParams[0], evaluatedParams[1]);
-      case 'getparent':
+      case "getparent":
         return this.graphics3d.getParent(evaluatedParams[0]);
-      case 'nameentity':
-        return this.graphics3d.nameEntity(evaluatedParams[0], evaluatedParams[1]);
+      case "nameentity":
+        return this.graphics3d.nameEntity(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
       // GRAPHICS 3D - SURFACES
-      case 'addtriangle':
+      case "addtriangle":
         return this.graphics3d.addTriangle();
-      case 'addvertex':
+      case "addvertex":
         return this.graphics3d.addVertex();
-      case 'clearsurface':
+      case "clearsurface":
         return this.graphics3d.clearSurface();
-      case 'countsurfaces':
+      case "countsurfaces":
         return this.graphics3d.countSurfaces();
-      case 'counttriangles':
+      case "counttriangles":
         return this.graphics3d.countTriangles();
-      case 'countvertices':
+      case "countvertices":
         return this.graphics3d.countVertices();
-      case 'createsurface':
+      case "createsurface":
         return this.graphics3d.createSurface();
-      case 'findsurface':
+      case "findsurface":
         return this.graphics3d.findSurface();
-      case 'getsurface':
+      case "getsurface":
         return this.graphics3d.getSurface();
-      case 'trianglevertex':
+      case "trianglevertex":
         return this.graphics3d.triangleVertex();
-      case 'updatenormals':
+      case "updatenormals":
         return this.graphics3d.updateNormals();
-      case 'vertexalpha':
+      case "vertexalpha":
         return this.graphics3d.vertexAlpha();
-      case 'vertexblue':
+      case "vertexblue":
         return this.graphics3d.vertexBlue();
-      case 'vertexcolor':
+      case "vertexcolor":
         return this.graphics3d.vertexColor();
-      case 'vertexcoords':
+      case "vertexcoords":
         return this.graphics3d.vertexCoords();
-      case 'vertexgreen':
+      case "vertexgreen":
         return this.graphics3d.vertexGreen();
-      case 'vertexnormal':
+      case "vertexnormal":
         return this.graphics3d.vertexNormal();
-      case 'vertexnx':
+      case "vertexnx":
         return this.graphics3d.vertexNX();
-      case 'vertexny':
+      case "vertexny":
         return this.graphics3d.vertexNY();
-      case 'vertexnz':
+      case "vertexnz":
         return this.graphics3d.vertexNZ();
-      case 'vertexred':
+      case "vertexred":
         return this.graphics3d.vertexRed();
-      case 'vertextexcoords':
+      case "vertextexcoords":
         return this.graphics3d.vertexTexCoords();
-      case 'vertexu':
+      case "vertexu":
         return this.graphics3d.vertexU();
-      case 'vertexv':
+      case "vertexv":
         return this.graphics3d.vertexV();
-      case 'vertexw':
+      case "vertexw":
         return this.graphics3d.vertexW();
-      case 'vertexx':
+      case "vertexx":
         return this.graphics3d.vertexX();
-      case 'vertexy':
+      case "vertexy":
         return this.graphics3d.vertexY();
-      case 'vertexz':
+      case "vertexz":
         return this.graphics3d.vertexZ();
       // GRAPHICS 3D - TERRAIN
-      case 'createterrain':
-        return this.graphics3d.createTerrain(evaluatedParams[0], evaluatedParams[1]);
-      case 'loadterrain':
-        return this.graphics3d.loadTerrain(evaluatedParams[0], evaluatedParams[1]);
-      case 'modifyterrain':
+      case "createterrain":
+        return this.graphics3d.createTerrain(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "loadterrain":
+        return this.graphics3d.loadTerrain(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "modifyterrain":
         return this.graphics3d.modifyTerrain(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -1170,35 +1434,58 @@ export class InterpreterService {
           evaluatedParams[3],
           evaluatedParams[4]
         );
-      case 'terraindetail':
-        return this.graphics3d.terrainDetail(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'terrainheight':
-        return this.graphics3d.terrainHeight(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'terrainshading':
+      case "terraindetail":
+        return this.graphics3d.terrainDetail(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "terrainheight":
+        return this.graphics3d.terrainHeight(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "terrainshading":
         return this.graphics3d.terrainShading(evaluatedParams[0]);
-      case 'terrainsize':
+      case "terrainsize":
         return this.graphics3d.terrainSize(evaluatedParams[0]);
-      case 'terrainx':
-        return this.graphics3d.terrainX(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
-      case 'terrainy':
-        return this.graphics3d.terrainY(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
-      case 'terrainz':
-        return this.graphics3d.terrainZ(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      case "terrainx":
+        return this.graphics3d.terrainX(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
+      case "terrainy":
+        return this.graphics3d.terrainY(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
+      case "terrainz":
+        return this.graphics3d.terrainZ(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
       // GRAPHICS 3D - TEXTURES
-      case 'activetextures':
+      case "activetextures":
         return this.graphics3d.activeTextures();
-      case 'cleartexturefilters':
+      case "cleartexturefilters":
         return this.graphics3d.clearTextureFilters();
-      case 'createtexture':
+      case "createtexture":
         return this.graphics3d.createTexture(
           evaluatedParams[0],
           evaluatedParams[1],
           evaluatedParams[2],
           evaluatedParams[3]
         );
-      case 'freetexture':
+      case "freetexture":
         return this.graphics3d.freeTexture(evaluatedParams[0]);
-      case 'loadanimtexture':
+      case "loadanimtexture":
         return this.graphics3d.loadAnimTexture(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -1207,34 +1494,63 @@ export class InterpreterService {
           evaluatedParams[4],
           evaluatedParams[5]
         );
-      case 'loadtexture':
-        return this.graphics3d.loadTexture(evaluatedParams[0], evaluatedParams[1]);
-      case 'positiontexture':
-        return this.graphics3d.positionTexture(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'rotatetexture':
-        return this.graphics3d.rotateTexture(evaluatedParams[0], evaluatedParams[1]);
-      case 'scaletexture':
-        return this.graphics3d.scaleTexture(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
-      case 'setcubeface':
-        return this.graphics3d.setCubeFace(evaluatedParams[0], evaluatedParams[1]);
-      case 'setcubemode':
-        return this.graphics3d.setCubeMode(evaluatedParams[0], evaluatedParams[1]);
-      case 'textureblend':
-        return this.graphics3d.textureBlend(evaluatedParams[0], evaluatedParams[1]);
-      case 'texturecoords':
-        return this.graphics3d.textureCoords(evaluatedParams[0], evaluatedParams[1]);
-      case 'texturefilter':
-        return this.graphics3d.textureFilter(evaluatedParams[0], evaluatedParams[1]);
-      case 'textureheight':
+      case "loadtexture":
+        return this.graphics3d.loadTexture(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "positiontexture":
+        return this.graphics3d.positionTexture(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "rotatetexture":
+        return this.graphics3d.rotateTexture(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "scaletexture":
+        return this.graphics3d.scaleTexture(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "setcubeface":
+        return this.graphics3d.setCubeFace(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "setcubemode":
+        return this.graphics3d.setCubeMode(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "textureblend":
+        return this.graphics3d.textureBlend(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "texturecoords":
+        return this.graphics3d.textureCoords(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "texturefilter":
+        return this.graphics3d.textureFilter(
+          evaluatedParams[0],
+          evaluatedParams[1]
+        );
+      case "textureheight":
         return this.graphics3d.textureHeight(evaluatedParams[0]);
-      case 'texturename':
+      case "texturename":
         return this.graphics3d.textureName(evaluatedParams[0]);
-      case 'texturewidth':
+      case "texturewidth":
         return this.graphics3d.textureWidth(evaluatedParams[0]);
       // GUI - BUTTON
-      case 'buttonstate':
+      case "buttonstate":
         return this.gui.buttonState(evaluatedParams[0]);
-      case 'createbutton':
+      case "createbutton":
         return this.gui.createButton(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -1244,10 +1560,10 @@ export class InterpreterService {
           evaluatedParams[5],
           evaluatedParams[6]
         );
-      case 'setbuttonstate':
+      case "setbuttonstate":
         return this.gui.setButtonState(evaluatedParams[0], evaluatedParams[1]);
       // GUI - CANVAS
-      case 'createcanvas':
+      case "createcanvas":
         return this.gui.createCanvas(
           evaluatedParams[0],
           evaluatedParams[1],
@@ -1256,416 +1572,425 @@ export class InterpreterService {
           evaluatedParams[4],
           evaluatedParams[5]
         );
-      case 'flipcanvas':
+      case "flipcanvas":
         return this.gui.flipCanvas(evaluatedParams[0], evaluatedParams[1]);
       // GUI - DESKTOP
-      case 'desktop':
+      case "desktop":
         return this.gui.desktop();
       // GUI - DIVERSE
-      case 'activeobjects':
+      case "activeobjects":
         return this.gui.activeObjects();
-      case 'autosuspend':
+      case "autosuspend":
         return this.gui.autoSuspend();
-      case 'createprocess':
+      case "createprocess":
         return this.gui.createProcess();
-      case 'debugobjects':
+      case "debugobjects":
         return this.gui.debugObjects();
       // GUI - EVENT
-      case 'eventdata':
+      case "eventdata":
         return this.gui.eventData();
-      case 'eventid':
+      case "eventid":
         return this.gui.eventId();
-      case 'eventsource':
+      case "eventsource":
         return this.gui.eventSource();
-      case 'eventx':
+      case "eventx":
         return this.gui.eventX();
-      case 'eventy':
+      case "eventy":
         return this.gui.eventY();
-      case 'eventz':
+      case "eventz":
         return this.gui.eventZ();
-      case 'flushevents':
+      case "flushevents":
         return this.gui.flushEvents();
-      case 'hotkeyevent':
+      case "hotkeyevent":
         return this.gui.hotKeyEvent();
-      case 'peekevent':
+      case "peekevent":
         return this.gui.peekEvent();
-      case 'waitevent':
+      case "waitevent":
         return this.gui.waitEvent();
-      case 'activategadget':
+      case "activategadget":
         return this.gui.activateGadget();
-      case 'clientheight':
+      case "clientheight":
         return this.gui.clientHeight();
-      case 'clientwidth':
+      case "clientwidth":
         return this.gui.clientWidth();
-      case 'disablegadget':
+      case "disablegadget":
         return this.gui.disableGadget();
-      case 'enablegadget':
+      case "enablegadget":
         return this.gui.enableGadget();
-      case 'freegadget':
+      case "freegadget":
         return this.gui.freeGadget();
-      case 'gadgetfont':
+      case "gadgetfont":
         return this.gui.gadgetFont();
-      case 'gadgetgroup':
+      case "gadgetgroup":
         return this.gui.gadgetGroup();
-      case 'gadgetheight':
+      case "gadgetheight":
         return this.gui.gadgetHeight();
-      case 'gadgettext':
+      case "gadgettext":
         return this.gui.gadgetText();
-      case 'gadgetwidth':
+      case "gadgetwidth":
         return this.gui.gadgetWidth();
-      case 'gadgetx':
+      case "gadgetx":
         return this.gui.gadgetX();
-      case 'gadgety':
+      case "gadgety":
         return this.gui.gadgetY();
-      case 'hidegadget':
+      case "hidegadget":
         return this.gui.hideGadget();
-      case 'queryobject':
+      case "queryobject":
         return this.gui.queryObject();
-      case 'setgadgetfont':
+      case "setgadgetfont":
         return this.gui.setGadgetFont();
-      case 'setgadgetlayout':
+      case "setgadgetlayout":
         return this.gui.setGadgetLayout();
-      case 'setgadgetshape':
+      case "setgadgetshape":
         return this.gui.setGadgetShape();
-      case 'setgadgettext':
+      case "setgadgettext":
         return this.gui.setGadgetText();
-      case 'showgadget':
+      case "showgadget":
         return this.gui.showGadget();
       // GUI - HTML
-      case 'createhtmlview':
+      case "createhtmlview":
         return this.gui.createHtmlView();
-      case 'htmlviewback':
+      case "htmlviewback":
         return this.gui.htmlViewBack();
-      case 'htmlviewcurrenturl':
+      case "htmlviewcurrenturl":
         return this.gui.htmlViewCurrentUrl();
-      case 'htmlvieweventurl':
+      case "htmlvieweventurl":
         return this.gui.htmlViewEventUrl();
-      case 'htmlviewforward':
+      case "htmlviewforward":
         return this.gui.htmlViewForward();
-      case 'htmlviewgo':
+      case "htmlviewgo":
         return this.gui.htmlViewGo();
-      case 'htmlviewrun':
+      case "htmlviewrun":
         return this.gui.htmlViewRun();
-      case 'htmlviewstatus':
+      case "htmlviewstatus":
         return this.gui.htmlViewStatus();
       // GUI - ICON STRIP
-      case 'freeiconstrip':
+      case "freeiconstrip":
         return this.gui.freeIconStrip();
-      case 'loadiconstrip':
+      case "loadiconstrip":
         return this.gui.loadIconStrip();
-      case 'setgadgeticonstrip':
+      case "setgadgeticonstrip":
         return this.gui.setGadgetIconStrip();
       // GUI - LIST TABBER
-      case 'addgadgetitem':
+      case "addgadgetitem":
         return this.gui.addGadgetItem();
-      case 'cleargadgetitems':
+      case "cleargadgetitems":
         return this.gui.clearGadgetItems();
-      case 'countgadgetitems':
+      case "countgadgetitems":
         return this.gui.countGadgetItems();
-      case 'createcombobox':
+      case "createcombobox":
         return this.gui.createComboBox();
-      case 'createlistbox':
+      case "createlistbox":
         return this.gui.createListBox();
-      case 'createtabber':
+      case "createtabber":
         return this.gui.createTabber();
-      case 'gadgetitemtext':
+      case "gadgetitemtext":
         return this.gui.gadgetItemText();
-      case 'insertgadgetitem':
+      case "insertgadgetitem":
         return this.gui.insertGadgetItem();
-      case 'modifygadgetitem':
+      case "modifygadgetitem":
         return this.gui.modifyGadgetItem();
-      case 'removegadgetitem':
+      case "removegadgetitem":
         return this.gui.removeGadgetItem();
-      case 'selectedgadgetitem':
+      case "selectedgadgetitem":
         return this.gui.selectedGadgetItem();
-      case 'selectgadgetitem':
+      case "selectgadgetitem":
         return this.gui.selectGadgetItem();
       // GUI - MENU
-      case 'checkmenu':
+      case "checkmenu":
         return this.gui.checkMenu();
-      case 'createmenu':
+      case "createmenu":
         return this.gui.createMenu();
-      case 'disablemenu':
+      case "disablemenu":
         return this.gui.disableMenu();
-      case 'enablemenu':
+      case "enablemenu":
         return this.gui.enableMenu();
-      case 'menuchecked':
+      case "menuchecked":
         return this.gui.menuChecked();
-      case 'menuenabled':
+      case "menuenabled":
         return this.gui.menuEnabled();
-      case 'menutext':
+      case "menutext":
         return this.gui.menuText();
-      case 'setmenutext':
+      case "setmenutext":
         return this.gui.setMenuText();
-      case 'uncheckmenu':
+      case "uncheckmenu":
         return this.gui.uncheckMenu();
-      case 'updatewindowmenu':
+      case "updatewindowmenu":
         return this.gui.updateWindowMenu();
-      case 'windowmenu':
+      case "windowmenu":
         return this.gui.windowMenu();
       // GUI - PANEL
-      case 'createpanel':
+      case "createpanel":
         return this.gui.createPanel();
-      case 'setpanelcolor':
+      case "setpanelcolor":
         return this.gui.setPanelColor();
-      case 'setpanelimage':
+      case "setpanelimage":
         return this.gui.setPanelImage();
       // GUI - PROGRESS BAR
-      case 'createprogbar':
+      case "createprogbar":
         return this.gui.createProgBar();
-      case 'updateprogbar':
+      case "updateprogbar":
         return this.gui.updateProgBar();
       // GUI - REQUEST SERVICE
-      case 'confirm':
+      case "confirm":
         return this.gui.confirm();
-      case 'notify':
+      case "notify":
         return this.gui.notify();
-      case 'proceed':
+      case "proceed":
         return this.gui.proceed();
-      case 'requestcolor':
+      case "requestcolor":
         return this.gui.requestColor();
-      case 'requestdir':
+      case "requestdir":
         return this.gui.requestDir();
-      case 'requestedblue':
+      case "requestedblue":
         return this.gui.requestedBlue();
-      case 'requestedgreen':
+      case "requestedgreen":
         return this.gui.requestedGreen();
-      case 'requestedred':
+      case "requestedred":
         return this.gui.requestedRed();
-      case 'requestfile':
+      case "requestfile":
         return this.gui.requestFile();
-      case 'requestfont':
+      case "requestfont":
         return this.gui.requestFont();
       // GUI - SLIDER
-      case 'createslider':
+      case "createslider":
         return this.gui.createSlider();
-      case 'setsliderrange':
+      case "setsliderrange":
         return this.gui.setSliderRange();
-      case 'setslidervalue':
+      case "setslidervalue":
         return this.gui.setSliderValue();
-      case 'slidervalue':
+      case "slidervalue":
         return this.gui.sliderValue();
       // GUI - TEXT AREA
-      case 'addtextareatext':
+      case "addtextareatext":
         return this.gui.addTextAreaText();
-      case 'createtextarea':
+      case "createtextarea":
         return this.gui.createTextArea();
-      case 'formattextareatext':
+      case "formattextareatext":
         return this.gui.formatTextAreaText();
-      case 'locktextarea':
+      case "locktextarea":
         return this.gui.lockTextArea();
-      case 'settextareacolor':
+      case "settextareacolor":
         return this.gui.setTextAreaColor();
-      case 'settextareafont':
+      case "settextareafont":
         return this.gui.setTextAreaFont();
-      case 'settextareatabs':
+      case "settextareatabs":
         return this.gui.setTextAreaTabs();
-      case 'settextareatext':
+      case "settextareatext":
         return this.gui.setTextAreaText();
-      case 'textareachar':
+      case "textareachar":
         return this.gui.textAreaChar();
-      case 'textareacursor':
+      case "textareacursor":
         return this.gui.textAreaCursor();
-      case 'textarealen':
+      case "textarealen":
         return this.gui.textAreaLen();
-      case 'textarealine':
+      case "textarealine":
         return this.gui.textAreaLine();
-      case 'textarealinelen':
+      case "textarealinelen":
         return this.gui.textAreaLineLen();
-      case 'textareasellen':
+      case "textareasellen":
         return this.gui.textAreaSelLen();
-      case 'textareatext':
+      case "textareatext":
         return this.gui.textAreaText();
-      case 'unlocktextarea':
+      case "unlocktextarea":
         return this.gui.unlockTextArea();
       // GUI - TEXT FIELD
-      case 'createlabel':
+      case "createlabel":
         return this.gui.createLabel();
-      case 'createtextfield':
+      case "createtextfield":
         return this.gui.createTextField();
-      case 'textfieldtext':
+      case "textfieldtext":
         return this.gui.textFieldText();
       // GUI - TOOLBAR
-      case 'createtoolbar':
+      case "createtoolbar":
         return this.gui.createToolBar();
-      case 'disabletoolbaritem':
+      case "disabletoolbaritem":
         return this.gui.disableToolBarItem();
-      case 'enabletoolbaritem':
+      case "enabletoolbaritem":
         return this.gui.enableToolBarItem();
-      case 'settoolbartips':
+      case "settoolbartips":
         return this.gui.setToolBarTips();
       // GUI - TREE VIEW
-      case 'addtreeviewnode':
+      case "addtreeviewnode":
         return this.gui.addTreeViewNode();
-      case 'collapsetreeviewnode':
+      case "collapsetreeviewnode":
         return this.gui.collapseTreeViewNode();
-      case 'counttreeviewnodes':
+      case "counttreeviewnodes":
         return this.gui.countTreeViewNodes();
-      case 'createtreeview':
+      case "createtreeview":
         return this.gui.createTreeView();
-      case 'expandtreeviewnode':
+      case "expandtreeviewnode":
         return this.gui.expandTreeViewNode();
-      case 'freetreeviewnode':
+      case "freetreeviewnode":
         return this.gui.freeTreeViewNode();
-      case 'inserttreeviewnode':
+      case "inserttreeviewnode":
         return this.gui.insertTreeViewNode();
-      case 'modifytreeviewnode':
+      case "modifytreeviewnode":
         return this.gui.modifyTreeViewNode();
-      case 'selectedtreeviewnode':
+      case "selectedtreeviewnode":
         return this.gui.selectedTreeViewNode();
-      case 'selecttreeviewnode':
+      case "selecttreeviewnode":
         return this.gui.selectTreeViewNode();
-      case 'treeviewnodetext':
+      case "treeviewnodetext":
         return this.gui.treeViewNodeText();
-      case 'treeviewroot':
+      case "treeviewroot":
         return this.gui.treeViewRoot();
       // GUI - WINDOW
-      case 'activatewindow':
+      case "activatewindow":
         return this.gui.activateWindow();
-      case 'activewindow':
+      case "activewindow":
         return this.gui.activeWindow();
-      case 'createwindow':
+      case "createwindow":
         return this.gui.createWindow();
-      case 'maximizewindow':
+      case "maximizewindow":
         return this.gui.maximizeWindow();
-      case 'minimizewindow':
+      case "minimizewindow":
         return this.gui.minimizeWindow();
-      case 'restorewindow':
+      case "restorewindow":
         return this.gui.restoreWindow();
-      case 'setminwindowsize':
+      case "setminwindowsize":
         return this.gui.setMinWindowSize();
-      case 'setstatustext':
+      case "setstatustext":
         return this.gui.setStatusText();
-      case 'windowmaximized':
+      case "windowmaximized":
         return this.gui.windowMaximized();
-      case 'windowminimized':
+      case "windowminimized":
         return this.gui.windowMinimized();
       // IO - GAMEPAD
-      case 'flushjoy':
+      case "flushjoy":
         return this.io.flushJoy();
-      case 'getjoy':
+      case "getjoy":
         return this.io.getJoy();
-      case 'joydown':
-        return this.io.joyDown();
-      case 'joyhat':
+      case "joydown":
+        return this.io.joyDown(evaluatedParams[0], evaluatedParams[1]);
+      case "joyhat":
         return this.io.joyHat();
-      case 'joyhit':
-        return this.io.joyHit();
-      case 'joypitch':
+      case "joyhit":
+        return this.io.joyHit(evaluatedParams[0], evaluatedParams[1]);
+      case "joypitch":
         return this.io.joyPitch();
-      case 'joyroll':
+      case "joyroll":
         return this.io.joyRoll();
-      case 'joytype':
+      case "joytype":
         return this.io.joyType();
-      case 'joyu':
+      case "joyu":
         return this.io.joyU();
-      case 'joyudir':
+      case "joyudir":
         return this.io.joyUDir();
-      case 'joyv':
+      case "joyv":
         return this.io.joyV();
-      case 'joyvdir':
+      case "joyvdir":
         return this.io.joyVDir();
-      case 'joywait':
+      case "joywait":
         return this.io.joyWait();
-      case 'joyx':
+      case "joyx":
         return this.io.joyX();
-      case 'joyxdir':
+      case "joyxdir":
         return this.io.joyXDir();
-      case 'joyy':
+      case "joyy":
         return this.io.joyY();
-      case 'joyyaw':
+      case "joyyaw":
         return this.io.joyYaw();
-      case 'joyydir':
+      case "joyydir":
         return this.io.joyYDir();
-      case 'joyz':
+      case "joyz":
         return this.io.joyZ();
-      case 'joyzdir':
+      case "joyzdir":
         return this.io.joyZDir();
-      case 'waitjoy':
+      case "waitjoy":
         return this.io.waitJoy();
       // IO - KEYBOARD
-      case 'flushkeys':
+      case "flushkeys":
         return this.io.flushKeys();
-      case 'getkey':
+      case "getkey":
         return this.io.getKey();
-      case 'input':
+      case "input":
         return this.io.input(evaluatedParams[0]);
-      case 'keydown':
+      case "keydown":
         return this.io.keyDown(evaluatedParams[0]);
-      case 'keyhit':
+      case "keyhit":
         return this.io.keyHit(evaluatedParams[0]);
-      case 'keywait':
+      case "keywait":
         return this.io.keyWait();
-      case 'waitKey':
+      case "waitKey":
         return this.io.waitKey();
       // IO - MOUSE
-      case 'flushmouse':
+      case "flushmouse":
         return this.io.flushMouse();
-      case 'getmouse':
+      case "getmouse":
         return this.io.getMouse();
-      case 'hidepointer':
+      case "hidepointer":
         return this.io.hidePointer();
-      case 'mousedown':
+      case "mousedown":
         return this.io.mouseDown(evaluatedParams[0]);
-      case 'mousehit':
+      case "mousehit":
         return this.io.mouseHit(evaluatedParams[0]);
-      case 'mousewait':
+      case "mousewait":
         return this.io.mouseWait();
-      case 'mousex':
+      case "mousex":
         return this.io.mouseX();
-      case 'mousexspeed':
+      case "mousexspeed":
         return this.io.mouseXSpeed();
-      case 'mousey':
+      case "mousey":
         return this.io.mouseY();
-      case 'mouseyspeed':
+      case "mouseyspeed":
         return this.io.mouseYSpeed();
-      case 'mousez':
+      case "mousez":
         return this.io.mouseZ();
-      case 'mousezspeed':
+      case "mousezspeed":
         return this.io.mouseZSpeed();
-      case 'movemouse':
-        return this.io.moveMouse();
-      case 'showpointer':
+      case "movemouse":
+        return this.io.moveMouse(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2]
+        );
+      case "showpointer":
         return this.io.showPointer();
-      case 'waitmouse':
+      case "waitmouse":
         return this.io.waitMouse();
       // SOUND - 3D
-      case 'createlistener':
-        return this.sound.createListener();
-      case 'emitsound':
-        return this.sound.emitSound();
-      case 'load3dsound':
-        return this.sound.load3DSound();
-      case 'channelpan':
-        return this.sound.channelPan();
-      case 'channelpitch':
-        return this.sound.channelPitch();
-      case 'channelplaying':
-        return this.sound.channelPlaying();
-      case 'channelvolume':
-        return this.sound.channelVolume();
-      case 'pausechannel':
-        return this.sound.pauseChannel();
-      case 'resumechannel':
-        return this.sound.resumeChannel();
-      case 'stopchannel':
-        return this.sound.stopChannel();
+      case "createlistener":
+        return this.sound.createListener(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
+      case "emitsound":
+        return this.sound.emitSound(evaluatedParams[0], evaluatedParams[1]);
+      case "load3dsound":
+        return this.sound.load3DSound(evaluatedParams[0]);
+      case "channelpan":
+        return this.sound.channelPan(evaluatedParams[0], evaluatedParams[1]);
+      case "channelpitch":
+        return this.sound.channelPitch(evaluatedParams[0], evaluatedParams[1]);
+      case "channelplaying":
+        return this.sound.channelPlaying(evaluatedParams[0]);
+      case "channelvolume":
+        return this.sound.channelVolume(evaluatedParams[0], evaluatedParams[1]);
+      case "pausechannel":
+        return this.sound.pauseChannel(evaluatedParams[0]);
+      case "resumechannel":
+        return this.sound.resumeChannel(evaluatedParams[0]);
+      case "stopchannel":
+        return this.sound.stopChannel(evaluatedParams[0]);
       // SOUND - MUSIC SAMPLES
-      case 'playcdtrack':
-        return this.sound.playCDTrack();
-      case 'playmusic':
+      case "playcdtrack":
+        return this.sound.playCDTrack(evaluatedParams[0], evaluatedParams[1]);
+      case "playmusic":
         return this.sound.playMusic(evaluatedParams[0], evaluatedParams[1]);
-      case 'freesound':
+      case "freesound":
         return this.sound.freeSound(evaluatedParams[0]);
-      case 'loadsound':
+      case "loadsound":
         return this.sound.loadSound(evaluatedParams[0]);
-      case 'loopsound':
+      case "loopsound":
         return this.sound.loopSound(evaluatedParams[0]);
-      case 'playsound':
+      case "playsound":
         return this.sound.playSound(evaluatedParams[0]);
-      case 'soundpan':
+      case "soundpan":
         return this.sound.soundPan(evaluatedParams[0], evaluatedParams[1]);
-      case 'soundvolume':
+      case "soundvolume":
         return this.sound.soundVolume(evaluatedParams[0], evaluatedParams[1]);
     }
 
@@ -1675,29 +2000,31 @@ export class InterpreterService {
   public async evaluateExpression(expression: Expression): Promise<any> {
     const termsToEvaluate: Promise<string>[] = [];
     let evaluatedTerms: any[];
-    let result = '';
+    let result = "";
     // console.info('Expression', expression);
 
     switch (expression.constructor.name) {
-      case 'NumericExpression':
+      case "NumericExpression":
         return (expression as NumericExpression).value;
-      case 'BooleanExpression':
+      case "BooleanExpression":
         return (expression as BooleanExpression).value;
-      case 'StringExpression':
+      case "StringExpression":
         return (expression as StringExpression).value;
-      case 'VariableExpression':
+      case "VariableExpression":
         const varExpr: VariableExpression = expression as VariableExpression;
         switch (varExpr.scope) {
-          case 'const':
-          case 'global':
+          case "const":
+          case "global":
             return this.gameState.getGlobal(varExpr.id);
         }
-      case 'CommandStatement':
+      case "CommandStatement":
         return this.executeCommand(expression as CommandStatement);
-      case 'ArithmeticExpression':
+      case "ArithmeticExpression":
         const arithExpr: ArithmeticExpression = expression as ArithmeticExpression;
 
-        arithExpr.terms.forEach((term: Term) => termsToEvaluate.push(this.evaluateExpression(term)));
+        arithExpr.terms.forEach((term: Term) =>
+          termsToEvaluate.push(this.evaluateExpression(term))
+        );
         evaluatedTerms = await Promise.all(termsToEvaluate);
 
         evaluatedTerms.forEach((term: string, index: number) => {
@@ -1707,10 +2034,12 @@ export class InterpreterService {
           }
         });
         return eval(result);
-      case 'LogicalExpression':
+      case "LogicalExpression":
         const logicExpr: LogicalExpression = expression as LogicalExpression;
 
-        logicExpr.terms.forEach((term: Term) => termsToEvaluate.push(this.evaluateExpression(term)));
+        logicExpr.terms.forEach((term: Term) =>
+          termsToEvaluate.push(this.evaluateExpression(term))
+        );
         evaluatedTerms = await Promise.all(termsToEvaluate);
 
         evaluatedTerms.forEach((term: string, index: number) => {
@@ -1722,17 +2051,19 @@ export class InterpreterService {
         return eval(result);
     }
 
-    console.warn('Expression could not be evaluated:', expression);
+    console.warn("Expression could not be evaluated:", expression);
     return null;
   }
 
   public async assign(assignment: Assignment): Promise<void> {
-    const evaluatedExpression: any = await this.evaluateExpression(assignment.value);
+    const evaluatedExpression: any = await this.evaluateExpression(
+      assignment.value
+    );
     // console.info('evaluatedExpression:', evaluatedExpression);
 
     switch (assignment.scope) {
-      case 'const':
-      case 'global':
+      case "const":
+      case "global":
         this.gameState.setGlobal(assignment.id, evaluatedExpression);
     }
   }

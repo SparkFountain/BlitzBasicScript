@@ -3,7 +3,7 @@ import { CommandsSound3DService } from "./sound/3d.service";
 import { CommandsSoundChannelsService } from "./sound/channels.service";
 import { CommandsSoundMusicSamplesService } from "./sound/music-samples.service";
 import { GameSound } from "bbscript/src/interfaces/game/sound";
-import { BbScriptEntity } from "bbscript/src/classes/in-game/3d/entities/entity";
+import { BbScriptEntity } from "bbscript/src/classes/in-game/3d/entity";
 import { BbScriptListener } from "bbscript/src/classes/in-game/sound/listener";
 import { BbScriptSound } from "bbscript/src/classes/in-game/sound/sound";
 import { BbScriptChannel } from "bbscript/src/classes/in-game/sound/channel";

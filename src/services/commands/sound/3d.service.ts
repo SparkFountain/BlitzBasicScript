@@ -1,6 +1,6 @@
 import { Injectable } from "@angular/core";
 import { BbScriptListener } from "bbscript/src/classes/in-game/sound/listener";
-import { BbScriptEntity } from "bbscript/src/classes/in-game/3d/entities/entity";
+import { BbScriptEntity } from "bbscript/src/classes/in-game/3d/entity";
 import { BbScriptSound } from "bbscript/src/classes/in-game/sound/sound";
 import { BbScriptChannel } from "bbscript/src/classes/in-game/sound/channel";
 

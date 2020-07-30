@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
-import { CommandsBasicsDiverseService } from './basics/diverse.service';
-import { CommandsBasicsMathsService } from './basics/maths.service';
-import { CommandsBasicsStringsService } from './basics/strings.service';
-import { CommandsBasicsTimeRandomService } from './basics/time-random.service';
+import { Injectable } from "@angular/core";
+import { CommandsBasicsDiverseService } from "./basics/diverse.service";
+import { CommandsBasicsMathsService } from "./basics/maths.service";
+import { CommandsBasicsStringsService } from "./basics/strings.service";
+import { CommandsBasicsTimeRandomService } from "./basics/time-random.service";
+import { BbScriptTimer } from "bbscript/src/classes/in-game/time-and-date/timer";
 
 @Injectable()
 export class CommandsBasicsService {
@@ -160,7 +161,11 @@ export class CommandsBasicsService {
     return this.strings.mid(text, start, count);
   }
 
-  async replace(text: string, search: string, replace: string): Promise<string> {
+  async replace(
+    text: string,
+    search: string,
+    replace: string
+  ): Promise<string> {
     return this.strings.replace(text, search, replace);
   }
 
@@ -189,8 +194,8 @@ export class CommandsBasicsService {
   }
 
   // TIME AND RANDOM
-  async createTimer(): Promise<any> {
-    return this.timeRandom.createTimer();
+  async createTimer(frequency: number): Promise<any> {
+    return this.timeRandom.createTimer(frequency);
   }
 
   async currentDate(): Promise<string> {
@@ -205,28 +210,28 @@ export class CommandsBasicsService {
     return this.timeRandom.delay(milliSeconds);
   }
 
-  async freeTimer(): Promise<void> {
-    return this.timeRandom.freeTimer();
+  async freeTimer(timer: BbScriptTimer): Promise<void> {
+    return this.timeRandom.freeTimer(timer);
   }
 
   async milliSecs(): Promise<number> {
     return this.timeRandom.milliSecs();
   }
 
-  async pauseTimer(): Promise<void> {
-    return this.timeRandom.pauseTimer();
+  async pauseTimer(timer: BbScriptTimer): Promise<void> {
+    return this.timeRandom.pauseTimer(timer);
   }
 
   async rand(minOrMax: number, max?: number): Promise<number> {
     return this.timeRandom.rand(minOrMax, max);
   }
 
-  async resetTimer(): Promise<void> {
-    return this.timeRandom.resetTimer();
+  async resetTimer(timer: BbScriptTimer): Promise<void> {
+    return this.timeRandom.resetTimer(timer);
   }
 
-  async resumeTimer(): Promise<void> {
-    return this.timeRandom.resumeTimer();
+  async resumeTimer(timer: BbScriptTimer): Promise<void> {
+    return this.timeRandom.resumeTimer(timer);
   }
 
   async rnd(minOrMax: number, max: number): Promise<number> {
