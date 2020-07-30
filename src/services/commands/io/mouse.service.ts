@@ -1,5 +1,5 @@
-import { Injectable } from '@angular/core';
-import { GameStateService } from '../../game-state.service';
+import { Injectable } from "@angular/core";
+import { GameStateService } from "../../game-state.service";
 
 @Injectable()
 export class CommandsIOMouseService {
@@ -9,9 +9,11 @@ export class CommandsIOMouseService {
     return this.gameState.flushMouse();
   }
 
-  async getMouse() {}
+  async getMouse(): Promise<number> {
+    return 0;
+  }
 
-  async hidePointer(): Promise<void> {
+  async hidePointer(canvas?: any): Promise<void> {
     //TODO set CSS class on canvas
   }
 
@@ -23,23 +25,39 @@ export class CommandsIOMouseService {
     return this.gameState.getMouseHits(code);
   }
 
-  async mouseWait() {}
+  async mouseWait(): Promise<number> {
+    return 0;
+  }
 
-  async mouseX() {}
+  async mouseX(canvas?: any): Promise<number> {
+    return 0;
+  }
 
-  async mouseXSpeed() {}
+  async mouseXSpeed(canvas?: any): Promise<number> {
+    return 0;
+  }
 
-  async mouseY() {}
+  async mouseY(canvas?: any): Promise<number> {
+    return 0;
+  }
 
-  async mouseYSpeed() {}
+  async mouseYSpeed(canvas?: any): Promise<number> {
+    return 0;
+  }
 
-  async mouseZ() {}
+  async mouseZ(): Promise<number> {
+    return 0;
+  }
 
-  async mouseZSpeed() {}
+  async mouseZSpeed(): Promise<number> {
+    return 0;
+  }
 
-  async moveMouse() {}
+  async moveMouse(x: number, y: number, canvas?: any): Promise<void> {}
 
-  async showPointer() {}
+  async showPointer(canvas?: any): Promise<void> {}
 
-  async waitMouse() {}
+  async waitMouse(): Promise<number> {
+    return await this.mouseWait();
+  }
 }

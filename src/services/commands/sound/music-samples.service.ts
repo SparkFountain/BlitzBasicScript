@@ -1,13 +1,23 @@
-import { GameSound } from '../../../interfaces/game/sound';
-import { DebugEnvironment } from '../../../environment/debug.environment';
-import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { GameSound } from "../../../interfaces/game/sound";
+import { DebugEnvironment } from "../../../environment/debug.environment";
+import { Injectable } from "@angular/core";
+import { HttpClient } from "@angular/common/http";
+import { BbScriptChannel } from "bbscript/src/classes/in-game/sound/channel";
+import { BB_SCRIPT_CD_TRACK_MODE } from "bbscript/src/enums/in-game/sound/cd-track-mode";
 
 @Injectable()
 export class CommandsSoundMusicSamplesService {
-  constructor(private http: HttpClient, private environment: DebugEnvironment) {}
+  constructor(
+    private http: HttpClient,
+    private environment: DebugEnvironment
+  ) {}
 
-  async playCDTrack() {}
+  async playCDTrack(
+    track: number,
+    mode?: BB_SCRIPT_CD_TRACK_MODE
+  ): Promise<BbScriptChannel> {
+    return null;
+  }
 
   //TODO Midi will not be natively supported, use MIDI.js or similar library
   async playMusic(filePath: string, mode?: number): Promise<GameSound> {
@@ -36,7 +46,9 @@ export class CommandsSoundMusicSamplesService {
   async loadSound(filePath: string): Promise<GameSound> {
     //info: the responseType conversion to JSON is a workaround, see https://github.com/angular/angular/issues/18586
     return this.http
-      .get<ArrayBuffer>(this.environment.getServer() + filePath, { responseType: 'arraybuffer' as 'json' })
+      .get<ArrayBuffer>(this.environment.getServer() + filePath, {
+        responseType: "arraybuffer" as "json",
+      })
       .toPromise()
       .then((soundAsBlob: ArrayBuffer) => {
         let audioCtx: AudioContext = new AudioContext();
@@ -62,12 +74,12 @@ export class CommandsSoundMusicSamplesService {
                 context: audioCtx,
                 source: bufferSourceNode,
                 volumeGain: volumeGain,
-                stereoPanner: pannerNode
+                stereoPanner: pannerNode,
               };
             });
           },
           (e) => {
-            console.info('Error with decoding audio data' + e.err);
+            console.info("Error with decoding audio data" + e.err);
           }
         );
 
@@ -92,7 +104,11 @@ export class CommandsSoundMusicSamplesService {
     //TODO check how many channels exist and copy all of them successively
 
     let newBufferNode = sound.context.createBufferSource();
-    newBufferNode.buffer = sound.context.createBuffer(2, sound.source.buffer.length, frequency);
+    newBufferNode.buffer = sound.context.createBuffer(
+      2,
+      sound.source.buffer.length,
+      frequency
+    );
     let leftChannel = sound.source.buffer.getChannelData(0);
     let rightChannel = sound.source.buffer.getChannelData(1);
     newBufferNode.buffer.copyToChannel(leftChannel, 0);

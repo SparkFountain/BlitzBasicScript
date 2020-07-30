@@ -1,8 +1,13 @@
-import { Injectable } from '@angular/core';
-import { CommandsSound3DService } from './sound/3d.service';
-import { CommandsSoundChannelsService } from './sound/channels.service';
-import { CommandsSoundMusicSamplesService } from './sound/music-samples.service';
-import { GameSound } from 'bbscript/src/interfaces/game/sound';
+import { Injectable } from "@angular/core";
+import { CommandsSound3DService } from "./sound/3d.service";
+import { CommandsSoundChannelsService } from "./sound/channels.service";
+import { CommandsSoundMusicSamplesService } from "./sound/music-samples.service";
+import { GameSound } from "bbscript/src/interfaces/game/sound";
+import { BbScriptEntity } from "bbscript/src/classes/in-game/3d/entities/entity";
+import { BbScriptListener } from "bbscript/src/classes/in-game/sound/listener";
+import { BbScriptSound } from "bbscript/src/classes/in-game/sound/sound";
+import { BbScriptChannel } from "bbscript/src/classes/in-game/sound/channel";
+import { BB_SCRIPT_CD_TRACK_MODE } from "bbscript/src/enums/in-game/sound/cd-track-mode";
 
 @Injectable()
 export class CommandsSoundService {
@@ -13,50 +18,69 @@ export class CommandsSoundService {
   ) {}
 
   // 3D SOUND
-  async createListener(): Promise<any> {
-    return this.sound3dService.createListener();
+  async createListener(
+    parent: BbScriptEntity,
+    rolloff?: number,
+    doppler?: number,
+    distance?: number
+  ): Promise<BbScriptListener> {
+    return this.sound3dService.createListener(
+      parent,
+      rolloff,
+      doppler,
+      distance
+    );
   }
 
-  async emitSound(): Promise<any> {
-    return this.sound3dService.emitSound();
+  async emitSound(
+    sound: BbScriptSound,
+    entity: BbScriptEntity
+  ): Promise<BbScriptChannel> {
+    return this.sound3dService.emitSound(sound, entity);
   }
 
-  async load3DSound(): Promise<any> {
-    return this.sound3dService.load3DSound();
+  async load3DSound(filePath: string): Promise<BbScriptSound> {
+    return this.sound3dService.load3DSound(filePath);
   }
 
   // CHANNELS
-  async channelPan(): Promise<any> {
-    return this.channelService.channelPan();
+  async channelPan(channel: BbScriptChannel, balance: number): Promise<void> {
+    return this.channelService.channelPan(channel, balance);
   }
 
-  async channelPitch(): Promise<any> {
-    return this.channelService.channelPitch();
+  async channelPitch(
+    channel: BbScriptChannel,
+    frequency: number
+  ): Promise<void> {
+    return this.channelService.channelPitch(channel, frequency);
   }
 
-  async channelPlaying(): Promise<any> {
-    return this.channelService.channelPlaying();
+  async channelPlaying(channel: BbScriptChannel): Promise<boolean> {
+    return this.channelService.channelPlaying(channel);
   }
 
-  async channelVolume(): Promise<any> {
-    return this.channelService.channelVolume();
+  async channelVolume(channel: BbScriptChannel, volume: number): Promise<void> {
+    return this.channelService.channelVolume(channel, volume);
   }
 
-  async pauseChannel(): Promise<any> {
-    return this.channelService.pauseChannel();
+  async pauseChannel(channel: BbScriptChannel): Promise<void> {
+    return this.channelService.pauseChannel(channel);
   }
 
-  async resumeChannel(): Promise<any> {
-    return this.channelService.resumeChannel();
+  async resumeChannel(channel: BbScriptChannel): Promise<void> {
+    return this.channelService.resumeChannel(channel);
   }
 
-  async stopChannel(): Promise<any> {
-    return this.channelService.stopChannel();
+  async stopChannel(channel: BbScriptChannel): Promise<void> {
+    return this.channelService.stopChannel(channel);
   }
 
   // MUSIC SAMPLES
-  async playCDTrack(): Promise<any> {
-    return this.musicSamplesService.playCDTrack();
+  async playCDTrack(
+    track: number,
+    mode?: BB_SCRIPT_CD_TRACK_MODE
+  ): Promise<BbScriptChannel> {
+    return this.musicSamplesService.playCDTrack(track, mode);
   }
 
   //TODO Midi will not be natively supported, use MIDI.js or similar library

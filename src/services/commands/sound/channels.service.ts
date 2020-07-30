@@ -1,20 +1,29 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
+import { BbScriptChannel } from "bbscript/src/classes/in-game/sound/channel";
 
 @Injectable()
 export class CommandsSoundChannelsService {
   constructor() {}
 
-  async channelPan() {}
+  async channelPan(channel: BbScriptChannel, balance: number): Promise<void> {}
 
-  async channelPitch() {}
+  async channelPitch(
+    channel: BbScriptChannel,
+    frequency: number
+  ): Promise<void> {}
 
-  async channelPlaying() {}
+  async channelPlaying(channel: BbScriptChannel): Promise<boolean> {
+    return false;
+  }
 
-  async channelVolume() {}
+  async channelVolume(
+    channel: BbScriptChannel,
+    volume: number
+  ): Promise<void> {}
 
-  async pauseChannel() {}
+  async pauseChannel(channel: BbScriptChannel): Promise<void> {}
 
-  async resumeChannel() {}
+  async resumeChannel(channel: BbScriptChannel): Promise<void> {}
 
-  async stopChannel() {}
+  async stopChannel(channel: BbScriptChannel): Promise<void> {}
 }

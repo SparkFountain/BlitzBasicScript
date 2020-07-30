@@ -130,12 +130,12 @@ export class CommandsIOService {
     return this.mouseService.flushMouse();
   }
 
-  async getMouse(): Promise<any> {
+  async getMouse(): Promise<number> {
     return this.mouseService.getMouse();
   }
 
-  async hidePointer(): Promise<void> {
-    return this.mouseService.hidePointer();
+  async hidePointer(canvas?: any): Promise<void> {
+    return this.mouseService.hidePointer(canvas);
   }
 
   async mouseDown(code: number): Promise<boolean> {
@@ -146,43 +146,43 @@ export class CommandsIOService {
     return this.mouseService.mouseHit(code);
   }
 
-  async mouseWait(): Promise<any> {
+  async mouseWait(): Promise<number> {
     return this.mouseService.mouseWait();
   }
 
-  async mouseX(): Promise<any> {
-    return this.mouseService.mouseX();
+  async mouseX(canvas?: any): Promise<number> {
+    return this.mouseService.mouseX(canvas);
   }
 
-  async mouseXSpeed(): Promise<any> {
-    return this.mouseService.mouseXSpeed();
+  async mouseXSpeed(canvas?: any): Promise<number> {
+    return this.mouseService.mouseXSpeed(canvas);
   }
 
-  async mouseY(): Promise<any> {
-    return this.mouseService.mouseY();
+  async mouseY(canvas?: any): Promise<number> {
+    return this.mouseService.mouseY(canvas);
   }
 
-  async mouseYSpeed(): Promise<any> {
-    return this.mouseService.mouseYSpeed();
+  async mouseYSpeed(canvas?: any): Promise<number> {
+    return this.mouseService.mouseYSpeed(canvas);
   }
 
-  async mouseZ(): Promise<any> {
+  async mouseZ(): Promise<number> {
     return this.mouseService.mouseZ();
   }
 
-  async mouseZSpeed(): Promise<any> {
+  async mouseZSpeed(): Promise<number> {
     return this.mouseService.mouseZSpeed();
   }
 
-  async moveMouse(): Promise<any> {
-    return this.mouseService.moveMouse();
+  async moveMouse(x: number, y: number, canvas?: any): Promise<void> {
+    return this.mouseService.moveMouse(x, y, canvas);
   }
 
-  async showPointer(): Promise<any> {
-    return this.mouseService.showPointer();
+  async showPointer(canvas?: any): Promise<void> {
+    return this.mouseService.showPointer(canvas);
   }
 
-  async waitMouse(): Promise<any> {
+  async waitMouse(): Promise<number> {
     return this.mouseService.waitMouse();
   }
 }
