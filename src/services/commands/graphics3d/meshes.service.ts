@@ -1,109 +1,151 @@
-import { Injectable } from '@angular/core';
-import { BabylonJSService } from '../../babylon-js.service';
-import { GameEntity } from '../../../interfaces/game/entity';
-import { Mesh } from 'babylonjs';
+import { Injectable } from "@angular/core";
+import { BabylonJSService } from "../../babylon-js.service";
+import { Mesh } from "babylonjs";
+import { BbScriptEntity } from "bbscript/src/classes/in-game/3d/entity";
 
 @Injectable()
 export class CommandsGraphics3dMeshesService {
   constructor(private babylonjs: BabylonJSService) {}
 
-  async addMesh(source: any, target: any): Promise<any> {}
+  async addMesh(
+    source: BbScriptEntity,
+    target: BbScriptEntity
+  ): Promise<void> {}
 
-  async copyMesh(mesh: any, parent?: any): Promise<any> {}
-
-  async createCone(segments?: number, hasFloor?: boolean, parent?: GameEntity): Promise<GameEntity> {
-    return this.babylonjs.createCone(segments, hasFloor).then((coneMesh: Mesh) => {
-      const coneEntity: GameEntity = {
-        name: 'TODO',
-        class: 'Mesh',
-        parent: parent ? parent : null,
-        mesh: coneMesh
-      };
-
-      return coneEntity;
-    });
+  async copyMesh(
+    mesh: BbScriptEntity,
+    parent?: BbScriptEntity
+  ): Promise<BbScriptEntity> {
+    return null;
   }
 
-  async createSphere(segments?: number, parent?: GameEntity): Promise<GameEntity> {
+  async createCone(
+    segments?: number,
+    hasFloor?: boolean,
+    parent?: BbScriptEntity
+  ): Promise<BbScriptEntity> {
+    return null;
+
+    // return this.babylonjs
+    //   .createCone(segments, hasFloor)
+    //   .then((coneMesh: Mesh) => {
+    //     const coneEntity: BbScriptEntity = {
+    //       name: "TODO",
+    //       class: "Mesh",
+    //       parent: parent ? parent : null,
+    //       mesh: coneMesh,
+    //     };
+
+    //     return coneEntity;
+    //   });
+  }
+
+  async createSphere(
+    segments?: number,
+    parent?: BbScriptEntity
+  ): Promise<BbScriptEntity> {
     return this.babylonjs.createSphere(segments).then((sphereMesh: Mesh) => {
-      const sphereEntity: GameEntity = {
-        name: 'TODO',
-        class: 'Mesh',
-        parent: parent ? parent : null,
-        mesh: sphereMesh
-      };
+      return null;
 
-      return sphereEntity;
+      // const sphereEntity: BbScriptEntity = {
+      //   name: "TODO",
+      //   class: "Mesh",
+      //   parent: parent ? parent : null,
+      //   mesh: sphereMesh,
+      // };
+
+      // return sphereEntity;
     });
   }
 
-  async createCube(parent?: GameEntity): Promise<GameEntity> {
-    return this.babylonjs.createCube().then((cubeMesh: Mesh) => {
-      const cubeEntity: GameEntity = {
-        name: 'TODO',
-        class: 'Mesh',
-        parent: parent ? parent : null,
-        mesh: cubeMesh
-      };
+  async createCube(parent?: BbScriptEntity): Promise<BbScriptEntity> {
+    return null;
 
-      return cubeEntity;
-    });
+    // return this.babylonjs.createCube().then((cubeMesh: Mesh) => {
+    //   const cubeEntity: BbScriptEntity = {
+    //     name: "TODO",
+    //     class: "Mesh",
+    //     parent: parent ? parent : null,
+    //     mesh: cubeMesh,
+    //   };
+
+    //   return cubeEntity;
+    // });
   }
 
-  async createCylinder(segments?: number, hasFloor?: boolean, parent?: GameEntity): Promise<GameEntity> {
-    return this.babylonjs.createCylinder(segments, hasFloor).then((cylinderMesh: Mesh) => {
-      const cylinderEntity: GameEntity = {
-        name: 'TODO',
-        class: 'Mesh',
-        parent: parent ? parent : null,
-        mesh: cylinderMesh
-      };
+  async createCylinder(
+    segments?: number,
+    hasFloor?: boolean,
+    parent?: BbScriptEntity
+  ): Promise<BbScriptEntity> {
+    return null;
 
-      return cylinderEntity;
-    });
+    // return this.babylonjs
+    //   .createCylinder(segments, hasFloor)
+    //   .then((cylinderMesh: Mesh) => {
+    //     const cylinderEntity: BbScriptEntity = {
+    //       name: "TODO",
+    //       class: "Mesh",
+    //       parent: parent ? parent : null,
+    //       mesh: cylinderMesh,
+    //     };
+
+    //     return cylinderEntity;
+    //   });
   }
 
-  async createPyramid(baseVertexNumber?: number, parent?: any): Promise<GameEntity> {
-    return this.babylonjs.createPyramid(baseVertexNumber).then((pyramidMesh: Mesh) => {
-      const pyramidEntity: GameEntity = {
-        name: 'TODO',
-        class: 'Mesh',
-        parent: parent ? parent : null,
-        mesh: pyramidMesh
-      };
+  async createPyramid(
+    baseVertexNumber?: number,
+    parent?: any
+  ): Promise<BbScriptEntity> {
+    return null;
 
-      return pyramidEntity;
-    });
+    // return this.babylonjs
+    //   .createPyramid(baseVertexNumber)
+    //   .then((pyramidMesh: Mesh) => {
+    //     const pyramidEntity: BbScriptEntity = {
+    //       name: "TODO",
+    //       class: "Mesh",
+    //       parent: parent ? parent : null,
+    //       mesh: pyramidMesh,
+    //     };
+
+    //     return pyramidEntity;
+    //   });
   }
 
-  async createTorus(parent?: GameEntity): Promise<GameEntity> {
-    return this.babylonjs.createTorus().then((torusMesh: Mesh) => {
-      const torusEntity: GameEntity = {
-        name: 'TODO',
-        class: 'Mesh',
-        parent: parent ? parent : null,
-        mesh: torusMesh
-      };
+  async createTorus(parent?: BbScriptEntity): Promise<BbScriptEntity> {
+    return null;
 
-      return torusEntity;
-    });
+    // return this.babylonjs.createTorus().then((torusMesh: Mesh) => {
+    //   const torusEntity: BbScriptEntity = {
+    //     name: "TODO",
+    //     class: "Mesh",
+    //     parent: parent ? parent : null,
+    //     mesh: torusMesh,
+    //   };
+
+    //   return torusEntity;
+    // });
   }
 
-  async createTorusKnot(parent?: GameEntity): Promise<GameEntity> {
-    return this.babylonjs.createTorusKnot().then((torusKnotMesh: Mesh) => {
-      const torusKnotEntity: GameEntity = {
-        name: 'TODO',
-        class: 'Mesh',
-        parent: parent ? parent : null,
-        mesh: torusKnotMesh
-      };
+  async createTorusKnot(parent?: BbScriptEntity): Promise<BbScriptEntity> {
+    return null;
 
-      return torusKnotEntity;
-    });
+    // return this.babylonjs.createTorusKnot().then((torusKnotMesh: Mesh) => {
+    //   const torusKnotEntity: BbScriptEntity = {
+    //     name: "TODO",
+    //     class: "Mesh",
+    //     parent: parent ? parent : null,
+    //     mesh: torusKnotMesh,
+    //   };
+
+    //   return torusKnotEntity;
+    // });
   }
 
   async fitMesh(
-    mesh: any,
+    mesh: BbScriptEntity,
     x: number,
     y: number,
     z: number,
@@ -113,11 +155,15 @@ export class CommandsGraphics3dMeshesService {
     uniform: boolean
   ): Promise<void> {}
 
-  async flipMesh(mesh): Promise<void> {}
+  async flipMesh(mesh: BbScriptEntity): Promise<void> {}
 
-  async loadAnimMesh(filePath: string, parent?: any): Promise<any> {}
+  async loadAnimMesh(filePath: string, parent?: any): Promise<BbScriptEntity> {
+    return null;
+  }
 
-  async loadMesh(filePath: string, parent?: any): Promise<any> {}
+  async loadMesh(filePath: string, parent?: any): Promise<BbScriptEntity> {
+    return null;
+  }
 
   async meshCullBox(
     mesh: any,
@@ -129,21 +175,36 @@ export class CommandsGraphics3dMeshesService {
     depth: number
   ): Promise<void> {}
 
-  async meshDepth(mesh: any): Promise<number> {
+  async meshDepth(mesh: BbScriptEntity): Promise<number> {
     return 0;
   }
 
-  async meshHeight(mesh: any): Promise<number> {
+  async meshHeight(mesh: BbScriptEntity): Promise<number> {
     return 0;
   }
 
-  async meshWidth(mesh: any): Promise<number> {
+  async meshWidth(mesh: BbScriptEntity): Promise<number> {
     return 0;
   }
 
-  async positionMesh(mesh: Mesh, x: number, y: number, z: number): Promise<void> {}
+  async positionMesh(
+    mesh: BbScriptEntity,
+    x: number,
+    y: number,
+    z: number
+  ): Promise<void> {}
 
-  async rotateMesh(mesh: Mesh, pitch: number, yaw: number, roll: number): Promise<void> {}
+  async rotateMesh(
+    mesh: BbScriptEntity,
+    pitch: number,
+    yaw: number,
+    roll: number
+  ): Promise<void> {}
 
-  async scaleMesh(mesh: Mesh, scaleX: number, scaleY: number, scaleZ: number): Promise<void> {}
+  async scaleMesh(
+    mesh: BbScriptEntity,
+    scaleX: number,
+    scaleY: number,
+    scaleZ: number
+  ): Promise<void> {}
 }

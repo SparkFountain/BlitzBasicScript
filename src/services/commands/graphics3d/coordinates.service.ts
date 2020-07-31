@@ -21,7 +21,7 @@ export class CommandsGraphics3dCoordinatesService {
   }
 
   async moveEntity(
-    entity: any,
+    entity: BbScriptEntity,
     x: number,
     y: number,
     z: number
@@ -30,8 +30,8 @@ export class CommandsGraphics3dCoordinatesService {
   }
 
   async pointEntity(
-    sourceEntity: any,
-    targetEntity: any,
+    sourceEntity: BbScriptEntity,
+    targetEntity: BbScriptEntity,
     roll: number
   ): Promise<void> {
     return this.babylonjs.pointEntity(sourceEntity, targetEntity, roll);
@@ -71,7 +71,7 @@ export class CommandsGraphics3dCoordinatesService {
   }
 
   async scaleEntity(
-    entity: any,
+    entity: BbScriptEntity,
     x: number,
     y: number,
     z: number,
@@ -81,7 +81,7 @@ export class CommandsGraphics3dCoordinatesService {
   }
 
   async translateEntity(
-    entity: any,
+    entity: BbScriptEntity,
     x: number,
     y: number,
     z: number,
@@ -91,7 +91,7 @@ export class CommandsGraphics3dCoordinatesService {
   }
 
   async turnEntity(
-    entity: any,
+    entity: BbScriptEntity,
     pitch: number,
     yaw: number,
     roll: number,

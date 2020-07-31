@@ -1,6 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Observable, of } from "rxjs";
 import { BbScriptTerrain } from "bbscript/src/classes/in-game/3d/terrain";
+import { BbScriptEntity } from "bbscript/src/classes/in-game/3d/entity";
 
 @Injectable()
 export class CommandsGraphics3dTerrainService {
@@ -8,14 +9,17 @@ export class CommandsGraphics3dTerrainService {
 
   async createTerrain(
     segments: number,
-    parent?: any
+    parent?: BbScriptEntity
   ): Promise<BbScriptTerrain> {
-    //TODO implementation
+    //TODO: implementation
     return null;
   }
 
-  async loadTerrain(filePath: string, parent?: any): Promise<BbScriptTerrain> {
-    //TODO implementation, see https://www.babylonjs-playground.com/#E6OZX#7
+  async loadTerrain(
+    filePath: string,
+    parent?: BbScriptEntity
+  ): Promise<BbScriptTerrain> {
+    //TODO: implementation, see https://www.babylonjs-playground.com/#E6OZX#7
     return null;
   }
 
@@ -26,7 +30,7 @@ export class CommandsGraphics3dTerrainService {
     height: number,
     realTimeUpdate?: boolean
   ): Promise<void> {
-    //TODO implementation
+    //TODO: implementation
   }
 
   async terrainDetail(
@@ -34,7 +38,7 @@ export class CommandsGraphics3dTerrainService {
     detailLevel: number,
     enableMorphing: boolean
   ): Promise<void> {
-    //TODO implementation
+    //TODO: implementation
   }
 
   async terrainHeight(
@@ -42,16 +46,16 @@ export class CommandsGraphics3dTerrainService {
     x: number,
     z: number
   ): Promise<number> {
-    //TODO implementation
+    //TODO: implementation
     return 0;
   }
 
   async terrainShading(enableShading: boolean): Promise<void> {
-    //TODO implementation
+    //TODO: implementation
   }
 
   async terrainSize(terrain: BbScriptTerrain): Promise<number> {
-    //TODO implementation
+    //TODO: implementation
     return 0;
   }
 
@@ -61,7 +65,7 @@ export class CommandsGraphics3dTerrainService {
     y: number,
     z: number
   ): Promise<number> {
-    //TODO implementation
+    //TODO: implementation
     return 0;
   }
 
@@ -71,7 +75,7 @@ export class CommandsGraphics3dTerrainService {
     y: number,
     z: number
   ): Promise<number> {
-    //TODO implementation
+    //TODO: implementation
     return 0;
   }
 
@@ -81,7 +85,7 @@ export class CommandsGraphics3dTerrainService {
     y: number,
     z: number
   ): Promise<number> {
-    //TODO implementation
+    //TODO: implementation
     return 0;
   }
 }

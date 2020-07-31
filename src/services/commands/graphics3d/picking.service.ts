@@ -1,20 +1,31 @@
-import { Injectable } from '@angular/core';
-import { GameEntity } from '../../../interfaces/game/entity';
-import { PickGeometry } from '../../../enums/pick/geometry';
+import { Injectable } from "@angular/core";
+import { PickGeometry } from "../../../enums/pick/geometry";
+import { BbScriptEntity } from "bbscript/src/classes/in-game/3d/entity";
 
 @Injectable()
 export class CommandsGraphics3dPickingService {
   constructor() {}
 
-  async cameraPick(camera: GameEntity, x: number, y: number): Promise<GameEntity> {
+  async cameraPick(
+    camera: BbScriptEntity,
+    x: number,
+    y: number
+  ): Promise<BbScriptEntity> {
     return null;
   }
 
-  async entityPick(entity: GameEntity, distance: number): Promise<GameEntity> {
+  async entityPick(
+    entity: BbScriptEntity,
+    distance: number
+  ): Promise<BbScriptEntity> {
     return null;
   }
 
-  async entityPickMode(entity: GameEntity, geometry: PickGeometry, coverOtherObjects?: boolean): Promise<void> {}
+  async entityPickMode(
+    entity: BbScriptEntity,
+    geometry: PickGeometry,
+    coverOtherObjects?: boolean
+  ): Promise<void> {}
 
   async linePick(
     x: number,
@@ -24,11 +35,11 @@ export class CommandsGraphics3dPickingService {
     dy: number,
     dz: number,
     radius?: number
-  ): Promise<GameEntity> {
+  ): Promise<BbScriptEntity> {
     return null;
   }
 
-  async pickedEntity(): Promise<GameEntity> {
+  async pickedEntity(): Promise<BbScriptEntity> {
     return null;
   }
 

@@ -1,27 +1,29 @@
-import { Injectable } from '@angular/core';
-import { CommandsGuiButtonService } from './gui/button.service';
-import { CommandsGuiCanvasService } from './gui/canvas.service';
-import { CommandsGuiDesktopService } from './gui/desktop.service';
-import { CommandsGuiDiverseService } from './gui/diverse.service';
-import { CommandsGuiEventService } from './gui/event.service';
-import { CommandsGuiGadgetService } from './gui/gadget.service';
-import { CommandsGuiHtmlService } from './gui/html.service';
-import { CommandsGuiIconStripService } from './gui/icon-strip.service';
-import { CommandsGuiListTabberService } from './gui/list-tabber.service';
-import { CommandsGuiMenuService } from './gui/menu.service';
-import { CommandsGuiPanelService } from './gui/panel.service';
-import { CommandsGuiProgressBarService } from './gui/progress-bar.service';
-import { CommandsGuiRequestService } from './gui/request.service';
-import { CommandsGuiSliderService } from './gui/slider.service';
-import { CommandsGuiTextAreaService } from './gui/text-area.service';
-import { CommandsGuiTextFieldService } from './gui/text-field.service';
-import { CommandsGuiToolbarService } from './gui/toolbar.service';
-import { CommandsGuiTreeViewService } from './gui/tree-view.service';
-import { CommandsGuiWindowService } from './gui/window.service';
-import { ButtonComponent } from 'bbscript/src/components/button/button.component';
-import { GuiButtonStyle } from 'bbscript/src/enums/gui/buttons/button-style';
-import { BlitzBasicScriptCanvasComponent } from 'bbscript/src/components/canvas/canvas.component';
-import { Desktop } from 'bbscript/src/interfaces/gui/desktop';
+import { Injectable } from "@angular/core";
+import { CommandsGuiButtonService } from "./gui/button.service";
+import { CommandsGuiCanvasService } from "./gui/canvas.service";
+import { CommandsGuiDesktopService } from "./gui/desktop.service";
+import { CommandsGuiDiverseService } from "./gui/diverse.service";
+import { CommandsGuiEventService } from "./gui/event.service";
+import { CommandsGuiGadgetService } from "./gui/gadget.service";
+import { CommandsGuiHtmlService } from "./gui/html.service";
+import { CommandsGuiIconStripService } from "./gui/icon-strip.service";
+import { CommandsGuiListTabberService } from "./gui/list-tabber.service";
+import { CommandsGuiMenuService } from "./gui/menu.service";
+import { CommandsGuiPanelService } from "./gui/panel.service";
+import { CommandsGuiProgressBarService } from "./gui/progress-bar.service";
+import { CommandsGuiRequestService } from "./gui/request.service";
+import { CommandsGuiSliderService } from "./gui/slider.service";
+import { CommandsGuiTextAreaService } from "./gui/text-area.service";
+import { CommandsGuiTextFieldService } from "./gui/text-field.service";
+import { CommandsGuiToolbarService } from "./gui/toolbar.service";
+import { CommandsGuiTreeViewService } from "./gui/tree-view.service";
+import { CommandsGuiWindowService } from "./gui/window.service";
+import { ButtonComponent } from "bbscript/src/components/button/button.component";
+import { GuiButtonStyle } from "bbscript/src/enums/gui/buttons/button-style";
+import { BlitzBasicScriptCanvasComponent } from "bbscript/src/components/canvas/canvas.component";
+import { Desktop } from "bbscript/src/interfaces/gui/desktop";
+import { BbScriptHtmlView } from "bbscript/src/classes/in-game/gui/html-view";
+import { BbScriptHtmlViewLoadingState } from "bbscript/src/enums/gui/html-view/loading-state";
 
 @Injectable()
 export class CommandsGUIService {
@@ -61,10 +63,21 @@ export class CommandsGUIService {
     group: any,
     style?: GuiButtonStyle
   ): Promise<ButtonComponent> {
-    return this.buttonService.createButton(text, x, y, width, height, group, style);
+    return this.buttonService.createButton(
+      text,
+      x,
+      y,
+      width,
+      height,
+      group,
+      style
+    );
   }
 
-  async setButtonState(button: ButtonComponent, active: boolean): Promise<void> {
+  async setButtonState(
+    button: ButtonComponent,
+    active: boolean
+  ): Promise<void> {
     return this.buttonService.setButtonState(button, active);
   }
 
@@ -233,32 +246,34 @@ export class CommandsGUIService {
     return this.htmlService.createHtmlView();
   }
 
-  async htmlViewBack(): Promise<any> {
-    return this.htmlService.htmlViewBack();
+  async htmlViewBack(htmlView: BbScriptHtmlView): Promise<void> {
+    return this.htmlService.htmlViewBack(htmlView);
   }
 
-  async htmlViewCurrentUrl(): Promise<any> {
-    return this.htmlService.htmlViewCurrentUrl();
+  async htmlViewCurrentUrl(htmlView: BbScriptHtmlView): Promise<string> {
+    return this.htmlService.htmlViewCurrentUrl(htmlView);
   }
 
-  async htmlViewEventUrl(): Promise<any> {
-    return this.htmlService.htmlViewEventUrl();
+  async htmlViewEventUrl(htmlView: BbScriptHtmlView): Promise<string> {
+    return this.htmlService.htmlViewEventUrl(htmlView);
   }
 
-  async htmlViewForward(): Promise<any> {
-    return this.htmlService.htmlViewForward();
+  async htmlViewForward(htmlView: BbScriptHtmlView): Promise<void> {
+    return this.htmlService.htmlViewForward(htmlView);
   }
 
-  async htmlViewGo(): Promise<any> {
-    return this.htmlService.htmlViewGo();
+  async htmlViewGo(htmlView: BbScriptHtmlView, url: string): Promise<void> {
+    return this.htmlService.htmlViewGo(htmlView, url);
   }
 
-  async htmlViewRun(): Promise<any> {
-    return this.htmlService.htmlViewRun();
+  async htmlViewRun(htmlView: BbScriptHtmlView, code: string[]): Promise<void> {
+    return this.htmlService.htmlViewRun(htmlView, code);
   }
 
-  async htmlViewStatus(): Promise<any> {
-    return this.htmlService.htmlViewStatus();
+  async htmlViewStatus(
+    htmlView: BbScriptHtmlView
+  ): Promise<BbScriptHtmlViewLoadingState> {
+    return this.htmlService.htmlViewStatus(htmlView);
   }
 
   // ICON STRIP

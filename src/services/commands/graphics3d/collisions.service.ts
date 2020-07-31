@@ -1,5 +1,7 @@
-import { Injectable } from '@angular/core';
-import { Observable, Subscriber } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Observable, Subscriber } from "rxjs";
+import { BbScriptEntity } from "bbscript/src/classes/in-game/3d/entity";
+import { BbScriptSurface } from "bbscript/src/classes/in-game/3d/surface";
 
 @Injectable()
 export class CommandsGraphics3dCollisionsService {
@@ -7,7 +9,9 @@ export class CommandsGraphics3dCollisionsService {
 
   async clearCollisions(): Promise<void> {}
 
-  async collisionEntity(entity: any, index: number): Promise<any> {}
+  async collisionEntity(entity: any, index: number): Promise<BbScriptEntity> {
+    return null;
+  }
 
   async collisionNX(entity: any, index: number): Promise<number> {
     return 0;
@@ -21,35 +25,86 @@ export class CommandsGraphics3dCollisionsService {
     return 0;
   }
 
-  async collisions(sourceEntity: any, targetEntity: any, method: number, reaction: number): Promise<void> {}
+  async collisions(
+    sourceEntity: any,
+    targetEntity: any,
+    method: number,
+    reaction: number
+  ): Promise<void> {}
 
-  async collisionSurface(entity: any, index: number): Promise<any> {}
+  async collisionSurface(
+    entity: BbScriptEntity,
+    index: number
+  ): Promise<BbScriptSurface> {
+    return null;
+  }
 
-  async collisionTime(entity: any, index: number): Promise<number> {
+  async collisionTime(entity: BbScriptEntity, index: number): Promise<number> {
     return 0;
   }
 
-  async collisionTriangle() {}
+  async collisionTriangle(
+    entity: BbScriptEntity,
+    index: number
+  ): Promise<number> {
+    return 0;
+  }
 
-  async collisionX() {}
+  async collisionX(entity: BbScriptEntity, index: number): Promise<number> {
+    return 0;
+  }
 
-  async collisionY() {}
+  async collisionY(entity: BbScriptEntity, index: number): Promise<number> {
+    return 0;
+  }
 
-  async collisionZ() {}
+  async collisionZ(entity: BbScriptEntity, index: number): Promise<number> {
+    return 0;
+  }
 
-  async countCollisions() {}
+  async countCollisions(entity: BbScriptEntity): Promise<number> {
+    return 0;
+  }
 
-  async entityBox() {}
+  async entityBox(
+    entity: BbScriptEntity,
+    x: number,
+    y: number,
+    z: number,
+    width: number,
+    height: number,
+    depth: number
+  ): Promise<void> {}
 
-  async entityCollided() {}
+  async entityCollided(
+    entity: BbScriptEntity,
+    collisionType: number
+  ): Promise<boolean> {
+    return false;
+  }
 
-  async entityRadius() {}
+  async entityRadius(
+    entity: BbScriptEntity,
+    radiusX: number,
+    radiusY?: number
+  ): Promise<void> {}
 
-  async entityType() {}
+  async entityType(
+    entity: BbScriptEntity,
+    collisionType: number,
+    recursively?: boolean
+  ): Promise<void> {}
 
-  async getEntityType() {}
+  async getEntityType(entity: BbScriptEntity): Promise<number> {
+    return 0;
+  }
 
-  async meshesIntersect() {}
+  async meshesIntersect(
+    source: BbScriptEntity,
+    target: BbScriptEntity
+  ): Promise<boolean> {
+    return false;
+  }
 
-  async resetEntity() {}
+  async resetEntity(entity: BbScriptEntity): Promise<void> {}
 }

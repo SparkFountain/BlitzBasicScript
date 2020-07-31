@@ -54,7 +54,7 @@ export class CommandsGraphics3dTexturesService {
   }
 
   async positionTexture(
-    texture: BABYLON.Texture,
+    texture: BbScriptTexture,
     u: number,
     v: number
   ): Promise<void> {
@@ -62,13 +62,13 @@ export class CommandsGraphics3dTexturesService {
     return null;
   }
 
-  async rotateTexture(texture: BABYLON.Texture, angle: number): Promise<void> {
+  async rotateTexture(texture: BbScriptTexture, angle: number): Promise<void> {
     //TODO implementation
     return null;
   }
 
   async scaleTexture(
-    texture: BABYLON.Texture,
+    texture: BbScriptTexture,
     u: number,
     v: number
   ): Promise<void> {
@@ -77,7 +77,7 @@ export class CommandsGraphics3dTexturesService {
   }
 
   async setCubeFace(
-    texture: BABYLON.Texture,
+    texture: BbScriptTexture,
     face: CubeMapFace
   ): Promise<void> {
     //TODO implementation
@@ -85,7 +85,7 @@ export class CommandsGraphics3dTexturesService {
   }
 
   async setCubeMode(
-    texture: BABYLON.Texture,
+    texture: BbScriptTexture,
     mode: CubeMapMode
   ): Promise<void> {
     //TODO implementation
@@ -93,7 +93,7 @@ export class CommandsGraphics3dTexturesService {
   }
 
   async textureBlend(
-    texture: BABYLON.Texture,
+    texture: BbScriptTexture,
     mode: TextureBlendMode
   ): Promise<void> {
     //TODO implementation
@@ -101,7 +101,7 @@ export class CommandsGraphics3dTexturesService {
   }
 
   async textureCoords(
-    texture: BABYLON.Texture,
+    texture: BbScriptTexture,
     coordinate: boolean
   ): Promise<void> {
     //TODO implementation
@@ -113,16 +113,18 @@ export class CommandsGraphics3dTexturesService {
     return null;
   }
 
-  async textureHeight(texture: BABYLON.Texture): Promise<number> {
-    return texture.getBaseSize().height;
+  async textureHeight(texture: BbScriptTexture): Promise<number> {
+    return 0;
+    // return texture.getBaseSize().height;
   }
 
-  async textureName(texture: BABYLON.Texture): Promise<string> {
+  async textureName(texture: BbScriptTexture): Promise<string> {
     //TODO implementation
     return "";
   }
 
-  async textureWidth(texture: BABYLON.Texture): Promise<number> {
-    return texture.getBaseSize().width;
+  async textureWidth(texture: BbScriptTexture): Promise<number> {
+    return 0;
+    // return texture.getBaseSize().width;
   }
 }
