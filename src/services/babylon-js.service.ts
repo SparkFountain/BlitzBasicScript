@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 
 import * as BABYLON from 'babylonjs';
 import { CameraType } from '../enums/camera/camera-type';
-import { Axis } from '../enums/axis';
+import { BbScriptAxis } from '../enums/axis';
 import { LightType } from '../enums/light/light-type';
 import Mesh = BABYLON.Mesh;
 import Camera = BABYLON.Camera;
@@ -293,7 +293,7 @@ export class BabylonJSService {
     entity.addRotation(pitch, yaw, roll);
   }
 
-  async alignToVector(entity: any, x: number, y: number, z: number, axis: Axis, tween: number): Promise<void> {
+  async alignToVector(entity: any, x: number, y: number, z: number, axis: BbScriptAxis, tween: number): Promise<void> {
     //TODO test if this is the correct behaviour
     //TODO in this implementation, tween would be deprecated
     let upDirection;

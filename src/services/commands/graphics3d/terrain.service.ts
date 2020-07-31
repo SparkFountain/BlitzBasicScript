@@ -1,22 +1,26 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Injectable } from "@angular/core";
+import { Observable, of } from "rxjs";
+import { BbScriptTerrain } from "bbscript/src/classes/in-game/3d/terrain";
 
 @Injectable()
 export class CommandsGraphics3dTerrainService {
   constructor() {}
 
-  async createTerrain(segments: number, parent?: any): Promise<BABYLON.Mesh> {
+  async createTerrain(
+    segments: number,
+    parent?: any
+  ): Promise<BbScriptTerrain> {
     //TODO implementation
     return null;
   }
 
-  async loadTerrain(filePath: string, parent?: any): Promise<BABYLON.Mesh> {
+  async loadTerrain(filePath: string, parent?: any): Promise<BbScriptTerrain> {
     //TODO implementation, see https://www.babylonjs-playground.com/#E6OZX#7
     return null;
   }
 
   async modifyTerrain(
-    terrain: BABYLON.Mesh,
+    terrain: BbScriptTerrain,
     x: number,
     z: number,
     height: number,
@@ -25,11 +29,19 @@ export class CommandsGraphics3dTerrainService {
     //TODO implementation
   }
 
-  async terrainDetail(terrain: BABYLON.Mesh, detailLevel: number, enableMorphing: boolean): Promise<void> {
+  async terrainDetail(
+    terrain: BbScriptTerrain,
+    detailLevel: number,
+    enableMorphing: boolean
+  ): Promise<void> {
     //TODO implementation
   }
 
-  async terrainHeight(terrain: BABYLON.Mesh, x: number, z: number): Promise<number> {
+  async terrainHeight(
+    terrain: BbScriptTerrain,
+    x: number,
+    z: number
+  ): Promise<number> {
     //TODO implementation
     return 0;
   }
@@ -38,22 +50,37 @@ export class CommandsGraphics3dTerrainService {
     //TODO implementation
   }
 
-  async terrainSize(terrain: BABYLON.Mesh): Promise<number> {
+  async terrainSize(terrain: BbScriptTerrain): Promise<number> {
     //TODO implementation
     return 0;
   }
 
-  async terrainX(terrain: BABYLON.Mesh, x: number, y: number, z: number): Promise<number> {
+  async terrainX(
+    terrain: BbScriptTerrain,
+    x: number,
+    y: number,
+    z: number
+  ): Promise<number> {
     //TODO implementation
     return 0;
   }
 
-  async terrainY(terrain: BABYLON.Mesh, x: number, y: number, z: number): Promise<number> {
+  async terrainY(
+    terrain: BbScriptTerrain,
+    x: number,
+    y: number,
+    z: number
+  ): Promise<number> {
     //TODO implementation
     return 0;
   }
 
-  async terrainZ(terrain: BABYLON.Mesh, x: number, y: number, z: number): Promise<number> {
+  async terrainZ(
+    terrain: BbScriptTerrain,
+    x: number,
+    y: number,
+    z: number
+  ): Promise<number> {
     //TODO implementation
     return 0;
   }

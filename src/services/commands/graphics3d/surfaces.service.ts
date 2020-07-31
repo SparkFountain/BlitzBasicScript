@@ -1,62 +1,177 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
+import { BbScriptSurface } from "bbscript/src/classes/in-game/3d/surface";
+import { BbScriptEntity } from "bbscript/src/classes/in-game/3d/entity";
+import { BbScriptBrush } from "bbscript/src/classes/in-game/3d/brush";
 
 @Injectable()
 export class CommandsGraphics3dSurfacesService {
   constructor() {}
 
-  addTriangle() {}
+  async addTriangle(
+    surface: BbScriptSurface,
+    v0: number,
+    v1: number,
+    v2: number
+  ): Promise<number> {
+    return null;
+  }
 
-  addVertex() {}
+  async addVertex(
+    surface: BbScriptSurface,
+    x: number,
+    y: number,
+    z: number,
+    u?: number,
+    v?: number,
+    w?: number
+  ): Promise<number> {
+    return null;
+  }
 
-  clearSurface() {}
+  async clearSurface(
+    surface: BbScriptSurface,
+    deleteVertices?: boolean,
+    deleteTriangles?: boolean
+  ): Promise<void> {}
 
-  countSurfaces() {}
+  async countSurfaces(mesh: BbScriptEntity): Promise<number> {
+    return 0;
+  }
 
-  countTriangles() {}
+  async countTriangles(surface: BbScriptSurface): Promise<number> {
+    return 0;
+  }
 
-  countVertices() {}
+  async countVertices(surface: BbScriptSurface): Promise<number> {
+    return 0;
+  }
 
-  createSurface() {}
+  async createSurface(
+    mesh: BbScriptEntity,
+    brush: BbScriptBrush
+  ): Promise<BbScriptSurface> {
+    return null;
+  }
 
-  findSurface() {}
+  async findSurface(
+    mesh: BbScriptEntity,
+    brush: BbScriptBrush
+  ): Promise<BbScriptSurface> {
+    return null;
+  }
 
-  getSurface() {}
+  async getSurface(
+    mesh: BbScriptEntity,
+    index: number
+  ): Promise<BbScriptSurface> {
+    return null;
+  }
 
-  triangleVertex() {}
+  async triangleVertex(
+    surface: BbScriptSurface,
+    triangle: number,
+    vertex: number
+  ): Promise<number> {
+    return 0;
+  }
 
-  updateNormals() {}
+  async updateNormals(mesh: BbScriptEntity): Promise<void> {}
 
-  vertexAlpha() {}
+  async vertexAlpha(surface: BbScriptSurface, vertex: number): Promise<number> {
+    return 0;
+  }
 
-  vertexBlue() {}
+  async vertexBlue(surface: BbScriptSurface, vertex: number): Promise<number> {
+    return 0;
+  }
 
-  vertexColor() {}
+  async vertexColor(
+    surface: BbScriptSurface,
+    vertex: number,
+    red: number,
+    green: number,
+    blue: number,
+    alpha?: number
+  ): Promise<void> {}
 
-  vertexCoords() {}
+  async vertexCoords(
+    surface: BbScriptSurface,
+    vertex: number,
+    x: number,
+    y: number,
+    z: number
+  ): Promise<void> {}
 
-  vertexGreen() {}
+  async vertexGreen(surface: BbScriptSurface, vertex: number): Promise<number> {
+    return 0;
+  }
 
-  vertexNormal() {}
+  async vertexNormal(
+    surface: BbScriptSurface,
+    vertex: number,
+    x: number,
+    y: number,
+    z: number
+  ): Promise<void> {}
 
-  vertexNX() {}
+  async vertexNX(surface: BbScriptSurface, vertex: number): Promise<number> {
+    return 0;
+  }
 
-  vertexNY() {}
+  async vertexNY(surface: BbScriptSurface, vertex: number): Promise<number> {
+    return 0;
+  }
 
-  vertexNZ() {}
+  async vertexNZ(surface: BbScriptSurface, vertex: number): Promise<number> {
+    return 0;
+  }
 
-  vertexRed() {}
+  async vertexRed(surface: BbScriptSurface, vertex: number): Promise<number> {
+    return 0;
+  }
 
-  vertexTexCoords() {}
+  async vertexTexCoords(
+    surface: BbScriptSurface,
+    vertex: number,
+    u: number,
+    v: number,
+    w?: number,
+    set?: boolean
+  ): Promise<void> {}
 
-  vertexU() {}
+  async vertexU(
+    surface: BbScriptSurface,
+    vertex: number,
+    set?: boolean
+  ): Promise<number> {
+    return 0;
+  }
 
-  vertexV() {}
+  async vertexV(
+    surface: BbScriptSurface,
+    vertex: number,
+    set?: boolean
+  ): Promise<number> {
+    return 0;
+  }
 
-  vertexW() {}
+  async vertexW(
+    surface: BbScriptSurface,
+    vertex: number,
+    set?: boolean
+  ): Promise<number> {
+    return 0;
+  }
 
-  vertexX() {}
+  async vertexX(surface: BbScriptSurface, vertex: number): Promise<number> {
+    return 0;
+  }
 
-  vertexY() {}
+  async vertexY(surface: BbScriptSurface, vertex: number): Promise<number> {
+    return 0;
+  }
 
-  vertexZ() {}
+  async vertexZ(surface: BbScriptSurface, vertex: number): Promise<number> {
+    return 0;
+  }
 }

@@ -1,8 +1,9 @@
-import { Injectable } from '@angular/core';
-import { TextureMode } from '../../../enums/texture/texture-mode';
-import { CubeMapFace } from '../../../enums/texture/cube-map-face';
-import { CubeMapMode } from '../../../enums/texture/cube-map-mode';
-import { TextureBlendMode } from '../../../enums/texture/texture-blend-mode';
+import { Injectable } from "@angular/core";
+import { TextureMode } from "../../../enums/texture/texture-mode";
+import { CubeMapFace } from "../../../enums/texture/cube-map-face";
+import { CubeMapMode } from "../../../enums/texture/cube-map-mode";
+import { TextureBlendMode } from "../../../enums/texture/texture-blend-mode";
+import { BbScriptTexture } from "bbscript/src/classes/in-game/3d/texture";
 
 @Injectable()
 export class CommandsGraphics3dTexturesService {
@@ -18,12 +19,17 @@ export class CommandsGraphics3dTexturesService {
     return null;
   }
 
-  async createTexture(width: number, height: number, mode?: TextureMode, frames?: number): Promise<BABYLON.Texture> {
+  async createTexture(
+    width: number,
+    height: number,
+    mode?: TextureMode,
+    frames?: number
+  ): Promise<BbScriptTexture> {
     //TODO implementation
     return null;
   }
 
-  async freeTexture(texture: BABYLON.Texture): Promise<void> {
+  async freeTexture(texture: BbScriptTexture): Promise<void> {
     texture = null;
   }
 
@@ -34,17 +40,24 @@ export class CommandsGraphics3dTexturesService {
     height: number,
     startFrame: number,
     totalFrames: number
-  ): Promise<BABYLON.Texture> {
+  ): Promise<BbScriptTexture> {
     //TODO implementation
     return null;
   }
 
-  async loadTexture(filePath: string, mode: TextureMode): Promise<BABYLON.Texture> {
+  async loadTexture(
+    filePath: string,
+    mode: TextureMode
+  ): Promise<BbScriptTexture> {
     //TODO implementation
     return null;
   }
 
-  async positionTexture(texture: BABYLON.Texture, u: number, v: number): Promise<void> {
+  async positionTexture(
+    texture: BABYLON.Texture,
+    u: number,
+    v: number
+  ): Promise<void> {
     //TODO implementation
     return null;
   }
@@ -54,27 +67,43 @@ export class CommandsGraphics3dTexturesService {
     return null;
   }
 
-  async scaleTexture(texture: BABYLON.Texture, u: number, v: number): Promise<void> {
+  async scaleTexture(
+    texture: BABYLON.Texture,
+    u: number,
+    v: number
+  ): Promise<void> {
     //TODO implementation
     return null;
   }
 
-  async setCubeFace(texture: BABYLON.Texture, face: CubeMapFace): Promise<void> {
+  async setCubeFace(
+    texture: BABYLON.Texture,
+    face: CubeMapFace
+  ): Promise<void> {
     //TODO implementation
     return null;
   }
 
-  async setCubeMode(texture: BABYLON.Texture, mode: CubeMapMode): Promise<void> {
+  async setCubeMode(
+    texture: BABYLON.Texture,
+    mode: CubeMapMode
+  ): Promise<void> {
     //TODO implementation
     return null;
   }
 
-  async textureBlend(texture: BABYLON.Texture, mode: TextureBlendMode): Promise<void> {
+  async textureBlend(
+    texture: BABYLON.Texture,
+    mode: TextureBlendMode
+  ): Promise<void> {
     //TODO implementation
     return null;
   }
 
-  async textureCoords(texture: BABYLON.Texture, coordinate: boolean): Promise<void> {
+  async textureCoords(
+    texture: BABYLON.Texture,
+    coordinate: boolean
+  ): Promise<void> {
     //TODO implementation
     return null;
   }
@@ -90,7 +119,7 @@ export class CommandsGraphics3dTexturesService {
 
   async textureName(texture: BABYLON.Texture): Promise<string> {
     //TODO implementation
-    return '';
+    return "";
   }
 
   async textureWidth(texture: BABYLON.Texture): Promise<number> {

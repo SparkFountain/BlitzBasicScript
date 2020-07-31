@@ -1,1 +1,4 @@
-export class BbScriptEntity {}
+export class BbScriptEntity {
+  mesh: any;
+  class: string;
+}

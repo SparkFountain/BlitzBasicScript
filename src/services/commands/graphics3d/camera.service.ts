@@ -1,10 +1,11 @@
 import { BabylonJSService } from "../../babylon-js.service";
-import { Subscriber, of } from "rxjs";
 import { Injectable } from "@angular/core";
 import { GameEntity } from "../../../interfaces/game/entity";
 import { CameraType } from "../../../enums/camera/camera-type";
 import { Camera } from "babylonjs";
 import { BbScriptCamera } from "bbscript/src/classes/in-game/3d/camera";
+import { BbScriptFogMode } from "bbscript/src/enums/in-game/3d/fog";
+import { BbScriptCameraProjectionMode } from "bbscript/src/enums/in-game/3d/camera";
 
 @Injectable()
 export class CommandsGraphics3dCameraService {
@@ -17,7 +18,7 @@ export class CommandsGraphics3dCameraService {
 
   /** PUBLIC **/
   async cameraClsColor(
-    camera: any,
+    camera: BbScriptCamera,
     red: number,
     green: number,
     blue: number
@@ -30,7 +31,7 @@ export class CommandsGraphics3dCameraService {
   }
 
   async cameraClsMode(
-    camera: any,
+    camera: BbScriptCamera,
     deleteColorBuffer?: boolean,
     deleteZBuffer?: boolean
   ) {
@@ -45,7 +46,7 @@ export class CommandsGraphics3dCameraService {
     );
   }
 
-  async fogMode(mode): Promise<void> {
+  async fogMode(mode: BbScriptFogMode): Promise<void> {
     // TODO
     /*switch (mode) {
       case BBScript.FOG.NONE:
@@ -81,13 +82,16 @@ export class CommandsGraphics3dCameraService {
   }
 
   async cameraProject(
-    camera: any,
+    camera: BbScriptCamera,
     x: number,
     y: number,
     z: number
   ): Promise<void> {}
 
-  async cameraProjMode(camera: any, mode: number): Promise<void> {
+  async cameraProjMode(
+    camera: BbScriptCamera,
+    mode: BbScriptCameraProjectionMode
+  ): Promise<void> {
     /*switch (mode) {
       case BBScript.CAMERA_PROJECTION.NONE:
         camera.setEnabled(false);
@@ -101,20 +105,24 @@ export class CommandsGraphics3dCameraService {
     }*/
   }
 
-  async cameraRange(camera: any, near: number, far: number): Promise<void> {
+  async cameraRange(
+    camera: BbScriptCamera,
+    near: number,
+    far: number
+  ): Promise<void> {
     camera.minZ = near;
     camera.maxZ = far;
   }
 
   async cameraViewport(
-    camera: any,
+    camera: BbScriptCamera,
     x: number,
     y: number,
     width: number,
     height: number
   ): Promise<void> {}
 
-  async cameraZoom(camera: any, value: number): Promise<void> {
+  async cameraZoom(camera: BbScriptCamera, value: number): Promise<void> {
     // TODO fix (code below does not seem to work)
     // camera.zoomOnFactor = value;
   }
@@ -124,14 +132,17 @@ export class CommandsGraphics3dCameraService {
     parent?: GameEntity
   ): Promise<BbScriptCamera> {
     return this.babylonjs.createCamera(type).then((camera: Camera) => {
-      const cameraEntity: BbScriptCamera = {
-        name: "TODO",
-        class: "Camera",
-        parent: parent ? parent : null,
-        camera: camera,
-      };
+      return null;
 
-      return cameraEntity;
+      // TODO: refactor (use class constructor)
+      // const cameraEntity: BbScriptCamera = {
+      //   name: "TODO",
+      //   class: "Camera",
+      //   parent: parent ? parent : null,
+      //   camera: camera,
+      // };
+
+      // return cameraEntity;
     });
   }
 

@@ -28,7 +28,7 @@ import { SpriteViewMode } from 'bbscript/src/enums/sprite/sprite-view-mode';
 import { CubeMapFace } from 'bbscript/src/enums/texture/cube-map-face';
 import { CubeMapMode } from 'bbscript/src/enums/texture/cube-map-mode';
 import { TextureBlendMode } from 'bbscript/src/enums/texture/texture-blend-mode';
-import { Axis } from 'bbscript/src/enums/axis';
+import { BbScriptAxis } from 'bbscript/src/enums/axis';
 
 @Injectable()
 export class CommandsGraphics3DService {
@@ -357,7 +357,7 @@ export class CommandsGraphics3DService {
   }
 
   // COORDINATES
-  async alignToVector(entity: any, x: number, y: number, z: number, axis: Axis, tween: number): Promise<void> {
+  async alignToVector(entity: any, x: number, y: number, z: number, axis: BbScriptAxis, tween: number): Promise<void> {
     return this.coordinatesService.alignToVector(entity, x, y, z, axis, tween);
   }
 

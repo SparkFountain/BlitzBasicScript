@@ -1,22 +1,39 @@
-import { Injectable } from '@angular/core';
-import { BabylonJSService } from '../../babylon-js.service';
-import { Axis } from '../../../enums/axis';
-import { GameEntity } from '../../../interfaces/game/entity';
-import { Mesh, Camera } from 'babylonjs';
+import { Injectable } from "@angular/core";
+import { BabylonJSService } from "../../babylon-js.service";
+import { BbScriptAxis } from "../../../enums/axis";
+import { GameEntity } from "../../../interfaces/game/entity";
+import { Mesh, Camera } from "babylonjs";
+import { BbScriptEntity } from "bbscript/src/classes/in-game/3d/entity";
 
 @Injectable()
 export class CommandsGraphics3dCoordinatesService {
   constructor(private babylonjs: BabylonJSService) {}
 
-  async alignToVector(entity: any, x: number, y: number, z: number, axis: Axis, tween: number): Promise<void> {
+  async alignToVector(
+    entity: BbScriptEntity,
+    x: number,
+    y: number,
+    z: number,
+    axis: BbScriptAxis,
+    tween: number
+  ): Promise<void> {
     return this.babylonjs.alignToVector(entity, x, y, z, axis, tween);
   }
 
-  async moveEntity(entity: any, x: number, y: number, z: number): Promise<void> {
+  async moveEntity(
+    entity: any,
+    x: number,
+    y: number,
+    z: number
+  ): Promise<void> {
     return this.babylonjs.moveEntity(entity, x, y, z);
   }
 
-  async pointEntity(sourceEntity: any, targetEntity: any, roll: number): Promise<void> {
+  async pointEntity(
+    sourceEntity: any,
+    targetEntity: any,
+    roll: number
+  ): Promise<void> {
     return this.babylonjs.pointEntity(sourceEntity, targetEntity, roll);
   }
 
@@ -37,19 +54,49 @@ export class CommandsGraphics3dCoordinatesService {
     return this.babylonjs.positionMesh(mesh, x, y, z, parentCoordinates);
   }
 
-  async rotateEntity(entity: Mesh | Camera, pitch: number, yaw: number, roll: number, parentCoordinates?: boolean) {
-    return this.babylonjs.rotateEntity(entity, pitch, yaw, roll, parentCoordinates);
+  async rotateEntity(
+    entity: Mesh | Camera,
+    pitch: number,
+    yaw: number,
+    roll: number,
+    parentCoordinates?: boolean
+  ) {
+    return this.babylonjs.rotateEntity(
+      entity,
+      pitch,
+      yaw,
+      roll,
+      parentCoordinates
+    );
   }
 
-  async scaleEntity(entity: any, x: number, y: number, z: number, parentScale?: boolean): Promise<void> {
+  async scaleEntity(
+    entity: any,
+    x: number,
+    y: number,
+    z: number,
+    parentScale?: boolean
+  ): Promise<void> {
     return this.babylonjs.scaleMesh(entity, x, y, z, parentScale);
   }
 
-  async translateEntity(entity: any, x: number, y: number, z: number, parentAngle?: boolean): Promise<void> {
+  async translateEntity(
+    entity: any,
+    x: number,
+    y: number,
+    z: number,
+    parentAngle?: boolean
+  ): Promise<void> {
     return this.babylonjs.translateEntity(entity, x, y, z, parentAngle);
   }
 
-  async turnEntity(entity: any, pitch: number, yaw: number, roll: number, parentAngle?: boolean): Promise<void> {
+  async turnEntity(
+    entity: any,
+    pitch: number,
+    yaw: number,
+    roll: number,
+    parentAngle?: boolean
+  ): Promise<void> {
     return this.babylonjs.turnEntity(entity, pitch, yaw, roll, parentAngle);
   }
 
@@ -65,9 +112,27 @@ export class CommandsGraphics3dCoordinatesService {
     return 0;
   }
 
-  async tFormNormal(x: number, y: number, z: number, source: GameEntity, target: GameEntity): Promise<void> {}
+  async tFormNormal(
+    x: number,
+    y: number,
+    z: number,
+    source: GameEntity,
+    target: GameEntity
+  ): Promise<void> {}
 
-  async tFormPoint(x: number, y: number, z: number, source: GameEntity, target: GameEntity): Promise<void> {}
+  async tFormPoint(
+    x: number,
+    y: number,
+    z: number,
+    source: GameEntity,
+    target: GameEntity
+  ): Promise<void> {}
 
-  async tFormVector(x: number, y: number, z: number, source: GameEntity, target: GameEntity): Promise<void> {}
+  async tFormVector(
+    x: number,
+    y: number,
+    z: number,
+    source: GameEntity,
+    target: GameEntity
+  ): Promise<void> {}
 }

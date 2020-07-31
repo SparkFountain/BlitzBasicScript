@@ -7,7 +7,7 @@ export class CommandsBasicsTimeRandomService {
   constructor(private gameState: GameStateService) {}
 
   async createTimer(frequency: number): Promise<BbScriptTimer> {
-    return null;
+    return new BbScriptTimer(frequency);
   }
 
   async currentDate(): Promise<string> {

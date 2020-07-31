@@ -1,22 +1,59 @@
-import { Injectable } from '@angular/core';
+import { Injectable } from "@angular/core";
+import { BbScriptEntity } from "bbscript/src/classes/in-game/3d/entity";
+import { BbScriptMirror } from "bbscript/src/classes/in-game/3d/mirror";
+import { BbScriptPivot } from "bbscript/src/classes/in-game/3d/pivot";
+import { BbScriptPlane } from "bbscript/src/classes/in-game/3d/plane";
+import { BbScriptMeshType } from "bbscript/src/enums/in-game/3d/mesh-type";
 
 @Injectable()
 export class CommandsGraphics3dDiverseService {
   constructor() {}
 
-  async createMirror() {}
+  async createMirror(parent?: BbScriptEntity): Promise<BbScriptMirror> {
+    return null;
+  }
 
-  async createPivot() {}
+  async createPivot(parent?: BbScriptEntity): Promise<BbScriptPivot> {
+    return null;
+  }
 
-  async createPlane() {}
+  async createPlane(
+    segments?: number,
+    parent?: BbScriptEntity
+  ): Promise<BbScriptPlane> {
+    return null;
+  }
 
-  async getMatElement() {}
+  async getMatElement(
+    entity: BbScriptEntity,
+    row: number,
+    column: number
+  ): Promise<number> {
+    return null;
+  }
 
-  async loaderMatrix() {}
+  async loaderMatrix(
+    meshType: BbScriptMeshType,
+    xx: number,
+    xy: number,
+    xz: number,
+    yx: number,
+    yy: number,
+    yz: number,
+    zx: number,
+    zy: number,
+    zz: number
+  ): Promise<void> {}
 
-  async trisRendered() {}
+  async trisRendered(): Promise<number> {
+    return 0;
+  }
 
-  async vectorPitch() {}
+  async vectorPitch(x: number, y: number, z: number): Promise<number> {
+    return 0;
+  }
 
-  async vectorYaw() {}
+  async vectorYaw(x: number, y: number, z: number): Promise<number> {
+    return 0;
+  }
 }

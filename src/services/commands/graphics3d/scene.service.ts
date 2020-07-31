@@ -1,17 +1,19 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from "@angular/core";
+import { BbScriptSkyBox } from "bbscript/src/classes/in-game/3d/skybox";
 
 @Injectable()
 export class CommandsGraphics3dSceneService {
-    constructor() {
+  constructor() {}
 
-    }
+  createSkyBox(): Promise<BbScriptSkyBox> {
+    return null;
+  }
 
-    createSkyBox() {
-    }
+  loadSkyBox(): Promise<BbScriptSkyBox> {
+    return null;
+  }
 
-    loadSkyBox() {
-    }
-
-    setGravity() {
-    }
+  setGravity(gravity: number): Promise<void> {
+    return;
+  }
 }
