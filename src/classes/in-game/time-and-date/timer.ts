@@ -1,5 +1,5 @@
 export class BbScriptTimer {
-  instance: NodeJS.Timeout;
+  instance: any;
 
   constructor(frequency: number) {
     this.instance = setInterval(() => {}, 1000 / frequency);

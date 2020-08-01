@@ -18,7 +18,6 @@ import { CommandsGraphics3dSurfacesService } from './graphics3d/surfaces.service
 import { CommandsGraphics3dTerrainService } from './graphics3d/terrain.service';
 import { CommandsGraphics3dTexturesService } from './graphics3d/textures.service';
 import { CameraType } from 'bbscript/src/enums/camera/camera-type';
-import { GameEntity } from 'bbscript/src/interfaces/game/entity';
 import { BlendMode } from 'bbscript/src/enums/entity/blend-mode';
 import { LightType } from 'bbscript/src/enums/light/light-type';
 import { Light, Mesh, Camera } from 'babylonjs';
@@ -29,6 +28,12 @@ import { CubeMapFace } from 'bbscript/src/enums/texture/cube-map-face';
 import { CubeMapMode } from 'bbscript/src/enums/texture/cube-map-mode';
 import { TextureBlendMode } from 'bbscript/src/enums/texture/texture-blend-mode';
 import { BbScriptAxis } from 'bbscript/src/enums/axis';
+import { BbScriptEntity } from 'bbscript/src/classes/in-game/3d/entity';
+import { BbScriptTexture } from 'bbscript/src/classes/in-game/3d/texture';
+import { BbScriptMeshType } from 'bbscript/src/enums/in-game/3d/mesh-type';
+import { BbScriptSurface } from 'bbscript/src/classes/in-game/3d/surface';
+import { BbScriptBrush } from 'bbscript/src/classes/in-game/3d/brush';
+import { BbScriptTerrain } from 'bbscript/src/classes/in-game/3d/terrain';
 
 @Injectable()
 export class CommandsGraphics3DService {
@@ -206,7 +211,7 @@ export class CommandsGraphics3DService {
     return this.cameraService.cameraZoom(camera, value);
   }
 
-  async createCamera(type: CameraType, parent?: GameEntity): Promise<GameEntity> {
+  async createCamera(type: CameraType, parent?: BbScriptEntity): Promise<BbScriptEntity> {
     return this.cameraService.createCamera(type, parent);
   }
 
@@ -255,105 +260,113 @@ export class CommandsGraphics3DService {
     return this.collisionsService.collisionTime(entity, index);
   }
 
-  async collisionTriangle() {
-    return this.collisionsService.collisionTriangle();
+  async collisionTriangle(entity: BbScriptEntity, index: number): Promise<number> {
+    return this.collisionsService.collisionTriangle(entity, index);
   }
 
-  async collisionX() {
-    return this.collisionsService.collisionX();
+  async collisionX(entity: BbScriptEntity, index: number): Promise<number> {
+    return this.collisionsService.collisionX(entity, index);
   }
 
-  async collisionY() {
-    return this.collisionsService.collisionY();
+  async collisionY(entity: BbScriptEntity, index: number): Promise<number> {
+    return this.collisionsService.collisionY(entity, index);
   }
 
-  async collisionZ() {
-    return this.collisionsService.collisionZ();
+  async collisionZ(entity: BbScriptEntity, index: number): Promise<number> {
+    return this.collisionsService.collisionZ(entity, index);
   }
 
-  async countCollisions() {
-    return this.collisionsService.countCollisions();
+  async countCollisions(entity: BbScriptEntity): Promise<number> {
+    return this.collisionsService.countCollisions(entity);
   }
 
-  async entityBox() {
-    return this.collisionsService.entityBox();
+  async entityBox(
+    entity: BbScriptEntity,
+    x: number,
+    y: number,
+    z: number,
+    width: number,
+    height: number,
+    depth: number
+  ): Promise<void> {
+    return this.collisionsService.entityBox(entity, x, y, z, width, height, depth);
   }
 
-  async entityCollided() {
-    return this.collisionsService.entityCollided();
+  async entityCollided(entity: BbScriptEntity, collisionType: number): Promise<boolean> {
+    return this.collisionsService.entityCollided(entity, collisionType);
   }
 
-  async entityRadius() {
-    return this.collisionsService.entityRadius();
+  async entityRadius(entity: BbScriptEntity, radiusX: number, radiusY?: number): Promise<void> {
+    return this.collisionsService.entityRadius(entity, radiusX, radiusY);
   }
 
-  async entityType() {
-    return this.collisionsService.entityType();
+  async entityType(entity: BbScriptEntity, collisionType: number, recursively?: boolean): Promise<void> {
+    return this.collisionsService.entityType(entity, collisionType, recursively);
   }
 
-  async getEntityType() {
-    return this.collisionsService.getEntityType();
+  async getEntityType(entity: BbScriptEntity): Promise<number> {
+    return this.collisionsService.getEntityType(entity);
   }
 
-  async meshesIntersect() {
-    return this.collisionsService.meshesIntersect();
+  async meshesIntersect(source: BbScriptEntity, target: BbScriptEntity): Promise<boolean> {
+    return this.collisionsService.meshesIntersect(source, target);
   }
 
-  async resetEntity() {
-    return this.collisionsService.resetEntity();
+  async resetEntity(entity: BbScriptEntity): Promise<void> {
+    return this.collisionsService.resetEntity(entity);
   }
 
   // CONTROLS
-  async copyEntity(entity: GameEntity, parent?: GameEntity): Promise<GameEntity> {
+  async copyEntity(entity: BbScriptEntity, parent?: BbScriptEntity): Promise<BbScriptEntity> {
     return this.controlsService.copyEntity(entity, parent);
   }
 
-  async entityAlpha(entity: GameEntity, alpha: number): Promise<void> {
+  async entityAlpha(entity: BbScriptEntity, alpha: number): Promise<void> {
     return this.controlsService.entityAlpha(entity, alpha);
   }
 
-  async entityAutoFade(entity: GameEntity, near: number, far: number): Promise<void> {
+  async entityAutoFade(entity: BbScriptEntity, near: number, far: number): Promise<void> {
     return this.controlsService.entityAutoFade(entity, near, far);
   }
 
-  async entityBlend(entity: GameEntity, mode: BlendMode): Promise<void> {
+  async entityBlend(entity: BbScriptEntity, mode: BlendMode): Promise<void> {
     return this.controlsService.entityBlend(entity, mode);
   }
 
-  async entityColor(entity: GameEntity, red: number, green: number, blue: number): Promise<void> {
+  async entityColor(entity: BbScriptEntity, red: number, green: number, blue: number): Promise<void> {
     return this.controlsService.entityColor(entity, red, green, blue);
   }
 
-  async entityFx() {
-    return this.controlsService.entityFx();
+  async entityFx(entity: BbScriptEntity, effect: number): Promise<void> {
+    return this.controlsService.entityFx(entity, effect);
   }
 
-  async entityOrder() {
-    return this.controlsService.entityOrder();
+  async entityOrder(entity: BbScriptEntity, effect: number): Promise<void> {
+    return this.controlsService.entityOrder(entity, effect);
   }
 
-  async entityParent() {
-    return this.controlsService.entityParent();
+  async entityParent(entity: BbScriptEntity, parent: BbScriptEntity, global?: boolean): Promise<void> {
+    return this.controlsService.entityParent(entity, parent, global);
   }
 
-  async entityShininess() {
-    return this.controlsService.entityShininess();
+  async entityShininess(entity: BbScriptEntity, shininess: number): Promise<void> {
+    return this.controlsService.entityShininess(entity, shininess);
   }
 
-  async entityTexture() {
-    return this.controlsService.entityTexture();
+  async entityTexture(entity: BbScriptEntity, texture: BbScriptTexture, frame?: number, layer?: number): Promise<void> {
+    return this.controlsService.entityTexture(entity, texture, frame, layer);
   }
 
-  async freeEntity() {
-    return this.controlsService.freeEntity();
+  async freeEntity(entity: BbScriptEntity): Promise<void> {
+    return this.controlsService.freeEntity(entity);
   }
 
-  async hideEntity() {
-    return this.controlsService.hideEntity();
+  async hideEntity(entity: BbScriptEntity): Promise<void> {
+    return this.controlsService.hideEntity(entity);
   }
 
-  async showEntity() {
-    return this.controlsService.showEntity();
+  async showEntity(entity: BbScriptEntity): Promise<void> {
+    return this.controlsService.showEntity(entity);
   }
 
   // COORDINATES
@@ -370,7 +383,7 @@ export class CommandsGraphics3DService {
   }
 
   async positionEntity(
-    entity: GameEntity,
+    entity: BbScriptEntity,
     x: number,
     y: number,
     z: number,
@@ -407,15 +420,15 @@ export class CommandsGraphics3DService {
     return this.coordinatesService.tFormedZ();
   }
 
-  async tFormNormal(x: number, y: number, z: number, source: GameEntity, target: GameEntity): Promise<void> {
+  async tFormNormal(x: number, y: number, z: number, source: BbScriptEntity, target: BbScriptEntity): Promise<void> {
     return this.coordinatesService.tFormNormal(x, y, z, source, target);
   }
 
-  async tFormPoint(x: number, y: number, z: number, source: GameEntity, target: GameEntity): Promise<void> {
+  async tFormPoint(x: number, y: number, z: number, source: BbScriptEntity, target: BbScriptEntity): Promise<void> {
     return this.coordinatesService.tFormPoint(x, y, z, source, target);
   }
 
-  async tFormVector(x: number, y: number, z: number, source: GameEntity, target: GameEntity): Promise<void> {
+  async tFormVector(x: number, y: number, z: number, source: BbScriptEntity, target: BbScriptEntity): Promise<void> {
     return this.coordinatesService.tFormVector(x, y, z, source, target);
   }
 
@@ -432,24 +445,35 @@ export class CommandsGraphics3DService {
     return this.diverseService.createPlane();
   }
 
-  async getMatElement() {
-    return this.diverseService.getMatElement();
+  async getMatElement(entity: BbScriptEntity, row: number, column: number): Promise<number> {
+    return this.diverseService.getMatElement(entity, row, column);
   }
 
-  async loaderMatrix() {
-    return this.diverseService.loaderMatrix();
+  async loaderMatrix(
+    meshType: BbScriptMeshType,
+    xx: number,
+    xy: number,
+    xz: number,
+    yx: number,
+    yy: number,
+    yz: number,
+    zx: number,
+    zy: number,
+    zz: number
+  ): Promise<void> {
+    return this.diverseService.loaderMatrix(meshType, xx, xy, xz, yx, yy, yz, zx, zy, zz);
   }
 
   async trisRendered() {
     return this.diverseService.trisRendered();
   }
 
-  async vectorPitch() {
-    return this.diverseService.vectorPitch();
+  async vectorPitch(x: number, y: number, z: number): Promise<number> {
+    return this.diverseService.vectorPitch(x, y, z);
   }
 
-  async vectorYaw() {
-    return this.diverseService.vectorYaw();
+  async vectorYaw(x: number, y: number, z: number): Promise<number> {
+    return this.diverseService.vectorYaw(x, y, z);
   }
 
   // LIGHT AND SHADOW
@@ -506,31 +530,31 @@ export class CommandsGraphics3DService {
     return this.meshesService.copyMesh(mesh, parent);
   }
 
-  async createCone(segments?: number, hasFloor?: boolean, parent?: GameEntity): Promise<GameEntity> {
+  async createCone(segments?: number, hasFloor?: boolean, parent?: BbScriptEntity): Promise<BbScriptEntity> {
     return this.meshesService.createCone(segments, hasFloor, parent);
   }
 
-  async createSphere(segments?: number, parent?: GameEntity): Promise<GameEntity> {
+  async createSphere(segments?: number, parent?: BbScriptEntity): Promise<BbScriptEntity> {
     return this.meshesService.createSphere(segments, parent);
   }
 
-  async createCube(parent?: GameEntity): Promise<GameEntity> {
+  async createCube(parent?: BbScriptEntity): Promise<BbScriptEntity> {
     return this.meshesService.createCube(parent);
   }
 
-  async createCylinder(segments?: number, hasFloor?: boolean, parent?: GameEntity): Promise<GameEntity> {
+  async createCylinder(segments?: number, hasFloor?: boolean, parent?: BbScriptEntity): Promise<BbScriptEntity> {
     return this.meshesService.createCylinder(segments, hasFloor, parent);
   }
 
-  async createPyramid(baseVertexNumber?: number, parent?: any): Promise<GameEntity> {
+  async createPyramid(baseVertexNumber?: number, parent?: any): Promise<BbScriptEntity> {
     return this.meshesService.createPyramid(baseVertexNumber, parent);
   }
 
-  async createTorus(parent?: GameEntity): Promise<GameEntity> {
+  async createTorus(parent?: BbScriptEntity): Promise<BbScriptEntity> {
     return this.meshesService.createTorus(parent);
   }
 
-  async createTorusKnot(parent?: GameEntity): Promise<GameEntity> {
+  async createTorusKnot(parent?: BbScriptEntity): Promise<BbScriptEntity> {
     return this.meshesService.createTorusKnot(parent);
   }
 
@@ -583,28 +607,28 @@ export class CommandsGraphics3DService {
     return this.meshesService.meshWidth(mesh);
   }
 
-  async positionMesh(mesh: Mesh, x: number, y: number, z: number): Promise<void> {
+  async positionMesh(mesh: BbScriptEntity, x: number, y: number, z: number): Promise<void> {
     return this.meshesService.positionMesh(mesh, x, y, z);
   }
 
-  async rotateMesh(mesh: Mesh, pitch: number, yaw: number, roll: number): Promise<void> {
+  async rotateMesh(mesh: BbScriptEntity, pitch: number, yaw: number, roll: number): Promise<void> {
     return this.meshesService.rotateMesh(mesh, pitch, yaw, roll);
   }
 
-  async scaleMesh(mesh: Mesh, scaleX: number, scaleY: number, scaleZ: number): Promise<void> {
+  async scaleMesh(mesh: BbScriptEntity, scaleX: number, scaleY: number, scaleZ: number): Promise<void> {
     return this.meshesService.scaleMesh(mesh, scaleX, scaleY, scaleZ);
   }
 
   // PICKING
-  async cameraPick(camera: GameEntity, x: number, y: number): Promise<GameEntity> {
+  async cameraPick(camera: BbScriptEntity, x: number, y: number): Promise<BbScriptEntity> {
     return this.pickingService.cameraPick(camera, x, y);
   }
 
-  async entityPick(entity: GameEntity, distance: number): Promise<GameEntity> {
+  async entityPick(entity: BbScriptEntity, distance: number): Promise<BbScriptEntity> {
     return this.pickingService.entityPick(entity, distance);
   }
 
-  async entityPickMode(entity: GameEntity, geometry: PickGeometry, coverOtherObjects?: boolean): Promise<void> {
+  async entityPickMode(entity: BbScriptEntity, geometry: PickGeometry, coverOtherObjects?: boolean): Promise<void> {
     return this.pickingService.entityPickMode(entity, geometry);
   }
 
@@ -616,11 +640,11 @@ export class CommandsGraphics3DService {
     dy: number,
     dz: number,
     radius?: number
-  ): Promise<GameEntity> {
+  ): Promise<BbScriptEntity> {
     return this.pickingService.linePick(x, y, z, dx, dy, dz, radius);
   }
 
-  async pickedEntity(): Promise<GameEntity> {
+  async pickedEntity(): Promise<BbScriptEntity> {
     return this.pickingService.pickedEntity();
   }
 
@@ -669,8 +693,8 @@ export class CommandsGraphics3DService {
     return this.sceneService.loadSkyBox();
   }
 
-  async setGravity() {
-    return this.sceneService.setGravity();
+  async setGravity(gravity: number): Promise<void> {
+    return this.sceneService.setGravity(gravity);
   }
 
   // SCENERY
@@ -724,227 +748,249 @@ export class CommandsGraphics3DService {
   }
 
   // SPRITES
-  async createSprite(parent?: GameEntity): Promise<GameEntity> {
+  async createSprite(parent?: BbScriptEntity): Promise<BbScriptEntity> {
     return this.spritesService.createSprite(parent);
   }
 
-  async handleSprite(sprite: GameEntity, x: number, y: number): Promise<void> {
+  async handleSprite(sprite: BbScriptEntity, x: number, y: number): Promise<void> {
     return this.spritesService.handleSprite(sprite, x, y);
   }
 
-  async loadSprite(filePath: string, mode: TextureMode, parent?: any): Promise<GameEntity> {
+  async loadSprite(filePath: string, mode: TextureMode, parent?: any): Promise<BbScriptEntity> {
     return this.spritesService.loadSprite(filePath, mode, parent);
   }
 
-  async rotateSprite(sprite: GameEntity, angle: number): Promise<void> {
+  async rotateSprite(sprite: BbScriptEntity, angle: number): Promise<void> {
     return this.spritesService.rotateSprite(sprite, angle);
   }
 
-  async scaleSprite(sprite: GameEntity, x: number, y: number): Promise<void> {
+  async scaleSprite(sprite: BbScriptEntity, x: number, y: number): Promise<void> {
     return this.spritesService.scaleSprite(sprite, x, y);
   }
 
-  async spriteViewMode(sprite: GameEntity, mode: SpriteViewMode): Promise<void> {
+  async spriteViewMode(sprite: BbScriptEntity, mode: SpriteViewMode): Promise<void> {
     return this.spritesService.spriteViewMode(sprite, mode);
   }
 
   // STATUS
-  async countChildren(entity: GameEntity): Promise<number> {
+  async countChildren(entity: BbScriptEntity): Promise<number> {
     return this.statusService.countChildren(entity);
   }
 
-  async deltaPitch(sourceEntity: GameEntity, targetEntity: GameEntity): Promise<number> {
+  async deltaPitch(sourceEntity: BbScriptEntity, targetEntity: BbScriptEntity): Promise<number> {
     return this.statusService.deltaPitch(sourceEntity, targetEntity);
   }
 
-  async deltaYaw(sourceEntity: GameEntity, targetEntity: GameEntity): Promise<number> {
+  async deltaYaw(sourceEntity: BbScriptEntity, targetEntity: BbScriptEntity): Promise<number> {
     return this.statusService.deltaYaw(sourceEntity, targetEntity);
   }
 
-  async entityClass(entity: GameEntity): Promise<string> {
+  async entityClass(entity: BbScriptEntity): Promise<string> {
     return this.statusService.entityClass(entity);
   }
 
-  async entityDistance(entity1: GameEntity, entity2: GameEntity): Promise<number> {
+  async entityDistance(entity1: BbScriptEntity, entity2: BbScriptEntity): Promise<number> {
     return this.statusService.entityDistance(entity1, entity2);
   }
 
-  async entityInView(entity: GameEntity, camera: GameEntity): Promise<boolean> {
+  async entityInView(entity: BbScriptEntity, camera: BbScriptEntity): Promise<boolean> {
     return this.statusService.entityInView(entity, camera);
   }
 
-  async entityName(entity: GameEntity): Promise<string> {
+  async entityName(entity: BbScriptEntity): Promise<string> {
     return this.statusService.entityName(entity);
   }
 
-  async entityPitch(entity: GameEntity, global?: boolean): Promise<number> {
+  async entityPitch(entity: BbScriptEntity, global?: boolean): Promise<number> {
     return this.statusService.entityPitch(entity, global);
   }
 
-  async entityRoll(entity: GameEntity, global?: boolean): Promise<number> {
+  async entityRoll(entity: BbScriptEntity, global?: boolean): Promise<number> {
     return this.statusService.entityRoll(entity, global);
   }
 
-  async entityVisible(entity1: GameEntity, entity2: GameEntity): Promise<boolean> {
+  async entityVisible(entity1: BbScriptEntity, entity2: BbScriptEntity): Promise<boolean> {
     return this.statusService.entityVisible(entity1, entity2);
   }
 
-  async entityX(entity: GameEntity, global?: boolean): Promise<number> {
+  async entityX(entity: BbScriptEntity, global?: boolean): Promise<number> {
     return this.statusService.entityX(entity, global);
   }
 
-  async entityY(entity: GameEntity, global?: boolean): Promise<number> {
+  async entityY(entity: BbScriptEntity, global?: boolean): Promise<number> {
     return this.statusService.entityY(entity, global);
   }
 
-  async entityYaw(entity: GameEntity, global?: boolean): Promise<number> {
+  async entityYaw(entity: BbScriptEntity, global?: boolean): Promise<number> {
     return this.statusService.entityYaw(entity, global);
   }
 
-  async entityZ(entity: GameEntity, global?: boolean): Promise<number> {
+  async entityZ(entity: BbScriptEntity, global?: boolean): Promise<number> {
     return this.statusService.entityZ(entity, global);
   }
 
-  async findChild(entity: GameEntity, childName: string): Promise<GameEntity | null> {
+  async findChild(entity: BbScriptEntity, childName: string): Promise<BbScriptEntity | null> {
     return this.statusService.findChild(entity, childName);
   }
 
-  async getChild(entity: GameEntity, index: number): Promise<GameEntity | null> {
+  async getChild(entity: BbScriptEntity, index: number): Promise<BbScriptEntity | null> {
     return this.statusService.getChild(entity, index);
   }
 
-  async getParent(entity: GameEntity): Promise<GameEntity> {
+  async getParent(entity: BbScriptEntity): Promise<BbScriptEntity> {
     return this.statusService.getParent(entity);
   }
 
-  async nameEntity(entity: GameEntity, name: string): Promise<void> {
+  async nameEntity(entity: BbScriptEntity, name: string): Promise<void> {
     return this.statusService.nameEntity(entity, name);
   }
 
   // SURFACES
-  async addTriangle() {
-    return this.surfacesService.addTriangle();
+  async addTriangle(surface: BbScriptSurface, v0: number, v1: number, v2: number): Promise<number> {
+    return this.surfacesService.addTriangle(surface, v0, v1, v2);
   }
 
-  async addVertex() {
-    return this.surfacesService.addVertex();
+  async addVertex(
+    surface: BbScriptSurface,
+    x: number,
+    y: number,
+    z: number,
+    u?: number,
+    v?: number,
+    w?: number
+  ): Promise<number> {
+    return this.surfacesService.addVertex(surface, x, y, z, u, v, w);
   }
 
-  async clearSurface() {
-    return this.surfacesService.clearSurface();
+  async clearSurface(surface: BbScriptSurface, deleteVertices?: boolean, deleteTriangles?: boolean): Promise<void> {
+    return this.surfacesService.clearSurface(surface, deleteVertices, deleteTriangles);
   }
 
-  async countSurfaces() {
-    return this.surfacesService.countSurfaces();
+  async countSurfaces(mesh: BbScriptEntity): Promise<number> {
+    return this.surfacesService.countSurfaces(mesh);
   }
 
-  async countTriangles() {
-    return this.surfacesService.countTriangles();
+  async countTriangles(surface: BbScriptSurface): Promise<number> {
+    return this.surfacesService.countTriangles(surface);
   }
 
-  async countVertices() {
-    return this.surfacesService.countVertices();
+  async countVertices(surface: BbScriptSurface): Promise<number> {
+    return this.surfacesService.countVertices(surface);
   }
 
-  async createSurface() {
-    return this.surfacesService.createSurface();
+  async createSurface(mesh: BbScriptEntity, brush: BbScriptBrush): Promise<BbScriptSurface> {
+    return this.surfacesService.createSurface(mesh, brush);
   }
 
-  async findSurface() {
-    return this.surfacesService.findSurface();
+  async findSurface(mesh: BbScriptEntity, brush: BbScriptBrush): Promise<BbScriptSurface> {
+    return this.surfacesService.findSurface(mesh, brush);
   }
 
-  async getSurface() {
-    return this.surfacesService.getSurface();
+  async getSurface(mesh: BbScriptEntity, index: number): Promise<BbScriptSurface> {
+    return this.surfacesService.getSurface(mesh, index);
   }
 
-  async triangleVertex() {
-    return this.surfacesService.triangleVertex();
+  async triangleVertex(surface: BbScriptSurface, triangle: number, vertex: number): Promise<number> {
+    return this.surfacesService.triangleVertex(surface, triangle, vertex);
   }
 
-  async updateNormals() {
-    return this.surfacesService.updateNormals();
+  async updateNormals(mesh: BbScriptEntity): Promise<void> {
+    return this.surfacesService.updateNormals(mesh);
   }
 
-  async vertexAlpha() {
-    return this.surfacesService.vertexAlpha();
+  async vertexAlpha(surface: BbScriptSurface, vertex: number): Promise<number> {
+    return this.surfacesService.vertexAlpha(surface, vertex);
   }
 
-  async vertexBlue() {
-    return this.surfacesService.vertexBlue();
+  async vertexBlue(surface: BbScriptSurface, vertex: number): Promise<number> {
+    return this.surfacesService.vertexBlue(surface, vertex);
   }
 
-  async vertexColor() {
-    return this.surfacesService.vertexColor();
+  async vertexColor(
+    surface: BbScriptSurface,
+    vertex: number,
+    red: number,
+    green: number,
+    blue: number,
+    alpha?: number
+  ): Promise<void> {
+    return this.surfacesService.vertexColor(surface, vertex, red, green, blue, alpha);
   }
 
-  async vertexCoords() {
-    return this.surfacesService.vertexCoords();
+  async vertexCoords(surface: BbScriptSurface, vertex: number, x: number, y: number, z: number): Promise<void> {
+    return this.surfacesService.vertexCoords(surface, vertex, x, y, z);
   }
 
-  async vertexGreen() {
-    return this.surfacesService.vertexGreen();
+  async vertexGreen(surface: BbScriptSurface, vertex: number): Promise<number> {
+    return this.surfacesService.vertexGreen(surface, vertex);
   }
 
-  async vertexNormal() {
-    return this.surfacesService.vertexNormal();
+  async vertexNormal(surface: BbScriptSurface, vertex: number, x: number, y: number, z: number): Promise<void> {
+    return this.surfacesService.vertexNormal(surface, vertex, x, y, z);
   }
 
-  async vertexNX() {
-    return this.surfacesService.vertexNX();
+  async vertexNX(surface: BbScriptSurface, vertex: number): Promise<number> {
+    return this.surfacesService.vertexNX(surface, vertex);
   }
 
-  async vertexNY() {
-    return this.surfacesService.vertexNY();
+  async vertexNY(surface: BbScriptSurface, vertex: number): Promise<number> {
+    return this.surfacesService.vertexNY(surface, vertex);
   }
 
-  async vertexNZ() {
-    return this.surfacesService.vertexNZ();
+  async vertexNZ(surface: BbScriptSurface, vertex: number): Promise<number> {
+    return this.surfacesService.vertexNZ(surface, vertex);
   }
 
-  async vertexRed() {
-    return this.surfacesService.vertexRed();
+  async vertexRed(surface: BbScriptSurface, vertex: number): Promise<number> {
+    return this.surfacesService.vertexRed(surface, vertex);
   }
 
-  async vertexTexCoords() {
-    return this.surfacesService.vertexTexCoords();
+  async vertexTexCoords(
+    surface: BbScriptSurface,
+    vertex: number,
+    u: number,
+    v: number,
+    w?: number,
+    set?: boolean
+  ): Promise<void> {
+    return this.surfacesService.vertexTexCoords(surface, vertex, u, v, w, set);
   }
 
-  async vertexU() {
-    return this.surfacesService.vertexU();
+  async vertexU(surface: BbScriptSurface, vertex: number, set?: boolean): Promise<number> {
+    return this.surfacesService.vertexU(surface, vertex, set);
   }
 
-  async vertexV() {
-    return this.surfacesService.vertexV();
+  async vertexV(surface: BbScriptSurface, vertex: number, set?: boolean): Promise<number> {
+    return this.surfacesService.vertexV(surface, vertex, set);
   }
 
-  async vertexW() {
-    return this.surfacesService.vertexW();
+  async vertexW(surface: BbScriptSurface, vertex: number, set?: boolean): Promise<number> {
+    return this.surfacesService.vertexW(surface, vertex, set);
   }
 
-  async vertexX() {
-    return this.surfacesService.vertexX();
+  async vertexX(surface: BbScriptSurface, vertex: number): Promise<number> {
+    return this.surfacesService.vertexX(surface, vertex);
   }
 
-  async vertexY() {
-    return this.surfacesService.vertexY();
+  async vertexY(surface: BbScriptSurface, vertex: number): Promise<number> {
+    return this.surfacesService.vertexY(surface, vertex);
   }
 
-  async vertexZ() {
-    return this.surfacesService.vertexZ();
+  async vertexZ(surface: BbScriptSurface, vertex: number): Promise<number> {
+    return this.surfacesService.vertexZ(surface, vertex);
   }
 
   // TERRAIN
-  async createTerrain(segments: number, parent?: any): Promise<BABYLON.Mesh> {
+  async createTerrain(segments: number, parent?: BbScriptEntity): Promise<BbScriptTerrain> {
     return this.terrainService.createTerrain(segments, parent);
   }
 
-  async loadTerrain(filePath: string, parent?: any): Promise<BABYLON.Mesh> {
+  async loadTerrain(filePath: string, parent?: any): Promise<BbScriptTerrain> {
     return this.terrainService.loadTerrain(filePath, parent);
   }
 
   async modifyTerrain(
-    terrain: BABYLON.Mesh,
+    terrain: BbScriptEntity,
     x: number,
     z: number,
     height: number,
@@ -953,11 +999,11 @@ export class CommandsGraphics3DService {
     return this.terrainService.modifyTerrain(terrain, x, z, height, realTimeUpdate);
   }
 
-  async terrainDetail(terrain: BABYLON.Mesh, detailLevel: number, enableMorphing: boolean): Promise<void> {
+  async terrainDetail(terrain: BbScriptEntity, detailLevel: number, enableMorphing: boolean): Promise<void> {
     return this.terrainService.terrainDetail(terrain, detailLevel, enableMorphing);
   }
 
-  async terrainHeight(terrain: BABYLON.Mesh, x: number, z: number): Promise<number> {
+  async terrainHeight(terrain: BbScriptEntity, x: number, z: number): Promise<number> {
     return this.terrainService.terrainHeight(terrain, x, z);
   }
 
@@ -965,19 +1011,19 @@ export class CommandsGraphics3DService {
     return this.terrainService.terrainShading(enableShading);
   }
 
-  async terrainSize(terrain: BABYLON.Mesh): Promise<number> {
+  async terrainSize(terrain: BbScriptEntity): Promise<number> {
     return this.terrainService.terrainSize(terrain);
   }
 
-  async terrainX(terrain: BABYLON.Mesh, x: number, y: number, z: number): Promise<number> {
+  async terrainX(terrain: BbScriptEntity, x: number, y: number, z: number): Promise<number> {
     return this.terrainService.terrainX(terrain, x, y, z);
   }
 
-  async terrainY(terrain: BABYLON.Mesh, x: number, y: number, z: number): Promise<number> {
+  async terrainY(terrain: BbScriptEntity, x: number, y: number, z: number): Promise<number> {
     return this.terrainService.terrainY(terrain, x, y, z);
   }
 
-  async terrainZ(terrain: BABYLON.Mesh, x: number, y: number, z: number): Promise<number> {
+  async terrainZ(terrain: BbScriptEntity, x: number, y: number, z: number): Promise<number> {
     return this.terrainService.terrainZ(terrain, x, y, z);
   }
 
@@ -990,11 +1036,11 @@ export class CommandsGraphics3DService {
     return this.texturesService.clearTextureFilters();
   }
 
-  async createTexture(width: number, height: number, mode?: TextureMode, frames?: number): Promise<BABYLON.Texture> {
+  async createTexture(width: number, height: number, mode?: TextureMode, frames?: number): Promise<BbScriptTexture> {
     return this.texturesService.createTexture(width, height, mode, frames);
   }
 
-  async freeTexture(texture: BABYLON.Texture): Promise<void> {
+  async freeTexture(texture: BbScriptTexture): Promise<void> {
     return this.texturesService.freeTexture(texture);
   }
 
@@ -1005,39 +1051,39 @@ export class CommandsGraphics3DService {
     height: number,
     startFrame: number,
     totalFrames: number
-  ): Promise<BABYLON.Texture> {
+  ): Promise<BbScriptTexture> {
     return this.texturesService.loadAnimTexture(filePath, mode, width, height, startFrame, totalFrames);
   }
 
-  async loadTexture(filePath: string, mode: TextureMode): Promise<BABYLON.Texture> {
+  async loadTexture(filePath: string, mode: TextureMode): Promise<BbScriptTexture> {
     return this.texturesService.loadTexture(filePath, mode);
   }
 
-  async positionTexture(texture: BABYLON.Texture, u: number, v: number): Promise<void> {
+  async positionTexture(texture: BbScriptTexture, u: number, v: number): Promise<void> {
     return this.texturesService.positionTexture(texture, u, v);
   }
 
-  async rotateTexture(texture: BABYLON.Texture, angle: number): Promise<void> {
+  async rotateTexture(texture: BbScriptTexture, angle: number): Promise<void> {
     return this.texturesService.rotateTexture(texture, angle);
   }
 
-  async scaleTexture(texture: BABYLON.Texture, u: number, v: number): Promise<void> {
+  async scaleTexture(texture: BbScriptTexture, u: number, v: number): Promise<void> {
     return this.texturesService.scaleTexture(texture, u, v);
   }
 
-  async setCubeFace(texture: BABYLON.Texture, face: CubeMapFace): Promise<void> {
+  async setCubeFace(texture: BbScriptTexture, face: CubeMapFace): Promise<void> {
     return this.texturesService.setCubeFace(texture, face);
   }
 
-  async setCubeMode(texture: BABYLON.Texture, mode: CubeMapMode): Promise<void> {
+  async setCubeMode(texture: BbScriptTexture, mode: CubeMapMode): Promise<void> {
     return this.texturesService.setCubeMode(texture, mode);
   }
 
-  async textureBlend(texture: BABYLON.Texture, mode: TextureBlendMode): Promise<void> {
+  async textureBlend(texture: BbScriptTexture, mode: TextureBlendMode): Promise<void> {
     return this.texturesService.textureBlend(texture, mode);
   }
 
-  async textureCoords(texture: BABYLON.Texture, coordinate: boolean): Promise<void> {
+  async textureCoords(texture: BbScriptTexture, coordinate: boolean): Promise<void> {
     return this.texturesService.textureCoords(texture, coordinate);
   }
 
@@ -1045,15 +1091,15 @@ export class CommandsGraphics3DService {
     return this.texturesService.textureFilter(searchText, mode);
   }
 
-  async textureHeight(texture: BABYLON.Texture): Promise<number> {
+  async textureHeight(texture: BbScriptTexture): Promise<number> {
     return this.texturesService.textureHeight(texture);
   }
 
-  async textureName(texture: BABYLON.Texture): Promise<string> {
+  async textureName(texture: BbScriptTexture): Promise<string> {
     return this.texturesService.textureName(texture);
   }
 
-  async textureWidth(texture: BABYLON.Texture): Promise<number> {
+  async textureWidth(texture: BbScriptTexture): Promise<number> {
     return this.texturesService.textureWidth(texture);
   }
 }

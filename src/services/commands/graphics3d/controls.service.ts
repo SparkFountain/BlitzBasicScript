@@ -1,19 +1,14 @@
-import { Injectable } from "@angular/core";
-import { GameEntity } from "../../../interfaces/game/entity";
-import { of, Subscriber } from "rxjs";
-import { BlendMode } from "../../../enums/entity/blend-mode";
-import { BabylonJSService } from "../../babylon-js.service";
-import { BbScriptEntity } from "bbscript/src/classes/in-game/3d/entity";
-import { BbScriptTexture } from "bbscript/src/classes/in-game/3d/texture";
+import { Injectable } from '@angular/core';
+import { BlendMode } from '../../../enums/entity/blend-mode';
+import { BabylonJSService } from '../../babylon-js.service';
+import { BbScriptEntity } from 'bbscript/src/classes/in-game/3d/entity';
+import { BbScriptTexture } from 'bbscript/src/classes/in-game/3d/texture';
 
 @Injectable()
 export class CommandsGraphics3dControlsService {
   constructor(private babylonjs: BabylonJSService) {}
 
-  async copyEntity(
-    entity: BbScriptEntity,
-    parent?: GameEntity
-  ): Promise<GameEntity> {
+  async copyEntity(entity: BbScriptEntity, parent?: BbScriptEntity): Promise<BbScriptEntity> {
     return null;
   }
 
@@ -21,26 +16,15 @@ export class CommandsGraphics3dControlsService {
     entity.mesh.material.alpha = alpha;
   }
 
-  async entityAutoFade(
-    entity: BbScriptEntity,
-    near: number,
-    far: number
-  ): Promise<void> {}
+  async entityAutoFade(entity: BbScriptEntity, near: number, far: number): Promise<void> {}
 
   async entityBlend(entity: BbScriptEntity, mode: BlendMode): Promise<void> {}
 
-  async entityColor(
-    entity: BbScriptEntity,
-    red: number,
-    green: number,
-    blue: number
-  ): Promise<void> {
-    if (entity.class === "Mesh") {
+  async entityColor(entity: BbScriptEntity, red: number, green: number, blue: number): Promise<void> {
+    if (entity.class === 'Mesh') {
       this.babylonjs.colorMesh(entity.mesh, red, green, blue);
     } else {
-      console.error(
-        `Cannot assign "EntityColor()" to entity of type ${entity.class}`
-      );
+      console.error(`Cannot assign "EntityColor()" to entity of type ${entity.class}`);
     }
   }
 
@@ -48,16 +32,9 @@ export class CommandsGraphics3dControlsService {
 
   async entityOrder(entity: BbScriptEntity, index: number): Promise<void> {}
 
-  async entityParent(
-    entity: BbScriptEntity,
-    parent: BbScriptEntity,
-    global?: boolean
-  ): Promise<void> {}
+  async entityParent(entity: BbScriptEntity, parent: BbScriptEntity, global?: boolean): Promise<void> {}
 
-  async entityShininess(
-    entity: BbScriptEntity,
-    shininess: number
-  ): Promise<void> {}
+  async entityShininess(entity: BbScriptEntity, shininess: number): Promise<void> {}
 
   async entityTexture(
     entity: BbScriptEntity,
