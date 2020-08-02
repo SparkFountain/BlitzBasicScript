@@ -13,7 +13,7 @@ export class CommandsGraphics3dControlsService {
   }
 
   async entityAlpha(entity: BbScriptEntity, alpha: number): Promise<void> {
-    entity.mesh.material.alpha = alpha;
+    entity.instance.material.alpha = alpha;
   }
 
   async entityAutoFade(entity: BbScriptEntity, near: number, far: number): Promise<void> {}
@@ -22,7 +22,7 @@ export class CommandsGraphics3dControlsService {
 
   async entityColor(entity: BbScriptEntity, red: number, green: number, blue: number): Promise<void> {
     if (entity.class === 'Mesh') {
-      this.babylonjs.colorMesh(entity.mesh, red, green, blue);
+      this.babylonjs.colorMesh(entity.instance, red, green, blue);
     } else {
       console.error(`Cannot assign "EntityColor()" to entity of type ${entity.class}`);
     }

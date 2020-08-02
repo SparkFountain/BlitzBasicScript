@@ -1,34 +1,44 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
 
-import * as BABYLON from "babylonjs";
-import { CameraType } from "../enums/camera/camera-type";
-import { BbScriptAxis } from "../enums/axis";
-import { LightType } from "../enums/light/light-type";
-import Mesh = BABYLON.Mesh;
-import Camera = BABYLON.Camera;
-import Light = BABYLON.Light;
-import PointLight = BABYLON.PointLight;
-import SpotLight = BABYLON.SpotLight;
-import Color3 = BABYLON.Color3;
-import StandardMaterial = BABYLON.StandardMaterial;
-import { CodeBlock } from "../interfaces/code/block";
-import { BbScriptLight } from "../classes/in-game/3d/light";
-import { BbScriptEntity } from "../classes/in-game/3d/entity";
+import { CameraType } from '../enums/camera/camera-type';
+import { BbScriptAxis } from '../enums/axis';
+import { LightType } from '../enums/light/light-type';
+import { CodeBlock } from '../interfaces/code/block';
+import { BbScriptLight } from '../classes/in-game/3d/light';
+import { BbScriptEntity } from '../classes/in-game/3d/entity';
+import {
+  Engine,
+  Scene,
+  FreeCamera,
+  Light,
+  StandardMaterial,
+  Vector3,
+  HemisphericLight,
+  MeshBuilder,
+  Camera,
+  Mesh,
+  DirectionalLight,
+  PointLight,
+  SpotLight,
+  Color3,
+  AssetsManager
+} from 'babylonjs';
 
 @Injectable({
-  providedIn: "root",
+  providedIn: 'root'
 })
 export class BabylonJSService {
   private screenWidth: number;
   private screenHeight: number;
 
   private _canvas: HTMLCanvasElement;
-  private _engine: BABYLON.Engine;
-  private _scene: BABYLON.Scene;
+  private _engine: Engine;
+  private _scene: Scene;
+  private _assetsManager: AssetsManager;
 
   //TODO remove camera and light later
-  private _camera: BABYLON.FreeCamera;
-  private _light: BABYLON.Light;
+  private _camera: FreeCamera;
+  private _light: Light;
 
   private wireFrame: boolean;
   private antiAlias: boolean;
@@ -42,10 +52,7 @@ export class BabylonJSService {
   }
 
   defaultMaterial(): StandardMaterial {
-    let material: StandardMaterial = new BABYLON.StandardMaterial(
-      "1",
-      this._scene
-    );
+    let material: StandardMaterial = new StandardMaterial('1', this._scene);
     let white = new BABYLON.Color3(1, 1, 1);
     material.diffuseColor = BABYLON.Color3.Red();
     material.specularColor = white;
@@ -57,39 +64,77 @@ export class BabylonJSService {
     return material;
   }
 
-  async initEngine(canvas: HTMLElement) {
+  testScene(): void {
     // Create canvas3d and engine.
-    this._canvas = canvas as HTMLCanvasElement;
-    this._engine = new BABYLON.Engine(this._canvas, true);
-  }
+    this._canvas = document.getElementById('renderCanvas') as HTMLCanvasElement;
+    this._engine = new Engine(this._canvas, this.antiAlias);
 
-  async createScene(): Promise<void> {
     // Create a basic BJS Scene object.
-    this._scene = new BABYLON.Scene(this._engine);
+    this._scene = new Scene(this._engine);
 
     // Create a FreeCamera, and set its position to (x:0, y:5, z:-10).
-    //this._camera = new BABYLON.FreeCamera('camera1', new BABYLON.Vector3(0, 5, -10), this._scene);
+    this._camera = new FreeCamera('camera1', new Vector3(0, 5, -10), this._scene);
 
     // Target the camera to scene origin.
-    //this._camera.setTarget(BABYLON.Vector3.Zero());
+    this._camera.setTarget(Vector3.Zero());
 
     // Attach the camera to the canvas3d.
-    //this._camera.attachControl(this._canvas, false);
+    this._camera.attachControl(this._canvas, false);
 
     // Create a basic light, aiming 0,1,0 - meaning, to the sky.
-    //this._light = new BABYLON.HemisphericLight('light1', new BABYLON.Vector3(0, 1, 0), this._scene);
+    this._light = new HemisphericLight('light1', new Vector3(0, 1, 0), this._scene);
 
     // Create a built-in "sphere" shape; with 16 segments and diameter of 2.
-    /*let sphere = BABYLON.MeshBuilder.CreateSphere('sphere1',
-          {segments: 16, diameter: 2}, this._scene);*/
+    let sphere = MeshBuilder.CreateSphere('sphere1', { segments: 16, diameter: 2 }, this._scene);
 
     // Move the sphere upward 1/2 of its height.
-    //sphere.position.z = 10;
-    //sphere.position.y = 1;
+    sphere.position.z = 10;
+    sphere.position.y = 1;
 
     // Create a built-in "ground" shape.
-    /*let ground = BABYLON.MeshBuilder.CreateGround('ground1',
-          {width: 6, height: 6, subdivisions: 2}, this._scene);*/
+    let ground = MeshBuilder.CreateGround('ground1', { width: 6, height: 6, subdivisions: 2 }, this._scene);
+
+    this._engine.runRenderLoop(() => {
+      this._scene.render();
+
+      // TODO: execute all code blocks sequentially
+    });
+  }
+
+  initEngine(canvas: HTMLElement): void {
+    // Create canvas3d and engine.
+    this._canvas = canvas as HTMLCanvasElement;
+    this._engine = new Engine(this._canvas, true);
+  }
+
+  createScene(): void {
+    // Create a basic BJS Scene object.
+    this._scene = new Scene(this._engine);
+
+    // Initialize assets manager to load content
+    this._assetsManager = new AssetsManager(this._scene);
+
+    // Create a FreeCamera, and set its position to (x:0, y:5, z:-10).
+    // this._camera = new BABYLON.FreeCamera('camera1', new Vector3(0, 5, -10), this._scene);
+
+    // Target the camera to scene origin.
+    // this._camera.setTarget(Vector3.Zero());
+
+    // Attach the camera to the canvas3d.
+    // this._camera.attachControl(this._canvas, false);
+
+    // Create a basic light, aiming 0,1,0 - meaning, to the sky.
+    // this._light = new BABYLON.HemisphericLight('light1', new Vector3(0, 1, 0), this._scene);
+
+    // Create a built-in "sphere" shape; with 16 segments and diameter of 2.
+    // let sphere = MeshBuilder.CreateSphere('sphere1', { segments: 16, diameter: 2 }, this._scene);
+
+    // Move the sphere upward 1/2 of its height.
+    // sphere.position.z = 10;
+    // sphere.position.y = 1;
+
+    // Create a built-in "ground" shape.
+    // let ground = MeshBuilder.CreateGround('ground1', { width: 6, height: 6, subdivisions: 2 }, this._scene);
   }
 
   async mainLoop(statements: CodeBlock[]): Promise<void> {
@@ -105,10 +150,10 @@ export class BabylonJSService {
     this.screenWidth = width;
     this.screenHeight = height;
 
-    this._canvas.style.width = width + "px";
-    this._canvas.style.height = height + "px";
+    this._canvas.style.width = width + 'px';
+    this._canvas.style.height = height + 'px';
 
-    this._engine = new BABYLON.Engine(this._canvas, true);
+    this._engine = new Engine(this._canvas, true);
 
     //this._canvas.style.width = '100%';
     //this._canvas.style.height = '100%';
@@ -122,9 +167,17 @@ export class BabylonJSService {
     this._scene.fogColor = new BABYLON.Color3(red, green, blue);
   }
 
+  /* ASSETS */
+  async loadAsset(url: string): Promise<any> {
+    this._assetsManager.addTextureTask('texLoad', url);
+    this._assetsManager.loadAsync().then((result: any) => {
+      console.info('[LOADED ASSET]', result);
+    });
+  }
+
   /* CAMERA */
-  async createCamera(type: CameraType): Promise<BABYLON.Camera> {
-    let camera: BABYLON.Camera;
+  async createCamera(type: CameraType): Promise<Camera> {
+    let camera: Camera;
 
     switch (type) {
       //TODO anaglyph needs another type in combination
@@ -137,19 +190,14 @@ export class BabylonJSService {
       case CameraType.FOLLOW:
         break;
       case CameraType.FREE:
-        camera = new BABYLON.FreeCamera(
-          "1",
-          new BABYLON.Vector3(0, 0, 0),
-          this._scene,
-          true
-        );
+        camera = new FreeCamera('1', new Vector3(0, 0, 0), this._scene, true);
         break;
       case CameraType.UNIVERSAL:
         break;
       case CameraType.WEB_VR:
         break;
       default:
-        console.error("Error at CreateCamera: invalid camera type", type);
+        console.error('Error at CreateCamera: invalid camera type', type);
         break;
     }
 
@@ -161,16 +209,9 @@ export class BabylonJSService {
 
   async copyMesh() {}
 
-  async createCone(
-    segments?: number,
-    hasFloor?: boolean
-  ): Promise<BbScriptEntity> {
+  async createCone(segments?: number, hasFloor?: boolean): Promise<BbScriptEntity> {
     //TODO implement segments and hasFloor
-    let cone: Mesh = BABYLON.MeshBuilder.CreateCylinder(
-      "1",
-      { diameterTop: 0, tessellation: 32 },
-      this._scene
-    );
+    let cone: Mesh = MeshBuilder.CreateCylinder('1', { diameterTop: 0, tessellation: 32 }, this._scene);
     cone.material = this.defaultMaterial();
 
     return null;
@@ -178,20 +219,20 @@ export class BabylonJSService {
   }
 
   async createSphere(segments: number): Promise<Mesh> {
-    let sphere: Mesh = BABYLON.MeshBuilder.CreateSphere("1", {}, this._scene);
+    let sphere: Mesh = MeshBuilder.CreateSphere('1', {}, this._scene);
     sphere.material = this.defaultMaterial();
     return sphere;
   }
 
   async createCube(): Promise<Mesh> {
-    let cube: Mesh = BABYLON.MeshBuilder.CreateBox("1", {}, this._scene);
+    let cube: Mesh = MeshBuilder.CreateBox('1', {}, this._scene);
     cube.material = this.defaultMaterial();
     return cube;
   }
 
   async createCylinder(segments, hasFloor): Promise<Mesh> {
-    let cylinder: Mesh = BABYLON.MeshBuilder.CreateCylinder(
-      "1",
+    let cylinder: Mesh = MeshBuilder.CreateCylinder(
+      '1',
       { diameterTop: 4, diameterBottom: 4, tessellation: 32 },
       this._scene
     );
@@ -213,35 +254,24 @@ export class BabylonJSService {
         meshType = 9;
         break;
       default:
-        console.error(
-          "The number of base vertices for a pyramid is not allowed:",
-          baseVertexNumber
-        );
+        console.error('The number of base vertices for a pyramid is not allowed:', baseVertexNumber);
         return;
     }
 
-    let pyramid: Mesh = BABYLON.MeshBuilder.CreatePolyhedron(
-      "1",
-      { type: 1, size: 1 },
-      this._scene
-    );
+    let pyramid: Mesh = MeshBuilder.CreatePolyhedron('1', { type: 1, size: 1 }, this._scene);
     pyramid.material = this.defaultMaterial();
     return pyramid;
   }
 
   //TODO add parameter(s) how smooth the torus should be
   async createTorus(): Promise<Mesh> {
-    let torus: Mesh = BABYLON.MeshBuilder.CreateTorus("1", {}, this._scene);
+    let torus: Mesh = MeshBuilder.CreateTorus('1', {}, this._scene);
     torus.material = this.defaultMaterial();
     return torus;
   }
 
   async createTorusKnot(): Promise<Mesh> {
-    let torusKnot: Mesh = BABYLON.MeshBuilder.CreateTorusKnot(
-      "tk",
-      {},
-      this._scene
-    );
+    let torusKnot: Mesh = MeshBuilder.CreateTorusKnot('tk', {}, this._scene);
     torusKnot.material = this.defaultMaterial();
     return torusKnot;
   }
@@ -249,7 +279,7 @@ export class BabylonJSService {
   async fitMesh() {}
 
   async flipMesh(mesh) {
-    console.info("flip mesh", mesh);
+    console.info('flip mesh', mesh);
     //TODO negative scaling does not work, try to invert all normals / vertices
   }
 
@@ -280,30 +310,19 @@ export class BabylonJSService {
     z: number,
     parentCoordinates?: boolean
   ): Promise<void> {
-    console.info("Entity:", entity);
+    console.info('Entity:', entity);
 
     //TODO regard parent coordinates
-    entity.position = new BABYLON.Vector3(x, y, z);
-    console.info("New position of entity:", x, y, z);
+    entity.position = new Vector3(x, y, z);
+    console.info('New position of entity:', x, y, z);
   }
 
-  async scaleMesh(
-    entity: any,
-    x: number,
-    y: number,
-    z: number,
-    parentScale?: boolean
-  ): Promise<void> {
-    entity.scaling = new BABYLON.Vector3(x, y, z);
+  async scaleMesh(entity: any, x: number, y: number, z: number, parentScale?: boolean): Promise<void> {
+    entity.scaling = new Vector3(x, y, z);
   }
 
   /* ENTITIES */
-  async moveEntity(
-    entity: any,
-    x: number,
-    y: number,
-    z: number
-  ): Promise<void> {
+  async moveEntity(entity: any, x: number, y: number, z: number): Promise<void> {
     entity.movePOV(-x, -y, -z);
   }
 
@@ -317,78 +336,46 @@ export class BabylonJSService {
     //Pi = 180°
     //TODO regard parent coordinates
     if (entity instanceof Mesh) {
-      entity.rotation = new BABYLON.Vector3(
-        Math.PI * (pitch / 180),
-        Math.PI * (yaw / 180),
-        Math.PI * (roll / 180)
-      );
+      entity.rotation = new Vector3(Math.PI * (pitch / 180), Math.PI * (yaw / 180), Math.PI * (roll / 180));
     } else {
       //TODO
     }
   }
 
-  async translateEntity(
-    entity: any,
-    x: number,
-    y: number,
-    z: number,
-    parentAngle?: boolean
-  ): Promise<void> {
+  async translateEntity(entity: any, x: number, y: number, z: number, parentAngle?: boolean): Promise<void> {
     entity.translate(BABYLON.Axis.X, x, BABYLON.Space.LOCAL);
     entity.translate(BABYLON.Axis.Y, y, BABYLON.Space.LOCAL);
     entity.translate(BABYLON.Axis.Z, z, BABYLON.Space.LOCAL);
   }
 
-  async turnEntity(
-    entity: any,
-    pitch: number,
-    yaw: number,
-    roll: number,
-    parentAngle?: boolean
-  ): Promise<void> {
+  async turnEntity(entity: any, pitch: number, yaw: number, roll: number, parentAngle?: boolean): Promise<void> {
     //TODO implement global
     entity.addRotation(pitch, yaw, roll);
   }
 
-  async alignToVector(
-    entity: any,
-    x: number,
-    y: number,
-    z: number,
-    axis: BbScriptAxis,
-    tween: number
-  ): Promise<void> {
+  async alignToVector(entity: any, x: number, y: number, z: number, axis: BbScriptAxis, tween: number): Promise<void> {
     //TODO test if this is the correct behaviour
     //TODO in this implementation, tween would be deprecated
     let upDirection;
     switch (axis) {
       case 1: //x
-        upDirection = new BABYLON.Vector3(1, 0, 0);
+        upDirection = new Vector3(1, 0, 0);
         break;
       case 2: //y
-        upDirection = new BABYLON.Vector3(0, 1, 0);
+        upDirection = new Vector3(0, 1, 0);
         break;
       case 3: //z
-        upDirection = new BABYLON.Vector3(0, 0, 1);
+        upDirection = new Vector3(0, 0, 1);
         break;
     }
-    entity.alignWithNormal(new BABYLON.Vector3(x, y, z), upDirection);
+    entity.alignWithNormal(new Vector3(x, y, z), upDirection);
   }
 
-  async pointEntity(
-    sourceEntity: any,
-    targetEntity: any,
-    roll: number
-  ): Promise<void> {
+  async pointEntity(sourceEntity: any, targetEntity: any, roll: number): Promise<void> {
     //TODO implementation
   }
 
-  async colorMesh(
-    mesh: Mesh,
-    red: number,
-    green: number,
-    blue: number
-  ): Promise<void> {
+  async colorMesh(mesh: Mesh, red: number, green: number, blue: number): Promise<void> {
     //mesh.material.ambientColor = new BABYLON.Color3(Math.trunc(red) / 255, Math.trunc(green) / 255, Math.trunc(blue) / 255);
   }
 
@@ -411,38 +398,19 @@ export class BabylonJSService {
 
     switch (type) {
       case LightType.DIRECTIONAL:
-        light = new BABYLON.DirectionalLight(
-          "1",
-          new BABYLON.Vector3(0, 0, 0),
-          this._scene
-        );
+        light = new DirectionalLight('1', new Vector3(0, 0, 0), this._scene);
         break;
       case LightType.POINT:
-        light = new BABYLON.PointLight(
-          "1",
-          new BABYLON.Vector3(0, 0, 0),
-          this._scene
-        );
+        light = new PointLight('1', new Vector3(0, 0, 0), this._scene);
         break;
       case LightType.SPOT:
-        light = new BABYLON.SpotLight(
-          "1",
-          new BABYLON.Vector3(0, 0, 0),
-          new BABYLON.Vector3(0, 0, 0),
-          Math.PI / 3,
-          2,
-          this._scene
-        );
+        light = new SpotLight('1', new Vector3(0, 0, 0), new Vector3(0, 0, 0), Math.PI / 3, 2, this._scene);
         break;
       case LightType.HEMISPHERIC:
-        light = new BABYLON.HemisphericLight(
-          "1",
-          new BABYLON.Vector3(0, 0, 0),
-          this._scene
-        );
+        light = new HemisphericLight('1', new Vector3(0, 0, 0), this._scene);
         break;
       default:
-        console.error("Error in CreateLight: Invalid light type!");
+        console.error('Error in CreateLight: Invalid light type!');
         light = null;
     }
 
@@ -450,24 +418,15 @@ export class BabylonJSService {
     // return light;
   }
 
-  async lightColor(
-    light: Light,
-    red: number,
-    green: number,
-    blue: number
-  ): Promise<void> {
-    light.diffuse = new Color3(
-      Math.trunc(red) / 255,
-      Math.trunc(green) / 255,
-      Math.trunc(blue) / 255
-    );
+  async lightColor(light: Light, red: number, green: number, blue: number): Promise<void> {
+    light.diffuse = new Color3(Math.trunc(red) / 255, Math.trunc(green) / 255, Math.trunc(blue) / 255);
   }
 
   async lightRange(light: Light, range: number): Promise<void> {
     if (light instanceof PointLight || light instanceof SpotLight) {
       light.range = range;
     } else {
-      console.warn("Light range can only be applied to point or spot lights");
+      console.warn('Light range can only be applied to point or spot lights');
     }
   }
 }

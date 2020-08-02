@@ -94,19 +94,7 @@ export class CommandsGraphics3dCameraService {
   }
 
   async createCamera(type: CameraType, parent?: BbScriptEntity): Promise<BbScriptCamera> {
-    return this.babylonjs.createCamera(type).then((camera: Camera) => {
-      return null;
-
-      // TODO: refactor (use class constructor)
-      // const cameraEntity: BbScriptCamera = {
-      //   name: "TODO",
-      //   class: "Camera",
-      //   parent: parent ? parent : null,
-      //   camera: camera,
-      // };
-
-      // return cameraEntity;
-    });
+    return this.babylonjs.createCamera(type).then((camera: Camera) => new BbScriptCamera(camera, parent));
   }
 
   async projectedX(): Promise<number> {

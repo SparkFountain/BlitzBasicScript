@@ -3,8 +3,6 @@ import { LexerService } from 'bbscript/src/services/lexer.service';
 import { ParserService } from 'bbscript/src/services/parser.service';
 import { LexerToken } from 'bbscript/src/interfaces/lexer-token';
 import { AbstractSyntax } from 'bbscript/src/interfaces/abstract-syntax';
-import { GameStateService } from 'bbscript/src/services/game-state.service';
-import { concat } from 'rxjs';
 import { Render2dService } from 'bbscript/src/services/render2d.service';
 
 @Component({
@@ -35,12 +33,8 @@ export class BlitzBasicScriptCanvasComponent implements OnInit, AfterViewInit {
   private _camera: BABYLON.FreeCamera;
   private _light: BABYLON.Light;
 
-  constructor(private lexer: LexerService,
-              private parser: ParserService,
-              private gameState: GameStateService,
-              private graphics2dService: Render2dService
-    ) {
-
+  constructor(private lexer: LexerService, private parser: ParserService, private graphics2dService: Render2dService) {
+    console.info('[CANVAS COMPONENT] Initialized');
   }
 
   ngOnInit(): void {

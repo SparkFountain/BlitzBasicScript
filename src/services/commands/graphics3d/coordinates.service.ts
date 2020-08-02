@@ -34,14 +34,7 @@ export class CommandsGraphics3dCoordinatesService {
     z: number,
     parentCoordinates?: boolean
   ): Promise<void> {
-    // TODO: distinguish between positionMesh and positionEntity!
-    let mesh: Mesh | Camera;
-    // if (entity.camera) {
-    //   mesh = entity.camera;
-    // } else if (entity.mesh) {
-    //   mesh = entity.mesh;
-    // }
-    return this.babylonjs.positionMesh(mesh, x, y, z, parentCoordinates);
+    return this.babylonjs.positionMesh(entity.instance, x, y, z, parentCoordinates);
   }
 
   async rotateEntity(entity: Mesh | Camera, pitch: number, yaw: number, roll: number, parentCoordinates?: boolean) {

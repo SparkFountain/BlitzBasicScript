@@ -73,12 +73,9 @@ import { CommandsGuiIconStripService } from '../services/commands/gui/icon-strip
 import { CommandsGuiListTabberService } from '../services/commands/gui/list-tabber.service';
 import { CommandsGuiMenuService } from '../services/commands/gui/menu.service';
 import { CommandsGuiPanelService } from '../services/commands/gui/panel.service';
-import { Render2dService } from '../services/render2d.service';
 
 @NgModule({
-  declarations: [
-    BlitzBasicScriptComponent
-  ],
+  declarations: [BlitzBasicScriptComponent],
   imports: [
     HttpClientModule,
     CommonModule,
@@ -91,11 +88,8 @@ import { Render2dService } from '../services/render2d.service';
     BlitzBasicScriptMenuModule,
     BlitzBasicScriptPanelModule,
     BlitzBasicScriptProgressBarModule
-
   ],
-  exports: [
-    BlitzBasicScriptComponent
-  ],
+  exports: [BlitzBasicScriptComponent],
   providers: [
     DebugEnvironment,
 
@@ -106,7 +100,6 @@ import { Render2dService } from '../services/render2d.service';
 
     GameStateService,
     BabylonJSService,
-    Render2dService,
     GuiService,
 
     // BASICS
@@ -179,6 +172,4 @@ import { Render2dService } from '../services/render2d.service';
     CommandsSoundMusicSamplesService
   ]
 })
-
-export class BlitzBasicScriptGameModule {
-}
+export class BlitzBasicScriptGameModule {}

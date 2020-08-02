@@ -1,21 +1,25 @@
 import { Injectable } from '@angular/core';
-import { of, Subscriber } from 'rxjs';
 import { GameStateService } from './game-state.service';
 import { GameImage2D } from '../interfaces/game/image-2d';
 import { GameFont } from '../interfaces/game/font';
 
-@Injectable()
+@Injectable({
+  providedIn: 'root'
+})
 export class Render2dService {
   private _canvas: HTMLCanvasElement;
   private _context2d: CanvasRenderingContext2D;
 
-  constructor(private gameState: GameStateService) {}
+  constructor(private gameState: GameStateService) {
+    console.info('[RENDER 2D SERVICE] Initialized');
+  }
 
   initCanvas(canvas: HTMLCanvasElement) {
     this._canvas = canvas;
     this._canvas.width = 800;
     this._canvas.height = 600;
     this._context2d = this._canvas.getContext('2d');
+    console.info('[CONTEXT 2D]', this._context2d);
   }
 
   initGraphics(width: number, height: number): Promise<void> {
@@ -39,6 +43,7 @@ export class Render2dService {
     let blue = this.gameState.getScreenProperties().color.blue;
 
     console.info('Active color:', red, green, blue);
+    console.info('[CONTEXT 2D]', this._context2d);
 
     this._context2d.strokeStyle = 'rgba(' + red + ',' + green + ',' + blue + ', 1)';
     this._context2d.fillStyle = 'rgba(' + red + ',' + green + ',' + blue + ', 1)';
@@ -55,7 +60,7 @@ export class Render2dService {
   private getOrigin(): { x: number; y: number } {
     return {
       x: this.gameState.getScreenProperties().origin.x,
-      y: this.gameState.getScreenProperties().origin.y,
+      y: this.gameState.getScreenProperties().origin.y
     };
   }
 
@@ -69,7 +74,7 @@ export class Render2dService {
 
       let screen = {
         width: this.gameState.getScreenProperties().width,
-        height: this.gameState.getScreenProperties().height,
+        height: this.gameState.getScreenProperties().height
       };
       this._context2d.fillRect(0, 0, screen.width, screen.height);
     });
@@ -156,7 +161,7 @@ export class Render2dService {
       image.maskColor = {
         red: red,
         green: green,
-        blue: blue,
+        blue: blue
       };
 
       //create masked element
@@ -195,7 +200,7 @@ export class Render2dService {
       let handleVector = {
         length: Math.sqrt(Math.pow(image.handle.x, 2) + Math.pow(image.handle.y, 2)),
         dx: 0,
-        dy: 0,
+        dy: 0
       };
       handleVector.dx = -Math.sin(handleVector.length);
       handleVector.dy = Math.cos(handleVector.length);

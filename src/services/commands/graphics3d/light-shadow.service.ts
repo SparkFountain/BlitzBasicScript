@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import { BabylonJSService } from "../../babylon-js.service";
-import { LightType } from "../../../enums/light/light-type";
-import { Light } from "babylonjs";
-import { BbScriptLight } from "bbscript/src/classes/in-game/3d/light";
-import { BbScriptEntity } from "bbscript/src/classes/in-game/3d/entity";
+import { Injectable } from '@angular/core';
+import { BabylonJSService } from '../../babylon-js.service';
+import { LightType } from '../../../enums/light/light-type';
+import { Light } from 'babylonjs';
+import { BbScriptLight } from 'bbscript/src/classes/in-game/3d/light';
+import { BbScriptEntity } from 'bbscript/src/classes/in-game/3d/entity';
 
 @Injectable()
 export class CommandsGraphics3dLightShadowService {
@@ -13,24 +13,13 @@ export class CommandsGraphics3dLightShadowService {
     return this.babylonjs.ambientLight(red, green, blue);
   }
 
-  async createLight(
-    type?: LightType,
-    parent?: BbScriptEntity
-  ): Promise<BbScriptLight> {
-    return this.babylonjs.createLight(type).then((light: BbScriptLight) => {
-      if (parent) {
-        // light.parent = parent;
-      }
-      return light;
-    });
+  async createLight(type?: LightType, parent?: BbScriptEntity): Promise<BbScriptLight> {
+    return this.babylonjs
+      .createLight(type)
+      .then((light: BbScriptLight) => new BbScriptEntity('light', 'Light', parent, light));
   }
 
-  async lightColor(
-    light: Light,
-    red: number,
-    green: number,
-    blue: number
-  ): Promise<void> {
+  async lightColor(light: Light, red: number, green: number, blue: number): Promise<void> {
     return this.babylonjs.lightColor(light, red, green, blue);
   }
 
