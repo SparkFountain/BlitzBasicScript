@@ -8,6 +8,7 @@ import { CommandsGraphics2dTextService } from './graphics2d/text.service';
 import { GameImage2D } from 'bbscript/src/interfaces/game/image-2d';
 import { GameMovie } from 'bbscript/src/interfaces/game/movie';
 import { GameFont } from 'bbscript/src/interfaces/game/font';
+import { BbScriptImage } from 'bbscript/src/classes/in-game/2d/image';
 
 @Injectable()
 export class CommandsGraphics2DService {
@@ -150,8 +151,16 @@ export class CommandsGraphics2DService {
     return this.imagesService.imageRectCollide(image, x, y, frame, beginX, beginY, width, height);
   }
 
-  async imageRectOverlap(): Promise<boolean> {
-    return this.imagesService.imageRectOverlap();
+  async imageRectOverlap(
+    image: BbScriptImage,
+    imageX: number,
+    imageY: number,
+    rectX: number,
+    rectY: number,
+    rectWidth: number,
+    rectHeight: number
+  ): Promise<boolean> {
+    return this.imagesService.imageRectOverlap(image, imageX, imageY, rectX, rectY, rectWidth, rectHeight);
   }
 
   async imagesCollide(

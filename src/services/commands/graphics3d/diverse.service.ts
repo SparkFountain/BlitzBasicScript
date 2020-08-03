@@ -1,9 +1,9 @@
-import { Injectable } from "@angular/core";
-import { BbScriptEntity } from "bbscript/src/classes/in-game/3d/entity";
-import { BbScriptMirror } from "bbscript/src/classes/in-game/3d/mirror";
-import { BbScriptPivot } from "bbscript/src/classes/in-game/3d/pivot";
-import { BbScriptPlane } from "bbscript/src/classes/in-game/3d/plane";
-import { BbScriptMeshType } from "bbscript/src/enums/in-game/3d/mesh-type";
+import { Injectable } from '@angular/core';
+import { BbScriptEntity } from 'bbscript/src/classes/in-game/3d/entity';
+import { BbScriptMirror } from 'bbscript/src/classes/in-game/3d/mirror';
+import { BbScriptPivot } from 'bbscript/src/classes/in-game/3d/pivot';
+import { BbScriptPlane } from 'bbscript/src/classes/in-game/3d/plane';
+import { BbScriptMeshType } from 'bbscript/src/enums/in-game/3d/mesh-type';
 
 @Injectable()
 export class CommandsGraphics3dDiverseService {
@@ -14,21 +14,15 @@ export class CommandsGraphics3dDiverseService {
   }
 
   async createPivot(parent?: BbScriptEntity): Promise<BbScriptPivot> {
+    // TODO: use vector with rotation and translation?
     return null;
   }
 
-  async createPlane(
-    segments?: number,
-    parent?: BbScriptEntity
-  ): Promise<BbScriptPlane> {
+  async createPlane(segments?: number, parent?: BbScriptEntity): Promise<BbScriptPlane> {
     return null;
   }
 
-  async getMatElement(
-    entity: BbScriptEntity,
-    row: number,
-    column: number
-  ): Promise<number> {
+  async getMatElement(entity: BbScriptEntity, row: number, column: number): Promise<number> {
     return null;
   }
 

@@ -420,7 +420,13 @@ export class InterpreterService {
           evaluatedParams[7]
         );
       case 'imagerectoverlap':
-        return this.graphics2d.imageRectOverlap();
+        return this.graphics2d.imageRectOverlap(evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4],
+          evaluatedParams[5],
+          evaluatedParams[6);
       case 'imagescollide':
         return this.graphics2d.imagesCollide(
           evaluatedParams[0],

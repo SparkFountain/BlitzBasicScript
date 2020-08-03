@@ -192,7 +192,7 @@ export class Render2dService {
     });
   }
 
-  drawBlock(image: GameImage2D, x: number, y: number, frame?: number): Promise<void> {
+  drawBlock(image: GameImage2D, x: number, y: number, width: number, height: number, frame?: number): Promise<void> {
     return new Promise<void>((resolve: Function, reject: Function) => {
       let origin = this.getOrigin();
 
@@ -220,7 +220,11 @@ export class Render2dService {
         x + toX + origin.x,
         y + toY + origin.y
       );
-      this._context2d.drawImage(image.element, 0, 0);
+      if (width === -1 && height === -1) {
+        this._context2d.drawImage(image.element, 0, 0);
+      } else {
+        this._context2d.drawImage(image.element, 0, 0, width, height);
+      }
       this._context2d.setTransform(1, 0, 0, 1, 0, 0);
 
       resolve();

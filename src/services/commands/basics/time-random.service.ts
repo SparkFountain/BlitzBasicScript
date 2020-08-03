@@ -1,6 +1,6 @@
-import { Injectable } from "@angular/core";
-import { BbScriptTimer } from "bbscript/src/classes/in-game/time-and-date/timer";
-import { GameStateService } from "../../game-state.service";
+import { Injectable } from '@angular/core';
+import { BbScriptTimer } from 'bbscript/src/classes/in-game/time-and-date/timer';
+import { GameStateService } from '../../game-state.service';
 
 @Injectable()
 export class CommandsBasicsTimeRandomService {
@@ -11,39 +11,22 @@ export class CommandsBasicsTimeRandomService {
   }
 
   async currentDate(): Promise<string> {
-    const monthNames = [
-      "Jan",
-      "Feb",
-      "Mar",
-      "Apr",
-      "May",
-      "Jun",
-      "Jul",
-      "Aug",
-      "Sep",
-      "Oct",
-      "Nov",
-      "Dec",
-    ];
+    const monthNames = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
     let date = new Date();
-    let day = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-    return Promise.resolve(
-      `${day} ${monthNames[date.getMonth()]} ${date.getFullYear()}`
-    );
+    let day = date.getDate() < 10 ? '0' + date.getDate() : date.getDate();
+    return Promise.resolve(`${day} ${monthNames[date.getMonth()]} ${date.getFullYear()}`);
   }
 
   async currentTime(): Promise<string> {
     let date = new Date();
-    let hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
-    let minutes =
-      date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-    let seconds =
-      date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+    let hours = date.getHours() < 10 ? '0' + date.getHours() : date.getHours();
+    let minutes = date.getMinutes() < 10 ? '0' + date.getMinutes() : date.getMinutes();
+    let seconds = date.getSeconds() < 10 ? '0' + date.getSeconds() : date.getSeconds();
     return Promise.resolve(`${hours}:${minutes}:${seconds}`);
   }
 
   async delay(milliSeconds: number): Promise<void> {
-    setTimeout(() => {}, milliSeconds);
+    return new Promise(resolve => setTimeout(resolve, milliSeconds));
   }
 
   async freeTimer(timer: BbScriptTimer): Promise<void> {
@@ -60,9 +43,7 @@ export class CommandsBasicsTimeRandomService {
 
   async rand(minOrMax: number, max?: number): Promise<number> {
     if (max) {
-      return Promise.resolve(
-        Math.trunc(Math.random() * (max - minOrMax) + minOrMax)
-      );
+      return Promise.resolve(Math.trunc(Math.random() * (max - minOrMax) + minOrMax));
     } else {
       return Promise.resolve(Math.trunc(Math.random() * minOrMax));
     }

@@ -11,7 +11,9 @@ export class CommandsGraphics2dDisplayService {
     private gameState: GameStateService
   ) {}
 
-  async endGraphics(): Promise<void> {}
+  async endGraphics(): Promise<void> {
+    // TODO: does anything happen here?
+  }
 
   async gfxModeDepth(mode: number): Promise<number> {
     return 32;
@@ -34,11 +36,9 @@ export class CommandsGraphics2dDisplayService {
       height: height
     });
 
-    // TODO: refactor
-    // return concat(
-    //     this.babylonjs.initGraphics(width, height),
-    //     this.graphics2d.initGraphics(width, height)
-    // );
+    return this.babylonjs.initGraphics(width, height).then(() => {
+      this.graphics2d.initGraphics(width, height);
+    });
   }
 
   async graphicsDepth(): Promise<number> {

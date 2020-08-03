@@ -10,19 +10,19 @@ export class CommandsGraphics3dSceneryService {
   }
 
   async captureWorld(): Promise<void> {
-    //TODO implementation
+    //TODO: implementation
   }
 
   async clearWorld(removeEntities?: boolean, removeBrushes?: boolean, removeTextures?: boolean): Promise<void> {
-    //TODO implementation
+    //TODO: implementation
   }
 
   async renderWorld(animationStep: number): Promise<void> {
-    //TODO implementation
+    //TODO: implementation
   }
 
   async updateWorld(updateSpeed?: number): Promise<void> {
-    //TODO implementation
+    //TODO: implementation
   }
 
   async wireFrame(enabled: boolean): Promise<void> {

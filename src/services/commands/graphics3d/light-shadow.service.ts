@@ -14,9 +14,7 @@ export class CommandsGraphics3dLightShadowService {
   }
 
   async createLight(type?: LightType, parent?: BbScriptEntity): Promise<BbScriptLight> {
-    return this.babylonjs
-      .createLight(type)
-      .then((light: BbScriptLight) => new BbScriptEntity('light', 'Light', parent, light));
+    return this.babylonjs.createLight(type).then((light: Light) => new BbScriptEntity('light', 'Light', parent, light));
   }
 
   async lightColor(light: Light, red: number, green: number, blue: number): Promise<void> {

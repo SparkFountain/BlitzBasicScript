@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { BbScriptEntity } from 'bbscript/src/classes/in-game/3d/entity';
+import { DeepImmutableObject, Vector3, DeepImmutable } from 'babylonjs';
 
 @Injectable()
 export class CommandsGraphics3dStatusService {
@@ -22,7 +23,9 @@ export class CommandsGraphics3dStatusService {
   }
 
   async entityDistance(entity1: BbScriptEntity, entity2: BbScriptEntity): Promise<number> {
-    return -1;
+    // TODO: find out what's wrong with DeepImmutableObjects
+    return null;
+    // return BABYLON.Vector3.Distance(entity1.getPosition() as DeepImmutable<Vector3>, entity2.getPosition());
   }
 
   async entityInView(entity: BbScriptEntity, camera: BbScriptEntity): Promise<boolean> {
@@ -30,8 +33,7 @@ export class CommandsGraphics3dStatusService {
   }
 
   async entityName(entity: BbScriptEntity): Promise<string> {
-    return null;
-    // return entity.name;
+    return entity.name;
   }
 
   async entityPitch(entity: BbScriptEntity, global?: boolean): Promise<number> {
@@ -47,11 +49,13 @@ export class CommandsGraphics3dStatusService {
   }
 
   async entityX(entity: BbScriptEntity, global?: boolean): Promise<number> {
-    return null;
+    // TODO: implement global parameter
+    return entity.getPosition().x;
   }
 
   async entityY(entity: BbScriptEntity, global?: boolean): Promise<number> {
-    return null;
+    // TODO: implement global parameter
+    return entity.getPosition().y;
   }
 
   async entityYaw(entity: BbScriptEntity, global?: boolean): Promise<number> {
@@ -59,7 +63,8 @@ export class CommandsGraphics3dStatusService {
   }
 
   async entityZ(entity: BbScriptEntity, global?: boolean): Promise<number> {
-    return null;
+    // TODO: implement global parameter
+    return entity.getPosition().z;
   }
 
   async findChild(entity: BbScriptEntity, childName: string): Promise<BbScriptEntity | null> {
@@ -71,12 +76,10 @@ export class CommandsGraphics3dStatusService {
   }
 
   async getParent(entity: BbScriptEntity): Promise<BbScriptEntity> {
-    return null;
-    // return entity.parent;
+    return entity.parent;
   }
 
   async nameEntity(entity: BbScriptEntity, name: string): Promise<void> {
-    return null;
-    // entity.name = name;
+    entity.name = name;
   }
 }

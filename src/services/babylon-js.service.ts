@@ -209,13 +209,12 @@ export class BabylonJSService {
 
   async copyMesh() {}
 
-  async createCone(segments?: number, hasFloor?: boolean): Promise<BbScriptEntity> {
+  async createCone(segments?: number, hasFloor?: boolean): Promise<Mesh> {
     //TODO implement segments and hasFloor
     let cone: Mesh = MeshBuilder.CreateCylinder('1', { diameterTop: 0, tessellation: 32 }, this._scene);
     cone.material = this.defaultMaterial();
 
-    return null;
-    // return cone;
+    return cone;
   }
 
   async createSphere(segments: number): Promise<Mesh> {
@@ -389,7 +388,7 @@ export class BabylonJSService {
     );
   }
 
-  async createLight(type: LightType): Promise<BbScriptLight> {
+  async createLight(type: LightType): Promise<Light> {
     let light: Light;
 
     if (!type) {
@@ -414,8 +413,7 @@ export class BabylonJSService {
         light = null;
     }
 
-    return null;
-    // return light;
+    return light;
   }
 
   async lightColor(light: Light, red: number, green: number, blue: number): Promise<void> {

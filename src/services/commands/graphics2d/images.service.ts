@@ -4,6 +4,7 @@ import { HttpClient } from '@angular/common/http';
 import { DebugEnvironment } from '../../../environment/debug.environment';
 import { GameImage2D } from '../../../interfaces/game/image-2d';
 import { Render2dService } from '../../render2d.service';
+import { BbScriptImage } from 'bbscript/src/classes/in-game/2d/image';
 
 @Injectable()
 export class CommandsGraphics2dImagesService {
@@ -46,7 +47,7 @@ export class CommandsGraphics2dImagesService {
   }
 
   async drawBlock(image: any, x: number, y: number, frame?: number): Promise<void> {
-    return this.graphics2d.drawBlock(image, x, y, frame);
+    return this.graphics2d.drawBlock(image, x, y, -1, -1, frame);
   }
 
   async drawBlockRect(
@@ -58,7 +59,9 @@ export class CommandsGraphics2dImagesService {
     width: number,
     height: number,
     frame?: number
-  ): Promise<void> {}
+  ): Promise<void> {
+    return this.graphics2d.drawBlock(image, x, y, -1, -1, frame);
+  }
 
   async drawImage(image: GameImage2D, x: number, y: number, frame?: number): Promise<void> {
     return this.graphics2d.drawImage(image, x, y, frame);
@@ -72,7 +75,7 @@ export class CommandsGraphics2dImagesService {
     image = null;
   }
 
-  async grabImage(): Promise<any> {
+  async grabImage(): Promise<void> {
     return null;
   }
 
@@ -98,8 +101,16 @@ export class CommandsGraphics2dImagesService {
     return null;
   }
 
-  async imageRectOverlap(): Promise<boolean> {
-    return null;
+  async imageRectOverlap(
+    image: BbScriptImage,
+    imageX: number,
+    imageY: number,
+    rectX: number,
+    rectY: number,
+    rectWidth: number,
+    rectHeight: number
+  ): Promise<boolean> {
+    return this.rectsOverlap(imageX, imageY, image.getWidth(), image.getHeight(), rectX, rectY, rectWidth, rectHeight);
   }
 
   async imagesCollide(
@@ -126,19 +137,25 @@ export class CommandsGraphics2dImagesService {
     return this.rectsOverlap(x1, y1, image1.width, image1.height, x2, y2, image2.width, image2.height);
   }
 
-  async imageWidth(image: GameImage2D): Promise<number> {
-    return Promise.resolve(image.width);
+  async imageWidth(image: BbScriptImage): Promise<number> {
+    return Promise.resolve(image.getWidth());
   }
 
-  async imageXHandle(image: GameImage2D): Promise<number> {
-    return Promise.resolve(image.handle.x);
+  async imageXHandle(image: BbScriptImage): Promise<number> {
+    return Promise.resolve(image.getHandle().x);
   }
 
-  async imageYHandle(image: GameImage2D): Promise<number> {
-    return Promise.resolve(image.handle.y);
+  async imageYHandle(image: BbScriptImage): Promise<number> {
+    return Promise.resolve(image.getHandle().y);
   }
 
-  async loadAnimImage(filePath: string, width, height, startFrameIndex: number, totalFrames: number): Promise<any> {
+  async loadAnimImage(
+    filePath: string,
+    width: number,
+    height: number,
+    startFrameIndex: number,
+    totalFrames: number
+  ): Promise<any> {
     return null;
   }
 
@@ -220,7 +237,9 @@ export class CommandsGraphics2dImagesService {
     image.rotation = angle;
   }
 
-  async saveImage(): Promise<void> {}
+  async saveImage(image: BbScriptImage, filePath: string, frame?: number): Promise<void> {
+    // TODO: implement backend method
+  }
 
   async scaleImage(image: GameImage2D, zoomX: number, zoomY: number): Promise<void> {
     let newWidth = Math.trunc(image.width * zoomX);
