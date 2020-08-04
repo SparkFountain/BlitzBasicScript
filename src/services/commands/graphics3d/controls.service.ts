@@ -3,6 +3,7 @@ import { BlendMode } from '../../../enums/entity/blend-mode';
 import { BabylonJSService } from '../../babylon-js.service';
 import { BbScriptEntity } from 'bbscript/src/classes/in-game/3d/entity';
 import { BbScriptTexture } from 'bbscript/src/classes/in-game/3d/texture';
+import { Mesh, StandardMaterial } from 'babylonjs';
 
 @Injectable()
 export class CommandsGraphics3dControlsService {
@@ -13,7 +14,7 @@ export class CommandsGraphics3dControlsService {
   }
 
   async entityAlpha(entity: BbScriptEntity, alpha: number): Promise<void> {
-    entity.instance.material.alpha = alpha;
+    (entity.getInstance() as Mesh).material.alpha = alpha;
   }
 
   async entityAutoFade(entity: BbScriptEntity, near: number, far: number): Promise<void> {}
@@ -21,10 +22,10 @@ export class CommandsGraphics3dControlsService {
   async entityBlend(entity: BbScriptEntity, mode: BlendMode): Promise<void> {}
 
   async entityColor(entity: BbScriptEntity, red: number, green: number, blue: number): Promise<void> {
-    if (entity.class === 'Mesh') {
-      this.babylonjs.colorMesh(entity.instance, red, green, blue);
+    if (entity.getClass() === 'Mesh') {
+      this.babylonjs.colorMesh(entity.getInstance() as Mesh, red, green, blue);
     } else {
-      console.error(`Cannot assign "EntityColor()" to entity of type ${entity.class}`);
+      console.error(`Cannot assign "EntityColor()" to entity of type ${entity.getClass()}`);
     }
   }
 
@@ -36,18 +37,20 @@ export class CommandsGraphics3dControlsService {
 
   async entityShininess(entity: BbScriptEntity, shininess: number): Promise<void> {}
 
-  async entityTexture(
-    entity: BbScriptEntity,
-    texture: BbScriptTexture,
-    frame?: number,
-    layer?: number
-  ): Promise<void> {}
+  async entityTexture(entity: BbScriptEntity, texture: BbScriptTexture, frame?: number, layer?: number): Promise<void> {
+    let material: StandardMaterial = (entity.getInstance() as Mesh).material as StandardMaterial;
+    material.diffuseTexture = texture.getTexture();
+  }
 
   async freeEntity(entity: BbScriptEntity): Promise<void> {
     entity = null;
   }
 
-  async hideEntity(entity: BbScriptEntity): Promise<void> {}
+  async hideEntity(entity: BbScriptEntity): Promise<void> {
+    (entity.getInstance() as Mesh).setEnabled(false);
+  }
 
-  async showEntity(entity: BbScriptEntity): Promise<void> {}
+  async showEntity(entity: BbScriptEntity): Promise<void> {
+    (entity.getInstance() as Mesh).setEnabled(true);
+  }
 }

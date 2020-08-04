@@ -99,7 +99,6 @@ import { CommandsGuiPanelService } from '../services/commands/gui/panel.service'
     ParserService,
 
     GameStateService,
-    BabylonJSService,
     GuiService,
 
     // BASICS

@@ -1,21 +1,37 @@
 import { Vector3, Mesh, Camera, Light } from 'babylonjs';
+import { BbScriptInstance } from 'bbscript/src/types/ingame/3d/instance';
 
 export class BbScriptEntity {
-  name: string;
-  class: string;
-  parent: BbScriptEntity;
-  instance: Mesh | Camera | Light;
+  private name: string;
+  private class: string;
+  private parent: BbScriptEntity;
+  private instance: BbScriptInstance;
 
-  constructor(
-    name: string,
-    className: string,
-    parent: BbScriptEntity,
-    instance: Mesh | Camera | Light
-  ) {
+  constructor(name: string, className: string, parent: BbScriptEntity, instance: Mesh | Camera | Light) {
     this.name = name;
     this.class = className;
     this.parent = parent;
     this.instance = instance;
+  }
+
+  public getName(): string {
+    return this.name;
+  }
+
+  public setName(name: string): void {
+    this.name = name;
+  }
+
+  public getClass(): string {
+    return this.class;
+  }
+
+  public getParent(): BbScriptEntity {
+    return this.parent;
+  }
+
+  public getInstance(): BbScriptInstance {
+    return this.instance;
   }
 
   public getPosition(): Vector3 {

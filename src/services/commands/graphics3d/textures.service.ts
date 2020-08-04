@@ -43,9 +43,8 @@ export class CommandsGraphics3dTexturesService {
   }
 
   async loadTexture(filePath: string, mode: TextureMode): Promise<BbScriptTexture> {
-    return this.babylonjs.loadAsset(filePath).then((texture: Texture) => {
-      // TODO: implement correctly
-      return texture;
+    return this.babylonjs.loadAsset('texture', filePath).then((texture: Texture) => {
+      return new BbScriptTexture(texture);
     });
   }
 

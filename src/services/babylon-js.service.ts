@@ -4,8 +4,6 @@ import { CameraType } from '../enums/camera/camera-type';
 import { BbScriptAxis } from '../enums/axis';
 import { LightType } from '../enums/light/light-type';
 import { CodeBlock } from '../interfaces/code/block';
-import { BbScriptLight } from '../classes/in-game/3d/light';
-import { BbScriptEntity } from '../classes/in-game/3d/entity';
 import {
   Engine,
   Scene,
@@ -23,6 +21,8 @@ import {
   Color3,
   AssetsManager
 } from 'babylonjs';
+import { BbScriptAsset } from '../types/ingame/3d/asset';
+import { GameStateService } from './game-state.service';
 
 @Injectable({
   providedIn: 'root'
@@ -43,7 +43,7 @@ export class BabylonJSService {
   private wireFrame: boolean;
   private antiAlias: boolean;
 
-  constructor() {
+  constructor(private gameState: GameStateService) {
     this.screenWidth = 0;
     this.screenHeight = 0;
 
@@ -58,9 +58,9 @@ export class BabylonJSService {
     material.specularColor = white;
     material.emissiveColor = white;
     material.ambientColor = white;
-    /*if(BBScript.game.wireFrame) {
-          material.wireframe = true;
-        }*/
+    // if (this.gameState.wir) {
+    //   material.wireframe = true;
+    // }
     return material;
   }
 
@@ -168,11 +168,21 @@ export class BabylonJSService {
   }
 
   /* ASSETS */
-  async loadAsset(url: string): Promise<any> {
-    this._assetsManager.addTextureTask('texLoad', url);
-    this._assetsManager.loadAsync().then((result: any) => {
-      console.info('[LOADED ASSET]', result);
-    });
+  async loadAsset(which: BbScriptAsset, url: string): Promise<any> {
+    let task: any;
+
+    switch (which) {
+      case 'texture':
+        task = this._assetsManager.addTextureTask('texLoad', url);
+        break;
+    }
+
+    task.onSuccess = (task: any) => {
+      console.info('[TASK DONE]', task);
+      return task.texture;
+    };
+
+    this._assetsManager.loadAsync();
   }
 
   /* CAMERA */
@@ -371,11 +381,15 @@ export class BabylonJSService {
   }
 
   async pointEntity(sourceEntity: any, targetEntity: any, roll: number): Promise<void> {
-    //TODO implementation
+    //TODO: implementation
   }
 
   async colorMesh(mesh: Mesh, red: number, green: number, blue: number): Promise<void> {
-    //mesh.material.ambientColor = new BABYLON.Color3(Math.trunc(red) / 255, Math.trunc(green) / 255, Math.trunc(blue) / 255);
+    (mesh.material as StandardMaterial).ambientColor = new Color3(
+      Math.trunc(red) / 255,
+      Math.trunc(green) / 255,
+      Math.trunc(blue) / 255
+    );
   }
 
   /** LIGHT **/

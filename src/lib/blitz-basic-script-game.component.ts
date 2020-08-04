@@ -227,16 +227,24 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
         new CommandStatement('PositionEntity', [
           new VariableExpression('global', 'cube'),
           new NumericExpression(0),
-          new NumericExpression(0),
+          new NumericExpression(-3),
           new NumericExpression(10)
         ]),
         new Assignment(
           'global',
           'cubeMaterial',
-          new CommandStatement('LoadTexture', [
-            new StringExpression('https://i.pinimg.com/originals/d5/65/b9/d565b92e257567b18c649eb4721d2248.jpg')
-          ])
+          new CommandStatement('LoadTexture', [new StringExpression('http://localhost:4200/assets/gfx/face.png')])
         ),
+        new CommandStatement('EntityTexture', [
+          new VariableExpression('global', 'cube'),
+          new VariableExpression('global', 'cubeMaterial')
+        ]),
+        new CommandStatement('EntityColor', [
+          new VariableExpression('global', 'cube'),
+          new NumericExpression(255),
+          new NumericExpression(0),
+          new NumericExpression(0)
+        ]),
         new CommandStatement('DebugLog', [new StringExpression('Hello New BbScript Approach!')]),
         new CommandStatement('color', [
           new NumericExpression(255),

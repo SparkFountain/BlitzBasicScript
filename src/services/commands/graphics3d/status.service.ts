@@ -19,7 +19,7 @@ export class CommandsGraphics3dStatusService {
   }
 
   async entityClass(entity: BbScriptEntity): Promise<string> {
-    return entity.class;
+    return entity.getClass();
   }
 
   async entityDistance(entity1: BbScriptEntity, entity2: BbScriptEntity): Promise<number> {
@@ -33,7 +33,7 @@ export class CommandsGraphics3dStatusService {
   }
 
   async entityName(entity: BbScriptEntity): Promise<string> {
-    return entity.name;
+    return entity.getName();
   }
 
   async entityPitch(entity: BbScriptEntity, global?: boolean): Promise<number> {
@@ -76,10 +76,10 @@ export class CommandsGraphics3dStatusService {
   }
 
   async getParent(entity: BbScriptEntity): Promise<BbScriptEntity> {
-    return entity.parent;
+    return entity.getParent();
   }
 
   async nameEntity(entity: BbScriptEntity, name: string): Promise<void> {
-    entity.name = name;
+    entity.setName(name);
   }
 }
