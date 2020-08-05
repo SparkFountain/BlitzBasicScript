@@ -1,8 +1,19 @@
-import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
+import {
+  AfterViewInit,
+  Component,
+  ElementRef,
+  HostListener,
+  Input,
+  OnInit,
+  ViewChild,
+} from '@angular/core';
 import { LexerService } from '../services/lexer.service';
 import { ParserService } from '../services/parser.service';
 import { AbstractSyntax } from '../interfaces/abstract-syntax';
-import { GameStateService, ScreenProperties } from '../services/game-state.service';
+import {
+  GameStateService,
+  ScreenProperties,
+} from '../services/game-state.service';
 import { BabylonJSService } from '../services/babylon-js.service';
 import { GuiService } from '../services/gui.service';
 import { LanguageService } from '../services/language.service';
@@ -26,7 +37,7 @@ import { CameraType } from '../enums/camera/camera-type';
 @Component({
   selector: 'blitz-basic-script-game',
   templateUrl: 'blitz-basic-script-game.html',
-  styleUrls: ['blitz-basic-script-game.scss']
+  styleUrls: ['blitz-basic-script-game.scss'],
 })
 export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
   @Input('icon') iconPath?: string;
@@ -38,7 +49,9 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
   set action(name: 'idle' | 'play' | 'debug' | 'stop') {
     switch (name) {
       case 'play':
-        console.warn('Playing is currently impossible due to work in progress on parser and interpreter.');
+        console.warn(
+          'Playing is currently impossible due to work in progress on parser and interpreter.'
+        );
         // this.play();
         break;
       case 'debug':
@@ -57,7 +70,10 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
   @HostListener('window:keydown', ['$event'])
   keyDownEvent(event: KeyboardEvent) {
     // console.info('[KEY DOWN]', event);
-    this.gameState.setKeyDown(KeyCode[this.general.formatUpper(event.code)], true);
+    this.gameState.setKeyDown(
+      KeyCode[this.general.formatUpper(event.code)],
+      true
+    );
     this.gameState.setKeyAsciiCode(event.key.charCodeAt(0));
   }
 
@@ -125,7 +141,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     this.render2d.initCanvas(this.canvas2d.nativeElement);
 
     const codeBlocks: CodeBlock[] = [
-      new WhileLoop(new LogicalExpression([], []), [])
+      new WhileLoop(new LogicalExpression([], []), []),
 
       // new Assignment('global', 'cone', new CommandStatement('CreateCone', []))
       // new Assignment(
@@ -171,7 +187,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
       codeBlocks: codeBlocks,
       mainLoop: [],
       functions: [],
-      types: {}
+      types: {},
     });
     this.interpreter.run();
   }
@@ -195,7 +211,9 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
 
     // lex, parse and initialize abstract syntax
     const tokens: LexerToken[][] = this.lexer.lexCode(this.code);
-    const abstractSyntax: AbstractSyntax = this.parser.createAbstractSyntax(tokens);
+    const abstractSyntax: AbstractSyntax = this.parser.createAbstractSyntax(
+      tokens
+    );
     this.interpreter.initializeAbstractSyntax(abstractSyntax);
     this.interpreter.run();
   }
@@ -216,51 +234,11 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     const syntax: AbstractSyntax = {
       globals: {},
       codeBlocks: [
-        new CommandStatement('Graphics', [new NumericExpression(640), new NumericExpression(480)]),
-        new Assignment(
-          'global',
-          'camera',
-          new CommandStatement('CreateCamera', [new NumericExpression(CameraType.FREE)])
-        ),
-        new Assignment('global', 'light', new CommandStatement('CreateLight', [])),
-        new Assignment('global', 'cube', new CommandStatement('CreateCube', [])),
-        new CommandStatement('PositionEntity', [
-          new VariableExpression('global', 'cube'),
-          new NumericExpression(0),
-          new NumericExpression(-3),
-          new NumericExpression(10)
-        ]),
-        new Assignment(
-          'global',
-          'cubeMaterial',
-          new CommandStatement('LoadTexture', [new StringExpression('http://localhost:4200/assets/gfx/face.png')])
-        ),
-        new CommandStatement('EntityTexture', [
-          new VariableExpression('global', 'cube'),
-          new VariableExpression('global', 'cubeMaterial')
-        ]),
-        new CommandStatement('EntityColor', [
-          new VariableExpression('global', 'cube'),
-          new NumericExpression(255),
-          new NumericExpression(0),
-          new NumericExpression(0)
-        ]),
-        new CommandStatement('DebugLog', [new StringExpression('Hello New BbScript Approach!')]),
-        new CommandStatement('color', [
-          new NumericExpression(255),
-          new NumericExpression(120),
-          new NumericExpression(30)
-        ]),
-        new CommandStatement('rect', [
-          new NumericExpression(10),
-          new NumericExpression(20),
-          new NumericExpression(40),
-          new NumericExpression(15)
-        ])
+        new CommandStatement('CountGfxModes', [])
       ],
       mainLoop: [],
       functions: [],
-      types: {}
+      types: {},
     };
 
     // load and execute pre-defined program
@@ -269,6 +247,65 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
 
     // TODO: call render loop from interpreter
     this.babylonjs.mainLoop([]);
+  }
+
+  testCommands1(): CodeBlock[] {
+    return [
+      new CommandStatement('Graphics', [
+        new NumericExpression(640),
+        new NumericExpression(480),
+      ]),
+      new Assignment(
+        'global',
+        'camera',
+        new CommandStatement('CreateCamera', [
+          new NumericExpression(CameraType.FREE),
+        ])
+      ),
+      new Assignment(
+        'global',
+        'light',
+        new CommandStatement('CreateLight', [])
+      ),
+      new Assignment('global', 'cube', new CommandStatement('CreateCube', [])),
+      new CommandStatement('PositionEntity', [
+        new VariableExpression('global', 'cube'),
+        new NumericExpression(0),
+        new NumericExpression(-3),
+        new NumericExpression(10),
+      ]),
+      new Assignment(
+        'global',
+        'cubeMaterial',
+        new CommandStatement('LoadTexture', [
+          new StringExpression('http://localhost:4200/assets/gfx/face.png'),
+        ])
+      ),
+      new CommandStatement('EntityTexture', [
+        new VariableExpression('global', 'cube'),
+        new VariableExpression('global', 'cubeMaterial'),
+      ]),
+      new CommandStatement('EntityColor', [
+        new VariableExpression('global', 'cube'),
+        new NumericExpression(255),
+        new NumericExpression(0),
+        new NumericExpression(0),
+      ]),
+      new CommandStatement('DebugLog', [
+        new StringExpression('Hello New BbScript Approach!'),
+      ]),
+      new CommandStatement('color', [
+        new NumericExpression(255),
+        new NumericExpression(120),
+        new NumericExpression(30),
+      ]),
+      new CommandStatement('rect', [
+        new NumericExpression(10),
+        new NumericExpression(20),
+        new NumericExpression(40),
+        new NumericExpression(15),
+      ]),
+    ];
   }
 
   stop(): void {

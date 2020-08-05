@@ -30,12 +30,12 @@
     "@types/chai": "4.2.12",
     "@types/mocha": "8.0.1",
     "chai": "4.2.0",
-    "mocha": "8.1.0",
+    "mocha": "8.1.1",
     "ts-node": "8.10.2",
     "typescript": "3.9.7",
     "lodash": "4.17.19"
   },
   "dependencies": {
-    "ngx-ace-wrapper": "9.0.1"
+    "ngx-ace-wrapper": "10.0.1"
   }
 }
