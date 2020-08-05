@@ -57,7 +57,7 @@ export class CommandsGraphics2dDisplayService {
           '1600 x 900',
           '1680 x 1050',
           '1920 x 1080',
-          '1920 x 1200',
+          '1920 x 1200'
         ];
       case 'Android':
       case 'iPhone':
@@ -67,14 +67,7 @@ export class CommandsGraphics2dDisplayService {
       case 'Pike v7.6 release 92':
       case 'Pike v7.8 release 517':
         // smartphone
-        return [
-          '480 × 800',
-          '640 × 1136',
-          '720 × 1280',
-          '750 × 1334',
-          '1080 × 1920',
-          '1440 × 2560',
-        ];
+        return ['480 × 800', '640 × 1136', '720 × 1280', '750 × 1334', '1080 × 1920', '1440 × 2560'];
       case 'iPad':
       case 'iPad Simulator':
         // iPad
@@ -94,7 +87,7 @@ export class CommandsGraphics2dDisplayService {
   }
 
   async endGraphics(): Promise<void> {
-    return this.graphics(400, 300);
+    return this.graphics(400, 300, 32, 2);
   }
 
   async gfxDriverName(driverIndex: number): Promise<string> {
@@ -109,14 +102,8 @@ export class CommandsGraphics2dDisplayService {
     return 32;
   }
 
-  async gfxModeExists(
-    width: number,
-    height: number,
-    depth: number
-  ): Promise<boolean> {
-    const resolutions: string[] = this.getDefaultResolutions(
-      window.navigator.platform
-    );
+  async gfxModeExists(width: number, height: number, depth: number): Promise<boolean> {
+    const resolutions: string[] = this.getDefaultResolutions(window.navigator.platform);
     return resolutions.indexOf(`${width} x ${height}`) > -1;
   }
 
@@ -125,46 +112,33 @@ export class CommandsGraphics2dDisplayService {
   }
 
   async gfxModeHeight(mode: number): Promise<number> {
-    const resolutions: string[] = this.getDefaultResolutions(
-      window.navigator.platform
-    );
+    const resolutions: string[] = this.getDefaultResolutions(window.navigator.platform);
 
     if (resolutions.length < mode) {
       return 0;
     }
 
-    return Number(
-      resolutions[mode - 1].substr(resolutions[mode].indexOf('x') + 2)
-    );
+    return Number(resolutions[mode - 1].substr(resolutions[mode].indexOf('x') + 2));
   }
 
   async gfxModeWidth(mode: number): Promise<number> {
-    const resolutions: string[] = this.getDefaultResolutions(
-      window.navigator.platform
-    );
+    const resolutions: string[] = this.getDefaultResolutions(window.navigator.platform);
 
     if (resolutions.length < mode) {
       return 0;
     }
 
-    return Number(
-      resolutions[mode - 1].substr(0, resolutions[mode].indexOf('x') - 2)
-    );
+    return Number(resolutions[mode - 1].substr(0, resolutions[mode].indexOf('x') - 2));
   }
 
-  async graphics(
-    width: number,
-    height: number,
-    depth: number,
-    mode: number
-  ): Promise<void> {
+  async graphics(width: number, height: number, depth: number, mode: number): Promise<void> {
     this.gameState.setScreenWidth(width);
     this.gameState.setScreenHeight(height);
     this.gameState.setScreenViewport({
       beginX: 0,
       beginY: 0,
       width: width,
-      height: height,
+      height: height
     });
 
     return this.babylonjs.initGraphics(width, height).then(() => {
@@ -198,8 +172,6 @@ export class CommandsGraphics2dDisplayService {
   }
 
   async setGfxDriver(driverIndex: number): Promise<void> {
-    console.warn(
-      '[SetGfxDriver] Currently the graphics driver cannot be set manually in BlitzBasicScript.'
-    );
+    console.warn('[SetGfxDriver] Currently the graphics driver cannot be set manually in BlitzBasicScript.');
   }
 }

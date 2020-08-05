@@ -2,24 +2,35 @@ export class BbScriptImage {
   private width: number;
   private height: number;
   private name: string;
-  private element: HTMLImageElement;
-  private maskedElement?: HTMLImageElement;
-  private maskColor?: {
-    red: number;
-    green: number;
-    blue: number;
-  };
+  private elements: HTMLImageElement[];
+
+  // private maskColor?: {
+  //   red: number;
+  //   green: number;
+  //   blue: number;
+  // };
+
   private handle: {
     x: number;
     y: number;
   };
   private rotation: number;
 
-  constructor(width: number, height: number, name: string, element: HTMLImageElement) {
+  constructor(
+    width: number,
+    height: number,
+    name: string,
+    elements: HTMLImageElement[],
+    handle: {
+      x: number;
+      y: number;
+    }
+  ) {
     this.width = width;
     this.height = height;
     this.name = name;
-    this.element = element;
+    this.elements = elements;
+    this.handle = handle;
   }
 
   public getWidth(): number {
@@ -39,17 +50,33 @@ export class BbScriptImage {
   public getName(): string {
     return this.name;
   }
-  public getElement(): HTMLImageElement {
-    return this.element;
+
+  public getElement(frame: number): HTMLImageElement {
+    if (frame > this.elements.length - 1) {
+      console.error(`[GET IMAGE ELEMENT] Invalid frame ${frame}, image has only ${this.elements.length} frames`);
+      frame = 0;
+    }
+
+    return this.elements[frame];
   }
-  public getMaskedElement(): HTMLImageElement {
-    return this.maskedElement;
+
+  public getElements(): HTMLImageElement[] {
+    return this.elements;
   }
-  public getMaskColor(): { red: number; green: number; blue: number } {
-    return this.maskColor;
-  }
+
+  // public getMaskedElement(): HTMLImageElement {
+  //   return this.maskedElement;
+  // }
+  // public getMaskColor(): { red: number; green: number; blue: number } {
+  //   return this.maskColor;
+  // }
+
   public getHandle(): { x: number; y: number } {
     return this.handle;
+  }
+  public setHandle(x: number, y: number) {
+    this.handle.x = x;
+    this.handle.y = y;
   }
 
   public getRotation(): number {
@@ -59,7 +86,7 @@ export class BbScriptImage {
     this.rotation = angle;
   }
 
-  public setMaskColor(red: number, green: number, blue: number): void {
-    this.maskColor = { red, green, blue };
-  }
+  // public setMaskColor(red: number, green: number, blue: number): void {
+  //   this.maskColor = { red, green, blue };
+  // }
 }

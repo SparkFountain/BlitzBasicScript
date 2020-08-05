@@ -4,6 +4,8 @@ import { HttpClient } from '@angular/common/http';
 import { DebugEnvironment } from '../../../environment/debug.environment';
 import { Render2dService } from '../../render2d.service';
 import { BbScriptImage } from 'bbscript/src/classes/in-game/2d/image';
+import { BbScriptBuffer } from 'bbscript/src/classes/in-game/2d/buffer';
+import { BbScriptImageMode } from 'bbscript/src/enums/in-game/2d/image';
 
 @Injectable()
 export class CommandsGraphics2dImagesService {
@@ -22,29 +24,40 @@ export class CommandsGraphics2dImagesService {
     this.gameState.setImagesAutoMidHandle(active);
   }
 
-  async copyImage(image: BbScriptImage): Promise<BbScriptImage> {
-    return this.createImage(image.getWidth(), image.getHeight());
+  async bufferDirty(buffer: BbScriptBuffer): Promise<void> {
+    // TODO: implement logic if necessary
+    buffer.setDirty(true);
   }
 
-  async createImage(width: number, height: number, frames?: number): Promise<BbScriptImage> {
-    let autoMidHandleActive = this.autoMidHandleActive();
-    let htmlImage: HTMLImageElement = document.createElement('img') as HTMLImageElement;
-    htmlImage.width = width;
-    htmlImage.height = height;
+  async copyImage(image: BbScriptImage): Promise<BbScriptImage> {
+    return new BbScriptImage(
+      image.getWidth(),
+      image.getHeight(),
+      `${image.getName()}-copy`,
+      image.getElements(),
+      image.getHandle()
+    );
+  }
 
-    return new BbScriptImage(width, height, '', htmlImage);
+  async createImage(width: number, height: number, frames?: number, mode?: BbScriptImageMode): Promise<BbScriptImage> {
+    let handle: { x: number; y: number };
+    if (this.autoMidHandleActive()) {
+      handle = { x: width / 2, y: height / 2 };
+    } else {
+      handle = { x: 0, y: 0 };
+    }
 
-    // return {
-    //   name: '',
-    //   element: htmlImage,
-    //   width: width,
-    //   height: height,
-    //   handle: {
-    //     x: autoMidHandleActive ? width / 2 : 0,
-    //     y: autoMidHandleActive ? height / 2 : 0
-    //   },
-    //   rotation: 0
-    // };
+    let elements: HTMLImageElement[] = [];
+    if (!frames) {
+      frames = 1;
+    }
+    for (let i = 0; i < frames; i++) {
+      let htmlImage: HTMLImageElement = document.createElement('img') as HTMLImageElement;
+      htmlImage.width = width;
+      htmlImage.height = height;
+    }
+
+    return new BbScriptImage(width, height, 'image', elements, handle);
   }
 
   async drawBlock(image: any, x: number, y: number, frame?: number): Promise<void> {

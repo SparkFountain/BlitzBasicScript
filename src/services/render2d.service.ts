@@ -158,8 +158,6 @@ export class Render2dService {
 
   async maskImage(image: BbScriptImage, red: number, green: number, blue: number): Promise<void> {
     return new Promise((resolve: Function, reject: Function) => {
-      image.setMaskColor(red, green, blue);
-
       // TODO: fix
       //create masked element
       // image.maskedElement = document.createElement('img') as HTMLImageElement;

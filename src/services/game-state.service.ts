@@ -1,4 +1,5 @@
-import { Injectable } from "@angular/core";
+import { Injectable } from '@angular/core';
+import { BbScriptImage } from '../classes/in-game/2d/image';
 
 export interface ScreenProperties {
   width: number;
@@ -78,9 +79,9 @@ export class GameStateService {
     this.initialTimeStamp = new Date();
 
     this.app = {
-      title: "",
+      title: '',
       antiAliasing: true,
-      wireFrame: false,
+      wireFrame: false
     };
 
     this.screen = {
@@ -88,42 +89,54 @@ export class GameStateService {
       height: 768,
       origin: {
         x: 0,
-        y: 0,
+        y: 0
       },
       color: {
         red: 1,
         green: 1,
-        blue: 1,
+        blue: 1
       },
       clsColor: {
         red: 0,
         green: 0,
-        blue: 0,
+        blue: 0
       },
       viewport: {
         beginX: 0,
         beginY: 0,
         width: 400,
-        height: 300,
-      },
+        height: 300
+      }
     };
 
     this.images = {
-      autoMidHandle: false,
+      autoMidHandle: false
     };
 
     this.textMode = {
-      offset: { x: 0, y: 0 },
+      offset: { x: 0, y: 0 }
     };
   }
 
   public get(property: string): any {
     if (!this.hasOwnProperty(property)) {
-      console.error("Game State has no property " + property + ":", this);
+      console.error('Game State has no property ' + property + ':', this);
       return null;
     } else {
       return this[property];
     }
+  }
+
+  public getAllImages(): BbScriptImage[] {
+    let result: BbScriptImage[] = [];
+
+    Object.values(this.global).forEach((e: any) => {
+      if (e instanceof BbScriptImage) {
+        result.push(e);
+      }
+    });
+
+    return result;
   }
 
   public getMilliSecs(): number {
@@ -146,28 +159,15 @@ export class GameStateService {
     this.screen.origin = origin;
   }
 
-  public setScreenColor(color: {
-    red: number;
-    green: number;
-    blue: number;
-  }): void {
+  public setScreenColor(color: { red: number; green: number; blue: number }): void {
     this.screen.color = color;
   }
 
-  public setScreenClsColor(clsColor: {
-    red: number;
-    green: number;
-    blue: number;
-  }): void {
+  public setScreenClsColor(clsColor: { red: number; green: number; blue: number }): void {
     this.screen.clsColor = clsColor;
   }
 
-  public setScreenViewport(viewport: {
-    beginX: number;
-    beginY: number;
-    width: number;
-    height: number;
-  }): void {
+  public setScreenViewport(viewport: { beginX: number; beginY: number; width: number; height: number }): void {
     this.screen.viewport = viewport;
   }
 
@@ -177,6 +177,15 @@ export class GameStateService {
 
   public setImagesAutoMidHandle(active: boolean): void {
     this.images.autoMidHandle = active;
+
+    // update all existing images
+    this.getAllImages().forEach((image: BbScriptImage) => {
+      if (active) {
+        image.setHandle(image.getWidth() / 2, image.getHeight() / 2);
+      } else {
+        image.setHandle(0, 0);
+      }
+    });
   }
 
   public getTextModeProperties(): TextModeProperties {
@@ -194,7 +203,7 @@ export class GameStateService {
   }
 
   setGlobal(id: string, value: any): any {
-    console.info("Set Global:", id, value);
+    console.info('Set Global:', id, value);
     this.global[id] = value;
   }
 
