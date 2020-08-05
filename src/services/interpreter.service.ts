@@ -424,11 +424,25 @@ export class InterpreterService {
           evaluatedParams[3]
         );
       case 'drawimagerect':
-        return this.graphics2d.drawImageRect();
+        return this.graphics2d.drawImageRect(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4],
+          evaluatedParams[5],
+          evaluatedParams[6],
+          evaluatedParams[7]
+        );
       case 'freeimage':
         return this.graphics2d.freeImage(evaluatedParams[0]);
       case 'grabimage':
-        return this.graphics2d.grabImage();
+        return this.graphics2d.grabImage(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
       case 'handleimage':
         return this.graphics2d.handleImage(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
       case 'imageheight':

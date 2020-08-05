@@ -30,12 +30,23 @@ export class CommandsGraphics2dImagesService {
   }
 
   async copyImage(image: BbScriptImage): Promise<BbScriptImage> {
+    let originalElements: HTMLImageElement[] = image.getElements();
+    let newElements: HTMLImageElement[] = [];
+    for (let i = 0; i < originalElements.length; i++) {
+      let originalImage: HTMLImageElement = originalElements[i];
+      let htmlImage: HTMLImageElement = document.createElement('img') as HTMLImageElement;
+      htmlImage.width = originalImage.width;
+      htmlImage.height = originalImage.height;
+      htmlImage.src = originalImage.src;
+      newElements.push(htmlImage);
+    }
+
     return new BbScriptImage(
       image.getWidth(),
       image.getHeight(),
       `${image.getName()}-copy`,
-      image.getElements(),
-      image.getHandle()
+      newElements,
+      JSON.parse(JSON.stringify(image.getHandle()))
     );
   }
 
@@ -55,13 +66,14 @@ export class CommandsGraphics2dImagesService {
       let htmlImage: HTMLImageElement = document.createElement('img') as HTMLImageElement;
       htmlImage.width = width;
       htmlImage.height = height;
+      elements.push(htmlImage);
     }
 
     return new BbScriptImage(width, height, 'image', elements, handle);
   }
 
-  async drawBlock(image: any, x: number, y: number, frame?: number): Promise<void> {
-    return this.graphics2d.drawBlock(image, x, y, -1, -1, frame);
+  async drawBlock(image: BbScriptImage, x: number, y: number, frame?: number): Promise<void> {
+    return this.graphics2d.drawImage(image, x, y, frame);
   }
 
   async drawBlockRect(
@@ -74,14 +86,25 @@ export class CommandsGraphics2dImagesService {
     height: number,
     frame?: number
   ): Promise<void> {
-    return this.graphics2d.drawBlock(image, x, y, -1, -1, frame);
+    // TODO: implement own method
+    // return this.graphics2d.drawImage(image, x, y, frame);
   }
 
   async drawImage(image: BbScriptImage, x: number, y: number, frame?: number): Promise<void> {
     return this.graphics2d.drawImage(image, x, y, frame);
   }
 
-  async drawImageRect(): Promise<void> {
+  async drawImageRect(
+    image: any,
+    x: number,
+    y: number,
+    beginX: number,
+    beginY: number,
+    width: number,
+    height: number,
+    frame?: number
+  ): Promise<void> {
+    // TODO: implement own method
     return null;
   }
 
@@ -89,13 +112,13 @@ export class CommandsGraphics2dImagesService {
     image = null;
   }
 
-  async grabImage(): Promise<void> {
+  async grabImage(image: BbScriptImage, x: number, y: number, frame?: number): Promise<void> {
+    // TODO: implement
     return null;
   }
 
   async handleImage(image: BbScriptImage, x: number, y: number): Promise<void> {
-    image.getHandle().x = x;
-    image.getHandle().y = y;
+    image.setHandle(x, y);
   }
 
   async imageHeight(image: BbScriptImage): Promise<number> {

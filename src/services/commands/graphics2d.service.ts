@@ -142,12 +142,12 @@ export class CommandsGraphics2DService {
     return this.imagesService.createImage(width, height, frames, mode);
   }
 
-  async drawBlock(image: any, x: number, y: number, frame?: number): Promise<void> {
+  async drawBlock(image: BbScriptImage, x: number, y: number, frame?: number): Promise<void> {
     return this.imagesService.drawBlock(image, x, y, frame);
   }
 
   async drawBlockRect(
-    image: any,
+    image: BbScriptImage,
     x: number,
     y: number,
     beginX: number,
@@ -163,16 +163,25 @@ export class CommandsGraphics2DService {
     return this.imagesService.drawImage(image, x, y, frame);
   }
 
-  async drawImageRect(): Promise<void> {
-    return this.imagesService.drawImageRect();
+  async drawImageRect(
+    image: BbScriptImage,
+    x: number,
+    y: number,
+    beginX: number,
+    beginY: number,
+    width: number,
+    height: number,
+    frame?: number
+  ): Promise<void> {
+    return this.imagesService.drawImageRect(image, x, y, beginX, beginY, width, height, frame);
   }
 
   async freeImage(image: BbScriptImage): Promise<void> {
     return this.imagesService.freeImage(image);
   }
 
-  async grabImage(): Promise<any> {
-    return this.imagesService.grabImage();
+  async grabImage(image: BbScriptImage, x: number, y: number, frame?: number): Promise<void> {
+    return this.imagesService.grabImage(image, x, y, frame);
   }
 
   async handleImage(image: BbScriptImage, x: number, y: number): Promise<void> {

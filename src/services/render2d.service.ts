@@ -164,66 +164,23 @@ export class Render2dService {
       // image.maskedElement.onload = () => {
       //   resolve();
       // };
-
       // let maskCanvas = document.createElement('canvas');
       // maskCanvas.width = image.width;
       // maskCanvas.height = image.height;
       // let ctx = maskCanvas.getContext('2d');
       // ctx.drawImage(image.element, 0, 0);
-
       // let canvasImage = ctx.getImageData(0, 0, image.width, image.height);
       // let length = canvasImage.data.length;
       // for (let i = 0; i < length; i += 4) {
       //   let red = canvasImage.data[i];
       //   let green = canvasImage.data[i + 1];
       //   let blue = canvasImage.data[i + 2];
-
       //   if (red === image.maskColor.red && green === image.maskColor.green && blue === image.maskColor.blue) {
       //     canvasImage.data[i + 3] = 0;
       //   }
       // }
       // ctx.putImageData(canvasImage, 0, 0);
       // image.maskedElement.src = maskCanvas.toDataURL();
-    });
-  }
-
-  async drawBlock(image: BbScriptImage, x: number, y: number, width: number, height: number, frame?: number): Promise<void> {
-    return new Promise<void>((resolve: Function, reject: Function) => {
-      let origin = this.getOrigin();
-
-      // TODO: fix
-      // let rotationRadians = image.rotation / (180 / Math.PI);
-      // let handleVector = {
-      //   length: Math.sqrt(Math.pow(image.handle.x, 2) + Math.pow(image.handle.y, 2)),
-      //   dx: 0,
-      //   dy: 0
-      // };
-      // handleVector.dx = -Math.sin(handleVector.length);
-      // handleVector.dy = Math.cos(handleVector.length);
-
-      // let scaleX = image.width / image.element.width;
-      // let scaleY = image.height / image.element.height;
-      // let toX = -image.handle.x;
-      // let toY = -image.handle.y;
-      // let sin = Math.sin(rotationRadians);
-      // let cos = Math.cos(rotationRadians);
-
-      // this._context2d.setTransform(
-      //   cos * scaleX,
-      //   sin * scaleX,
-      //   -sin * scaleY,
-      //   cos * scaleY,
-      //   x + toX + origin.x,
-      //   y + toY + origin.y
-      // );
-      // if (width === -1 && height === -1) {
-      //   this._context2d.drawImage(image.element, 0, 0);
-      // } else {
-      //   this._context2d.drawImage(image.element, 0, 0, width, height);
-      // }
-      // this._context2d.setTransform(1, 0, 0, 1, 0, 0);
-
-      resolve();
     });
   }
 
@@ -246,21 +203,47 @@ export class Render2dService {
   }
 
   async drawImage(image: BbScriptImage, x: number, y: number, frame?: number): Promise<void> {
-    // TODO: fix
-    // console.info('Draw image:', image);
-    // if (image.maskColor) {
-    //   return new Promise<void>((resolve: Function, reject: Function) => {
-    //     if (!image.maskedElement) {
-    //       console.error('Image has no mask color');
-    //     } else {
-    //       let origin = this.getOrigin();
-    //       this._context2d.drawImage(image.maskedElement, x + origin.x, y + origin.y);
-    //       resolve();
-    //     }
-    //   });
-    // } else {
-    //   return this.drawBlock(image, x, y);
-    // }
+    if (!frame) {
+      frame = 0;
+    }
+
+    const origin = this.getOrigin();
+    const element = image.getElement(frame);
+    const width = image.getWidth();
+    const height = image.getHeight();
+    const handle = image.getHandle();
+    const rotation = image.getRotation();
+
+    let rotationRadians = rotation / (180 / Math.PI);
+    let handleVector = {
+      length: Math.sqrt(Math.pow(handle.x, 2) + Math.pow(handle.y, 2)),
+      dx: 0,
+      dy: 0
+    };
+    handleVector.dx = -Math.sin(handleVector.length);
+    handleVector.dy = Math.cos(handleVector.length);
+
+    let scaleX = width / element.width;
+    let scaleY = height / element.height;
+    let toX = -handle.x;
+    let toY = -handle.y;
+    let sin = Math.sin(rotationRadians);
+    let cos = Math.cos(rotationRadians);
+
+    this._context2d.setTransform(
+      cos * scaleX,
+      sin * scaleX,
+      -sin * scaleY,
+      cos * scaleY,
+      x + toX + origin.x,
+      y + toY + origin.y
+    );
+    if (width === -1 && height === -1) {
+      this._context2d.drawImage(element, 0, 0);
+    } else {
+      this._context2d.drawImage(element, 0, 0, width, height);
+    }
+    this._context2d.setTransform(1, 0, 0, 1, 0, 0);
   }
 
   text(x: number, y: number, text: string, centerX?: boolean, centerY?: boolean): Promise<void> {
