@@ -257,9 +257,8 @@ export class CommandsGraphics2DService {
     return this.imagesService.loadAnimImage(filePath, width, height, startFrameIndex, totalFrames);
   }
 
-  async loadImage(filePath: string): Promise<BbScriptImage> {
-    console.info('Load Image:', filePath);
-    return this.imagesService.loadImage(filePath);
+  async loadImage(filePath: string, mode: BbScriptImageMode): Promise<BbScriptImage> {
+    return this.imagesService.loadImage(filePath, mode);
   }
 
   async maskImage(image: BbScriptImage, red: number, green: number, blue: number): Promise<void> {

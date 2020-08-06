@@ -34,7 +34,9 @@ export class CommandsGraphics2dImagesService {
     let newElements: HTMLImageElement[] = [];
     for (let i = 0; i < originalElements.length; i++) {
       let originalImage: HTMLImageElement = originalElements[i];
-      let htmlImage: HTMLImageElement = document.createElement('img') as HTMLImageElement;
+      let htmlImage: HTMLImageElement = document.createElement(
+        'img'
+      ) as HTMLImageElement;
       htmlImage.width = originalImage.width;
       htmlImage.height = originalImage.height;
       htmlImage.src = originalImage.src;
@@ -50,7 +52,12 @@ export class CommandsGraphics2dImagesService {
     );
   }
 
-  async createImage(width: number, height: number, frames?: number, mode?: BbScriptImageMode): Promise<BbScriptImage> {
+  async createImage(
+    width: number,
+    height: number,
+    frames?: number,
+    mode?: BbScriptImageMode
+  ): Promise<BbScriptImage> {
     let handle: { x: number; y: number };
     if (this.autoMidHandleActive()) {
       handle = { x: width / 2, y: height / 2 };
@@ -63,7 +70,9 @@ export class CommandsGraphics2dImagesService {
       frames = 1;
     }
     for (let i = 0; i < frames; i++) {
-      let htmlImage: HTMLImageElement = document.createElement('img') as HTMLImageElement;
+      let htmlImage: HTMLImageElement = document.createElement(
+        'img'
+      ) as HTMLImageElement;
       htmlImage.width = width;
       htmlImage.height = height;
       elements.push(htmlImage);
@@ -72,7 +81,12 @@ export class CommandsGraphics2dImagesService {
     return new BbScriptImage(width, height, 'image', elements, handle);
   }
 
-  async drawBlock(image: BbScriptImage, x: number, y: number, frame?: number): Promise<void> {
+  async drawBlock(
+    image: BbScriptImage,
+    x: number,
+    y: number,
+    frame?: number
+  ): Promise<void> {
     return this.graphics2d.drawImage(image, x, y, frame);
   }
 
@@ -90,7 +104,12 @@ export class CommandsGraphics2dImagesService {
     // return this.graphics2d.drawImage(image, x, y, frame);
   }
 
-  async drawImage(image: BbScriptImage, x: number, y: number, frame?: number): Promise<void> {
+  async drawImage(
+    image: BbScriptImage,
+    x: number,
+    y: number,
+    frame?: number
+  ): Promise<void> {
     return this.graphics2d.drawImage(image, x, y, frame);
   }
 
@@ -112,7 +131,12 @@ export class CommandsGraphics2dImagesService {
     image = null;
   }
 
-  async grabImage(image: BbScriptImage, x: number, y: number, frame?: number): Promise<void> {
+  async grabImage(
+    image: BbScriptImage,
+    x: number,
+    y: number,
+    frame?: number
+  ): Promise<void> {
     // TODO: implement
     return null;
   }
@@ -147,7 +171,16 @@ export class CommandsGraphics2dImagesService {
     rectWidth: number,
     rectHeight: number
   ): Promise<boolean> {
-    return this.rectsOverlap(imageX, imageY, image.getWidth(), image.getHeight(), rectX, rectY, rectWidth, rectHeight);
+    return this.rectsOverlap(
+      imageX,
+      imageY,
+      image.getWidth(),
+      image.getHeight(),
+      rectX,
+      rectY,
+      rectWidth,
+      rectHeight
+    );
   }
 
   async imagesCollide(
@@ -205,32 +238,41 @@ export class CommandsGraphics2dImagesService {
     return null;
   }
 
-  async loadImage(filePath: string): Promise<BbScriptImage> {
+  async loadImage(
+    filePath: string,
+    mode: BbScriptImageMode
+  ): Promise<BbScriptImage> {
     console.info('LOAD IMAGE', `${this.environment.getServer()}`, filePath);
     return new Promise<BbScriptImage>((resolve: Function, reject: Function) => {
       //info: the responseType conversion to JSON is a workaround, see https://github.com/angular/angular/issues/18586
       this.http
-        .get<Blob>(`${this.environment.getServer()}${filePath}`, { responseType: 'blob' as 'json' })
-        .subscribe((imageAsBlob: Blob) => {
+        .get<Blob>(`${this.environment.getServer()}${filePath}`, {
+          responseType: 'blob' as 'json'
+        })
+        .toPromise()
+        .then((imageAsBlob: Blob) => {
           let reader = new FileReader();
           reader.addEventListener(
             'load',
             () => {
-              let htmlImage: HTMLImageElement = document.createElement('img') as HTMLImageElement;
+              let htmlImage: HTMLImageElement = document.createElement(
+                'img'
+              ) as HTMLImageElement;
               htmlImage.onload = () => {
                 let autoMidHandleActive = this.autoMidHandleActive();
 
-                resolve({
-                  name: '',
-                  element: htmlImage,
-                  width: htmlImage.width,
-                  height: htmlImage.height,
-                  handle: {
-                    x: autoMidHandleActive ? htmlImage.width / 2 : 0,
-                    y: autoMidHandleActive ? htmlImage.height / 2 : 0
-                  },
-                  rotation: 0
-                });
+                resolve(
+                  new BbScriptImage(
+                    htmlImage.width,
+                    htmlImage.height,
+                    'image',
+                    [htmlImage],
+                    {
+                      x: autoMidHandleActive ? htmlImage.width / 2 : 0,
+                      y: autoMidHandleActive ? htmlImage.height / 2 : 0
+                    }
+                  )
+                );
               };
               htmlImage.src = reader.result as string;
             },
@@ -244,7 +286,12 @@ export class CommandsGraphics2dImagesService {
     });
   }
 
-  async maskImage(image: BbScriptImage, red: number, green: number, blue: number): Promise<void> {
+  async maskImage(
+    image: BbScriptImage,
+    red: number,
+    green: number,
+    blue: number
+  ): Promise<void> {
     return this.graphics2d.maskImage(image, red, green, blue);
   }
 
@@ -263,10 +310,19 @@ export class CommandsGraphics2dImagesService {
     width2: number,
     height2: number
   ): Promise<boolean> {
-    return Promise.resolve(x1 < x2 + width2 && x1 + width1 > x2 && y1 < y2 + height2 && y1 + height1 > y2);
+    return Promise.resolve(
+      x1 < x2 + width2 &&
+        x1 + width1 > x2 &&
+        y1 < y2 + height2 &&
+        y1 + height1 > y2
+    );
   }
 
-  async resizeImage(image: BbScriptImage, width: number, height: number): Promise<void> {
+  async resizeImage(
+    image: BbScriptImage,
+    width: number,
+    height: number
+  ): Promise<void> {
     image.setWidth(width);
     image.setHeight(height);
 
@@ -283,11 +339,19 @@ export class CommandsGraphics2dImagesService {
     image.setRotation(angle);
   }
 
-  async saveImage(image: BbScriptImage, filePath: string, frame?: number): Promise<void> {
+  async saveImage(
+    image: BbScriptImage,
+    filePath: string,
+    frame?: number
+  ): Promise<void> {
     // TODO: implement backend method
   }
 
-  async scaleImage(image: BbScriptImage, zoomX: number, zoomY: number): Promise<void> {
+  async scaleImage(
+    image: BbScriptImage,
+    zoomX: number,
+    zoomY: number
+  ): Promise<void> {
     let newWidth = Math.trunc(image.getWidth() * zoomX);
     let newHeight = Math.trunc(image.getHeight() * zoomY);
 
@@ -295,7 +359,12 @@ export class CommandsGraphics2dImagesService {
     image.setHeight(newHeight);
   }
 
-  async tileBlock(image: BbScriptImage, offsetX: number, offsetY: number, frame?: number): Promise<void> {
+  async tileBlock(
+    image: BbScriptImage,
+    offsetX: number,
+    offsetY: number,
+    frame?: number
+  ): Promise<void> {
     return this.graphics2d.tileBlock(image, offsetX, offsetY, frame);
   }
 

@@ -45,8 +45,10 @@ export class Render2dService {
     console.info('Active color:', red, green, blue);
     console.info('[CONTEXT 2D]', this._context2d);
 
-    this._context2d.strokeStyle = 'rgba(' + red + ',' + green + ',' + blue + ', 1)';
-    this._context2d.fillStyle = 'rgba(' + red + ',' + green + ',' + blue + ', 1)';
+    this._context2d.strokeStyle =
+      'rgba(' + red + ',' + green + ',' + blue + ', 1)';
+    this._context2d.fillStyle =
+      'rgba(' + red + ',' + green + ',' + blue + ', 1)';
   }
 
   private loadActiveClsColor(): void {
@@ -54,7 +56,8 @@ export class Render2dService {
     let green = this.gameState.getScreenProperties().clsColor.green;
     let blue = this.gameState.getScreenProperties().clsColor.blue;
 
-    this._context2d.fillStyle = 'rgba(' + red + ',' + green + ',' + blue + ', 1)';
+    this._context2d.fillStyle =
+      'rgba(' + red + ',' + green + ',' + blue + ', 1)';
   }
 
   private getOrigin(): { x: number; y: number } {
@@ -64,7 +67,12 @@ export class Render2dService {
     };
   }
 
-  private getActiveViewport(): { beginX: number; beginY: number; width: number; height: number } {
+  private getActiveViewport(): {
+    beginX: number;
+    beginY: number;
+    width: number;
+    height: number;
+  } {
     return this.gameState.getScreenProperties().viewport;
   }
 
@@ -80,7 +88,12 @@ export class Render2dService {
     });
   }
 
-  async line(beginX: number, beginY: number, endX: number, endY: number): Promise<void> {
+  async line(
+    beginX: number,
+    beginY: number,
+    endX: number,
+    endY: number
+  ): Promise<void> {
     return new Promise<void>((resolve: Function, reject: Function) => {
       this.loadActiveColor();
       let origin = this.getOrigin();
@@ -94,7 +107,13 @@ export class Render2dService {
     });
   }
 
-  async rect(x: number, y: number, width: number, height: number, filled: boolean): Promise<void> {
+  async rect(
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    filled: boolean
+  ): Promise<void> {
     return new Promise<void>((resolve: Function, reject: Function) => {
       if (filled === undefined) {
         filled = true;
@@ -103,7 +122,12 @@ export class Render2dService {
       this.loadActiveColor();
       let origin = this.getOrigin();
 
-      this._context2d.rect(x + origin.x, y + origin.y, width + origin.x, height + origin.y);
+      this._context2d.rect(
+        x + origin.x,
+        y + origin.y,
+        width + origin.x,
+        height + origin.y
+      );
 
       if (filled) {
         this._context2d.fill();
@@ -115,7 +139,13 @@ export class Render2dService {
     });
   }
 
-  async oval(x: number, y: number, width: number, height: number, filled?: boolean): Promise<void> {
+  async oval(
+    x: number,
+    y: number,
+    width: number,
+    height: number,
+    filled?: boolean
+  ): Promise<void> {
     //TODO refactor with respect to origin
     return new Promise<void>((resolve: Function, reject: Function) => {
       if (filled === undefined) {
@@ -133,7 +163,14 @@ export class Render2dService {
       this._context2d.moveTo(x, yStart);
       this._context2d.bezierCurveTo(x, y, x + width, y, x + width, yStart);
       this._context2d.moveTo(x, yStart);
-      this._context2d.bezierCurveTo(x, y + height, x + width, y + height, x + width, yStart);
+      this._context2d.bezierCurveTo(
+        x,
+        y + height,
+        x + width,
+        y + height,
+        x + width,
+        yStart
+      );
 
       if (filled) {
         this._context2d.fill();
@@ -156,35 +193,54 @@ export class Render2dService {
     });
   }
 
-  async maskImage(image: BbScriptImage, red: number, green: number, blue: number): Promise<void> {
+  async maskImage(
+    image: BbScriptImage,
+    maskRed: number,
+    maskGreen: number,
+    maskBlue: number
+  ): Promise<void> {
     return new Promise((resolve: Function, reject: Function) => {
-      // TODO: fix
-      //create masked element
-      // image.maskedElement = document.createElement('img') as HTMLImageElement;
-      // image.maskedElement.onload = () => {
-      //   resolve();
-      // };
-      // let maskCanvas = document.createElement('canvas');
-      // maskCanvas.width = image.width;
-      // maskCanvas.height = image.height;
-      // let ctx = maskCanvas.getContext('2d');
-      // ctx.drawImage(image.element, 0, 0);
-      // let canvasImage = ctx.getImageData(0, 0, image.width, image.height);
-      // let length = canvasImage.data.length;
-      // for (let i = 0; i < length; i += 4) {
-      //   let red = canvasImage.data[i];
-      //   let green = canvasImage.data[i + 1];
-      //   let blue = canvasImage.data[i + 2];
-      //   if (red === image.maskColor.red && green === image.maskColor.green && blue === image.maskColor.blue) {
-      //     canvasImage.data[i + 3] = 0;
-      //   }
-      // }
-      // ctx.putImageData(canvasImage, 0, 0);
-      // image.maskedElement.src = maskCanvas.toDataURL();
+      let processedImages = 0;
+
+      const width = image.getWidth();
+      const height = image.getHeight();
+      const elements: HTMLImageElement[] = image.getElements();
+
+      elements.forEach((e: HTMLImageElement) => {
+        e.onload = () => {
+          processedImages++;
+          if (processedImages === elements.length) {
+            resolve();
+          }
+        };
+
+        const maskCanvas: HTMLCanvasElement = document.createElement('canvas');
+        maskCanvas.width = width;
+        maskCanvas.height = height;
+        const ctx = maskCanvas.getContext('2d');
+        ctx.drawImage(e, 0, 0);
+        let canvasImage: ImageData = ctx.getImageData(0, 0, width, height);
+        let length = canvasImage.data.length;
+        for (let i = 0; i < length; i += 4) {
+          let red = canvasImage.data[i];
+          let green = canvasImage.data[i + 1];
+          let blue = canvasImage.data[i + 2];
+          if (red === maskRed && green === maskGreen && blue === maskBlue) {
+            canvasImage.data[i + 3] = 0;
+          }
+        }
+        ctx.putImageData(canvasImage, 0, 0);
+        e.src = maskCanvas.toDataURL();
+      });
     });
   }
 
-  async tileBlock(image: BbScriptImage, x: number, y: number, frame?: number): Promise<void> {
+  async tileBlock(
+    image: BbScriptImage,
+    x: number,
+    y: number,
+    frame?: number
+  ): Promise<void> {
     return new Promise<void>((resolve: Function, reject: Function) => {
       // TODO: fix
       // let origin = this.getOrigin();
@@ -202,7 +258,12 @@ export class Render2dService {
     });
   }
 
-  async drawImage(image: BbScriptImage, x: number, y: number, frame?: number): Promise<void> {
+  async drawImage(
+    image: BbScriptImage,
+    x: number,
+    y: number,
+    frame?: number
+  ): Promise<void> {
     if (!frame) {
       frame = 0;
     }
@@ -238,15 +299,24 @@ export class Render2dService {
       x + toX + origin.x,
       y + toY + origin.y
     );
+
     if (width === -1 && height === -1) {
-      this._context2d.drawImage(element, 0, 0);
+      this._context2d.drawImage(element, x, y);
     } else {
-      this._context2d.drawImage(element, 0, 0, width, height);
+      this._context2d.drawImage(element, x, y, width, height);
     }
+
+    // TODO: what does this do? :D
     this._context2d.setTransform(1, 0, 0, 1, 0, 0);
   }
 
-  text(x: number, y: number, text: string, centerX?: boolean, centerY?: boolean): Promise<void> {
+  text(
+    x: number,
+    y: number,
+    text: string,
+    centerX?: boolean,
+    centerY?: boolean
+  ): Promise<void> {
     return new Promise<void>((resolve: Function, reject: Function) => {
       this._context2d.fillText(text, x, y);
 

@@ -503,7 +503,7 @@ export class InterpreterService {
           evaluatedParams[4]
         );
       case 'loadimage':
-        return this.graphics2d.loadImage(evaluatedParams[0]);
+        return this.graphics2d.loadImage(evaluatedParams[0], evaluatedParams[1]);
       case 'maskimage':
         return this.graphics2d.maskImage(
           evaluatedParams[0],

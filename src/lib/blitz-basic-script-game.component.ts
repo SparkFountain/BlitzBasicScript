@@ -5,14 +5,14 @@ import {
   HostListener,
   Input,
   OnInit,
-  ViewChild,
+  ViewChild
 } from '@angular/core';
 import { LexerService } from '../services/lexer.service';
 import { ParserService } from '../services/parser.service';
 import { AbstractSyntax } from '../interfaces/abstract-syntax';
 import {
   GameStateService,
-  ScreenProperties,
+  ScreenProperties
 } from '../services/game-state.service';
 import { BabylonJSService } from '../services/babylon-js.service';
 import { GuiService } from '../services/gui.service';
@@ -37,7 +37,7 @@ import { CameraType } from '../enums/camera/camera-type';
 @Component({
   selector: 'blitz-basic-script-game',
   templateUrl: 'blitz-basic-script-game.html',
-  styleUrls: ['blitz-basic-script-game.scss'],
+  styleUrls: ['blitz-basic-script-game.scss']
 })
 export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
   @Input('icon') iconPath?: string;
@@ -141,7 +141,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     this.render2d.initCanvas(this.canvas2d.nativeElement);
 
     const codeBlocks: CodeBlock[] = [
-      new WhileLoop(new LogicalExpression([], []), []),
+      new WhileLoop(new LogicalExpression([], []), [])
 
       // new Assignment('global', 'cone', new CommandStatement('CreateCone', []))
       // new Assignment(
@@ -187,7 +187,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
       codeBlocks: codeBlocks,
       mainLoop: [],
       functions: [],
-      types: {},
+      types: {}
     });
     this.interpreter.run();
   }
@@ -234,11 +234,32 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     const syntax: AbstractSyntax = {
       globals: {},
       codeBlocks: [
-        new CommandStatement('CountGfxModes', [])
+        new CommandStatement('Graphics', [
+          new NumericExpression(800),
+          new NumericExpression(600)
+        ]),
+        new Assignment(
+          'global',
+          'image',
+          new CommandStatement('LoadImage', [
+            new StringExpression('/assets/gfx/face.png')
+          ])
+        ),
+        new CommandStatement('MaskImage', [
+          new VariableExpression('global', 'image'),
+          new NumericExpression(255),
+          new NumericExpression(0),
+          new NumericExpression(255)
+        ]),
+        new CommandStatement('DrawImage', [
+          new VariableExpression('global', 'image'),
+          new NumericExpression(150),
+          new NumericExpression(75)
+        ])
       ],
       mainLoop: [],
       functions: [],
-      types: {},
+      types: {}
     };
 
     // load and execute pre-defined program
@@ -246,20 +267,20 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     this.interpreter.run();
 
     // TODO: call render loop from interpreter
-    this.babylonjs.mainLoop([]);
+    // this.babylonjs.mainLoop([]);
   }
 
   testCommands1(): CodeBlock[] {
     return [
       new CommandStatement('Graphics', [
         new NumericExpression(640),
-        new NumericExpression(480),
+        new NumericExpression(480)
       ]),
       new Assignment(
         'global',
         'camera',
         new CommandStatement('CreateCamera', [
-          new NumericExpression(CameraType.FREE),
+          new NumericExpression(CameraType.FREE)
         ])
       ),
       new Assignment(
@@ -272,39 +293,39 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
         new VariableExpression('global', 'cube'),
         new NumericExpression(0),
         new NumericExpression(-3),
-        new NumericExpression(10),
+        new NumericExpression(10)
       ]),
       new Assignment(
         'global',
         'cubeMaterial',
         new CommandStatement('LoadTexture', [
-          new StringExpression('http://localhost:4200/assets/gfx/face.png'),
+          new StringExpression('http://localhost:4200/assets/gfx/face.png')
         ])
       ),
       new CommandStatement('EntityTexture', [
         new VariableExpression('global', 'cube'),
-        new VariableExpression('global', 'cubeMaterial'),
+        new VariableExpression('global', 'cubeMaterial')
       ]),
       new CommandStatement('EntityColor', [
         new VariableExpression('global', 'cube'),
         new NumericExpression(255),
         new NumericExpression(0),
-        new NumericExpression(0),
+        new NumericExpression(0)
       ]),
       new CommandStatement('DebugLog', [
-        new StringExpression('Hello New BbScript Approach!'),
+        new StringExpression('Hello New BbScript Approach!')
       ]),
       new CommandStatement('color', [
         new NumericExpression(255),
         new NumericExpression(120),
-        new NumericExpression(30),
+        new NumericExpression(30)
       ]),
       new CommandStatement('rect', [
         new NumericExpression(10),
         new NumericExpression(20),
         new NumericExpression(40),
-        new NumericExpression(15),
-      ]),
+        new NumericExpression(15)
+      ])
     ];
   }
 
