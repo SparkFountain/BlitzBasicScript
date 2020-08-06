@@ -87,7 +87,9 @@ export class CommandsGraphics2dImagesService {
     y: number,
     frame?: number
   ): Promise<void> {
-    return this.graphics2d.drawImage(image, x, y, frame);
+    const width = image.getWidth();
+    const height = image.getHeight();
+    return this.graphics2d.drawImage(image, x, y, 0, 0, width, height, frame);
   }
 
   async drawBlockRect(
@@ -100,8 +102,16 @@ export class CommandsGraphics2dImagesService {
     height: number,
     frame?: number
   ): Promise<void> {
-    // TODO: implement own method
-    // return this.graphics2d.drawImage(image, x, y, frame);
+    return this.graphics2d.drawImage(
+      image,
+      x,
+      y,
+      beginX,
+      beginY,
+      width,
+      height,
+      frame
+    );
   }
 
   async drawImage(
@@ -110,7 +120,9 @@ export class CommandsGraphics2dImagesService {
     y: number,
     frame?: number
   ): Promise<void> {
-    return this.graphics2d.drawImage(image, x, y, frame);
+    const width = image.getWidth();
+    const height = image.getHeight();
+    return this.graphics2d.drawImage(image, x, y, 0, 0, width, height, frame);
   }
 
   async drawImageRect(
@@ -123,8 +135,16 @@ export class CommandsGraphics2dImagesService {
     height: number,
     frame?: number
   ): Promise<void> {
-    // TODO: implement own method
-    return null;
+    return this.graphics2d.drawImage(
+      image,
+      x,
+      y,
+      beginX,
+      beginY,
+      width,
+      height,
+      frame
+    );
   }
 
   async freeImage(image: BbScriptImage): Promise<void> {

@@ -262,6 +262,10 @@ export class Render2dService {
     image: BbScriptImage,
     x: number,
     y: number,
+    beginX: number,
+    beginY: number,
+    width: number,
+    height: number,
     frame?: number
   ): Promise<void> {
     if (!frame) {
@@ -270,8 +274,8 @@ export class Render2dService {
 
     const origin = this.getOrigin();
     const element = image.getElement(frame);
-    const width = image.getWidth();
-    const height = image.getHeight();
+    const imageWidth = image.getWidth();
+    const imageHeight = image.getHeight();
     const handle = image.getHandle();
     const rotation = image.getRotation();
 
@@ -284,8 +288,8 @@ export class Render2dService {
     handleVector.dx = -Math.sin(handleVector.length);
     handleVector.dy = Math.cos(handleVector.length);
 
-    let scaleX = width / element.width;
-    let scaleY = height / element.height;
+    let scaleX = imageWidth / element.width;
+    let scaleY = imageHeight / element.height;
     let toX = -handle.x;
     let toY = -handle.y;
     let sin = Math.sin(rotationRadians);
@@ -300,11 +304,17 @@ export class Render2dService {
       y + toY + origin.y
     );
 
-    if (width === -1 && height === -1) {
-      this._context2d.drawImage(element, x, y);
-    } else {
-      this._context2d.drawImage(element, x, y, width, height);
-    }
+    this._context2d.drawImage(
+      element,
+      beginX,
+      beginY,
+      width,
+      height,
+      x,
+      y,
+      width,
+      height
+    );
 
     // TODO: what does this do? :D
     this._context2d.setTransform(1, 0, 0, 1, 0, 0);
