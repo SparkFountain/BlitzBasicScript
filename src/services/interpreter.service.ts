@@ -500,7 +500,8 @@ export class InterpreterService {
           evaluatedParams[1],
           evaluatedParams[2],
           evaluatedParams[3],
-          evaluatedParams[4]
+          evaluatedParams[4],
+          evaluatedParams[5]
         );
       case 'loadimage':
         return this.graphics2d.loadImage(evaluatedParams[0], evaluatedParams[1]);

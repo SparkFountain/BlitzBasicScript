@@ -248,21 +248,15 @@ export class CommandsGraphics2dImagesService {
     return Promise.resolve(image.getHandle().y);
   }
 
-  async loadAnimImage(
+  async loadImage(
     filePath: string,
     width: number,
     height: number,
     startFrameIndex: number,
-    totalFrames: number
-  ): Promise<any> {
-    return null;
-  }
-
-  async loadImage(
-    filePath: string,
+    totalFrames: number,
     mode: BbScriptImageMode
-  ): Promise<BbScriptImage> {
-    console.info('LOAD IMAGE', `${this.environment.getServer()}`, filePath);
+  ): Promise<any> {
+    // console.info('LOAD IMAGE', `${this.environment.getServer()}`, filePath);
     return new Promise<BbScriptImage>((resolve: Function, reject: Function) => {
       //info: the responseType conversion to JSON is a workaround, see https://github.com/angular/angular/issues/18586
       this.http
@@ -275,26 +269,87 @@ export class CommandsGraphics2dImagesService {
           reader.addEventListener(
             'load',
             () => {
-              let htmlImage: HTMLImageElement = document.createElement(
+              let originalImage: HTMLImageElement = document.createElement(
                 'img'
               ) as HTMLImageElement;
-              htmlImage.onload = () => {
+              originalImage.onload = () => {
                 let autoMidHandleActive = this.autoMidHandleActive();
 
-                resolve(
-                  new BbScriptImage(
-                    htmlImage.width,
-                    htmlImage.height,
-                    'image',
-                    [htmlImage],
-                    {
-                      x: autoMidHandleActive ? htmlImage.width / 2 : 0,
-                      y: autoMidHandleActive ? htmlImage.height / 2 : 0
+                if (width === -1 && height === -1) {
+                  // single image
+                  resolve(
+                    new BbScriptImage(
+                      originalImage.width,
+                      originalImage.height,
+                      'image',
+                      [originalImage],
+                      {
+                        x: autoMidHandleActive ? originalImage.width / 2 : 0,
+                        y: autoMidHandleActive ? originalImage.height / 2 : 0
+                      }
+                    )
+                  );
+                } else {
+                  // animated image
+                  let processedImages: number = 0;
+                  const helperCanvas: HTMLCanvasElement = document.createElement(
+                    'canvas'
+                  );
+                  helperCanvas.width = width;
+                  helperCanvas.height = height;
+                  const ctx: CanvasRenderingContext2D = helperCanvas.getContext(
+                    '2d'
+                  );
+
+                  let images: HTMLImageElement[] = [];
+                  let offset = { x: 0, y: 0 };
+                  for (let i = 0; i < totalFrames; i++) {
+                    if (i > 0) {
+                      offset.x += width;
+                      if (offset.x >= originalImage.width) {
+                        offset.x = 0;
+                        offset.y += height;
+                      }
                     }
-                  )
-                );
+
+                    ctx.clearRect(0, 0, width, height);
+                    ctx.drawImage(
+                      originalImage,
+                      offset.x,
+                      offset.y,
+                      width,
+                      height,
+                      0,
+                      0,
+                      width,
+                      height
+                    );
+                    const currentImage: HTMLImageElement = document.createElement(
+                      'img'
+                    );
+                    currentImage.onload = () => {
+                      images.push(currentImage);
+                      processedImages++;
+                      if (processedImages === totalFrames) {
+                        resolve(
+                          new BbScriptImage(
+                            originalImage.width,
+                            originalImage.height,
+                            'image',
+                            images,
+                            {
+                              x: autoMidHandleActive ? width / 2 : 0,
+                              y: autoMidHandleActive ? height / 2 : 0
+                            }
+                          )
+                        );
+                      }
+                    };
+                    currentImage.src = helperCanvas.toDataURL();
+                  }
+                }
               };
-              htmlImage.src = reader.result as string;
+              originalImage.src = reader.result as string;
             },
             false
           );
