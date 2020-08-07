@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { GameStateService } from './game-state.service';
 import { GameFont } from '../interfaces/game/font';
 import { BbScriptImage } from '../classes/in-game/2d/image';
+import { exit } from 'process';
 
 @Injectable({
   providedIn: 'root'
@@ -71,6 +72,18 @@ export class Render2dService {
     height: number;
   } {
     return this.gameState.getScreenProperties().viewport;
+  }
+
+  public async setImageSmoothing(enabled: boolean): Promise<void> {
+    // TODO: visually there seems to be no difference, has to be checked again
+    return new Promise<void>((resolve: Function, reject: Function) => {
+      this._context2d.imageSmoothingEnabled = enabled;
+      this._context2d['webkitImageSmoothingEnabled'] = enabled;
+      this._context2d['mozImageSmoothingEnabled'] = enabled;
+      this._context2d.msImageSmoothingEnabled = enabled;
+      this._context2d['oImageSmoothingEnabled'] = enabled;
+      resolve();
+    });
   }
 
   async cls(): Promise<void> {
@@ -198,19 +211,34 @@ export class Render2dService {
     });
   }
 
-  async tileBlock(image: BbScriptImage, x: number, y: number, frame?: number): Promise<void> {
+  async tileImage(image: BbScriptImage, x: number, y: number, frame?: number): Promise<void> {
     return new Promise<void>((resolve: Function, reject: Function) => {
-      // TODO: fix
-      // let origin = this.getOrigin();
-      // let activeViewport = this.getActiveViewport();
+      if (!frame) {
+        frame = 0;
+      }
 
-      // for (
-      //   let currentX: number = x, currentY: number = y;
-      //   currentX < activeViewport.width && currentY < activeViewport.height;
-      //   currentX += image.width, currentY += image.height
-      // ) {
-      //   this._context2d.drawImage(image.element, x + origin.x, y + origin.y);
-      // }
+      const origin = this.getOrigin();
+      const activeViewport = this.getActiveViewport();
+      console.info('[ORIGIN]', origin);
+      console.info('[ACTIVE VIEWPORT]', activeViewport);
+
+      for (
+        let currentX: number = x, currentY: number = y;
+        currentX < activeViewport.width && currentY < activeViewport.height;
+
+      ) {
+        this._context2d.drawImage(image.getElement(frame), currentX + origin.x, currentY + origin.y);
+
+        currentX += image.getWidth();
+
+        if (currentX >= activeViewport.width) {
+          currentX = 0;
+          currentY += image.getHeight();
+        }
+        if (currentY >= activeViewport.height) {
+          break;
+        }
+      }
 
       resolve();
     });
@@ -245,6 +273,7 @@ export class Render2dService {
       const handle = image.getHandle();
       const rotation = image.getRotation();
 
+      // TODO: rotation handle must be fixed
       let rotationRadians = rotation / (180 / Math.PI);
       let handleVector = {
         length: Math.sqrt(Math.pow(handle.x, 2) + Math.pow(handle.y, 2)),
@@ -254,6 +283,7 @@ export class Render2dService {
       handleVector.dx = -Math.sin(handleVector.length);
       handleVector.dy = Math.cos(handleVector.length);
 
+      // TODO: scaling / resizing with values < 1 crops the image
       let scaleX = realWidth / originalWidth;
       let scaleY = realHeight / originalHeight;
       let toX = -handle.x;

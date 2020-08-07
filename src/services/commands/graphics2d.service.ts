@@ -43,11 +43,7 @@ export class CommandsGraphics2DService {
     return this.display.gfxModeDepth(mode);
   }
 
-  async gfxModeExists(
-    width: number,
-    height: number,
-    depth: number
-  ): Promise<boolean> {
+  async gfxModeExists(width: number, height: number, depth: number): Promise<boolean> {
     return this.display.gfxModeExists(width, height, depth);
   }
 
@@ -63,12 +59,7 @@ export class CommandsGraphics2DService {
     return this.display.gfxModeWidth(mode);
   }
 
-  async graphics(
-    width: number,
-    height: number,
-    depth: number,
-    mode: number
-  ): Promise<void> {
+  async graphics(width: number, height: number, depth: number, mode: number): Promise<void> {
     return this.display.graphics(width, height, depth, mode);
   }
 
@@ -122,32 +113,15 @@ export class CommandsGraphics2DService {
     return this.graphicsService.origin(x, y);
   }
 
-  async oval(
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-    filled: boolean
-  ): Promise<void> {
+  async oval(x: number, y: number, width: number, height: number, filled: boolean): Promise<void> {
     return this.graphicsService.oval(x, y, width, height, filled);
   }
 
-  async rect(
-    x: number,
-    y: number,
-    width: number,
-    height: number,
-    filled?: boolean
-  ): Promise<void> {
+  async rect(x: number, y: number, width: number, height: number, filled?: boolean): Promise<void> {
     return this.graphicsService.rect(x, y, width, height, filled);
   }
 
-  async viewport(
-    beginX: number,
-    beginY: number,
-    width: number,
-    height: number
-  ): Promise<void> {
+  async viewport(beginX: number, beginY: number, width: number, height: number): Promise<void> {
     return this.graphicsService.viewport(beginX, beginY, width, height);
   }
 
@@ -164,21 +138,11 @@ export class CommandsGraphics2DService {
     return this.imagesService.copyImage(image);
   }
 
-  async createImage(
-    width: number,
-    height: number,
-    frames?: number,
-    mode?: BbScriptImageMode
-  ): Promise<BbScriptImage> {
+  async createImage(width: number, height: number, frames?: number, mode?: BbScriptImageMode): Promise<BbScriptImage> {
     return this.imagesService.createImage(width, height, frames, mode);
   }
 
-  async drawBlock(
-    image: BbScriptImage,
-    x: number,
-    y: number,
-    frame?: number
-  ): Promise<void> {
+  async drawBlock(image: BbScriptImage, x: number, y: number, frame?: number): Promise<void> {
     return this.imagesService.drawBlock(image, x, y, frame);
   }
 
@@ -192,24 +156,10 @@ export class CommandsGraphics2DService {
     height: number,
     frame?: number
   ): Promise<void> {
-    return this.imagesService.drawBlockRect(
-      image,
-      x,
-      y,
-      beginX,
-      beginY,
-      width,
-      height,
-      frame
-    );
+    return this.imagesService.drawBlockRect(image, x, y, beginX, beginY, width, height, frame);
   }
 
-  async drawImage(
-    image: BbScriptImage,
-    x: number,
-    y: number,
-    frame?: number
-  ): Promise<void> {
+  async drawImage(image: BbScriptImage, x: number, y: number, frame?: number): Promise<void> {
     return this.imagesService.drawImage(image, x, y, frame);
   }
 
@@ -223,28 +173,14 @@ export class CommandsGraphics2DService {
     height: number,
     frame?: number
   ): Promise<void> {
-    return this.imagesService.drawImageRect(
-      image,
-      x,
-      y,
-      beginX,
-      beginY,
-      width,
-      height,
-      frame
-    );
+    return this.imagesService.drawImageRect(image, x, y, beginX, beginY, width, height, frame);
   }
 
   async freeImage(image: BbScriptImage): Promise<void> {
     return this.imagesService.freeImage(image);
   }
 
-  async grabImage(
-    image: BbScriptImage,
-    x: number,
-    y: number,
-    frame?: number
-  ): Promise<void> {
+  async grabImage(image: BbScriptImage, x: number, y: number, frame?: number): Promise<void> {
     return this.imagesService.grabImage(image, x, y, frame);
   }
 
@@ -266,16 +202,7 @@ export class CommandsGraphics2DService {
     width: number,
     height: number
   ): Promise<boolean> {
-    return this.imagesService.imageRectCollide(
-      image,
-      x,
-      y,
-      frame,
-      beginX,
-      beginY,
-      width,
-      height
-    );
+    return this.imagesService.imageRectCollide(image, x, y, frame, beginX, beginY, width, height);
   }
 
   async imageRectOverlap(
@@ -287,15 +214,7 @@ export class CommandsGraphics2DService {
     rectWidth: number,
     rectHeight: number
   ): Promise<boolean> {
-    return this.imagesService.imageRectOverlap(
-      image,
-      imageX,
-      imageY,
-      rectX,
-      rectY,
-      rectWidth,
-      rectHeight
-    );
+    return this.imagesService.imageRectOverlap(image, imageX, imageY, rectX, rectY, rectWidth, rectHeight);
   }
 
   async imagesCollide(
@@ -308,16 +227,7 @@ export class CommandsGraphics2DService {
     y2: number,
     frame2: number
   ): Promise<boolean> {
-    return this.imagesService.imagesCollide(
-      image1,
-      x1,
-      y1,
-      frame1,
-      image2,
-      x2,
-      y2,
-      frame2
-    );
+    return this.imagesService.imagesCollide(image1, x1, y1, frame1, image2, x2, y2, frame2);
   }
 
   async imagesOverlap(
@@ -351,29 +261,14 @@ export class CommandsGraphics2DService {
     totalFrames: number,
     mode: BbScriptImageMode
   ): Promise<any> {
-    return this.imagesService.loadImage(
-      filePath,
-      width,
-      height,
-      startFrameIndex,
-      totalFrames,
-      mode
-    );
+    return this.imagesService.loadImage(filePath, width, height, startFrameIndex, totalFrames, mode);
   }
 
-  async loadImage(
-    filePath: string,
-    mode: BbScriptImageMode
-  ): Promise<BbScriptImage> {
+  async loadImage(filePath: string, mode: BbScriptImageMode): Promise<BbScriptImage> {
     return this.imagesService.loadImage(filePath, -1, -1, -1, -1, mode);
   }
 
-  async maskImage(
-    image: BbScriptImage,
-    red: number,
-    green: number,
-    blue: number
-  ): Promise<void> {
+  async maskImage(image: BbScriptImage, red: number, green: number, blue: number): Promise<void> {
     return this.imagesService.maskImage(image, red, green, blue);
   }
 
@@ -391,23 +286,10 @@ export class CommandsGraphics2DService {
     width2: number,
     height2: number
   ): Promise<boolean> {
-    return this.imagesService.rectsOverlap(
-      x1,
-      y1,
-      width1,
-      height1,
-      x2,
-      y2,
-      width2,
-      height2
-    );
+    return this.imagesService.rectsOverlap(x1, y1, width1, height1, x2, y2, width2, height2);
   }
 
-  async resizeImage(
-    image: BbScriptImage,
-    width: number,
-    height: number
-  ): Promise<void> {
+  async resizeImage(image: BbScriptImage, width: number, height: number): Promise<void> {
     return this.imagesService.resizeImage(image, width, height);
   }
 
@@ -415,33 +297,28 @@ export class CommandsGraphics2DService {
     return this.imagesService.rotateImage(image, angle);
   }
 
-  async saveImage(
-    image: BbScriptImage,
-    filePath: string,
-    frame?: number
-  ): Promise<boolean> {
+  async saveImage(image: BbScriptImage, filePath: string, frame?: number): Promise<boolean> {
     return this.imagesService.saveImage(image, filePath, frame);
   }
 
-  async scaleImage(
-    image: BbScriptImage,
-    zoomX: number,
-    zoomY: number
-  ): Promise<void> {
+  async scaleImage(image: BbScriptImage, zoomX: number, zoomY: number): Promise<void> {
     return this.imagesService.scaleImage(image, zoomX, zoomY);
   }
 
-  async tileBlock(
-    image: BbScriptImage,
-    offsetX: number,
-    offsetY: number,
-    frame?: number
-  ): Promise<void> {
+  async tFormFilter(enabled: boolean): Promise<void> {
+    return this.imagesService.tFormFilter(enabled);
+  }
+
+  async tFormImage(image: BbScriptImage, scaleX: number, skewY: number, skewX: number, scaleY: number): Promise<void> {
+    return this.imagesService.tFormImage(image, scaleX, skewY, skewX, scaleY);
+  }
+
+  async tileBlock(image: BbScriptImage, offsetX: number, offsetY: number, frame?: number): Promise<void> {
     return this.imagesService.tileBlock(image, offsetX, offsetY, frame);
   }
 
-  async tileImage(): Promise<void> {
-    return this.imagesService.tileImage();
+  async tileImage(image: BbScriptImage, offsetX: number, offsetY: number, frame?: number): Promise<void> {
+    return this.imagesService.tileImage(image, offsetX, offsetY, frame);
   }
 
   // MOVIES
@@ -449,13 +326,7 @@ export class CommandsGraphics2DService {
     return this.moviesService.closeMovie(movie);
   }
 
-  async drawMovie(
-    movie: GameMovie,
-    x: number,
-    y: number,
-    width: number,
-    height: number
-  ): Promise<boolean> {
+  async drawMovie(movie: GameMovie, x: number, y: number, width: number, height: number): Promise<boolean> {
     return this.moviesService.drawMovie(movie, x, y, width, height);
   }
 
@@ -555,13 +426,7 @@ export class CommandsGraphics2DService {
     return this.textService.stringWidth(text);
   }
 
-  async text(
-    x: number,
-    y: number,
-    text: string,
-    centerX?: boolean,
-    centerY?: boolean
-  ): Promise<void> {
+  async text(x: number, y: number, text: string, centerX?: boolean, centerY?: boolean): Promise<void> {
     return this.textService.text(x, y, text, centerX, centerY);
   }
 

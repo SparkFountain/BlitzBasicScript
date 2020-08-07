@@ -11,7 +11,7 @@ import { BbScriptImageMode } from 'bbscript/src/enums/in-game/2d/image';
 export class CommandsGraphics2dImagesService {
   constructor(
     private gameState: GameStateService,
-    private graphics2d: Render2dService,
+    private render2d: Render2dService,
     private environment: DebugEnvironment,
     private http: HttpClient
   ) {}
@@ -75,10 +75,10 @@ export class CommandsGraphics2dImagesService {
   async drawBlock(image: BbScriptImage, x: number, y: number, frame?: number): Promise<void> {
     const width = image.getWidth();
     const height = image.getHeight();
-    return this.graphics2d.drawImage(image, x, y, 0, 0, width, height, frame);
+    return this.render2d.drawImage(image, x, y, 0, 0, width, height, frame);
   }
 
-  async drawBlockRect(
+  public async drawBlockRect(
     image: any,
     x: number,
     y: number,
@@ -88,16 +88,16 @@ export class CommandsGraphics2dImagesService {
     height: number,
     frame?: number
   ): Promise<void> {
-    return this.graphics2d.drawImage(image, x, y, beginX, beginY, width, height, frame);
+    return this.render2d.drawImage(image, x, y, beginX, beginY, width, height, frame);
   }
 
-  async drawImage(image: BbScriptImage, x: number, y: number, frame?: number): Promise<void> {
+  public async drawImage(image: BbScriptImage, x: number, y: number, frame?: number): Promise<void> {
     const width = image.getWidth();
     const height = image.getHeight();
-    return this.graphics2d.drawImage(image, x, y, 0, 0, width, height, frame);
+    return this.render2d.drawImage(image, x, y, 0, 0, width, height, frame);
   }
 
-  async drawImageRect(
+  public async drawImageRect(
     image: any,
     x: number,
     y: number,
@@ -107,27 +107,27 @@ export class CommandsGraphics2dImagesService {
     height: number,
     frame?: number
   ): Promise<void> {
-    return this.graphics2d.drawImage(image, x, y, beginX, beginY, width, height, frame);
+    return this.render2d.drawImage(image, x, y, beginX, beginY, width, height, frame);
   }
 
-  async freeImage(image: BbScriptImage): Promise<void> {
+  public async freeImage(image: BbScriptImage): Promise<void> {
     image = null;
   }
 
-  async grabImage(image: BbScriptImage, x: number, y: number, frame?: number): Promise<void> {
+  public async grabImage(image: BbScriptImage, x: number, y: number, frame?: number): Promise<void> {
     // TODO: implement
     return null;
   }
 
-  async handleImage(image: BbScriptImage, x: number, y: number): Promise<void> {
+  public async handleImage(image: BbScriptImage, x: number, y: number): Promise<void> {
     image.setHandle(x, y);
   }
 
-  async imageHeight(image: BbScriptImage): Promise<number> {
+  public async imageHeight(image: BbScriptImage): Promise<number> {
     return image.getHeight();
   }
 
-  async imageRectCollide(
+  public async imageRectCollide(
     image: BbScriptImage,
     x: number,
     y: number,
@@ -140,7 +140,7 @@ export class CommandsGraphics2dImagesService {
     return null;
   }
 
-  async imageRectOverlap(
+  public async imageRectOverlap(
     image: BbScriptImage,
     imageX: number,
     imageY: number,
@@ -152,7 +152,7 @@ export class CommandsGraphics2dImagesService {
     return this.rectsOverlap(imageX, imageY, image.getWidth(), image.getHeight(), rectX, rectY, rectWidth, rectHeight);
   }
 
-  async imagesCollide(
+  public async imagesCollide(
     image1: BbScriptImage,
     x1: number,
     y1: number,
@@ -165,7 +165,7 @@ export class CommandsGraphics2dImagesService {
     return Promise.resolve(false);
   }
 
-  async imagesOverlap(
+  public async imagesOverlap(
     image1: BbScriptImage,
     x1: number,
     y1: number,
@@ -185,19 +185,19 @@ export class CommandsGraphics2dImagesService {
     );
   }
 
-  async imageWidth(image: BbScriptImage): Promise<number> {
+  public async imageWidth(image: BbScriptImage): Promise<number> {
     return Promise.resolve(image.getWidth());
   }
 
-  async imageXHandle(image: BbScriptImage): Promise<number> {
+  public async imageXHandle(image: BbScriptImage): Promise<number> {
     return Promise.resolve(image.getHandle().x);
   }
 
-  async imageYHandle(image: BbScriptImage): Promise<number> {
+  public async imageYHandle(image: BbScriptImage): Promise<number> {
     return Promise.resolve(image.getHandle().y);
   }
 
-  async loadImage(
+  public async loadImage(
     filePath: string,
     width: number,
     height: number,
@@ -281,7 +281,7 @@ export class CommandsGraphics2dImagesService {
   }
 
   async maskImage(image: BbScriptImage, red: number, green: number, blue: number): Promise<void> {
-    return this.graphics2d.maskImage(image, red, green, blue);
+    return this.render2d.maskImage(image, red, green, blue);
   }
 
   async midHandle(image: BbScriptImage): Promise<void> {
@@ -324,7 +324,7 @@ export class CommandsGraphics2dImagesService {
     helperCanvas.width = image.getWidth();
     helperCanvas.height = image.getHeight();
     let helperCtx: CanvasRenderingContext2D = helperCanvas.getContext('2d');
-    await this.graphics2d.drawImage(image, 0, 0, 0, 0, helperCanvas.width, helperCanvas.height, frame, helperCtx);
+    await this.render2d.drawImage(image, 0, 0, 0, 0, helperCanvas.width, helperCanvas.height, frame, helperCtx);
 
     // TODO: replace temporary download code by backend implementation
     /// create an "off-screen" anchor tag
@@ -360,9 +360,19 @@ export class CommandsGraphics2dImagesService {
     image.setHeight(newHeight);
   }
 
-  async tileBlock(image: BbScriptImage, offsetX: number, offsetY: number, frame?: number): Promise<void> {
-    return this.graphics2d.tileBlock(image, offsetX, offsetY, frame);
+  async tFormFilter(enabled: boolean): Promise<void> {
+    return this.render2d.setImageSmoothing(enabled);
   }
 
-  async tileImage(): Promise<void> {}
+  async tFormImage(image: BbScriptImage, scaleX: number, skewY: number, skewX: number, scaleY: number): Promise<void> {
+    // TODO: implement such that it doesn't collide with "RotateImage", "ResizeImage" and "ScaleImage"
+  }
+
+  async tileBlock(image: BbScriptImage, offsetX: number, offsetY: number, frame?: number): Promise<void> {
+    return this.render2d.tileImage(image, offsetX, offsetY, frame);
+  }
+
+  async tileImage(image: BbScriptImage, offsetX: number, offsetY: number, frame?: number): Promise<void> {
+    return this.render2d.tileImage(image, offsetX, offsetY, frame);
+  }
 }

@@ -1,19 +1,8 @@
-import {
-  AfterViewInit,
-  Component,
-  ElementRef,
-  HostListener,
-  Input,
-  OnInit,
-  ViewChild
-} from '@angular/core';
+import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, ViewChild } from '@angular/core';
 import { LexerService } from '../services/lexer.service';
 import { ParserService } from '../services/parser.service';
 import { AbstractSyntax } from '../interfaces/abstract-syntax';
-import {
-  GameStateService,
-  ScreenProperties
-} from '../services/game-state.service';
+import { GameStateService, ScreenProperties } from '../services/game-state.service';
 import { BabylonJSService } from '../services/babylon-js.service';
 import { GuiService } from '../services/gui.service';
 import { LanguageService } from '../services/language.service';
@@ -33,6 +22,8 @@ import { GeneralService } from '../services/general.service';
 import { WhileLoop } from '../classes/loops/while-loop';
 import { LogicalExpression } from '../classes/expressions/logical-expression';
 import { CameraType } from '../enums/camera/camera-type';
+import { Command } from 'protractor';
+import { BooleanExpression } from '../classes/expressions/boolean-expression';
 
 @Component({
   selector: 'blitz-basic-script-game',
@@ -49,9 +40,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
   set action(name: 'idle' | 'play' | 'debug' | 'stop') {
     switch (name) {
       case 'play':
-        console.warn(
-          'Playing is currently impossible due to work in progress on parser and interpreter.'
-        );
+        console.warn('Playing is currently impossible due to work in progress on parser and interpreter.');
         // this.play();
         break;
       case 'debug':
@@ -70,10 +59,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
   @HostListener('window:keydown', ['$event'])
   keyDownEvent(event: KeyboardEvent) {
     // console.info('[KEY DOWN]', event);
-    this.gameState.setKeyDown(
-      KeyCode[this.general.formatUpper(event.code)],
-      true
-    );
+    this.gameState.setKeyDown(KeyCode[this.general.formatUpper(event.code)], true);
     this.gameState.setKeyAsciiCode(event.key.charCodeAt(0));
   }
 
@@ -211,9 +197,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
 
     // lex, parse and initialize abstract syntax
     const tokens: LexerToken[][] = this.lexer.lexCode(this.code);
-    const abstractSyntax: AbstractSyntax = this.parser.createAbstractSyntax(
-      tokens
-    );
+    const abstractSyntax: AbstractSyntax = this.parser.createAbstractSyntax(tokens);
     this.interpreter.initializeAbstractSyntax(abstractSyntax);
     this.interpreter.run();
   }
@@ -234,10 +218,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     const syntax: AbstractSyntax = {
       globals: {},
       codeBlocks: [
-        new CommandStatement('Graphics', [
-          new NumericExpression(800),
-          new NumericExpression(600)
-        ]),
+        new CommandStatement('Graphics', [new NumericExpression(800), new NumericExpression(600)]),
         new Assignment(
           'global',
           'player',
@@ -249,28 +230,11 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
             new NumericExpression(16)
           ])
         ),
-        // new Assignment(
-        //   'global',
-        //   'face',
-        //   new CommandStatement('LoadImage', [
-        //     new StringExpression('/assets/gfx/face.png')
-        //   ])
-        // ),
-        // new CommandStatement('ResizeImage', [
-        //   new VariableExpression('global', 'face'),
-        //   new NumericExpression(100),
-        //   new NumericExpression(100)
-        // ]),
-        // new CommandStatement('DrawImage', [
-        //   new VariableExpression('global', 'player'),
-        //   new NumericExpression(20),
-        //   new NumericExpression(20),
-        //   new NumericExpression(0)
-        // ]),
-        new CommandStatement('SaveImage', [
+        new CommandStatement('TileImage', [
           new VariableExpression('global', 'player'),
-          new StringExpression('image.png'),
-          new NumericExpression(0)
+          new NumericExpression(0),
+          new NumericExpression(0),
+          new NumericExpression(8)
         ])
       ],
       mainLoop: [],
@@ -288,22 +252,13 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
 
   testCommands1(): CodeBlock[] {
     return [
-      new CommandStatement('Graphics', [
-        new NumericExpression(640),
-        new NumericExpression(480)
-      ]),
+      new CommandStatement('Graphics', [new NumericExpression(640), new NumericExpression(480)]),
       new Assignment(
         'global',
         'camera',
-        new CommandStatement('CreateCamera', [
-          new NumericExpression(CameraType.FREE)
-        ])
+        new CommandStatement('CreateCamera', [new NumericExpression(CameraType.FREE)])
       ),
-      new Assignment(
-        'global',
-        'light',
-        new CommandStatement('CreateLight', [])
-      ),
+      new Assignment('global', 'light', new CommandStatement('CreateLight', [])),
       new Assignment('global', 'cube', new CommandStatement('CreateCube', [])),
       new CommandStatement('PositionEntity', [
         new VariableExpression('global', 'cube'),
@@ -314,9 +269,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
       new Assignment(
         'global',
         'cubeMaterial',
-        new CommandStatement('LoadTexture', [
-          new StringExpression('http://localhost:4200/assets/gfx/face.png')
-        ])
+        new CommandStatement('LoadTexture', [new StringExpression('http://localhost:4200/assets/gfx/face.png')])
       ),
       new CommandStatement('EntityTexture', [
         new VariableExpression('global', 'cube'),
@@ -328,9 +281,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
         new NumericExpression(0),
         new NumericExpression(0)
       ]),
-      new CommandStatement('DebugLog', [
-        new StringExpression('Hello New BbScript Approach!')
-      ]),
+      new CommandStatement('DebugLog', [new StringExpression('Hello New BbScript Approach!')]),
       new CommandStatement('color', [
         new NumericExpression(255),
         new NumericExpression(120),

@@ -533,6 +533,16 @@ export class InterpreterService {
         return this.graphics2d.saveImage(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
       case 'scaleimage':
         return this.graphics2d.scaleImage(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'tformfilter':
+        return this.graphics2d.tFormFilter(evaluatedParams[0]);
+      case 'tformimage':
+        return this.graphics2d.tFormImage(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4]
+        );
       case 'tileblock':
         return this.graphics2d.tileBlock(
           evaluatedParams[0],
@@ -541,7 +551,12 @@ export class InterpreterService {
           evaluatedParams[3]
         );
       case 'tileimage':
-        return this.graphics2d.tileImage();
+        return this.graphics2d.tileImage(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3]
+        );
       // GRAPHICS 2D - MOVIES
       case 'closemovie':
         return this.graphics2d.closeMovie(evaluatedParams[0]);
