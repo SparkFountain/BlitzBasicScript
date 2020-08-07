@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { GameStateService } from '../../game-state.service';
 import { BabylonJSService } from '../../babylon-js.service';
 import { Render2dService } from '../../render2d.service';
+import { BbScriptBuffer } from 'bbscript/src/classes/in-game/2d/buffer';
 
 @Injectable()
 export class CommandsGraphics2dGraphicsService {
@@ -10,6 +11,19 @@ export class CommandsGraphics2dGraphicsService {
     private render2dService: Render2dService,
     private gameState: GameStateService
   ) {}
+
+  async availVidMem(): Promise<number> {
+    // TODO: this must be implemented inside of a "Render3D" service with access to webgl context
+    // see https://stackoverflow.com/questions/15464896/get-cpu-gpu-memory-information
+    // see https://developer.mozilla.org/en-US/docs/Web/API/HTMLCanvasElement/getContext
+    return 0;
+    // return this.render2dService.getAvailableVideoMemory();
+  }
+
+  async backBuffer(): Promise<BbScriptBuffer> {
+    // TODO: implement fallback such that an empty buffer will be returned
+    return null;
+  }
 
   async cls(): Promise<void> {
     return this.render2dService.cls();

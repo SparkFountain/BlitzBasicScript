@@ -15,7 +15,7 @@ export class Render2dService {
     console.info('[RENDER 2D SERVICE] Initialized');
   }
 
-  initCanvas(canvas: HTMLCanvasElement) {
+  public initCanvas(canvas: HTMLCanvasElement) {
     this._canvas = canvas;
     this._canvas.width = 800;
     this._canvas.height = 600;
@@ -23,7 +23,7 @@ export class Render2dService {
     console.info('[CONTEXT 2D]', this._context2d);
   }
 
-  initGraphics(width: number, height: number): Promise<void> {
+  public initGraphics(width: number, height: number): Promise<void> {
     return new Promise<void>((resolve: Function, reject: Function) => {
       this._canvas.width = width;
       this._canvas.height = height;
@@ -74,7 +74,7 @@ export class Render2dService {
     return this.gameState.getScreenProperties().viewport;
   }
 
-  public async setImageSmoothing(enabled: boolean): Promise<void> {
+  async setImageSmoothing(enabled: boolean): Promise<void> {
     // TODO: visually there seems to be no difference, has to be checked again
     return new Promise<void>((resolve: Function, reject: Function) => {
       this._context2d.imageSmoothingEnabled = enabled;

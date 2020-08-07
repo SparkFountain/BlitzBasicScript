@@ -10,6 +10,7 @@ import { GameFont } from 'bbscript/src/interfaces/game/font';
 import { BbScriptImage } from 'bbscript/src/classes/in-game/2d/image';
 import { BbScriptBuffer } from 'bbscript/src/classes/in-game/2d/buffer';
 import { BbScriptImageMode } from 'bbscript/src/enums/in-game/2d/image';
+import { CommandsGraphics2dGammaService } from './graphics2d/gamma.service';
 
 @Injectable()
 export class CommandsGraphics2DService {
@@ -17,6 +18,7 @@ export class CommandsGraphics2DService {
     private display: CommandsGraphics2dDisplayService,
     private graphicsService: CommandsGraphics2dGraphicsService,
     private imagesService: CommandsGraphics2dImagesService,
+    private gammaService: CommandsGraphics2dGammaService,
     private moviesService: CommandsGraphics2dMoviesService,
     private pixelService: CommandsGraphics2dPixelService,
     private textService: CommandsGraphics2dTextService
@@ -92,6 +94,14 @@ export class CommandsGraphics2DService {
   }
 
   // GRAPHICS
+  async availVidMem(): Promise<number> {
+    return this.graphicsService.availVidMem();
+  }
+
+  async backBuffer(): Promise<BbScriptBuffer> {
+    return this.graphicsService.backBuffer();
+  }
+
   async cls(): Promise<void> {
     return Promise.resolve(this.graphicsService.cls());
   }
@@ -319,6 +329,34 @@ export class CommandsGraphics2DService {
 
   async tileImage(image: BbScriptImage, offsetX: number, offsetY: number, frame?: number): Promise<void> {
     return this.imagesService.tileImage(image, offsetX, offsetY, frame);
+  }
+
+  // GAMMA
+  async gammaBlue(index: number): Promise<number> {
+    return this.gammaService.gammaBlue(index);
+  }
+
+  async gammaGreen(index: number): Promise<number> {
+    return this.gammaService.gammaGreen(index);
+  }
+
+  async gammaRed(index: number): Promise<number> {
+    return this.gammaService.gammaRed(index);
+  }
+
+  async setGamma(
+    indexRed: number,
+    indexGreen: number,
+    indexBlue: number,
+    gammaRed: number,
+    gammaGreen: number,
+    gammaBlue: number
+  ): Promise<void> {
+    return this.gammaService.setGamma(indexRed, indexGreen, indexBlue, gammaRed, gammaGreen, gammaBlue);
+  }
+
+  async updateGamma(calibration: boolean): Promise<void> {
+    return this.gammaService.updateGamma(calibration);
   }
 
   // MOVIES

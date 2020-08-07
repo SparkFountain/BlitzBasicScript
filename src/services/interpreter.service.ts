@@ -356,6 +356,10 @@ export class InterpreterService {
       case 'setgfxdriver':
         return this.graphics2d.setGfxDriver(evaluatedParams[0]);
       // GRAPHICS 2D - GRAPHICS
+      case 'availvidmem':
+        return this.graphics2d.availVidMem();
+      case 'backbuffer':
+        return this.graphics2d.backBuffer();
       case 'cls':
         return this.graphics2d.cls();
       case 'clscolor':
@@ -557,6 +561,24 @@ export class InterpreterService {
           evaluatedParams[2],
           evaluatedParams[3]
         );
+      // GRAPHICS 2D - GAMMA
+      case 'gammablue':
+        return this.graphics2d.gammaBlue(evaluatedParams[0]);
+      case 'gammagreen':
+        return this.graphics2d.gammaGreen(evaluatedParams[0]);
+      case 'gammared':
+        return this.graphics2d.gammaRed(evaluatedParams[0]);
+      case 'setgamma':
+        return this.graphics2d.setGamma(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4],
+          evaluatedParams[5]
+        );
+      case 'updategamma':
+        return this.graphics2d.updateGamma(evaluatedParams[0]);
       // GRAPHICS 2D - MOVIES
       case 'closemovie':
         return this.graphics2d.closeMovie(evaluatedParams[0]);

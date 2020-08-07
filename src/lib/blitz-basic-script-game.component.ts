@@ -219,23 +219,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
       globals: {},
       codeBlocks: [
         new CommandStatement('Graphics', [new NumericExpression(800), new NumericExpression(600)]),
-        new Assignment(
-          'global',
-          'player',
-          new CommandStatement('LoadAnimImage', [
-            new StringExpression('/assets/gfx/animation.png'),
-            new NumericExpression(108),
-            new NumericExpression(140),
-            new NumericExpression(0),
-            new NumericExpression(16)
-          ])
-        ),
-        new CommandStatement('TileImage', [
-          new VariableExpression('global', 'player'),
-          new NumericExpression(0),
-          new NumericExpression(0),
-          new NumericExpression(8)
-        ])
+        new CommandStatement('AvailVidMem', [])
       ],
       mainLoop: [],
       functions: [],
