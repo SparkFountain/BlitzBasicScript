@@ -3,13 +3,6 @@ export class BbScriptImage {
   private height: number;
   private name: string;
   private elements: HTMLImageElement[];
-
-  // private maskColor?: {
-  //   red: number;
-  //   green: number;
-  //   blue: number;
-  // };
-
   private handle: {
     x: number;
     y: number;
@@ -31,6 +24,7 @@ export class BbScriptImage {
     this.name = name;
     this.elements = elements;
     this.handle = handle;
+    this.rotation = 0;
   }
 
   public getWidth(): number {
@@ -53,7 +47,9 @@ export class BbScriptImage {
 
   public getElement(frame: number): HTMLImageElement {
     if (frame > this.elements.length - 1) {
-      console.error(`[GET IMAGE ELEMENT] Invalid frame ${frame}, image has only ${this.elements.length} frames`);
+      console.error(
+        `[GET IMAGE ELEMENT] Invalid frame ${frame}, image has only ${this.elements.length} frames`
+      );
       frame = 0;
     }
 
@@ -63,13 +59,6 @@ export class BbScriptImage {
   public getElements(): HTMLImageElement[] {
     return this.elements;
   }
-
-  // public getMaskedElement(): HTMLImageElement {
-  //   return this.maskedElement;
-  // }
-  // public getMaskColor(): { red: number; green: number; blue: number } {
-  //   return this.maskColor;
-  // }
 
   public getHandle(): { x: number; y: number } {
     return this.handle;
@@ -85,8 +74,4 @@ export class BbScriptImage {
   public setRotation(angle: number): void {
     this.rotation = angle;
   }
-
-  // public setMaskColor(red: number, green: number, blue: number): void {
-  //   this.maskColor = { red, green, blue };
-  // }
 }

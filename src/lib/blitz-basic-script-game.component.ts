@@ -240,7 +240,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
         ]),
         new Assignment(
           'global',
-          'animation',
+          'player',
           new CommandStatement('LoadAnimImage', [
             new StringExpression('/assets/gfx/animation.png'),
             new NumericExpression(108),
@@ -249,11 +249,22 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
             new NumericExpression(16)
           ])
         ),
+        new Assignment(
+          'global',
+          'face',
+          new CommandStatement('LoadImage', [
+            new StringExpression('/assets/gfx/face.png')
+          ])
+        ),
+        new CommandStatement('ResizeImage', [
+          new VariableExpression('global', 'face'),
+          new NumericExpression(100),
+          new NumericExpression(100)
+        ]),
         new CommandStatement('DrawImage', [
-          new VariableExpression('global', 'animation'),
-          new NumericExpression(150),
-          new NumericExpression(75),
-          new NumericExpression(4)
+          new VariableExpression('global', 'face'),
+          new NumericExpression(20),
+          new NumericExpression(20)
         ])
       ],
       mainLoop: [],

@@ -274,8 +274,10 @@ export class Render2dService {
 
     const origin = this.getOrigin();
     const element = image.getElement(frame);
-    const imageWidth = image.getWidth();
-    const imageHeight = image.getHeight();
+    const originalWidth = element.width;
+    const realWidth = image.getWidth();
+    const originalHeight = element.height;
+    const realHeight = image.getHeight();
     const handle = image.getHandle();
     const rotation = image.getRotation();
 
@@ -288,12 +290,14 @@ export class Render2dService {
     handleVector.dx = -Math.sin(handleVector.length);
     handleVector.dy = Math.cos(handleVector.length);
 
-    let scaleX = imageWidth / element.width;
-    let scaleY = imageHeight / element.height;
+    let scaleX = realWidth / originalWidth;
+    let scaleY = realHeight / originalHeight;
     let toX = -handle.x;
     let toY = -handle.y;
     let sin = Math.sin(rotationRadians);
     let cos = Math.cos(rotationRadians);
+
+    console.info('[IMAGE TRANSFORMATIONS]', scaleX, scaleY, toX, toY, sin, cos);
 
     this._context2d.setTransform(
       cos * scaleX,
@@ -316,7 +320,7 @@ export class Render2dService {
       height
     );
 
-    // TODO: what does this do? :D
+    // reset horizontal and vertical scaling for future events
     this._context2d.setTransform(1, 0, 0, 1, 0, 0);
   }
 
