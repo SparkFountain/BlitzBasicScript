@@ -1,3 +1,4 @@
+import { Render2dService } from 'bbscript/src/services/render2d.service';
 import { Injectable } from '@angular/core';
 import { GameStateService } from '../../game-state.service';
 import { HttpClient } from '@angular/common/http';
@@ -332,16 +333,10 @@ export class CommandsGraphics2dImagesService {
                       processedImages++;
                       if (processedImages === totalFrames) {
                         resolve(
-                          new BbScriptImage(
-                            originalImage.width,
-                            originalImage.height,
-                            'image',
-                            images,
-                            {
-                              x: autoMidHandleActive ? width / 2 : 0,
-                              y: autoMidHandleActive ? height / 2 : 0
-                            }
-                          )
+                          new BbScriptImage(width, height, 'image', images, {
+                            x: autoMidHandleActive ? width / 2 : 0,
+                            y: autoMidHandleActive ? height / 2 : 0
+                          })
                         );
                       }
                     };
@@ -418,8 +413,53 @@ export class CommandsGraphics2dImagesService {
     image: BbScriptImage,
     filePath: string,
     frame?: number
-  ): Promise<void> {
-    // TODO: implement backend method
+  ): Promise<boolean> {
+    let helperCanvas: HTMLCanvasElement = document.createElement('canvas');
+    helperCanvas.width = image.getWidth();
+    helperCanvas.height = image.getHeight();
+    let helperCtx: CanvasRenderingContext2D = helperCanvas.getContext('2d');
+    await this.graphics2d.drawImage(image, 0, 0, -1, -1, -1, -1, frame);
+
+    // TODO: replace temporary download code by backend implementation
+    /// create an "off-screen" anchor tag
+    var lnk = document.createElement('a'),
+      e;
+
+    /// the key here is to set the download attribute of the a tag
+    lnk.download = filePath;
+
+    /// convert canvas content to data-uri for link. When download
+    /// attribute is set the content pointed to by link will be
+    /// pushed as "download" in HTML5 capable browsers
+    lnk.href = helperCanvas.toDataURL('image/png;base64');
+
+    /// create a "fake" click-event to trigger the download
+    if (document.createEvent) {
+      e = document.createEvent('MouseEvents');
+      e.initMouseEvent(
+        'click',
+        true,
+        true,
+        window,
+        0,
+        0,
+        0,
+        0,
+        0,
+        false,
+        false,
+        false,
+        false,
+        0,
+        null
+      );
+
+      lnk.dispatchEvent(e);
+    } else if ((lnk as any).fireEvent) {
+      (lnk as any).fireEvent('onclick');
+    }
+
+    return false;
   }
 
   async scaleImage(

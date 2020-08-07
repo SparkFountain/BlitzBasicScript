@@ -419,7 +419,7 @@ export class CommandsGraphics2DService {
     image: BbScriptImage,
     filePath: string,
     frame?: number
-  ): Promise<void> {
+  ): Promise<boolean> {
     return this.imagesService.saveImage(image, filePath, frame);
   }
 

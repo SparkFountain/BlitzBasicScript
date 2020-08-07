@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { GameStateService } from './game-state.service';
 import { GameFont } from '../interfaces/game/font';
 import { BbScriptImage } from '../classes/in-game/2d/image';
+import { resolve } from 'path';
 
 @Injectable({
   providedIn: 'root'
@@ -266,62 +267,81 @@ export class Render2dService {
     beginY: number,
     width: number,
     height: number,
-    frame?: number
+    frame?: number,
+    context?: CanvasRenderingContext2D
   ): Promise<void> {
-    if (!frame) {
-      frame = 0;
-    }
+    return new Promise<void>((resolve: Function, reject: Function) => {
+      if(beginX === )
 
-    const origin = this.getOrigin();
-    const element = image.getElement(frame);
-    const originalWidth = element.width;
-    const realWidth = image.getWidth();
-    const originalHeight = element.height;
-    const realHeight = image.getHeight();
-    const handle = image.getHandle();
-    const rotation = image.getRotation();
+      if (!frame) {
+        frame = 0;
+      }
 
-    let rotationRadians = rotation / (180 / Math.PI);
-    let handleVector = {
-      length: Math.sqrt(Math.pow(handle.x, 2) + Math.pow(handle.y, 2)),
-      dx: 0,
-      dy: 0
-    };
-    handleVector.dx = -Math.sin(handleVector.length);
-    handleVector.dy = Math.cos(handleVector.length);
+      if (!context) {
+        context = this._context2d;
+      }
 
-    let scaleX = realWidth / originalWidth;
-    let scaleY = realHeight / originalHeight;
-    let toX = -handle.x;
-    let toY = -handle.y;
-    let sin = Math.sin(rotationRadians);
-    let cos = Math.cos(rotationRadians);
+      const origin = this.getOrigin();
+      const element = image.getElement(frame);
+      const originalWidth = element.width;
+      const realWidth = image.getWidth();
+      const originalHeight = element.height;
+      const realHeight = image.getHeight();
+      const handle = image.getHandle();
+      const rotation = image.getRotation();
 
-    console.info('[IMAGE TRANSFORMATIONS]', scaleX, scaleY, toX, toY, sin, cos);
+      let rotationRadians = rotation / (180 / Math.PI);
+      let handleVector = {
+        length: Math.sqrt(Math.pow(handle.x, 2) + Math.pow(handle.y, 2)),
+        dx: 0,
+        dy: 0
+      };
+      handleVector.dx = -Math.sin(handleVector.length);
+      handleVector.dy = Math.cos(handleVector.length);
 
-    this._context2d.setTransform(
-      cos * scaleX,
-      sin * scaleX,
-      -sin * scaleY,
-      cos * scaleY,
-      x + toX + origin.x,
-      y + toY + origin.y
-    );
+      let scaleX = realWidth / originalWidth;
+      let scaleY = realHeight / originalHeight;
+      let toX = -handle.x;
+      let toY = -handle.y;
+      let sin = Math.sin(rotationRadians);
+      let cos = Math.cos(rotationRadians);
 
-    this._context2d.drawImage(
-      element,
-      beginX,
-      beginY,
-      width,
-      height,
-      x,
-      y,
-      width,
-      height
-    );
+      console.info(
+        '[IMAGE TRANSFORMATIONS]',
+        scaleX,
+        scaleY,
+        toX,
+        toY,
+        sin,
+        cos
+      );
 
-    // reset horizontal and vertical scaling for future events
-    this._context2d.setTransform(1, 0, 0, 1, 0, 0);
+      context.setTransform(
+        cos * scaleX,
+        sin * scaleX,
+        -sin * scaleY,
+        cos * scaleY,
+        x + toX + origin.x,
+        y + toY + origin.y
+      );
+
+      context.drawImage(
+        element,
+        beginX,
+        beginY,
+        width,
+        height,
+        x,
+        y,
+        width,
+        height
+      );
+
+      // reset horizontal and vertical scaling for future events
+      context.setTransform(1, 0, 0, 1, 0, 0);
+
+      resolve();
+    });
   }
 
   text(
