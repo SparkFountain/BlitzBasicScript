@@ -5,7 +5,7 @@ export class DebugEnvironment {
     private server: string;
 
     constructor() {
-        this.server = 'http://localhost:4242';
+        this.server = 'http://localhost:4200';
     }
 
     getServer(): string {
