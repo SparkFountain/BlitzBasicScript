@@ -366,8 +366,25 @@ export class InterpreterService {
         return this.graphics2d.clsColor(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
       case 'color':
         return this.graphics2d.color(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2]);
+      case 'copyrect':
+        return this.graphics2d.copyRect(
+          evaluatedParams[0],
+          evaluatedParams[1],
+          evaluatedParams[2],
+          evaluatedParams[3],
+          evaluatedParams[4],
+          evaluatedParams[5],
+          evaluatedParams[6],
+          evaluatedParams[7]
+        );
+      case 'flip':
+        return this.graphics2d.flip(evaluatedParams[0]);
+      case 'frontbuffer':
+        return this.graphics2d.frontBuffer();
       case 'line':
         return this.graphics2d.line(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      case 'loadbuffer':
+        return this.graphics2d.loadBuffer(evaluatedParams[0], evaluatedParams[1]);
       case 'origin':
         return this.graphics2d.origin(evaluatedParams[0], evaluatedParams[1]);
       case 'oval':
@@ -386,8 +403,18 @@ export class InterpreterService {
           evaluatedParams[3],
           evaluatedParams[4]
         );
+      case 'scanline':
+        return this.graphics2d.scanLine();
+      case 'savebuffer':
+        return this.graphics2d.saveBuffer(evaluatedParams[0], evaluatedParams[1]);
+      case 'setbuffer':
+        return this.graphics2d.setBuffer(evaluatedParams[0]);
+      case 'totalvidmem':
+        return this.graphics2d.totalVidMem();
       case 'viewport':
         return this.graphics2d.viewport(evaluatedParams[0], evaluatedParams[1], evaluatedParams[2], evaluatedParams[3]);
+      case 'vwait':
+        return this.graphics2d.vWait(evaluatedParams[0]);
       // GRAPHICS 2D - IMAGES
       case 'automidhandle':
         return this.graphics2d.autoMidHandle(evaluatedParams[0]);

@@ -1,13 +1,16 @@
+import { BbScriptBuffer } from './buffer';
+
 export class BbScriptImage {
-  private width: number;
-  private height: number;
-  private name: string;
-  private elements: HTMLImageElement[];
-  private handle: {
+  private _buffer: BbScriptBuffer;
+  private _width: number;
+  private _height: number;
+  private _name: string;
+  private _elements: HTMLImageElement[];
+  private _handle: {
     x: number;
     y: number;
   };
-  private rotation: number;
+  private _rotation: number;
 
   constructor(
     width: number,
@@ -19,59 +22,61 @@ export class BbScriptImage {
       y: number;
     }
   ) {
-    this.width = width;
-    this.height = height;
-    this.name = name;
-    this.elements = elements;
-    this.handle = handle;
-    this.rotation = 0;
+    this._buffer = new BbScriptBuffer();
+    this._width = width;
+    this._height = height;
+    this._name = name;
+    this._elements = elements;
+    this._handle = handle;
+    this._rotation = 0;
   }
 
-  public getWidth(): number {
-    return this.width;
-  }
-  public setWidth(width: number): void {
-    this.width = width;
+  get buffer(): BbScriptBuffer {
+    return this._buffer;
   }
 
-  public getHeight(): number {
-    return this.height;
+  get width(): number {
+    return this._width;
   }
-  public setHeight(height: number): void {
-    this.height = height;
-  }
-
-  public getName(): string {
-    return this.name;
+  set width(width: number) {
+    this._width = width;
   }
 
-  public getElement(frame: number): HTMLImageElement {
-    if (frame > this.elements.length - 1) {
-      console.error(
-        `[GET IMAGE ELEMENT] Invalid frame ${frame}, image has only ${this.elements.length} frames`
-      );
+  get height(): number {
+    return this._height;
+  }
+  set height(height: number) {
+    this._height = height;
+  }
+
+  get name(): string {
+    return this._name;
+  }
+
+  getElement(frame: number): HTMLImageElement {
+    if (frame > this._elements.length - 1) {
+      console.error(`[GET IMAGE ELEMENT] Invalid frame ${frame}, image has only ${this._elements.length} frames`);
       frame = 0;
     }
 
-    return this.elements[frame];
+    return this._elements[frame];
   }
 
-  public getElements(): HTMLImageElement[] {
-    return this.elements;
+  get elements(): HTMLImageElement[] {
+    return this._elements;
   }
 
-  public getHandle(): { x: number; y: number } {
-    return this.handle;
+  get handle(): { x: number; y: number } {
+    return this._handle;
   }
-  public setHandle(x: number, y: number) {
-    this.handle.x = x;
-    this.handle.y = y;
+  set handle(handle: { x: number; y: number }) {
+    this._handle = handle;
   }
 
-  public getRotation(): number {
-    return this.rotation;
+  get rotation(): number {
+    return this._rotation;
   }
-  public setRotation(angle: number): void {
-    this.rotation = angle;
+  set rotation(angle: number) {
+    this._rotation = angle;
   }
 }

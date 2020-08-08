@@ -26,11 +26,11 @@ export class CommandsGraphics2dImagesService {
 
   async bufferDirty(buffer: BbScriptBuffer): Promise<void> {
     // TODO: implement logic if necessary
-    buffer.setDirty(true);
+    buffer.dirty = true;
   }
 
   async copyImage(image: BbScriptImage): Promise<BbScriptImage> {
-    let originalElements: HTMLImageElement[] = image.getElements();
+    let originalElements: HTMLImageElement[] = image.elements;
     let newElements: HTMLImageElement[] = [];
     for (let i = 0; i < originalElements.length; i++) {
       let originalImage: HTMLImageElement = originalElements[i];
@@ -42,11 +42,11 @@ export class CommandsGraphics2dImagesService {
     }
 
     return new BbScriptImage(
-      image.getWidth(),
-      image.getHeight(),
-      `${image.getName()}-copy`,
+      image.width,
+      image.height,
+      `${image.name}-copy`,
       newElements,
-      JSON.parse(JSON.stringify(image.getHandle()))
+      JSON.parse(JSON.stringify(image.handle))
     );
   }
 
@@ -73,8 +73,8 @@ export class CommandsGraphics2dImagesService {
   }
 
   async drawBlock(image: BbScriptImage, x: number, y: number, frame?: number): Promise<void> {
-    const width = image.getWidth();
-    const height = image.getHeight();
+    const width = image.width;
+    const height = image.height;
     return this.render2d.drawImage(image, x, y, 0, 0, width, height, frame);
   }
 
@@ -92,8 +92,8 @@ export class CommandsGraphics2dImagesService {
   }
 
   public async drawImage(image: BbScriptImage, x: number, y: number, frame?: number): Promise<void> {
-    const width = image.getWidth();
-    const height = image.getHeight();
+    const width = image.width;
+    const height = image.height;
     return this.render2d.drawImage(image, x, y, 0, 0, width, height, frame);
   }
 
@@ -120,11 +120,11 @@ export class CommandsGraphics2dImagesService {
   }
 
   public async handleImage(image: BbScriptImage, x: number, y: number): Promise<void> {
-    image.setHandle(x, y);
+    image.handle = { x, y };
   }
 
   public async imageHeight(image: BbScriptImage): Promise<number> {
-    return image.getHeight();
+    return image.height;
   }
 
   public async imageRectCollide(
@@ -149,7 +149,7 @@ export class CommandsGraphics2dImagesService {
     rectWidth: number,
     rectHeight: number
   ): Promise<boolean> {
-    return this.rectsOverlap(imageX, imageY, image.getWidth(), image.getHeight(), rectX, rectY, rectWidth, rectHeight);
+    return this.rectsOverlap(imageX, imageY, image.width, image.height, rectX, rectY, rectWidth, rectHeight);
   }
 
   public async imagesCollide(
@@ -173,28 +173,19 @@ export class CommandsGraphics2dImagesService {
     x2: number,
     y2: number
   ): Promise<boolean> {
-    return this.rectsOverlap(
-      x1,
-      y1,
-      image1.getWidth(),
-      image1.getHeight(),
-      x2,
-      y2,
-      image2.getWidth(),
-      image2.getHeight()
-    );
+    return this.rectsOverlap(x1, y1, image1.width, image1.height, x2, y2, image2.width, image2.height);
   }
 
   public async imageWidth(image: BbScriptImage): Promise<number> {
-    return Promise.resolve(image.getWidth());
+    return Promise.resolve(image.width);
   }
 
   public async imageXHandle(image: BbScriptImage): Promise<number> {
-    return Promise.resolve(image.getHandle().x);
+    return Promise.resolve(image.handle.x);
   }
 
   public async imageYHandle(image: BbScriptImage): Promise<number> {
-    return Promise.resolve(image.getHandle().y);
+    return Promise.resolve(image.handle.y);
   }
 
   public async loadImage(
@@ -285,8 +276,8 @@ export class CommandsGraphics2dImagesService {
   }
 
   async midHandle(image: BbScriptImage): Promise<void> {
-    image.getHandle().x = image.getWidth() / 2;
-    image.getHandle().y = image.getHeight() / 2;
+    image.handle.x = image.width / 2;
+    image.handle.y = image.height / 2;
   }
 
   async rectsOverlap(
@@ -303,26 +294,26 @@ export class CommandsGraphics2dImagesService {
   }
 
   async resizeImage(image: BbScriptImage, width: number, height: number): Promise<void> {
-    image.setWidth(width);
-    image.setHeight(height);
+    image.width = width;
+    image.height = height;
 
     if (this.autoMidHandleActive()) {
-      image.getHandle().x = width / 2;
-      image.getHandle().y = height / 2;
+      image.handle.x = width / 2;
+      image.handle.y = height / 2;
     } else {
-      image.getHandle().x = 0;
-      image.getHandle().y = 0;
+      image.handle.x = 0;
+      image.handle.y = 0;
     }
   }
 
   async rotateImage(image: BbScriptImage, angle: number): Promise<void> {
-    image.setRotation(angle);
+    image.rotation = angle;
   }
 
   async saveImage(image: BbScriptImage, filePath: string, frame?: number): Promise<boolean> {
     let helperCanvas: HTMLCanvasElement = document.createElement('canvas');
-    helperCanvas.width = image.getWidth();
-    helperCanvas.height = image.getHeight();
+    helperCanvas.width = image.width;
+    helperCanvas.height = image.height;
     let helperCtx: CanvasRenderingContext2D = helperCanvas.getContext('2d');
     await this.render2d.drawImage(image, 0, 0, 0, 0, helperCanvas.width, helperCanvas.height, frame, helperCtx);
 
@@ -353,11 +344,8 @@ export class CommandsGraphics2dImagesService {
   }
 
   async scaleImage(image: BbScriptImage, zoomX: number, zoomY: number): Promise<void> {
-    let newWidth = Math.trunc(image.getWidth() * zoomX);
-    let newHeight = Math.trunc(image.getHeight() * zoomY);
-
-    image.setWidth(newWidth);
-    image.setHeight(newHeight);
+    image.width = Math.trunc(image.width * zoomX);
+    image.height = Math.trunc(image.height * zoomY);
   }
 
   async tFormFilter(enabled: boolean): Promise<void> {

@@ -115,8 +115,33 @@ export class CommandsGraphics2DService {
     return this.graphicsService.color(red, green, blue);
   }
 
-  async line(beginX: number, beginY: number, endX: number, endY: number) {
+  async copyRect(
+    x1: number,
+    y1: number,
+    width: number,
+    height: number,
+    x2: number,
+    y2: number,
+    sourceBuffer?: BbScriptBuffer,
+    targetBuffer?: BbScriptBuffer
+  ): Promise<void> {
+    return this.graphicsService.copyRect(x1, y1, width, height, x2, y2, sourceBuffer, targetBuffer);
+  }
+
+  async flip(vSync: boolean): Promise<void> {
+    return this.graphicsService.flip(vSync);
+  }
+
+  async frontBuffer(): Promise<BbScriptBuffer> {
+    return this.graphicsService.frontBuffer();
+  }
+
+  async line(beginX: number, beginY: number, endX: number, endY: number): Promise<void> {
     return this.graphicsService.line(beginX, beginY, endX, endY);
+  }
+
+  async loadBuffer(buffer: BbScriptBuffer, filePath: string): Promise<boolean> {
+    return this.graphicsService.loadBuffer(buffer, filePath);
   }
 
   async origin(x: number, y: number): Promise<void> {
@@ -131,8 +156,28 @@ export class CommandsGraphics2DService {
     return this.graphicsService.rect(x, y, width, height, filled);
   }
 
+  async scanLine(): Promise<number> {
+    return this.graphicsService.scanLine();
+  }
+
+  async saveBuffer(buffer: BbScriptBuffer, filePath: string): Promise<boolean> {
+    return this.graphicsService.saveBuffer(buffer, filePath);
+  }
+
+  async setBuffer(buffer: BbScriptBuffer): Promise<BbScriptBuffer> {
+    return this.graphicsService.setBuffer(buffer);
+  }
+
+  async totalVidMem(): Promise<number> {
+    return this.graphicsService.totalVidMem();
+  }
+
   async viewport(beginX: number, beginY: number, width: number, height: number): Promise<void> {
     return this.graphicsService.viewport(beginX, beginY, width, height);
+  }
+
+  async vWait(frames: number): Promise<void> {
+    return this.graphicsService.vWait(frames);
   }
 
   // IMAGES

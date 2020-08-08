@@ -103,7 +103,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     this.canvasFocused = false;
     this.playing = false;
 
-    this.screen = this.gameState.getScreenProperties(); // TODO: event mechanism to reflect changes
+    this.screen = this.gameState.screen; // TODO: event mechanism to reflect changes
   }
 
   ngOnInit(): void {
@@ -205,21 +205,36 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
   debug(): void {
     this.playing = true;
 
-    // initialize BabylonJS Engine
+    // Initialize BabylonJS Engine
     this.babylonjs.initEngine(this.canvas3d.nativeElement);
 
-    // create the scene
+    // Create the Scene
     this.babylonjs.createScene();
 
-    // initialize 2D Service
+    // Initialize 2D Service
     this.render2d.initCanvas(this.canvas2d.nativeElement);
 
-    // define commands
+    // Define Commands
     const syntax: AbstractSyntax = {
       globals: {},
       codeBlocks: [
         new CommandStatement('Graphics', [new NumericExpression(800), new NumericExpression(600)]),
-        new CommandStatement('AvailVidMem', [])
+        new Assignment(
+          'global',
+          'player',
+          new CommandStatement('LoadAnimImage', [
+            new StringExpression('/assets/gfx/animation.png'),
+            new NumericExpression(108),
+            new NumericExpression(140),
+            new NumericExpression(0),
+            new NumericExpression(16)
+          ])
+        ),
+        new CommandStatement('DrawImage', [
+          new VariableExpression('global', 'player'),
+          new NumericExpression(20),
+          new NumericExpression(0)
+        ])
       ],
       mainLoop: [],
       functions: [],

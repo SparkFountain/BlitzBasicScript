@@ -1,12 +1,20 @@
 export class BbScriptBuffer {
-  private dirty: boolean;
+  private _context: CanvasRenderingContext2D;
+  private _dirty: boolean;
 
-  constructor() {}
-
-  public getDirty(): boolean {
-    return this.dirty;
+  constructor(renderingContext: CanvasRenderingContext2D) {
+    this._context = renderingContext;
+    this._dirty = false;
   }
-  public setDirty(value: boolean) {
-    this.dirty = value;
+
+  get context(): CanvasRenderingContext2D {
+    return this._context;
+  }
+
+  get dirty(): boolean {
+    return this._dirty;
+  }
+  set dirty(value: boolean) {
+    this._dirty = value;
   }
 }

@@ -1,47 +1,10 @@
 import { Injectable } from '@angular/core';
 import { BbScriptImage } from '../classes/in-game/2d/image';
-
-export interface ScreenProperties {
-  width: number;
-  height: number;
-  origin: {
-    x: number;
-    y: number;
-  };
-  color: {
-    red: number;
-    green: number;
-    blue: number;
-  };
-  clsColor: {
-    red: number;
-    green: number;
-    blue: number;
-  };
-  viewport: {
-    beginX: number;
-    beginY: number;
-    width: number;
-    height: number;
-  };
-}
-
-export interface ImagesProperties {
-  autoMidHandle: boolean;
-}
-
-export interface TextModeProperties {
-  offset: {
-    x: number;
-    y: number;
-  };
-}
-
-export interface AppProperties {
-  title: string;
-  antiAliasing: boolean;
-  wireFrame: boolean;
-}
+import { ScreenProperties } from '../interfaces/game/state/screen';
+import { ImagesProperties } from '../interfaces/game/state/image';
+import { TextModeProperties } from '../interfaces/game/state/text-mode';
+import { AppProperties } from '../interfaces/game/state/app';
+import { BbScriptBuffer } from '../classes/in-game/2d/buffer';
 
 @Injectable()
 export class GameStateService {
@@ -56,7 +19,7 @@ export class GameStateService {
   private mouseDown: object;
   private mouseHit: object;
 
-  private screen: ScreenProperties;
+  private _screen: ScreenProperties;
   private images: ImagesProperties;
   private textMode: TextModeProperties;
 
@@ -84,7 +47,7 @@ export class GameStateService {
       wireFrame: false
     };
 
-    this.screen = {
+    this._screen = {
       width: 1366,
       height: 768,
       origin: {
@@ -106,7 +69,8 @@ export class GameStateService {
         beginY: 0,
         width: 400,
         height: 300
-      }
+      },
+      buffer: null
     };
 
     this.images = {
@@ -143,32 +107,32 @@ export class GameStateService {
     return new Date().getTime() - this.initialTimeStamp.getMilliseconds();
   }
 
-  public getScreenProperties(): ScreenProperties {
-    return this.screen;
+  public get screen(): ScreenProperties {
+    return this._screen;
   }
 
   public setScreenWidth(width: number): void {
-    this.screen.width = width;
+    this._screen.width = width;
   }
 
   public setScreenHeight(height: number): void {
-    this.screen.height = height;
+    this._screen.height = height;
   }
 
   public setScreenOrigin(origin: { x: number; y: number }): void {
-    this.screen.origin = origin;
+    this._screen.origin = origin;
   }
 
   public setScreenColor(color: { red: number; green: number; blue: number }): void {
-    this.screen.color = color;
+    this._screen.color = color;
   }
 
   public setScreenClsColor(clsColor: { red: number; green: number; blue: number }): void {
-    this.screen.clsColor = clsColor;
+    this._screen.clsColor = clsColor;
   }
 
   public setScreenViewport(viewport: { beginX: number; beginY: number; width: number; height: number }): void {
-    this.screen.viewport = viewport;
+    this._screen.viewport = viewport;
   }
 
   public getImagesProperties(): ImagesProperties {
@@ -181,9 +145,9 @@ export class GameStateService {
     // update all existing images
     this.getAllImages().forEach((image: BbScriptImage) => {
       if (active) {
-        image.setHandle(image.getWidth() / 2, image.getHeight() / 2);
+        image.handle = { x: image.width / 2, y: image.height / 2 };
       } else {
-        image.setHandle(0, 0);
+        image.handle = { x: 0, y: 0 };
       }
     });
   }

@@ -45,8 +45,33 @@ export class CommandsGraphics2dGraphicsService {
     });
   }
 
+  async copyRect(
+    x1: number,
+    y1: number,
+    width: number,
+    height: number,
+    x2: number,
+    y2: number,
+    sourceBuffer?: BbScriptBuffer,
+    targetBuffer?: BbScriptBuffer
+  ): Promise<void> {
+    // TODO: implement
+  }
+
+  async flip(vSync: boolean): Promise<void> {}
+
+  async frontBuffer(): Promise<BbScriptBuffer> {
+    // TODO: implement fallback such that an empty buffer will be returned
+    return null;
+  }
+
   async line(beginX: number, beginY: number, endX: number, endY: number) {
     return this.render2dService.line(beginX, beginY, endX, endY);
+  }
+
+  async loadBuffer(buffer: BbScriptBuffer, filePath: string): Promise<boolean> {
+    // TODO: implement
+    return Promise.resolve(false);
   }
 
   async origin(x: number, y: number): Promise<void> {
@@ -64,6 +89,25 @@ export class CommandsGraphics2dGraphicsService {
     return this.render2dService.rect(x, y, width, height, filled);
   }
 
+  async saveBuffer(buffer: BbScriptBuffer, filePath: string): Promise<boolean> {
+    // TODO: implement
+    return Promise.resolve(false);
+  }
+
+  async scanLine(): Promise<number> {
+    return Promise.resolve(0);
+  }
+
+  async setBuffer(buffer: BbScriptBuffer): Promise<BbScriptBuffer> {
+    // TODO: implement
+    return Promise.resolve(null);
+  }
+
+  async totalVidMem(): Promise<number> {
+    // TODO: implement
+    return Promise.resolve(0);
+  }
+
   async viewport(beginX: number, beginY: number, width: number, height: number): Promise<void> {
     this.gameState.setScreenViewport({
       beginX: beginX,
@@ -71,5 +115,9 @@ export class CommandsGraphics2dGraphicsService {
       width: width,
       height: height
     });
+  }
+
+  async vWait(frames: number): Promise<void> {
+    // TODO: implement
   }
 }
