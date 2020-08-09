@@ -1,44 +1,81 @@
 import { Injectable } from '@angular/core';
+import { BbScriptBank } from 'bbscript/src/classes/in-game/data/bank';
 
 @Injectable()
 export class CommandsDataBankService {
   constructor() {}
 
-  async bankSize(bank: any): Promise<number> {
+  async bankSize(bank: BbScriptBank): Promise<number> {
     return 0;
   }
 
   async copyBank(
-    sourceBank: any,
+    sourceBank: BbScriptBank,
     sourcePos: number,
-    targetBank: any,
+    targetBank: BbScriptBank,
     targetPos: number,
     length?: number
-  ): Promise<any> {}
+  ): Promise<void> {
+    // TODO: implement
+    return null;
+  }
 
-  async createBank(bytes?: number): Promise<any> {}
+  async createBank(bytes?: number): Promise<BbScriptBank> {
+    // TODO: implement
+    return null;
+  }
 
-  async freeBank(bank: any): Promise<any> {}
+  async freeBank(bank: BbScriptBank): Promise<void> {
+    bank = null;
+  }
 
-  async peekByte(bank: any, pos: number): Promise<any> {}
+  async peekByte(bank: BbScriptBank, pos: number): Promise<number> {
+    // TODO: implement
+    return 0;
+  }
 
-  async peekFloat(bank: any, pos: number): Promise<any> {}
+  async peekFloat(bank: BbScriptBank, pos: number): Promise<number> {
+    // TODO: implement
+    return 0;
+  }
 
-  async peekInt(bank: any, pos: number): Promise<any> {}
+  async peekInt(bank: BbScriptBank, pos: number): Promise<number> {
+    // TODO: implement
+    return 0;
+  }
 
-  async peekShort(bank: any, pos: number): Promise<any> {}
+  async peekShort(bank: BbScriptBank, pos: number): Promise<number> {
+    // TODO: implement
+    return 0;
+  }
 
-  async pokeByte(bank: any, pos: number, value: number): Promise<any> {}
+  async pokeByte(bank: BbScriptBank, pos: number, value: number): Promise<void> {
+    // TODO: implement
+  }
 
-  async pokeFloat(bank: any, pos: number, value: number): Promise<any> {}
+  async pokeFloat(bank: BbScriptBank, pos: number, value: number): Promise<void> {
+    // TODO: implement
+  }
 
-  async pokeInt(bank: any, pos: number, value: number): Promise<any> {}
+  async pokeInt(bank: BbScriptBank, pos: number, value: number): Promise<void> {
+    // TODO: implement
+  }
 
-  async pokeShort(bank: any, pos: number, value: number): Promise<any> {}
+  async pokeShort(bank: BbScriptBank, pos: number, value: number): Promise<void> {
+    // TODO: implement
+  }
 
-  async readBytes(bank: any, stream: any, startPos: number, length: number): Promise<any> {}
+  async readBytes(bank: BbScriptBank, stream: any, startPos: number, length: number): Promise<number> {
+    // TODO: implement
+    return 0;
+  }
 
-  async resizeBank(bank: any, bytes?: number): Promise<any> {}
+  async resizeBank(bank: BbScriptBank, bytes: number): Promise<void> {
+    // TODO: implement
+  }
 
-  async writeBytes(bank: any, stream: any, startPos: number, length: number): Promise<any> {}
+  async writeBytes(bank: BbScriptBank, stream: any, startPos: number, length: number): Promise<number> {
+    // TODO: implement
+    return 0;
+  }
 }

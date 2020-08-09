@@ -1,96 +1,99 @@
 import { Injectable } from '@angular/core';
 import { CommandsDataBankService } from './data/bank.service';
 import { CommandsDataFileSystemService } from './data/file-system.service';
+import { BbScriptBank } from 'bbscript/src/classes/in-game/data/bank';
+import { BbScriptStream } from 'bbscript/src/classes/in-game/data/stream';
+import { BbScriptDirectory } from 'bbscript/src/classes/in-game/data/directory';
 
 @Injectable()
 export class CommandsDataService {
   constructor(private bank: CommandsDataBankService, private fileSystem: CommandsDataFileSystemService) {}
 
   // BANK
-  async bankSize(bank: any): Promise<number> {
+  async bankSize(bank: BbScriptBank): Promise<number> {
     return this.bank.bankSize(bank);
   }
 
   async copyBank(
-    sourceBank: any,
+    sourceBank: BbScriptBank,
     sourcePos: number,
-    targetBank: any,
+    targetBank: BbScriptBank,
     targetPos: number,
     length?: number
-  ): Promise<any> {
+  ): Promise<void> {
     return this.bank.copyBank(sourceBank, sourcePos, targetBank, targetPos, length);
   }
 
-  async createBank(bytes?: number): Promise<any> {
+  async createBank(bytes?: number): Promise<BbScriptBank> {
     return this.bank.createBank(bytes);
   }
 
-  async freeBank(bank: any): Promise<any> {
+  async freeBank(bank: BbScriptBank): Promise<void> {
     return this.bank.freeBank(bank);
   }
 
-  async peekByte(bank: any, pos: number): Promise<any> {
+  async peekByte(bank: BbScriptBank, pos: number): Promise<number> {
     return this.bank.peekByte(bank, pos);
   }
 
-  async peekFloat(bank: any, pos: number): Promise<any> {
+  async peekFloat(bank: BbScriptBank, pos: number): Promise<number> {
     return this.bank.peekFloat(bank, pos);
   }
 
-  async peekInt(bank: any, pos: number): Promise<any> {
+  async peekInt(bank: BbScriptBank, pos: number): Promise<number> {
     return this.bank.peekInt(bank, pos);
   }
 
-  async peekShort(bank: any, pos: number): Promise<any> {
+  async peekShort(bank: BbScriptBank, pos: number): Promise<number> {
     return this.bank.peekShort(bank, pos);
   }
 
-  async pokeByte(bank: any, pos: number, value: number): Promise<any> {
+  async pokeByte(bank: BbScriptBank, pos: number, value: number): Promise<void> {
     return this.bank.pokeByte(bank, pos, value);
   }
 
-  async pokeFloat(bank: any, pos: number, value: number): Promise<any> {
+  async pokeFloat(bank: BbScriptBank, pos: number, value: number): Promise<void> {
     return this.bank.pokeFloat(bank, pos, value);
   }
 
-  async pokeInt(bank: any, pos: number, value: number): Promise<any> {
+  async pokeInt(bank: BbScriptBank, pos: number, value: number): Promise<void> {
     return this.bank.pokeInt(bank, pos, value);
   }
 
-  async pokeShort(bank: any, pos: number, value: number): Promise<any> {
+  async pokeShort(bank: BbScriptBank, pos: number, value: number): Promise<void> {
     return this.bank.pokeShort(bank, pos, value);
   }
 
-  async readBytes(bank: any, stream: any, startPos: number, length: number): Promise<any> {
+  async readBytes(bank: BbScriptBank, stream: BbScriptStream, startPos: number, length: number): Promise<number> {
     return this.bank.readBytes(bank, stream, startPos, length);
   }
 
-  async resizeBank(bank: any, bytes?: number): Promise<any> {
+  async resizeBank(bank: BbScriptBank, bytes: number): Promise<void> {
     return this.bank.resizeBank(bank, bytes);
   }
 
-  async writeBytes(bank: any, stream: any, startPos: number, length: number): Promise<any> {
+  async writeBytes(bank: BbScriptBank, stream: BbScriptStream, startPos: number, length: number): Promise<number> {
     return this.bank.writeBytes(bank, stream, startPos, length);
   }
 
   // FILE SYSTEM
-  async changeDir(path: string): Promise<any> {
+  async changeDir(path: string): Promise<void> {
     return this.fileSystem.changeDir(path);
   }
 
-  async closeDir(directory: any): Promise<any> {
+  async closeDir(directory: any): Promise<void> {
     return this.fileSystem.closeDir(directory);
   }
 
-  async closeFile(stream: any): Promise<any> {
+  async closeFile(stream: BbScriptStream): Promise<void> {
     return this.fileSystem.closeFile(stream);
   }
 
-  async copyFile(source: string, target: string): Promise<any> {
+  async copyFile(source: string, target: string): Promise<void> {
     return this.fileSystem.copyFile(source, target);
   }
 
-  async createDir(path: string): Promise<any> {
+  async createDir(path: string): Promise<void> {
     return this.fileSystem.createDir(path);
   }
 
@@ -98,19 +101,19 @@ export class CommandsDataService {
     return this.fileSystem.currentDir();
   }
 
-  async deleteDir(path: string): Promise<any> {
+  async deleteDir(path: string): Promise<void> {
     return this.fileSystem.deleteDir(path);
   }
 
-  async deleteFile(path: string): Promise<any> {
+  async deleteFile(path: string): Promise<void> {
     return this.fileSystem.deleteFile(path);
   }
 
-  async eof(stream: any): Promise<-1 | 0 | 1> {
+  async eof(stream: BbScriptStream): Promise<-1 | 0 | 1> {
     return this.fileSystem.eof(stream);
   }
 
-  async filePos(stream: any): Promise<number> {
+  async filePos(stream: BbScriptStream): Promise<number> {
     return this.fileSystem.filePos(stream);
   }
 
@@ -130,75 +133,75 @@ export class CommandsDataService {
     return this.fileSystem.nextFile(path);
   }
 
-  async openFile(path: string): Promise<any> {
+  async openFile(path: string): Promise<BbScriptStream> {
     return this.fileSystem.openFile(path);
   }
 
-  async readAvail(stream: any): Promise<number> {
+  async readAvail(stream: BbScriptStream): Promise<number> {
     return this.fileSystem.readAvail(stream);
   }
 
-  async readByte(stream: any): Promise<number> {
+  async readByte(stream: BbScriptStream): Promise<number> {
     return this.fileSystem.readByte(stream);
   }
 
-  async readDir(path: string): Promise<any> {
+  async readDir(path: string): Promise<BbScriptDirectory> {
     return this.fileSystem.readDir(path);
   }
 
-  async readFile(path: string): Promise<any> {
+  async readFile(path: string): Promise<BbScriptStream> {
     return this.fileSystem.readFile(path);
   }
 
-  async readFloat(stream: any): Promise<any> {
+  async readFloat(stream: BbScriptStream): Promise<any> {
     return this.fileSystem.readFloat(stream);
   }
 
-  async readInt(stream: any): Promise<any> {
+  async readInt(stream: BbScriptStream): Promise<any> {
     return this.fileSystem.readInt(stream);
   }
 
-  async readLine(stream: any): Promise<any> {
+  async readLine(stream: BbScriptStream): Promise<any> {
     return this.fileSystem.readLine(stream);
   }
 
-  async readShort(stream: any): Promise<any> {
+  async readShort(stream: BbScriptStream): Promise<any> {
     return this.fileSystem.readShort(stream);
   }
 
-  async readString(stream: any): Promise<any> {
+  async readString(stream: BbScriptStream): Promise<any> {
     return this.fileSystem.readString(stream);
   }
 
-  async seekFile(stream: any, position: number): Promise<number> {
+  async seekFile(stream: BbScriptStream, position: number): Promise<number> {
     return this.fileSystem.seekFile(stream, position);
   }
 
-  async writeByte(stream: any, value: number): Promise<any> {
+  async writeByte(stream: BbScriptStream, value: number): Promise<void> {
     return this.fileSystem.writeByte(stream, value);
   }
 
-  async writeFile(stream: any): Promise<any> {
+  async writeFile(stream: BbScriptStream): Promise<BbScriptStream> {
     return this.fileSystem.writeFile(stream);
   }
 
-  async writeFloat(stream: any, value: number): Promise<any> {
+  async writeFloat(stream: BbScriptStream, value: number): Promise<void> {
     return this.fileSystem.writeFloat(stream, value);
   }
 
-  async writeInt(stream: any, value: number): Promise<any> {
+  async writeInt(stream: BbScriptStream, value: number): Promise<void> {
     return this.fileSystem.writeInt(stream, value);
   }
 
-  async writeLine(stream: any, value: number): Promise<any> {
+  async writeLine(stream: BbScriptStream, value: number): Promise<void> {
     return this.fileSystem.writeLine(stream, value);
   }
 
-  async writeShort(stream: any, value: number): Promise<any> {
+  async writeShort(stream: BbScriptStream, value: number): Promise<void> {
     return this.fileSystem.writeShort(stream, value);
   }
 
-  async writeString(stream: any, value: number): Promise<any> {
+  async writeString(stream: BbScriptStream, value: number): Promise<void> {
     return this.fileSystem.writeString(stream, value);
   }
 }

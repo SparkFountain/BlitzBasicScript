@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { environment } from 'src/environments/environment';
+import { BbScriptStream } from 'bbscript/src/classes/in-game/data/stream';
 
 @Injectable()
 export class CommandsDataFileSystemService {
@@ -79,7 +80,10 @@ export class CommandsDataFileSystemService {
 
   async writeByte(stream: any, value: number): Promise<void> {}
 
-  async writeFile(stream: any): Promise<void> {}
+  async writeFile(stream: any): Promise<BbScriptStream> {
+    // TODO: implement
+    return null;
+  }
 
   async writeFloat(stream: any, value: number): Promise<void> {}
 
