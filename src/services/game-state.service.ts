@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { BbScriptImage } from '../classes/in-game/2d/image';
-import { ScreenProperties } from '../interfaces/game/state/screen';
+import { BbScriptScreenProperties } from '../interfaces/game/state/screen';
 import { ImagesProperties } from '../interfaces/game/state/image';
 import { TextModeProperties } from '../interfaces/game/state/text-mode';
 import { AppProperties } from '../interfaces/game/state/app';
-import { BbScriptBuffer } from '../classes/in-game/2d/buffer';
+import { CommandsDataFileSystemService } from './commands/data/file-system.service';
+import { BbScriptFileSystem } from '../interfaces/game/state/file-system';
 
 @Injectable()
 export class GameStateService {
@@ -19,7 +20,8 @@ export class GameStateService {
   private mouseDown: object;
   private mouseHit: object;
 
-  private _screen: ScreenProperties;
+  private _screen: BbScriptScreenProperties;
+  private _fileSystem: BbScriptFileSystem;
   private images: ImagesProperties;
   private textMode: TextModeProperties;
 
@@ -107,7 +109,7 @@ export class GameStateService {
     return new Date().getTime() - this.initialTimeStamp.getMilliseconds();
   }
 
-  public get screen(): ScreenProperties {
+  public get screen(): BbScriptScreenProperties {
     return this._screen;
   }
 
@@ -274,11 +276,20 @@ export class GameStateService {
   }
 
   setAntiAliasing(enabled: boolean): void {
-    //TODO re-initialize BabylonJS engine to apply the new settings
+    // TODO: re-initialize BabylonJS engine to apply the new settings
     this.app.antiAliasing = enabled;
   }
 
   setWireFrame(enabled: boolean): void {
     this.app.wireFrame = enabled;
+  }
+
+  // FILE SYSTEM
+  public get fileSystem(): BbScriptFileSystem {
+    return this._fileSystem;
+  }
+
+  changeDirectory(path: string): void {
+    this._fileSystem.currentDirectory = path;
   }
 }

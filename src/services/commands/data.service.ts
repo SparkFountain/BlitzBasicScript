@@ -4,6 +4,7 @@ import { CommandsDataFileSystemService } from './data/file-system.service';
 import { BbScriptBank } from 'bbscript/src/classes/in-game/data/bank';
 import { BbScriptStream } from 'bbscript/src/classes/in-game/data/stream';
 import { BbScriptDirectory } from 'bbscript/src/classes/in-game/data/directory';
+import { BbScriptFileType } from 'bbscript/src/enums/in-game/file-system/file-type';
 
 @Injectable()
 export class CommandsDataService {
@@ -81,7 +82,7 @@ export class CommandsDataService {
     return this.fileSystem.changeDir(path);
   }
 
-  async closeDir(directory: any): Promise<void> {
+  async closeDir(directory: BbScriptDirectory): Promise<void> {
     return this.fileSystem.closeDir(directory);
   }
 
@@ -89,8 +90,8 @@ export class CommandsDataService {
     return this.fileSystem.closeFile(stream);
   }
 
-  async copyFile(source: string, target: string): Promise<void> {
-    return this.fileSystem.copyFile(source, target);
+  async copyFile(sourcePath: string, targetPath: string): Promise<void> {
+    return this.fileSystem.copyFile(sourcePath, targetPath);
   }
 
   async createDir(path: string): Promise<void> {
@@ -121,16 +122,16 @@ export class CommandsDataService {
     return this.fileSystem.fileSize(path);
   }
 
-  async fileType(path: string): Promise<0 | 1 | 2> {
+  async fileType(path: string): Promise<BbScriptFileType> {
     return this.fileSystem.fileType(path);
   }
 
-  async moreFiles(path: string): Promise<0 | 1> {
+  async moreFiles(path: string): Promise<boolean> {
     return this.fileSystem.moreFiles(path);
   }
 
-  async nextFile(path: string): Promise<string> {
-    return this.fileSystem.nextFile(path);
+  async nextFile(directory: BbScriptDirectory): Promise<string> {
+    return this.fileSystem.nextFile(directory);
   }
 
   async openFile(path: string): Promise<BbScriptStream> {
@@ -153,23 +154,23 @@ export class CommandsDataService {
     return this.fileSystem.readFile(path);
   }
 
-  async readFloat(stream: BbScriptStream): Promise<any> {
+  async readFloat(stream: BbScriptStream): Promise<number> {
     return this.fileSystem.readFloat(stream);
   }
 
-  async readInt(stream: BbScriptStream): Promise<any> {
+  async readInt(stream: BbScriptStream): Promise<number> {
     return this.fileSystem.readInt(stream);
   }
 
-  async readLine(stream: BbScriptStream): Promise<any> {
+  async readLine(stream: BbScriptStream): Promise<string> {
     return this.fileSystem.readLine(stream);
   }
 
-  async readShort(stream: BbScriptStream): Promise<any> {
+  async readShort(stream: BbScriptStream): Promise<number> {
     return this.fileSystem.readShort(stream);
   }
 
-  async readString(stream: BbScriptStream): Promise<any> {
+  async readString(stream: BbScriptStream): Promise<string> {
     return this.fileSystem.readString(stream);
   }
 
@@ -181,8 +182,8 @@ export class CommandsDataService {
     return this.fileSystem.writeByte(stream, value);
   }
 
-  async writeFile(stream: BbScriptStream): Promise<BbScriptStream> {
-    return this.fileSystem.writeFile(stream);
+  async writeFile(path: string): Promise<BbScriptStream> {
+    return this.fileSystem.writeFile(path);
   }
 
   async writeFloat(stream: BbScriptStream, value: number): Promise<void> {
@@ -193,7 +194,7 @@ export class CommandsDataService {
     return this.fileSystem.writeInt(stream, value);
   }
 
-  async writeLine(stream: BbScriptStream, value: number): Promise<void> {
+  async writeLine(stream: BbScriptStream, value: string): Promise<void> {
     return this.fileSystem.writeLine(stream, value);
   }
 
@@ -201,7 +202,7 @@ export class CommandsDataService {
     return this.fileSystem.writeShort(stream, value);
   }
 
-  async writeString(stream: BbScriptStream, value: number): Promise<void> {
+  async writeString(stream: BbScriptStream, value: string): Promise<void> {
     return this.fileSystem.writeString(stream, value);
   }
 }

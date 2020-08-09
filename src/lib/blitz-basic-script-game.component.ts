@@ -24,7 +24,7 @@ import { LogicalExpression } from '../classes/expressions/logical-expression';
 import { CameraType } from '../enums/camera/camera-type';
 import { Command } from 'protractor';
 import { BooleanExpression } from '../classes/expressions/boolean-expression';
-import { ScreenProperties } from '../interfaces/game/state/screen';
+import { BbScriptScreenProperties } from '../interfaces/game/state/screen';
 
 @Component({
   selector: 'blitz-basic-script-game',
@@ -53,7 +53,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
   @ViewChild('canvas2d') canvas2d: ElementRef;
   @ViewChild('canvas3d') canvas3d: ElementRef;
   public canvasFocused: boolean;
-  public screen: ScreenProperties;
+  public screen: BbScriptScreenProperties;
 
   public playing: boolean;
 
@@ -220,13 +220,19 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
       globals: {},
       codeBlocks: [
         new CommandStatement('Graphics', [new NumericExpression(800), new NumericExpression(600)]),
+        // new Assignment(
+        //   'global',
+        //   'sound',
+        //   new CommandStatement('LoadSound', [new StringExpression('/assets/sfx/tada.mp3')])
+        // ),
+        // new CommandStatement('SoundPitch', [new VariableExpression('global', 'sound'), new NumericExpression(28000)]),
+        // new CommandStatement('PlaySound', [new VariableExpression('global', 'sound')]),
         new Assignment(
           'global',
-          'sound',
-          new CommandStatement('LoadSound', [new StringExpression('/assets/sfx/tada.mp3')])
+          'stream',
+          new CommandStatement('WriteFile', [new StringExpression('/spark-fountain/temp.txt')])
         ),
-        new CommandStatement('SoundPitch', [new VariableExpression('global', 'sound'), new NumericExpression(28000)]),
-        new CommandStatement('PlaySound', [new VariableExpression('global', 'sound')])
+        new CommandStatement('DebugLog', [new VariableExpression('global', 'stream')])
       ],
       mainLoop: [],
       functions: [],

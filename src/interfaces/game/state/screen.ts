@@ -1,6 +1,6 @@
 import { BbScriptBuffer } from 'bbscript/src/classes/in-game/2d/buffer';
 
-export interface ScreenProperties {
+export interface BbScriptScreenProperties {
   // screen width in pixels
   width: number;
 
