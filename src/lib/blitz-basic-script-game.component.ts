@@ -2,7 +2,7 @@ import { AfterViewInit, Component, ElementRef, HostListener, Input, OnInit, View
 import { LexerService } from '../services/lexer.service';
 import { ParserService } from '../services/parser.service';
 import { AbstractSyntax } from '../interfaces/abstract-syntax';
-import { GameStateService, ScreenProperties } from '../services/game-state.service';
+import { GameStateService } from '../services/game-state.service';
 import { BabylonJSService } from '../services/babylon-js.service';
 import { GuiService } from '../services/gui.service';
 import { LanguageService } from '../services/language.service';
@@ -24,6 +24,7 @@ import { LogicalExpression } from '../classes/expressions/logical-expression';
 import { CameraType } from '../enums/camera/camera-type';
 import { Command } from 'protractor';
 import { BooleanExpression } from '../classes/expressions/boolean-expression';
+import { ScreenProperties } from '../interfaces/game/state/screen';
 
 @Component({
   selector: 'blitz-basic-script-game',
@@ -221,20 +222,11 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
         new CommandStatement('Graphics', [new NumericExpression(800), new NumericExpression(600)]),
         new Assignment(
           'global',
-          'player',
-          new CommandStatement('LoadAnimImage', [
-            new StringExpression('/assets/gfx/animation.png'),
-            new NumericExpression(108),
-            new NumericExpression(140),
-            new NumericExpression(0),
-            new NumericExpression(16)
-          ])
+          'sound',
+          new CommandStatement('LoadSound', [new StringExpression('/assets/sfx/tada.mp3')])
         ),
-        new CommandStatement('DrawImage', [
-          new VariableExpression('global', 'player'),
-          new NumericExpression(20),
-          new NumericExpression(0)
-        ])
+        new CommandStatement('SoundPitch', [new VariableExpression('global', 'sound'), new NumericExpression(28000)]),
+        new CommandStatement('PlaySound', [new VariableExpression('global', 'sound')])
       ],
       mainLoop: [],
       functions: [],

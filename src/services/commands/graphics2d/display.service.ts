@@ -160,7 +160,7 @@ export class CommandsGraphics2dDisplayService {
   }
 
   async graphicsHeight(): Promise<number> {
-    return this.gameState.getScreenProperties().height;
+    return this.gameState.screen.height;
   }
 
   async graphicsLost(): Promise<boolean> {
@@ -168,7 +168,7 @@ export class CommandsGraphics2dDisplayService {
   }
 
   async graphicsWidth(): Promise<number> {
-    return this.gameState.getScreenProperties().width;
+    return this.gameState.screen.width;
   }
 
   async setGfxDriver(driverIndex: number): Promise<void> {

@@ -1810,6 +1810,7 @@ export class InterpreterService {
         return this.sound.emitSound(evaluatedParams[0], evaluatedParams[1]);
       case 'load3dsound':
         return this.sound.load3DSound(evaluatedParams[0]);
+      // SOUND - CHANNELS
       case 'channelpan':
         return this.sound.channelPan(evaluatedParams[0], evaluatedParams[1]);
       case 'channelpitch':
@@ -1829,6 +1830,7 @@ export class InterpreterService {
         return this.sound.playCDTrack(evaluatedParams[0], evaluatedParams[1]);
       case 'playmusic':
         return this.sound.playMusic(evaluatedParams[0], evaluatedParams[1]);
+      // SOUND - SAMPLES
       case 'freesound':
         return this.sound.freeSound(evaluatedParams[0]);
       case 'loadsound':
@@ -1839,6 +1841,8 @@ export class InterpreterService {
         return this.sound.playSound(evaluatedParams[0]);
       case 'soundpan':
         return this.sound.soundPan(evaluatedParams[0], evaluatedParams[1]);
+      case 'soundpitch':
+        return this.sound.soundPitch(evaluatedParams[0], evaluatedParams[1]);
       case 'soundvolume':
         return this.sound.soundVolume(evaluatedParams[0], evaluatedParams[1]);
     }
