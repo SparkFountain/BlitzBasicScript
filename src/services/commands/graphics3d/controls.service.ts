@@ -14,7 +14,7 @@ export class CommandsGraphics3dControlsService {
   }
 
   async entityAlpha(entity: BbScriptEntity, alpha: number): Promise<void> {
-    (entity.getInstance() as Mesh).material.alpha = alpha;
+    (entity.instance as Mesh).material.alpha = alpha;
   }
 
   async entityAutoFade(entity: BbScriptEntity, near: number, far: number): Promise<void> {}
@@ -22,10 +22,10 @@ export class CommandsGraphics3dControlsService {
   async entityBlend(entity: BbScriptEntity, mode: BlendMode): Promise<void> {}
 
   async entityColor(entity: BbScriptEntity, red: number, green: number, blue: number): Promise<void> {
-    if (entity.getClass() === 'Mesh') {
-      this.babylonjs.colorMesh(entity.getInstance() as Mesh, red, green, blue);
+    if (entity.class === 'Mesh') {
+      this.babylonjs.colorMesh(entity.instance as Mesh, red, green, blue);
     } else {
-      console.error(`Cannot assign "EntityColor()" to entity of type ${entity.getClass()}`);
+      console.error(`Cannot assign "EntityColor()" to entity of type ${entity.class}`);
     }
   }
 
@@ -38,7 +38,7 @@ export class CommandsGraphics3dControlsService {
   async entityShininess(entity: BbScriptEntity, shininess: number): Promise<void> {}
 
   async entityTexture(entity: BbScriptEntity, texture: BbScriptTexture, frame?: number, layer?: number): Promise<void> {
-    let material: StandardMaterial = (entity.getInstance() as Mesh).material as StandardMaterial;
+    let material: StandardMaterial = (entity.instance as Mesh).material as StandardMaterial;
     material.diffuseTexture = texture.getTexture();
   }
 
@@ -47,10 +47,10 @@ export class CommandsGraphics3dControlsService {
   }
 
   async hideEntity(entity: BbScriptEntity): Promise<void> {
-    (entity.getInstance() as Mesh).setEnabled(false);
+    (entity.instance as Mesh).setEnabled(false);
   }
 
   async showEntity(entity: BbScriptEntity): Promise<void> {
-    (entity.getInstance() as Mesh).setEnabled(true);
+    (entity.instance as Mesh).setEnabled(true);
   }
 }

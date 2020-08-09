@@ -19,10 +19,13 @@ import {
   PointLight,
   SpotLight,
   Color3,
-  AssetsManager
+  AssetsManager,
+  Axis,
+  Space
 } from 'babylonjs';
 import { BbScriptAsset } from '../types/ingame/3d/asset';
 import { GameStateService } from './game-state.service';
+import { BbScriptEntity } from '../classes/in-game/3d/entity';
 
 @Injectable({
   providedIn: 'root'
@@ -215,7 +218,7 @@ export class BabylonJSService {
   }
 
   /* MESHES */
-  async addMesh(source: any, target: any): Promise<void> {}
+  async addMesh(source: BbScriptEntity, target: BbScriptEntity): Promise<void> {}
 
   async copyMesh() {}
 
@@ -326,13 +329,13 @@ export class BabylonJSService {
     console.info('New position of entity:', x, y, z);
   }
 
-  async scaleMesh(entity: any, x: number, y: number, z: number, parentScale?: boolean): Promise<void> {
+  async scaleMesh(entity: BbScriptEntity, x: number, y: number, z: number, parentScale?: boolean): Promise<void> {
     entity.scaling = new Vector3(x, y, z);
   }
 
   /* ENTITIES */
-  async moveEntity(entity: any, x: number, y: number, z: number): Promise<void> {
-    entity.movePOV(-x, -y, -z);
+  async moveEntity(entity: BbScriptEntity, x: number, y: number, z: number): Promise<void> {
+    (entity.instance as Mesh).movePOV(-x, -y, -z);
   }
 
   async rotateEntity(
@@ -351,18 +354,31 @@ export class BabylonJSService {
     }
   }
 
-  async translateEntity(entity: any, x: number, y: number, z: number, parentAngle?: boolean): Promise<void> {
-    entity.translate(BABYLON.Axis.X, x, BABYLON.Space.LOCAL);
-    entity.translate(BABYLON.Axis.Y, y, BABYLON.Space.LOCAL);
-    entity.translate(BABYLON.Axis.Z, z, BABYLON.Space.LOCAL);
+  async translateEntity(entity: BbScriptEntity, x: number, y: number, z: number, parentAngle?: boolean): Promise<void> {
+    (entity.instance as Mesh).translate(Axis.X, x, Space.LOCAL);
+    (entity.instance as Mesh).translate(Axis.Y, y, Space.LOCAL);
+    (entity.instance as Mesh).translate(Axis.Z, z, Space.LOCAL);
   }
 
-  async turnEntity(entity: any, pitch: number, yaw: number, roll: number, parentAngle?: boolean): Promise<void> {
+  async turnEntity(
+    entity: BbScriptEntity,
+    pitch: number,
+    yaw: number,
+    roll: number,
+    parentAngle?: boolean
+  ): Promise<void> {
     //TODO implement global
-    entity.addRotation(pitch, yaw, roll);
+    (entity.instance as Mesh).addRotation(pitch, yaw, roll);
   }
 
-  async alignToVector(entity: any, x: number, y: number, z: number, axis: BbScriptAxis, tween: number): Promise<void> {
+  async alignToVector(
+    entity: BbScriptEntity,
+    x: number,
+    y: number,
+    z: number,
+    axis: BbScriptAxis,
+    tween: number
+  ): Promise<void> {
     //TODO test if this is the correct behaviour
     //TODO in this implementation, tween would be deprecated
     let upDirection;
@@ -377,10 +393,10 @@ export class BabylonJSService {
         upDirection = new Vector3(0, 0, 1);
         break;
     }
-    entity.alignWithNormal(new Vector3(x, y, z), upDirection);
+    (entity.instance as Mesh).alignWithNormal(new Vector3(x, y, z), upDirection);
   }
 
-  async pointEntity(sourceEntity: any, targetEntity: any, roll: number): Promise<void> {
+  async pointEntity(sourceEntity: BbScriptEntity, targetEntity: BbScriptEntity, roll: number): Promise<void> {
     //TODO: implementation
   }
 

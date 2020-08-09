@@ -34,11 +34,11 @@ export class CommandsGraphics3dCoordinatesService {
     z: number,
     parentCoordinates?: boolean
   ): Promise<void> {
-    return this.babylonjs.positionMesh(entity.getInstance() as Mesh, x, y, z, parentCoordinates);
+    return this.babylonjs.positionMesh(entity.instance as Mesh, x, y, z, parentCoordinates);
   }
 
-  async rotateEntity(entity: Mesh | Camera, pitch: number, yaw: number, roll: number, parentCoordinates?: boolean) {
-    return this.babylonjs.rotateEntity(entity, pitch, yaw, roll, parentCoordinates);
+  async rotateEntity(entity: BbScriptEntity, pitch: number, yaw: number, roll: number, parentCoordinates?: boolean) {
+    return this.babylonjs.rotateEntity(entity.instance as Mesh, pitch, yaw, roll, parentCoordinates);
   }
 
   async scaleEntity(entity: BbScriptEntity, x: number, y: number, z: number, parentScale?: boolean): Promise<void> {

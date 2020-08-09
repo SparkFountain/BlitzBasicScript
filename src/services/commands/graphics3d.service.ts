@@ -59,40 +59,46 @@ export class CommandsGraphics3DService {
   ) {}
 
   // ANIMATIONS
-  async addAnimSeq(entity: any, duration: number): Promise<number> {
+  async addAnimSeq(entity: BbScriptEntity, duration: number): Promise<number> {
     return this.animationsService.addAnimSeq(entity, duration);
   }
 
-  async animate(entity: any, mode?: number, speed?: number, sequenceId?: number, transition?: number): Promise<void> {
+  async animate(
+    entity: BbScriptEntity,
+    mode?: number,
+    speed?: number,
+    sequenceId?: number,
+    transition?: number
+  ): Promise<void> {
     return this.animationsService.animate(entity, mode, speed, sequenceId, transition);
   }
 
-  async animating(entity: any): Promise<boolean> {
+  async animating(entity: BbScriptEntity): Promise<boolean> {
     return this.animationsService.animating(entity);
   }
 
-  async animLength(entity: any): Promise<number> {
+  async animLength(entity: BbScriptEntity): Promise<number> {
     return this.animationsService.animLength(entity);
   }
 
-  async animSeq(entity: any): Promise<number> {
+  async animSeq(entity: BbScriptEntity): Promise<number> {
     return this.animationsService.animSeq(entity);
   }
 
-  async animTime(entity: any): Promise<number> {
+  async animTime(entity: BbScriptEntity): Promise<number> {
     return this.animationsService.animTime(entity);
   }
 
-  async extractAnimSeq(entity: any, start: number, end: number, animSeq?: number): Promise<number> {
+  async extractAnimSeq(entity: BbScriptEntity, start: number, end: number, animSeq?: number): Promise<number> {
     return this.animationsService.extractAnimSeq(entity, start, end, animSeq);
   }
 
-  async loadAnimSeq(entity: any, filePath: string): Promise<number> {
+  async loadAnimSeq(entity: BbScriptEntity, filePath: string): Promise<number> {
     return this.animationsService.loadAnimSeq(entity, filePath);
   }
 
   async setAnimKey(
-    entity: any,
+    entity: BbScriptEntity,
     frame: number,
     translation?: boolean,
     rotation?: boolean,
@@ -101,7 +107,7 @@ export class CommandsGraphics3DService {
     return this.animationsService.setAnimKey(entity, frame, translation, rotation, scaling);
   }
 
-  async setAnimTime(entity: any, time: number, sequenceId?: number): Promise<void> {
+  async setAnimTime(entity: BbScriptEntity, time: number, sequenceId?: number): Promise<void> {
     return this.animationsService.setAnimTime(entity, time, sequenceId);
   }
 
@@ -142,7 +148,7 @@ export class CommandsGraphics3DService {
     return this.brushesService.getBrushTexture(brush, index);
   }
 
-  async getEntityBrush(entity: any): Promise<any> {
+  async getEntityBrush(entity: BbScriptEntity): Promise<any> {
     return this.brushesService.getEntityBrush(entity);
   }
 
@@ -154,7 +160,7 @@ export class CommandsGraphics3DService {
     return this.brushesService.loadBrush(filePath, modes, scaleU, scaleV);
   }
 
-  async paintEntity(entity: any, brush: any): Promise<void> {
+  async paintEntity(entity: BbScriptEntity, brush: any): Promise<void> {
     return this.brushesService.paintEntity(entity, brush);
   }
 
@@ -232,19 +238,19 @@ export class CommandsGraphics3DService {
     return this.collisionsService.clearCollisions();
   }
 
-  async collisionEntity(entity: any, index: number): Promise<any> {
+  async collisionEntity(entity: BbScriptEntity, index: number): Promise<any> {
     return this.collisionsService.collisionEntity(entity, index);
   }
 
-  async collisionNX(entity: any, index: number): Promise<number> {
+  async collisionNX(entity: BbScriptEntity, index: number): Promise<number> {
     return this.collisionsService.collisionNX(entity, index);
   }
 
-  async collisionNY(entity: any, index: number): Promise<number> {
+  async collisionNY(entity: BbScriptEntity, index: number): Promise<number> {
     return this.collisionsService.collisionNY(entity, index);
   }
 
-  async collisionNZ(entity: any, index: number): Promise<number> {
+  async collisionNZ(entity: BbScriptEntity, index: number): Promise<number> {
     return this.collisionsService.collisionNZ(entity, index);
   }
 
@@ -252,11 +258,11 @@ export class CommandsGraphics3DService {
     return this.collisionsService.collisions(sourceEntity, targetEntity, method, reaction);
   }
 
-  async collisionSurface(entity: any, index: number): Promise<any> {
+  async collisionSurface(entity: BbScriptEntity, index: number): Promise<any> {
     return this.collisionsService.collisionSurface(entity, index);
   }
 
-  async collisionTime(entity: any, index: number): Promise<number> {
+  async collisionTime(entity: BbScriptEntity, index: number): Promise<number> {
     return this.collisionsService.collisionTime(entity, index);
   }
 
@@ -370,15 +376,22 @@ export class CommandsGraphics3DService {
   }
 
   // COORDINATES
-  async alignToVector(entity: any, x: number, y: number, z: number, axis: BbScriptAxis, tween: number): Promise<void> {
+  async alignToVector(
+    entity: BbScriptEntity,
+    x: number,
+    y: number,
+    z: number,
+    axis: BbScriptAxis,
+    tween: number
+  ): Promise<void> {
     return this.coordinatesService.alignToVector(entity, x, y, z, axis, tween);
   }
 
-  async moveEntity(entity: any, x: number, y: number, z: number): Promise<void> {
+  async moveEntity(entity: BbScriptEntity, x: number, y: number, z: number): Promise<void> {
     return this.coordinatesService.moveEntity(entity, x, y, z);
   }
 
-  async pointEntity(sourceEntity: any, targetEntity: any, roll: number): Promise<void> {
+  async pointEntity(sourceEntity: BbScriptEntity, targetEntity: BbScriptEntity, roll: number): Promise<void> {
     return this.coordinatesService.pointEntity(sourceEntity, targetEntity, roll);
   }
 
@@ -392,19 +405,25 @@ export class CommandsGraphics3DService {
     return this.coordinatesService.positionEntity(entity, x, y, z, parentCoordinates);
   }
 
-  async rotateEntity(entity: Mesh | Camera, pitch: number, yaw: number, roll: number, parentCoordinates?: boolean) {
+  async rotateEntity(entity: BbScriptEntity, pitch: number, yaw: number, roll: number, parentCoordinates?: boolean) {
     return this.coordinatesService.rotateEntity(entity, pitch, yaw, roll, parentCoordinates);
   }
 
-  async scaleEntity(entity: any, x: number, y: number, z: number, parentScale?: boolean): Promise<void> {
+  async scaleEntity(entity: BbScriptEntity, x: number, y: number, z: number, parentScale?: boolean): Promise<void> {
     return this.coordinatesService.scaleEntity(entity, x, y, z, parentScale);
   }
 
-  async translateEntity(entity: any, x: number, y: number, z: number, parentAngle?: boolean): Promise<void> {
+  async translateEntity(entity: BbScriptEntity, x: number, y: number, z: number, parentAngle?: boolean): Promise<void> {
     return this.coordinatesService.translateEntity(entity, x, y, z, parentAngle);
   }
 
-  async turnEntity(entity: any, pitch: number, yaw: number, roll: number, parentAngle?: boolean): Promise<void> {
+  async turnEntity(
+    entity: BbScriptEntity,
+    pitch: number,
+    yaw: number,
+    roll: number,
+    parentAngle?: boolean
+  ): Promise<void> {
     return this.coordinatesService.turnEntity(entity, pitch, yaw, roll, parentAngle);
   }
 

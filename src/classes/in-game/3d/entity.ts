@@ -2,84 +2,82 @@ import { Vector3, Mesh, Camera, Light } from 'babylonjs';
 import { BbScriptInstance } from 'bbscript/src/types/ingame/3d/instance';
 
 export class BbScriptEntity {
-  private name: string;
-  private class: string;
-  private parent: BbScriptEntity;
-  private instance: BbScriptInstance;
+  private _name: string;
+  private _class: string;
+  private _parent: BbScriptEntity;
+  private _instance: BbScriptInstance;
 
   constructor(name: string, className: string, parent: BbScriptEntity, instance: Mesh | Camera | Light) {
-    this.name = name;
-    this.class = className;
-    this.parent = parent;
-    this.instance = instance;
+    this._name = name;
+    this._class = className;
+    this._parent = parent;
+    this._instance = instance;
   }
 
-  public getName(): string {
-    return this.name;
+  get name(): string {
+    return this._name;
   }
 
-  public setName(name: string): void {
-    this.name = name;
+  set name(name: string) {
+    this._name = name;
   }
 
-  public getClass(): string {
-    return this.class;
+  get class(): string {
+    return this._class;
   }
 
-  public getParent(): BbScriptEntity {
-    return this.parent;
+  get parent(): BbScriptEntity {
+    return this._parent;
   }
 
-  public getInstance(): BbScriptInstance {
-    return this.instance;
+  get instance(): BbScriptInstance {
+    return this._instance;
   }
 
-  public getPosition(): Vector3 {
-    if (this.instance instanceof Light) {
+  get position(): Vector3 {
+    if (this._instance instanceof Light) {
       return new Vector3();
     } else {
-      return this.instance.position;
+      return this._instance.position;
     }
   }
-
-  public setPosition(x: number, y: number, z: number): void {
-    if (this.instance instanceof Light) {
+  set position(position: Vector3) {
+    if (this._instance instanceof Light) {
       // TODO: implement a solution
     } else {
-      this.instance.position = new Vector3(x, y, z);
+      this._instance.position = position;
     }
   }
 
-  public getRotation(): Vector3 {
-    if (this.instance instanceof Light || this.instance instanceof Camera) {
+  get rotation(): Vector3 {
+    if (this._instance instanceof Light || this._instance instanceof Camera) {
       return new Vector3();
     } else {
-      return this.instance.rotation;
+      return this._instance.rotation;
     }
   }
-
-  public setRotation(pitch: number, yaw: number, roll: number): void {
-    if (this.instance instanceof Light || this.instance instanceof Camera) {
+  set rotation(rotation: Vector3) {
+    if (this._instance instanceof Light || this._instance instanceof Camera) {
       // TODO: implement a solution
     } else {
-      this.instance.rotation = new Vector3(pitch, yaw, roll);
+      this._instance.rotation = rotation;
     }
   }
 
-  public getScaling(): Vector3 {
-    if (this.instance instanceof Light || this.instance instanceof Camera) {
+  get scaling(): Vector3 {
+    if (this._instance instanceof Light || this._instance instanceof Camera) {
       // TODO: implement a solution
       return new Vector3();
     } else {
-      return this.instance.scaling;
+      return this._instance.scaling;
     }
   }
 
-  public setScaling(width: number, height: number, depth: number): void {
-    if (this.instance instanceof Light || this.instance instanceof Camera) {
+  set scaling(scaling: Vector3) {
+    if (this._instance instanceof Light || this._instance instanceof Camera) {
       // TODO: implement a solution
     } else {
-      this.instance.scaling = new Vector3(width, height, depth);
+      this._instance.scaling = scaling;
     }
   }
 }
