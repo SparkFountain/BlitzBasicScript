@@ -242,7 +242,7 @@ export class BabylonJSService {
     return cube;
   }
 
-  async createCylinder(segments, hasFloor): Promise<Mesh> {
+  async createCylinder(segments: number, hasFloor: boolean): Promise<Mesh> {
     let cylinder: Mesh = MeshBuilder.CreateCylinder(
       '1',
       { diameterTop: 4, diameterBottom: 4, tessellation: 32 },
