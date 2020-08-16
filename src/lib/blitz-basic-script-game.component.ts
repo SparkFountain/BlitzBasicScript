@@ -38,15 +38,17 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
   @Input() title?: string;
 
   @Input()
-  set action(name: 'idle' | 'play' | 'debug' | 'stop') {
+  set action(name: 'idle' | 'play' | 'debug' | 'stop' | 'fake') {
     switch (name) {
       case 'play':
         console.warn('Playing is currently impossible due to work in progress on parser and interpreter.');
-        // this.play();
+        this.play();
         break;
       case 'debug':
         console.warn('Debugging currently uses hard-coded statements.');
         this.debug();
+      case 'fake':
+        this.playFake();
     }
   }
 
@@ -201,6 +203,54 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     const abstractSyntax: AbstractSyntax = this.parser.createAbstractSyntax(tokens);
     this.interpreter.initializeAbstractSyntax(abstractSyntax);
     this.interpreter.run();
+  }
+
+  playFake(): void {
+    let codeBlocks: CodeBlock[];
+
+    switch (this.code[0]) {
+      case '; Draw a background image of a city':
+        codeBlocks = [
+          new Assignment(
+            'global',
+            'image',
+            new CommandStatement('LoadImage', [new StringExpression('assets/gfx/background/city-1.jpg')])
+          ),
+          new CommandStatement('DrawImage', [
+            new VariableExpression('global', 'image'),
+            new NumericExpression(0),
+            new NumericExpression(0)
+          ])
+        ];
+        break;
+    }
+
+    this.playing = true;
+
+    // Initialize BabylonJS Engine
+    this.babylonjs.initEngine(this.canvas3d.nativeElement);
+
+    // Create the Scene
+    this.babylonjs.createScene();
+
+    // Initialize 2D Service
+    this.render2d.initCanvas(this.canvas2d.nativeElement);
+
+    // Define Commands
+    const syntax: AbstractSyntax = {
+      globals: {},
+      codeBlocks,
+      mainLoop: [],
+      functions: [],
+      types: {}
+    };
+
+    // load and execute pre-defined program
+    this.interpreter.initializeAbstractSyntax(syntax);
+    this.interpreter.run();
+
+    // TODO: call render loop from interpreter
+    // this.babylonjs.mainLoop([]);
   }
 
   debug(): void {

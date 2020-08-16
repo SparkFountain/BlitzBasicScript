@@ -22,7 +22,7 @@ export class BbScriptImage {
       y: number;
     }
   ) {
-    this._buffer = new BbScriptBuffer(new HTMLCanvasElement().getContext('2d'));
+    this._buffer = new BbScriptBuffer(document.createElement('canvas'));
     this._width = width;
     this._height = height;
     this._name = name;

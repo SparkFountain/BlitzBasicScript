@@ -1,9 +1,13 @@
 export class BbScriptBuffer {
+  private _canvas: HTMLCanvasElement;
   private _context: CanvasRenderingContext2D;
   private _dirty: boolean;
 
-  constructor(renderingContext: CanvasRenderingContext2D) {
-    this._context = renderingContext;
+  constructor(canvas: HTMLCanvasElement) {
+    console.info('[CANVAS]', canvas);
+
+    this._canvas = canvas;
+    this._context = canvas.getContext('2d');
     this._dirty = false;
   }
 

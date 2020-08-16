@@ -9,7 +9,6 @@ import { BbScriptBuffer } from '../classes/in-game/2d/buffer';
 })
 export class Render2dService {
   private _canvas: HTMLCanvasElement;
-  private _context2d: CanvasRenderingContext2D;
 
   constructor(private gameState: GameStateService) {}
 
@@ -17,8 +16,7 @@ export class Render2dService {
     this._canvas = canvas;
     this._canvas.width = 800;
     this._canvas.height = 600;
-    this._context2d = this._canvas.getContext('2d');
-    this.gameState.screen.buffer = new BbScriptBuffer(this._context2d);
+    this.gameState.screen.buffer = new BbScriptBuffer(this._canvas);
   }
 
   initGraphics(width: number, height: number): Promise<void> {
