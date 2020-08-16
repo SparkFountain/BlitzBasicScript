@@ -57,9 +57,9 @@ export class GameStateService {
         y: 0
       },
       color: {
-        red: 1,
-        green: 1,
-        blue: 1
+        red: 255,
+        green: 255,
+        blue: 255
       },
       clsColor: {
         red: 0,

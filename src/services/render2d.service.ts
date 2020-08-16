@@ -308,6 +308,7 @@ export class Render2dService {
 
   text(x: number, y: number, text: string, centerX?: boolean, centerY?: boolean): Promise<void> {
     return new Promise<void>((resolve: Function, reject: Function) => {
+      this.loadActiveColor();
       const context: CanvasRenderingContext2D = this.gameState.screen.buffer.context;
       context.fillText(text, x, y);
       resolve();

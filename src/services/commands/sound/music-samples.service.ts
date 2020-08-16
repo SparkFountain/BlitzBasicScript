@@ -5,6 +5,7 @@ import { BbScriptChannel } from 'bbscript/src/classes/in-game/sound/channel';
 import { BB_SCRIPT_CD_TRACK_MODE } from 'bbscript/src/enums/in-game/sound/cd-track-mode';
 import { BbScriptSound } from 'bbscript/src/classes/in-game/sound/sound';
 import { rejects } from 'assert';
+import { ApiResponse } from 'bbscript/src/interfaces/api/api-response';
 
 @Injectable()
 export class CommandsSoundMusicSamplesService {
@@ -40,19 +41,25 @@ export class CommandsSoundMusicSamplesService {
 
   async loadSound(filePath: string): Promise<BbScriptSound> {
     return new Promise((resolve: Function, reject: Function) => {
-      // info: the responseType conversion to JSON is a workaround, see https://github.com/angular/angular/issues/18586
       this.http
-        .get<ArrayBuffer>(`${this.environment.getServer()}${filePath}`, {
-          responseType: 'arraybuffer' as 'json'
-        })
+        .get(`${this.environment.getServer()}/files/get-content`, { params: { path: filePath } })
         .toPromise()
-        .then((soundAsBlob: ArrayBuffer) => {
+        .then((response: ApiResponse<string>) => {
+          // convert Base64 to ArrayBuffer
+          const binary = window.atob(response.data);
+          const len = binary.length;
+          const bytes = new Uint8Array(len);
+          for (let i = 0; i < len; i++) {
+            bytes[i] = binary.charCodeAt(i);
+          }
+          const soundAsArrayBuffer = bytes.buffer;
+
           let audioCtx: AudioContext = new AudioContext();
           let bufferSourceNode: AudioBufferSourceNode = audioCtx.createBufferSource();
           let volumeGain: GainNode = audioCtx.createGain();
           let pannerNode: StereoPannerNode = audioCtx.createStereoPanner();
 
-          audioCtx.decodeAudioData(soundAsBlob).then(
+          audioCtx.decodeAudioData(soundAsArrayBuffer).then(
             (buffer: AudioBuffer) => {
               // TODO: test if this also works if the state is not initialized with "suspend"
               audioCtx.resume().then(() => {

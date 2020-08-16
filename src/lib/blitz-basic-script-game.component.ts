@@ -206,7 +206,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
   }
 
   playFake(): void {
-    let codeBlocks: CodeBlock[];
+    let codeBlocks: CodeBlock[] = [];
 
     switch (this.code[0]) {
       case '; Draw a background image of a city':
@@ -223,6 +223,28 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
           ])
         ];
         break;
+      case '; Load and play a sound sample':
+        codeBlocks = [
+          new Assignment(
+            'global',
+            'sound',
+            new CommandStatement('LoadSound', [new StringExpression('assets/sfx/sounds/tada.mp3')])
+          ),
+          new CommandStatement('PlaySound', [new VariableExpression('global', 'sound')])
+        ];
+        break;
+      case '; Some math examples':
+        codeBlocks = [
+          new Assignment('global', 'root', new CommandStatement('Sqr', [new NumericExpression(25)])),
+          new CommandStatement('Text', [
+            new NumericExpression(20),
+            new NumericExpression(20),
+            new VariableExpression('global', 'root')
+          ])
+        ];
+        break;
+      default:
+        console.warn('[PLAY FAKE] Code could not be faked');
     }
 
     this.playing = true;
