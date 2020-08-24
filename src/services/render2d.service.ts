@@ -87,6 +87,8 @@ export class Render2dService {
         height: this.gameState.screen.height
       };
       context.fillRect(0, 0, screen.width, screen.height);
+
+      resolve();
     });
   }
 
@@ -115,12 +117,10 @@ export class Render2dService {
       let origin = this.getOrigin();
       const context: CanvasRenderingContext2D = this.gameState.screen.buffer.context;
 
-      context.rect(x + origin.x, y + origin.y, width + origin.x, height + origin.y);
-
       if (filled) {
-        context.fill();
+        context.fillRect(x + origin.x, y + origin.y, width + origin.x, height + origin.y);
       } else {
-        context.stroke();
+        context.strokeRect(x + origin.x, y + origin.y, width + origin.x, height + origin.y);
       }
 
       resolve();
@@ -139,14 +139,7 @@ export class Render2dService {
       const context: CanvasRenderingContext2D = this.gameState.screen.buffer.context;
 
       context.beginPath();
-      context.lineWidth = 1;
-
-      let yStart = y + height / 2;
-
-      context.moveTo(x, yStart);
-      context.bezierCurveTo(x, y, x + width, y, x + width, yStart);
-      context.moveTo(x, yStart);
-      context.bezierCurveTo(x, y + height, x + width, y + height, x + width, yStart);
+      context.ellipse(x + width / 2, y + height / 2, width / 2, height / 2, 0, 0, 2 * Math.PI);
 
       if (filled) {
         context.fill();

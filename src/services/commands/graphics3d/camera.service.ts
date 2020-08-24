@@ -93,7 +93,7 @@ export class CommandsGraphics3dCameraService {
     // camera.zoomOnFactor = value;
   }
 
-  async createCamera(type: CameraType, parent?: BbScriptEntity): Promise<BbScriptCamera> {
+  async createCamera(type?: CameraType, parent?: BbScriptEntity): Promise<BbScriptCamera> {
     return this.babylonjs.createCamera(type).then((camera: Camera) => new BbScriptCamera(camera, parent));
   }
 

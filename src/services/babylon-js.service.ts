@@ -210,7 +210,7 @@ export class BabylonJSService {
       case CameraType.WEB_VR:
         break;
       default:
-        console.error('Error at CreateCamera: invalid camera type', type);
+        camera = new FreeCamera('1', new Vector3(0, 0, 0), this._scene, true);
         break;
     }
 
@@ -245,7 +245,7 @@ export class BabylonJSService {
   async createCylinder(segments: number, hasFloor: boolean): Promise<Mesh> {
     let cylinder: Mesh = MeshBuilder.CreateCylinder(
       '1',
-      { diameterTop: 4, diameterBottom: 4, tessellation: 32 },
+      { diameterTop: 1, diameterBottom: 1, tessellation: 32 },
       this._scene
     );
     cylinder.material = this.defaultMaterial();

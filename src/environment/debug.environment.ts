@@ -1,14 +1,14 @@
-import {Injectable} from '@angular/core';
+import { Injectable } from '@angular/core';
 
 @Injectable()
 export class DebugEnvironment {
-    private server: string;
+  private server: string;
 
-    constructor() {
-        this.server = 'http://api.blitzbasicscript.com';
-    }
+  constructor() {
+    this.server = 'http://api.blitzbasicscript.com';
+  }
 
-    getServer(): string {
-        return this.server;
-    }
+  getServer(): string {
+    return this.server;
+  }
 }

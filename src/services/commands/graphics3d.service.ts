@@ -217,7 +217,7 @@ export class CommandsGraphics3DService {
     return this.cameraService.cameraZoom(camera, value);
   }
 
-  async createCamera(type: CameraType, parent?: BbScriptEntity): Promise<BbScriptEntity> {
+  async createCamera(type?: CameraType, parent?: BbScriptEntity): Promise<BbScriptEntity> {
     return this.cameraService.createCamera(type, parent);
   }
 

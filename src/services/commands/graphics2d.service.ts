@@ -103,7 +103,7 @@ export class CommandsGraphics2DService {
   }
 
   async cls(): Promise<void> {
-    return Promise.resolve(this.graphicsService.cls());
+    return this.graphicsService.cls();
   }
 
   async clsColor(red: number, green: number, blue: number): Promise<void> {

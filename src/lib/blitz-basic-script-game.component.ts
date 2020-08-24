@@ -49,6 +49,8 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
         this.debug();
       case 'fake':
         this.playFake();
+      case 'stop':
+        this.stop();
     }
   }
 
@@ -211,6 +213,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     switch (this.code[0]) {
       case '; Draw a background image of a city':
         codeBlocks = [
+          new CommandStatement('Graphics', [new NumericExpression(800), new NumericExpression(600)]),
           new Assignment(
             'global',
             'image',
@@ -225,6 +228,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
         break;
       case '; Load and play a sound sample':
         codeBlocks = [
+          new CommandStatement('Graphics', [new NumericExpression(800), new NumericExpression(600)]),
           new Assignment(
             'global',
             'sound',
@@ -235,11 +239,193 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
         break;
       case '; Some math examples':
         codeBlocks = [
+          new CommandStatement('Graphics', [new NumericExpression(800), new NumericExpression(600)]),
+          new CommandStatement('Color', [
+            new NumericExpression(255),
+            new NumericExpression(255),
+            new NumericExpression(255)
+          ]),
           new Assignment('global', 'root', new CommandStatement('Sqr', [new NumericExpression(25)])),
           new CommandStatement('Text', [
             new NumericExpression(20),
             new NumericExpression(20),
-            new VariableExpression('global', 'root')
+            new StringExpression('5 x 5 = 25')
+          ]),
+          new Assignment('global', 'sinValue', new CommandStatement('Sin', [new NumericExpression(45)])),
+          new CommandStatement('Text', [
+            new NumericExpression(20),
+            new NumericExpression(40),
+            new StringExpression('Sin(45) = 0.8509035245341184')
+          ]),
+          new Assignment('global', 'logValue', new CommandStatement('Log', [new NumericExpression(42)])),
+          new CommandStatement('Text', [
+            new NumericExpression(20),
+            new NumericExpression(60),
+            new StringExpression('Log(42) = 3.7376696182833684')
+          ]),
+          new CommandStatement('Text', [
+            new NumericExpression(20),
+            new NumericExpression(80),
+            new StringExpression('Pi = 3.141592653589793')
+          ])
+        ];
+        break;
+      case '; Draw some lines, rectangles and ovals':
+        codeBlocks = [
+          new CommandStatement('Graphics', [new NumericExpression(800), new NumericExpression(600)]),
+          new CommandStatement('ClsColor', [
+            new NumericExpression(50),
+            new NumericExpression(152),
+            new NumericExpression(220)
+          ]),
+          new CommandStatement('Cls', []),
+          new CommandStatement('Color', [
+            new NumericExpression(92),
+            new NumericExpression(184),
+            new NumericExpression(92)
+          ]),
+          new CommandStatement('Rect', [
+            new NumericExpression(0),
+            new NumericExpression(250),
+            new NumericExpression(800),
+            new NumericExpression(350)
+          ]),
+          new CommandStatement('Color', [
+            new NumericExpression(217),
+            new NumericExpression(83),
+            new NumericExpression(79)
+          ]),
+          new CommandStatement('Rect', [
+            new NumericExpression(50),
+            new NumericExpression(150),
+            new NumericExpression(200),
+            new NumericExpression(200)
+          ]),
+          new CommandStatement('Line', [
+            new NumericExpression(50),
+            new NumericExpression(150),
+            new NumericExpression(150),
+            new NumericExpression(50)
+          ]),
+          new CommandStatement('Line', [
+            new NumericExpression(150),
+            new NumericExpression(50),
+            new NumericExpression(250),
+            new NumericExpression(150)
+          ]),
+          new CommandStatement('Color', [
+            new NumericExpression(134),
+            new NumericExpression(148),
+            new NumericExpression(164)
+          ]),
+          new CommandStatement('Rect', [
+            new NumericExpression(130),
+            new NumericExpression(270),
+            new NumericExpression(40),
+            new NumericExpression(80)
+          ]),
+          new CommandStatement('Color', [
+            new NumericExpression(43),
+            new NumericExpression(62),
+            new NumericExpression(80)
+          ]),
+          new CommandStatement('Rect', [
+            new NumericExpression(65),
+            new NumericExpression(190),
+            new NumericExpression(50),
+            new NumericExpression(50)
+          ]),
+          new CommandStatement('Color', [
+            new NumericExpression(240),
+            new NumericExpression(240),
+            new NumericExpression(240)
+          ]),
+          new CommandStatement('Oval', [
+            new NumericExpression(20),
+            new NumericExpression(10),
+            new NumericExpression(60),
+            new NumericExpression(20)
+          ]),
+          new CommandStatement('Oval', [
+            new NumericExpression(330),
+            new NumericExpression(40),
+            new NumericExpression(120),
+            new NumericExpression(50)
+          ]),
+          new CommandStatement('Oval', [
+            new NumericExpression(380),
+            new NumericExpression(75),
+            new NumericExpression(90),
+            new NumericExpression(30)
+          ]),
+          new CommandStatement('Oval', [
+            new NumericExpression(500),
+            new NumericExpression(140),
+            new NumericExpression(140),
+            new NumericExpression(40)
+          ]),
+          new CommandStatement('Color', [
+            new NumericExpression(240),
+            new NumericExpression(173),
+            new NumericExpression(78)
+          ]),
+          new CommandStatement('Oval', [
+            new NumericExpression(600),
+            new NumericExpression(10),
+            new NumericExpression(60),
+            new NumericExpression(60)
+          ])
+        ];
+        break;
+      case '; Create and position some primitive 3D object meshes':
+        codeBlocks = [
+          new Assignment('global', 'camera', new CommandStatement('CreateCamera', [])),
+          new CommandStatement('CameraClsColor', [
+            new VariableExpression('global', 'camera'),
+            new NumericExpression(50),
+            new NumericExpression(152),
+            new NumericExpression(220)
+          ]),
+          new CommandStatement('PositionEntity', [
+            new VariableExpression('global', 'camera'),
+            new NumericExpression(0),
+            new NumericExpression(8),
+            new NumericExpression(-25)
+          ]),
+          new Assignment('global', 'light', new CommandStatement('CreateLight', [])),
+          new CommandStatement('RotateEntity', [
+            new VariableExpression('global', 'light'),
+            new NumericExpression(90),
+            new NumericExpression(0),
+            new NumericExpression(0)
+          ]),
+          new Assignment('global', 'cube', new CommandStatement('CreateCube', [])),
+          new CommandStatement('PositionEntity', [
+            new VariableExpression('global', 'cube'),
+            new NumericExpression(-8),
+            new NumericExpression(0),
+            new NumericExpression(0)
+          ]),
+          new Assignment('global', 'sphere', new CommandStatement('CreateSphere', [])),
+          new CommandStatement('PositionEntity', [
+            new VariableExpression('global', 'sphere'),
+            new NumericExpression(-3),
+            new NumericExpression(0),
+            new NumericExpression(0)
+          ]),
+          new Assignment('global', 'cone', new CommandStatement('CreateCone', [])),
+          new CommandStatement('PositionEntity', [
+            new VariableExpression('global', 'cone'),
+            new NumericExpression(3),
+            new NumericExpression(0),
+            new NumericExpression(0)
+          ]),
+          new Assignment('global', 'cylinder', new CommandStatement('CreateCylinder', [])),
+          new CommandStatement('PositionEntity', [
+            new VariableExpression('global', 'cylinder'),
+            new NumericExpression(8),
+            new NumericExpression(0),
+            new NumericExpression(0)
           ])
         ];
         break;
@@ -272,7 +458,7 @@ export class BlitzBasicScriptComponent implements OnInit, AfterViewInit {
     this.interpreter.run();
 
     // TODO: call render loop from interpreter
-    // this.babylonjs.mainLoop([]);
+    this.babylonjs.mainLoop([]);
   }
 
   debug(): void {
